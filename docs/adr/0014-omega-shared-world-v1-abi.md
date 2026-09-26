@@ -1,11 +1,12 @@
 # ADR 0014: OMEGA_SHARED_WORLD_V1 — Coherent CPU↔GPU Shared-State ABI
 
-**Status:** Accepted (M20 Stage 1)
+**Status:** Proposed (M20 preparatory Stage 1, branch-only)
 
 ## Context
 
-M20 builds the first real CPU↔GPU coherent shared-state substrate for AIEN on
-DGX Spark / Grace Blackwell GB10. The architectural target is that AIEN executes
+The proposed M20 preparatory stage builds a CPU↔GPU coherent shared-state
+substrate for AIEN on DGX Spark / Grace Blackwell GB10. The architectural target
+is that AIEN executes
 on the GPU and AEGIS executes on the CPU side, and the two communicate **only**
 through a persistent PHYSICS-owned coherent-memory world — never by giving AIEN
 CPU execution authority, CPU pointers, or host syscalls.
@@ -43,12 +44,12 @@ object references, payload length, flags, integrity).
   doctrinal 64-byte identity pair (`semantic_id[32]` + `realization_id[32]`)
   lives when a real INTENT is carried.
 
-This is a clean **superset** of the doctrinal 64-byte intent entry: the identity
+This is a proposed **superset** of the doctrinal 64-byte intent entry: the identity
 pair still occupies one 64-byte line, and 64-byte alignment (Cacheline
-Sovereignty) is preserved. `OMEGA.md` §9.1 is updated to describe the 64-byte
-`omega_intent_entry_t` as the *identity payload* carried on line 1 of the
-128-byte transport descriptor, resolving the contradiction without discarding
-the doctrinal struct.
+Sovereignty) is preserved. On adoption, `OMEGA.md` §9.1 must describe the
+64-byte `omega_intent_entry_t` as the *identity payload* carried on line 1 of
+the 128-byte transport descriptor, resolving the contradiction without
+discarding the doctrinal struct.
 
 ### 2. Little-endian, fixed-width, directly interpreted (not canonical serialization)
 
@@ -100,9 +101,10 @@ BLAKE3. The doctrinal BLAKE3/SHA-256 tension is recorded here for a future ADR.
 
 ### 7. Placement (no duplication)
 
-- The **canonical semantic definition** lives in OMEGA doctrine
-  (`OMEGA.md` §9.2) and the M20 spec (`docs/milestone-20-spec.md`).
-- The **canonical ABI C header** lives once in
+- The **proposed semantic definition** is recorded in this ADR and the M20
+  preparatory spec (`docs/milestone-20-spec.md`). The canonical OMEGA doctrine
+  must be revised before the ABI is ratified.
+- The **canonical ABI C header**, when adopted, lives once in
   `aien-dev/physics:shared_world/omega_shared_world_abi.h`. OMEGA already
   includes PHYSICS headers, so both repos compile against one definition with
   zero duplication.

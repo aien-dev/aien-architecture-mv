@@ -1,24 +1,26 @@
-# Milestone 20 (Stage 1): OMEGA_SHARED_WORLD — Coherent Shared World + Cross-Processor Publication
+# Milestone 20 Preparatory Stage 1: OMEGA_SHARED_WORLD — Coherent Shared World + Cross-Processor Publication
 
 ```text
 Document ID:      SPEC-OMEGA-SHARED-WORLD-M20-S1
-Classification:   Sovereign Machine Canonical Doctrine (milestone spec)
+Classification:   Draft milestone preparatory specification (branch-only)
 Target Substrate: NVIDIA DGX Spark (Grace Blackwell GB10, sm_121, 128 GiB unified LPDDR5x)
-Status:           IN PROGRESS (Stage 1 of 4)
-Proposed roadmap change (PENDING check_doctrine.sh): the M20 identifier becomes
-OMEGA_SHARED_WORLD; the prior OMEGA_TENSOR is re-sequenced. The ROADMAP.md and
-OMEGA.md edits are applied once the doctrine checker can be run (see ADR 0014).
+Status:           STAGED ON BRANCH (M19 ratification and M20 opening pending)
+Roadmap binding:  M20 remains OMEGA_TENSOR. OMEGA_SHARED_WORLD is a preparatory
+                  substrate stage, not a replacement milestone identifier.
 ```
 
 ## 1. Purpose and scope
 
-Stage 1 proves that the CPU (where AEGIS executes) and the GPU (where AIEN will
-execute) can safely communicate through **one persistent PHYSICS-owned coherent
-allocation** using a **canonical, pointer-free OMEGA ABI** and **explicitly
-qualified cross-processor publication/consumption ordering**.
+This preparatory stage tests whether the CPU (where AEGIS executes) and the GPU
+(where AIEN will execute) can safely communicate through **one persistent
+PHYSICS-owned coherent allocation** using a **pointer-free OMEGA ABI** and
+**explicitly qualified cross-processor publication/consumption ordering**.
 
-Stage 1 is intentionally narrower than the full Shared World architecture. It
-does **not** implement AIEN residency, AEGIS effect mediation, autonomous tool
+Stage 1 is intentionally narrower than the full Shared World architecture and
+does not satisfy the M20 `OMEGA_TENSOR` milestone gate. Tensor semantics,
+multi-dimensional array types, strides, and memory layouts remain required by
+the canonical roadmap before M20 can be ratified. It does **not** implement
+AIEN residency, AEGIS effect mediation, autonomous tool
 execution, persistent cognition, branch-native inference, shared KV state, or an
 end-to-end sovereign operating environment. Those are Stages 2–4 and later
 milestones.
@@ -31,8 +33,8 @@ milestones.
 > qualified cross-processor publication semantics **on GB10 silicon**, with zero
 > stale, torn, duplicated, reordered-as-valid, or replayed messages.
 
-If the hardware evidence does not support this exact claim, the milestone
-**fails** rather than weakening the test.
+If the hardware evidence does not support this exact claim, this preparatory
+stage **fails** rather than weakening the test. Passing it alone does not close M20.
 
 ## 3. Architecture
 
