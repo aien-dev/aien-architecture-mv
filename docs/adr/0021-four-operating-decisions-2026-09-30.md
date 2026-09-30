@@ -85,5 +85,5 @@ The G4 caller-identity fix is in progress. It changes the runtime so that the ru
 
 ### Evidence checked on 2026-09-30
 
-- `aien-dev/omega#106` (draft, branch `feat/r16-g3-g5-host`) reports G3 passing on the host only (not on silicon), G5 passing, and G4 printing FAIL. Two probes found real bypasses: a legacy context holding the promoter's grant that names the promoter subject gets a promotion accepted, and a reaction naming that subject writes the in-force record. The cause is that identities are whatever the caller states. The fix is recorded there as spec clarification C5.
+- `aien-dev/omega#106` (draft, branch `feat/r16-g3-g5-host`) reports G3 passing on the host only (not on silicon), G5 passing, and G4 printing FAIL. Two probes found real bypasses: a legacy context holding the promoter's grant that names the promoter subject gets a promotion accepted, and a reaction naming that subject writes the in-force record. The cause is that identities are whatever the caller states. That branch records the flaw as spec clarification C5 and says the fix is not made there. The fix (runtime-issued caller credentials) is in progress as clarification C6, which was not yet on that branch when checked (head `44d8c06`).
 - `CURRENT_EXECUTION_PLAN.md` already records R16 as IN PROGRESS with G3 to G8 and the final receipt absent from `main`.
