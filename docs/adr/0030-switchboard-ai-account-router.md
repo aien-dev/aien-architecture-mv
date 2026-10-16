@@ -29,8 +29,44 @@ The operator holds subscription accounts with several AI companies: 2 Anthropic,
 ## Not decided here
 Wiring the hive and AIEN-TEST to call the Switchboard (later ADR). Any Omega port.
 
+## Amendment A (PROPOSED, 2026-10-16): Anthropic provider policy matrix
+**Status:** PROPOSED. Needs the operator's approval before any feature that depends on it ships. Tracking: aien-architecture#236 (parent), aien-sovereign-core#592 (phase 1).
+
+**Sources, all fetched 2026-10-16:**
+- [S1] https://code.claude.com/docs/en/authentication ("Log in with multiple accounts", "Authentication precedence", "Generate a long-lived token")
+- [S2] https://code.claude.com/docs/en/legal-and-compliance ("Usage policy")
+- [S3] https://www.anthropic.com/legal/consumer-terms (effective 2025-10-08), section 2 and section 3
+- [S4] https://www.anthropic.com/legal/aup (page states effective 2026-11-12), "Do Not Abuse Our Platform"
+
+**Key lines:**
+- S1: "To stay signed in to multiple accounts at once, such as work and personal accounts, give each account its own configuration directory."
+- S1: precedence is cloud-provider variables, then `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY` ("In non-interactive mode (`-p`), the key is always used when present"), `apiKeyHelper`, `CLAUDE_CODE_OAUTH_TOKEN`, Anthropic profile or federation credentials, and last the `/login` subscription.
+- S2: "Advertised usage limits for Pro and Max plans assume ordinary, individual usage of Claude Code and the Agent SDK."
+- S2: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens"; it does not "prevent an end user from signing in to the unmodified Claude Code binary with their own Claude subscription".
+- S3: forbids access "through automated or non-human means" "Except when you are accessing our Services via an Anthropic API Key or where we otherwise explicitly permit it"; forbids "bypassing any of our systems or protective measures"; forbids sharing account login.
+- S4: forbids "create multiple accounts, to avoid detection", "Circumvent a ban through the use of a different account", and "Intentionally bypass or interfere with capabilities, restrictions, or guardrails established within our products".
+- S1 documents `claude setup-token` "for CI pipelines, scripts, or other environments where interactive browser login isn't available", which is an explicit permission for scripted use of the operator's own subscription.
+
+**Matrix:**
+| Execution mode | Verdict | Condition or reason |
+|---|---|---|
+| Operator opens the unmodified `claude` in a chosen profile folder (`CLAUDE_CONFIG_DIR`) and signs in himself | ALLOWED | Documented in S1. Switchboard sets the folder itself and never passes an inherited one. |
+| Scripted `claude -p` by the operator's own tooling on his own subscription, credentials kept by `claude` in the profile folder | ALLOWED WITH CONDITIONS | Personal use only, unmodified binary, nobody else's requests (S2). Explicitly permitted scripted use per S1. |
+| `claude setup-token` token handed to Switchboard | FORBIDDEN in Switchboard | Switchboard would store or pass a session token (S2 "intermediate"). The operator may still use it outside Switchboard. |
+| Agent SDK or other program using subscription login | FORBIDDEN | S2 directs developers using the Agent SDK to API keys. |
+| Anthropic API key (Console, pay as you go) | ALLOWED | Billed separately. Must be an explicit operator choice per profile, never picked up by accident from the environment. |
+| Switchboard reads, copies, exports or proxies any credential file or token | FORBIDDEN | S2. Doctor checks only that the credentials file exists, never its contents. |
+| Automatic switch to another Anthropic subscription when one hits its limit | FORBIDDEN | Most direct reading of S4 "bypass ... restrictions" and S3 "bypassing ... protective measures". `run_job` failover between subscription accounts is turned off; failover goes only to `local`. |
+| Operator holds more than one paid Anthropic subscription and picks one by hand per session | GREY ZONE, operator decision | S3 and S4 are silent on holding several accounts. Risk: spreading one person's usage across subscriptions to go past "ordinary, individual usage" (S2) can be read as bypassing a usage restriction (S4). Manual choice lowers but does not remove that risk. |
+| Sanctioned ways to get more room: higher plan, Team or Enterprise plan, API key | ALLOWED | The honest alternative to several subscriptions. |
+| Using Claude output to train AIEN models | FORBIDDEN | S3 section 3 item 2. |
+
+**Environment allowlist (phase 1 design rule).** Before launching `claude`, Switchboard removes every credential-selecting variable in S1's precedence list (`ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY`, `CLAUDE_CODE_OAUTH_TOKEN`, `ANTHROPIC_PROFILE`, `ANTHROPIC_FEDERATION_RULE_ID`, `ANTHROPIC_ORGANIZATION_ID`, `CLAUDE_CODE_USE_BEDROCK`, `CLAUDE_CODE_USE_VERTEX`, `CLAUDE_CODE_USE_FOUNDRY`), `ANTHROPIC_BASE_URL`, and cloud-provider credential variables. Proxy variables pass only when listed in local config. `switchboard doctor` warns when an `apiKeyHelper` or `env` block in the profile's or the repository's Claude settings could bring an API key back in.
+
+**Still UNKNOWN:** whether Anthropic support would confirm in writing that one person may hold and hand-select several paid subscriptions; the operator may ask them before relying on it.
+
 ## Open UNKNOWNs
-- Anthropic consumer terms on one person holding two paid accounts to spread usage: not read (https://www.anthropic.com/legal/consumer-terms). Must be read before shipping.
+- Anthropic consumer terms on one person holding two paid accounts to spread usage: read 2026-10-16, see Amendment A. Terms are silent on holding several accounts; spreading usage to exceed limits is the grey zone recorded there.
 - xAI terms on automated use: page returned 403, not read.
 - Side-by-side logins: `CLAUDE_CONFIG_DIR` documented; `CODEX_HOME` documented but multi-account not described; `GROK_HOME` name seen only in the binary; `agy` unknown.
 - Usage-left in machine-readable form for codex, agy, grok: none found. Limit-error text for codex, agy, grok, and Claude's exact shape in `-p` json: undocumented.
