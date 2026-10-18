@@ -35,10 +35,28 @@ critical path, then E09 and E10 in the first quiet chip slot, then E05 to E08 an
 
 ## Issue map (aien-dev/aien-architecture-mv)
 
-Filled in once the issues are created; see the epic for the live list.
-
 | Item | Issue |
 |---|---|
-| Epic | (pending) |
-| Phase 0 | (pending) |
-| E01 to E20 | (pending) |
+| Epic | [#265](https://github.com/aien-dev/aien-architecture-mv/issues/265) |
+| Phase 0 | [#264](https://github.com/aien-dev/aien-architecture-mv/issues/264) |
+| E01 | [#244](https://github.com/aien-dev/aien-architecture-mv/issues/244) |
+| E02 | [#245](https://github.com/aien-dev/aien-architecture-mv/issues/245) |
+| E03 | [#246](https://github.com/aien-dev/aien-architecture-mv/issues/246) |
+| E04 | [#247](https://github.com/aien-dev/aien-architecture-mv/issues/247) |
+| E05 | [#248](https://github.com/aien-dev/aien-architecture-mv/issues/248) |
+| E06 | [#249](https://github.com/aien-dev/aien-architecture-mv/issues/249) |
+| E07 | [#250](https://github.com/aien-dev/aien-architecture-mv/issues/250) |
+| E08 | [#251](https://github.com/aien-dev/aien-architecture-mv/issues/251) |
+| E09 | [#252](https://github.com/aien-dev/aien-architecture-mv/issues/252) |
+| E10 | [#253](https://github.com/aien-dev/aien-architecture-mv/issues/253) |
+| E11 | [#254](https://github.com/aien-dev/aien-architecture-mv/issues/254) |
+| E12 | [#255](https://github.com/aien-dev/aien-architecture-mv/issues/255) |
+| E13 | [#256](https://github.com/aien-dev/aien-architecture-mv/issues/256) |
+| E14 | [#257](https://github.com/aien-dev/aien-architecture-mv/issues/257) |
+| E15 | [#258](https://github.com/aien-dev/aien-architecture-mv/issues/258) |
+| E16 | [#259](https://github.com/aien-dev/aien-architecture-mv/issues/259) |
+| E17 | [#260](https://github.com/aien-dev/aien-architecture-mv/issues/260) |
+| E18 | [#261](https://github.com/aien-dev/aien-architecture-mv/issues/261) |
+| E19 | [#262](https://github.com/aien-dev/aien-architecture-mv/issues/262) |
+| E20 | [#263](https://github.com/aien-dev/aien-architecture-mv/issues/263) |
+| EPIC | [#265](https://github.com/aien-dev/aien-architecture-mv/issues/265) |
