@@ -4,10 +4,10 @@ Resolved architectural decisions are recorded here so implementation agents do n
 
 ## Naming ADRs across repositories
 
-`aien-architecture` and `aien-spark/aienos` number their ADRs independently, so the same number (for example 0012 or 0016) names two different decisions. In prose — docs, plans, issues, PRs, commit messages — cite an ADR with its repository prefix:
+`aien-architecture` and `aien-dev/aienos` number their ADRs independently, so the same number (for example 0012 or 0016) names two different decisions. In prose (docs, plans, issues, PRs, commit messages), cite an ADR with its repository prefix:
 
-- `ARCH-00nn` — an ADR in this repository (`aien-architecture/docs/adr/`), e.g. ARCH-0016 is the resident reaction architecture.
-- `OS-00nn` — an ADR in `aien-spark/aienos` (`docs/adr/`), e.g. OS-0012 is self-construction, capability growth and generations.
+- `ARCH-00nn`: an ADR in this repository (`aien-architecture/docs/adr/`), e.g. ARCH-0016 is the resident reaction architecture.
+- `OS-00nn`: an ADR in `aien-dev/aienos` (`docs/adr/`), e.g. OS-0012 is self-construction, capability growth and generations.
 
 A bare "ADR 00nn" is acceptable only inside the repository that owns it. Files are not renamed: the prefix is a citation convention, and existing file names and historical references stay as they are.
 
@@ -25,7 +25,7 @@ Current ADRs:
 - [0010 - Canary observations are measurements](0010-canary-observations-are-measurements.md)
 - [0011 - An inference context is model state](0011-inference-context-is-model-state.md)
 - [0012 - One shell dispatch, then a landing split](0012-shell-dispatch-then-landing.md)
-- [0013 - Machine Physics Lowering and AEGIS Invariant Verification Chain](0013-machine-physics-lowering-and-aegis-invariant-checker.md) — naming superseded by ADR 0014
+- [0013 - Machine Physics Lowering and AEGIS Invariant Verification Chain](0013-machine-physics-lowering-and-aegis-invariant-checker.md) - naming superseded by ADR 0014
 - [0014 - Rename Machine Physics to FORGE](0014-rename-machine-physics-to-forge.md)
 - [0015 - Resident Semantic Store Boundary, Object Identity, and Reconstruction Contract](0015-resident-semantic-store.md)
 - [0016 - AIEN, Omega, and AEGIS are faculties of one resident reaction system](0016-resident-reaction-architecture.md) - Amendment 1, 2026-10-02: FORGE is a realization policy, not a commit step
@@ -35,7 +35,9 @@ Current ADRs:
 - [0020 - Belief / estimation layer](0020-belief-estimation-layer.md) - Accepted by operator Drake Stapleton, 2026-09-30
 - [0021 - Four operating decisions of 2026-09-30: Physics pin, SSD block layout, admission receipts, R16 status](0021-four-operating-decisions-2026-09-30.md) - Recorded 2026-09-30 from the orchestrator brief
 - [0022 - The canonical Cortex owner is omega `rx_cortex`](0022-canonical-cortex-owner.md) - Accepted 2026-09-30 (orchestrator engineering call under the operator's standing rule)
+- [0023 - DIRAC-0 Program (Integration Workstream)](0023-dirac-0-program.md) - PROPOSED 2026-10-01
 - [0024 - Rust is scaffolding, Omega is destination, C where hardware-justified](0024-rust-scaffolding-omega-destination.md) - Accepted by operator Drake Stapleton, 2026-10-01 (supersedes the Rust-to-C migration plan)
+- [0025 - One execution transcript, one causal id chain, one resource-contract vocabulary](0025-execution-transcript-causal-id-resource-contract.md) - PROPOSED 2026-10-01
 - [0026 - Sealed Discovery Examinations](0026-sealed-discovery-examinations.md) - PROPOSED 2026-10-01
 - [0027 - Formal verification uses Lean as a temporary oracle; Omega owns the invariants](0027-formal-oracle-lean-bootstrap.md) - Accepted by operator Drake Stapleton, 2026-10-01 (via his Formal Verification Bootstrap Plan)
 - [0028 - AIEN-TEST: manifest v1, EvidenceReceiptV1, verdict set, resource pools, incremental digests, Omega-native successor](0028-aien-test-runner-and-evidence-contract.md) - Accepted by operator Drake Stapleton, 2026-10-02 (via his approved `aien-test` spec)
@@ -43,6 +45,7 @@ Current ADRs:
 - [0030 - Switchboard: one typed router over our own AI accounts](0030-switchboard-ai-account-router.md) - PROPOSED 2026-10-03
 - [0031 - DUAL: constraint pricing for soft resource budgets; hard gates are never priced](0031-dual-constraint-pricing.md) - Accepted by operator Drake Stapleton, 2026-10-03 (via his "DUAL / Constraint Pricing" brief)
 - [0032 - Inertial Alignment (ANS): frozen reference, drift filter, three sensor classes, autonomy tiers, promotion gate; advisory only](0032-inertial-alignment.md) - Accepted by operator Drake Stapleton, 2026-10-03 (via his "fully implement this feature /goal Inertial Alignment" instruction on the pasted brief)
+- [0033 - AIEN Verification: gate manifests, exactness classes, Spark verifier, signed verification bundles, GitHub thin gate](0033-aien-verification-pipeline.md) - Written 2026-10-04, amended 2026-10-11; by its own rule it became ACCEPTED when its PR (#126) merged. Phase 3 (the Spark is the only test judge) in effect since 2026-10-16
 - [0034 - Physical-Form Realization IR: substrate-neutral realization form below Omega meaning and beside substrate lowering; LINEAR_OPERATOR first cut, ENERGY_FUNCTIONAL specified only](0034-physical-form-realization-ir.md) - Accepted by the orchestrator under operator delegation of 2026-10-04 (Drake: "make the calls yourself"); operator may revoke; extends ADR 0018 / 0019
 - [0035 - Persistent Cognitive Entity Boundary (ALLEN): AIEN is the organism, ALLEN the durable subject it sustains; one continuity object kind (aienos ADR 0018), three bindings in omega, six host gates incl. negative control](0035-persistent-cognitive-entity-boundary-allen.md) - ACCEPTED 2026-10-06 by the operator; creed and ARCHITECTURE.md edits applied; aienos#259, omega#276; native genesis and QEMU cold restart TESTED (QEMU) in aienos#260, hardware NOT_RUN
 - [0036 - Release v1 memory owner (lane L3): aien-allen-memory under an engaged ALLEN identity; remember and recall refuse when not engaged; every declared E2E run engages a fixture subject](0036-release-v1-memory-owner.md) - ACCEPTED 2026-10-10 (engineering decision under Drake directive; aien-architecture#197, aien-sovereign-core#386)
