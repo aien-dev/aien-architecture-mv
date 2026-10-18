@@ -71,7 +71,7 @@ Caveat for stages 4-5: Omega's program representation is still narrow (unary-u64
 
 ## 9. Tests
 
-`make -C tools/crumb test` runs `test.sh` and `test-continuation.sh`. The RFC-0003 cases are the lines starting `C3`.
+`make -C tools/crumb test` runs `test.sh` and `test-continuation.sh`. The RFC-0003 cases are the lines starting `C3`; amendment 1 cases start `AM1`.
 
 | Test | Result |
 |---|---|
@@ -85,3 +85,30 @@ Caveat for stages 4-5: Omega's program representation is still narrow (unary-u64
 | Differential against `crumb-compile.sh` on a scratch repo and on this repo (both tools compile from nothing, so `last_commit` is fresh in both): generated blocks identical, each tool verifies the other's output, whole file byte-identical apart from `compiled_at` | PASS (reported NOT_RUN if `jq` is missing) |
 | Number literals other than plain integers inside the semantic kernel (jq canonicalises them, the C tool keeps them verbatim) | NOT_RUN (UNVERIFIED) |
 | Paths containing spaces or newlines (the shell reference splits them; the C tool does not) | NOT_RUN (UNVERIFIED) |
+
+## Amendment 1 (2026-10-18): generated data is derived on demand, not committed
+
+**Status:** PROPOSED. Changes a decision of this RFC (section 2 and the CI rule of section 6: "the generated block is committed and `verify` compares it"). Needs Drake's yes before the per-repo migrations land. The tool change is backward compatible, so merging the tool alone changes nothing for any repository.
+
+### Problem, with evidence
+
+Every PR rewrites the root `.crumb`. The root's `source_tree` covers every tracked file, `children_root` and `digest` roll up every child digest, and `generated_at_commit` and `compiled_at` are rewritten by every compile. These keys sit next to each other at the end of the generated block, so two PRs that touch unrelated files both change the same lines. GitHub computes mergeability with a plain three-way merge, so the second PR goes DIRTY the moment the first merges. The same happens inside any crumbed directory both PRs touch (its `source_tree`, `files` and stamps).
+
+Seen on aien-sovereign-core-mv, 2026-10-18: #608 changes only `scripts/test-install-release.sh` and conflicts with main only in `.crumb`, inside the block `children_root` .. `source_tree`; #605 conflicts only in `.crumb` and `tools/aien-local-ci/.crumb`. The scripted repro (`swarm-crumbfix/repro-crumb-conflict.sh` on the Spark) reproduces both shapes on a scratch copy of sovereign-core main `a75b7c25` with the pinned tool `94fffbcf`. With sovereign-core #657 (merge only PRs that are current with main) every merge therefore forces a rebase, a recompile and a full re-judge of every other open PR.
+
+The committed values carry no information that is not already in the commit: `digest` is a pure function of the tracked tree (D2, D3), and git's own tree id already binds that tree. No program outside `tools/crumb` reads them (searched all 11 judged repositories on 2026-10-18: only the tool, its tests and its proof scripts read `extensions.generated`). ADR 0029 (Verified Crumbs) is not affected; it excludes `.crumb` explicitly.
+
+### Decision
+
+1. A repository opts in by carrying `"extensions": {"generated_policy": "on-demand"}` in its root `.crumb`. `crumb migrate .` writes the marker and removes `extensions.generated` from every crumb, once, in one commit. Nothing else in any crumb changes; the semantic kernel is untouched (D5).
+2. In an on-demand repository the committed `.crumb` holds only what people write (the semantic kernel, `extensions.seed`, `extensions.proposed`, `extensions.provenance`). A committed `extensions.generated` is STALE: `verify` exits 1 and names the crumb, and `compile` strips it. This keeps an old tool from quietly bringing the conflicts back.
+3. Digests are still computed, exactly as sections 2 and 3 define them, every time they are needed: `crumb verify` prints `crumb verify: OK: <n> crumbs current at HEAD <sha7>, generated data on demand, root digest sha256:<hex>`, and `crumb digest [dir]` prints the full generated block of any directory. The root digest of a migrated tree equals the digest the root crumb held before migration, so nothing is lost: the judge records the printed root digest with the SHA it judged (the first stdout line is already the readiness note in `aien-test verify`, `crumb_status`).
+4. Deleting a crumb still changes the root digest (D7), and is also a plain line in the PR diff.
+5. A repository without the marker is legacy: every command behaves byte for byte as before (test `AM1 legacy ...` checks the verify line). This is what lets the shared sandbox tool on the Spark move first, and each repository migrate in its own PR.
+
+### Consequences
+
+- Two PRs that touch different files never conflict in a crumb. Two PRs only conflict in a crumb when both edit its hand-written text, which is a real conflict a person must resolve.
+- A PR that changes no hand-written crumb text carries no `.crumb` change and no `crumb compile` commit. `LOCAL_PIPELINE.md` steps 2 to 4 become a no-op unless a crumb was edited; `rebase-crumb.sh` and `pr-gate.sh` work unchanged (verify still prints a line with `OK`).
+- Agents that read one crumb to learn its children use `crumb digest <dir>` or `crumb context <path>` instead of reading `extensions.generated` from the file.
+- Rejected alternatives, in order: dropping only the roll-up (keeps the conflict for any two PRs in the same crumbed directory, which the repro shows with `tools/aien-local-ci`); auto-rebasing crumb-only conflicts (removes the manual step but not the rebase-and-re-judge on every merge); a `.gitattributes` merge driver (GitHub's server-side merge and its mergeability check do not run custom drivers, so the PR stays DIRTY).

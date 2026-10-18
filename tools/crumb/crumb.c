@@ -2048,7 +2048,30 @@ static void find_crumbs(const char *top, const char *rel, CDir **out, size_t *n,
     closedir(dp); free(full);
 }
 
-/* mode: 'c' compile, 'v' verify, 's' status. Returns number of stale crumbs; *total set. */
+/* RFC-0003 amendment 1 (2026-10-18): generated data is derived on demand, never committed.
+ * A repository opts in with "extensions": {"generated_policy": "on-demand"} in its ROOT .crumb (written once by
+ * `crumb migrate`). Then every committed crumb holds only what a human writes; a committed extensions.generated
+ * block is STALE (it is the roll-up that made two unrelated PRs rewrite the same root lines), compile strips it,
+ * verify prints the root digest computed from the tree at HEAD, and `crumb digest` prints any generated block.
+ * Without the marker the repository is legacy and every command behaves exactly as before the amendment. */
+#define GEN_POLICY_KEY "generated_policy"
+#define GEN_POLICY_ON_DEMAND "on-demand"
+static const char *g_digest_dir = NULL;   /* mode 'd': repo-relative directory whose generated block to print */
+static int root_on_demand(const char *top) {
+    J *rc = load_crumb(top); J *x = rc ? jget(rc, "extensions") : NULL;
+    const char *p = x && x->t == JOBJ ? jstrval(x, GEN_POLICY_KEY) : NULL;
+    return p && !strcmp(p, GEN_POLICY_ON_DEMAND);
+}
+static void write_crumb(const char *full, J *cr) {   /* D9: key-sorted, temp file then rename */
+    jsort(cr);
+    char *out = jdump(cr), *tmp = xmalloc(strlen(full) + 32); snprintf(tmp, strlen(full) + 32, "%s.tmp.%ld", full, (long)getpid());
+    FILE *f = fopen(tmp, "wb"); if (!f) die("cannot write %s", tmp);
+    if (fputs(out, f) < 0 || fclose(f) != 0) die("write failed: %s", tmp);
+    if (rename(tmp, full)) die("rename failed: %s", full);
+}
+
+/* mode: 'c' compile, 'v' verify, 's' status, 'm' migrate (to on-demand), 'd' digest (print one generated block).
+ * Returns number of stale crumbs; *total set. */
 static int compile_engine(char mode, const char *root, int quiet, int *total_out, char *head_out) {
     Comp c; memset(&c, 0, sizeof c);
     char *rq = shq(root), cmd[PATH_MAX + 80]; snprintf(cmd, sizeof cmd, "git -C %s rev-parse --show-toplevel 2>/dev/null", rq);
@@ -2077,13 +2100,34 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
         if (!dup) ds[w++] = ds[i]; } nd = w; }
     for (size_t i = 0; i < nd; i++) { int n = 0; if (!strcmp(ds[i].d, ".")) n = -1; else for (const char *s = ds[i].d; *s; s++) if (*s == '/') n++; ds[i].depth = n; }
     qsort(ds, nd, sizeof *ds, cdcmp);
-    int total = 0, changed = 0, stale = 0; char stamp[21]; now_iso(stamp);
+    int total = 0, changed = 0, stale = 0, found = 0; char stamp[21]; now_iso(stamp);
+    int ondemand = mode == 'm' || root_on_demand(top);
     for (size_t i = 0; i < nd; i++) {
         const char *d = ds[i].d; char *cp = pjoin(d, ".crumb"), *full = pjoin(top, cp); struct stat sb;
         if (stat(full, &sb) || !S_ISREG(sb.st_mode)) continue;
         total++;
         char dg[65]; J *nw = comp_object(&c, d, dg); dig_set(&c, d, dg);
+        if (mode == 'd') {   /* on demand: the block compile would have committed, with this HEAD as its stamp */
+            if (g_digest_dir && !strcmp(d, g_digest_dir)) { jset(nw, "generated_at_commit", jstr(head)); jsort(nw); fputs(jdump(nw), stdout); found = 1; }
+            continue;
+        }
         char *txt = slurp(full); J *cr = txt ? jparse(txt) : NULL;
+        if (ondemand) {   /* amendment 1: only the hand-written crumb is committed */
+            J *x = cr && cr->t == JOBJ ? jget(cr, "extensions") : NULL;
+            int has_gen = x && x->t == JOBJ && jget(x, "generated");
+            int need_mark = mode == 'm' && !strcmp(d, ".") && !root_on_demand(top);
+            if (!cr || cr->t != JOBJ) {
+                stale++; if (!quiet) printf("INVALID    %s (not a JSON object)\n", d);
+                if (mode == 'c' || mode == 'm') die("cannot compile %s: not a JSON object", cp);
+                continue;
+            }
+            if (!has_gen && !need_mark) { if (mode == 's' && !quiet) printf("CURRENT    %s\n", d); continue; }
+            if (mode == 's' || mode == 'v') { stale++; if (!quiet) printf("STALE      %s (committed generated data; run: crumb compile)\n", d); continue; }
+            if (has_gen) { jdel(x, "generated"); if (x->n == 0) jdel(cr, "extensions"); }
+            if (need_mark) { J *rx = jget(cr, "extensions"); if (!rx || rx->t != JOBJ) { rx = jnew(JOBJ); jset(cr, "extensions", rx); } jset(rx, GEN_POLICY_KEY, jstr(GEN_POLICY_ON_DEMAND)); }
+            write_crumb(full, cr); changed++; if (!quiet) printf("STRIPPED   %s\n", d);
+            continue;
+        }
         J *old = jnew(JOBJ);
         if (cr && cr->t == JOBJ) { J *x = jget(cr, "extensions"), *g = x && x->t == JOBJ ? jget(x, "generated") : NULL;
             if (g && g->t == JOBJ) { old = jclone(g); jdel(old, "generated_at_commit"); jdel(old, "compiled_at"); } }
@@ -2108,6 +2152,17 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
     }
     if (total_out) *total_out = total;
     char h7[8]; memcpy(h7, head, 7); h7[7] = 0;
+    const char *rd = dig_of(&c, "."); char rds[80]; snprintf(rds, sizeof rds, "sha256:%s", rd ? rd : "none");
+    if (mode == 'd') { if (!found) die("crumb digest: %s holds no compiled .crumb", g_digest_dir ? g_digest_dir : "?"); return 0; }
+    if (!quiet && ondemand) {   /* one line: verify.rs takes the first stdout line as the readiness note */
+        if (mode == 'c') printf("crumb compile: %d crumbs, %d rewritten, HEAD %s, generated data on demand, root digest %s\n", total, changed, h7, rds);
+        else if (mode == 'm') printf("crumb migrate: %d crumbs, %d rewritten, generated data is now derived on demand, root digest %s\n", total, changed, rds);
+        else if (mode == 'v') {
+            if (stale) printf("crumb verify: FAIL: %d of %d crumbs stale; run: crumb compile\n", stale, total);
+            else printf("crumb verify: OK: %d crumbs current at HEAD %s, generated data on demand, root digest %s\n", total, h7, rds);
+        } else printf("crumb status: %d crumbs, %d not current\n", total, stale);
+        return stale;
+    }
     if (!quiet) {
         if (mode == 'c') printf("crumb compile: %d crumbs, %d rewritten, HEAD %s\n", total, changed, h7);
         else if (mode == 'v') {
@@ -2118,6 +2173,14 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
     return stale;
 }
 static int cmd_compile(char mode, const char *root) { int t; int s = compile_engine(mode, root, 0, &t, NULL); return mode == 'v' && s ? 1 : 0; }
+static int cmd_digest(const char *dir) {   /* amendment 1: print a directory's generated block, computed now */
+    char r[PATH_MAX]; if (!realpath(dir, r)) die("no such directory: %s", dir);
+    char *rq = shq(r), cmd[PATH_MAX + 80]; snprintf(cmd, sizeof cmd, "git -C %s rev-parse --show-toplevel 2>/dev/null", rq);
+    char *top = cap_cmd(cmd, NULL); chomp(top);
+    if (!*top) die("crumb digest: not inside a git repository: %s", dir);
+    size_t tl = strlen(top); g_digest_dir = r[tl] ? xstrdup(r + tl + 1) : xstrdup(".");
+    int t; compile_engine('d', top, 1, &t, NULL); return 0;
+}
 static int cmd_propose(const char *dir, const char *purpose) {   /* D5: only extensions.proposed, never .purpose */
     char *cp = pjoin(dir, ".crumb"), *txt = slurp(cp);
     if (!txt) die("no .crumb in %s", dir);
@@ -2242,6 +2305,8 @@ static void usage(void) {
           "  compile [root]                              RFC-0003: regenerate structural crumb data bottom-up (Merkle digests)\n"
           "  verify [root]                               exit 1 if any committed crumb differs from what compile would write\n"
           "  status [root]                               CURRENT / STALE / UNCOMPILED per crumb\n"
+          "  migrate [root]                              RFC-0003 am. 1: strip committed generated data, mark the root on-demand\n"
+          "  digest [dir]                                print the generated block of dir, computed from the tree now\n"
           "  propose <dir> <purpose>                     write extensions.proposed.purpose (never .purpose)\n"
           "  context [path]                              entry point: tree, what to read, conflicts, continuation, freshness\n"
           "  checkpoint <agent> [--reason R]             new Continuation Crumb (wraps cc.sh); then checkpoint --seal <id> [agent]\n"
@@ -2279,6 +2344,8 @@ int main(int argc, char **argv) {
     if (!strcmp(c, "compile") && a <= 1) return cmd_compile('c', a ? v[0] : ".");
     if (!strcmp(c, "verify") && a <= 1) return cmd_compile('v', a ? v[0] : ".");
     if (!strcmp(c, "status") && a <= 1) return cmd_compile('s', a ? v[0] : ".");
+    if (!strcmp(c, "migrate") && a <= 1) return cmd_compile('m', a ? v[0] : ".");
+    if (!strcmp(c, "digest") && a <= 1) return cmd_digest(a ? v[0] : ".");
     if (!strcmp(c, "propose") && a == 2) return cmd_propose(v[0], v[1]);
     if (!strcmp(c, "context") && a <= 1) return cmd_context(a ? v[0] : ".");
     if (!strcmp(c, "checkpoint")) return cmd_checkpoint(a, v);
