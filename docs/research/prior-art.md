@@ -16,5 +16,6 @@ AIEN should reuse protocols and primitives where possible while owning its integ
 | Observability | OpenTelemetry | semantic conventions |
 | Durable workflows | Temporal | deterministic replay/activity isolation |
 | Path reasoning | PEARL / KELP / PoG / MOSAIC | contextual path ranking and adaptive exploration |
+| Agent harness mechanics | Hermes Agent (NousResearch, MIT) | bounded micro-compaction, evidence-anchored token accounting, agent-written skills under an editorial policy, skill ledger with rollback; see [hermes-agent-prior-art.md](hermes-agent-prior-art.md) |
 
 External technologies are implementation inputs, not reasons to give up AIEN's own typed state/effect semantics.
