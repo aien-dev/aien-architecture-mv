@@ -224,6 +224,45 @@ git add .gitignore .crumb src keep; git -c user.name=t -c user.email=t@t commit 
 echo 'int q;' >> target/debug/build/x/out/auth/a.rs; echo 'more' > out/cache/more.c
 "$C" verify . >/dev/null && ok "355 changing files inside build dirs does not stale anything" || bad "355 build-dir change staled crumbs"
 cd "$SAVE" || exit 1
+# ---- RFC-0003 amendment 1 (2026-10-18): generated data derived on demand, never committed ----
+# The regression this guards: two PRs touching unrelated files both rewrite the root crumb's roll-up lines
+# (source_tree, children_root, digest, stamps), so after the first squash-merges the second CONFLICTS on GitHub.
+SAVE=$(pwd); AM="$T/am1"; rm -rf "$AM"; mkdir -p "$AM/src/deep" "$AM/docs" "$AM/evidence" && cd "$AM" || exit 1
+gc() { git -c user.name=t -c user.email=t@t -c commit.gpgsign=false "$@"; }
+git init -q -b main . && echo 'int a;' > src/a.c && echo 'int b;' > src/deep/b.c && echo n > docs/n.md && echo r > evidence/r.json && echo top > README
+"$C" seed . >/dev/null; git add -A; "$C" compile . >/dev/null; git add -A; gc commit -qm "legacy compiled"
+[ "$("$C" verify .)" = "crumb verify: OK: 4 crumbs current" ] && ok "AM1 legacy repo (no root marker): verify output unchanged" || bad "AM1 legacy verify output changed"
+twoprs() {  # twoprs <tag>: PR A edits src/a.c, PR B edits docs/n.md, each compiled per protocol; A squash-lands; prints B's conflicts
+  for b in A B; do gc checkout -q -b "$1$b" main; [ $b = A ] && echo "/* $1 */" >> src/a.c || echo "$1" >> docs/n.md
+    gc commit -qam "$1$b edit"; "$C" compile . >/dev/null; [ -n "$(git status --porcelain)" ] && { git add -A; gc commit -qm "crumb compile"; }; gc checkout -q main; done
+  gc merge -q --squash "$1A" >/dev/null 2>&1; gc commit -qm "squash $1A"
+  git merge-tree --write-tree --name-only main "$1B" | sed -n '2,/^$/p' | grep -v '^$' | tr '\n' ' '
+}
+conf=$(twoprs leg); [ -n "$conf" ] && ok "AM1 RED reproduced on legacy: unrelated PR conflicts after the first lands (in: $conf)" || bad "AM1 legacy conflict not reproduced (test cannot go red)"
+gc reset -q --hard HEAD~1
+legacy_root=$(jq -r .extensions.generated.digest .crumb); sem0=$(for f in $(git ls-files '*.crumb' '**/.crumb'); do jq -cS '{purpose,layer,invariants,exports,related,boundaries}' "$f"; done)
+"$C" migrate . | grep -q '^crumb migrate: 4 crumbs, 4 rewritten' && ok "AM1 migrate rewrites every crumb once" || bad "AM1 migrate"
+"$C" migrate . | grep -q ', 0 rewritten' && ok "AM1 migrate is idempotent" || bad "AM1 migrate idempotent"
+[ "$(git ls-files '*.crumb' '**/.crumb' | xargs cat | grep -c '"generated"')" = 0 ] && ok "AM1 no committed crumb carries extensions.generated" || bad "AM1 generated left behind"
+[ "$(jq -r .extensions.generated_policy .crumb)" = on-demand ] && ok "AM1 root crumb carries generated_policy on-demand" || bad "AM1 root marker"
+[ "$sem0" = "$(for f in $(git ls-files '*.crumb' '**/.crumb'); do jq -cS '{purpose,layer,invariants,exports,related,boundaries}' "$f"; done)" ] && ok "AM1 migrate never touches the semantic kernel" || bad "AM1 kernel changed"
+v=$("$C" verify .); [ $? -eq 0 ] && echo "$v" | grep -q "^crumb verify: OK: 4 crumbs current at HEAD .*root digest $legacy_root$" && ok "AM1 verify OK and prints the same root digest the legacy root crumb held (provenance kept)" || bad "AM1 verify/root digest ($v vs $legacy_root)"
+[ "$(echo "$v" | wc -l)" = 1 ] && ok "AM1 verify prints one line (verify.rs readiness note)" || bad "AM1 verify lines"
+[ "$("$C" digest . | jq -r .digest)" = "$legacy_root" ] && "$C" digest src | jq -e '.children | map(.name) == ["deep"]' >/dev/null && ok "AM1 digest prints the generated block on demand" || bad "AM1 digest"
+gc commit -qam "crumb migrate"
+conf=$(twoprs od); [ -z "$conf" ] && ok "AM1 GREEN: after migration the unrelated PR merges cleanly" || bad "AM1 on-demand still conflicts (in: $conf)"
+gc merge -q --squash odB >/dev/null 2>&1 && gc commit -qm "squash odB"; "$C" verify . >/dev/null && ok "AM1 GREEN: merged main verifies with no recompile" || bad "AM1 merged main does not verify"
+[ -z "$(git diff --name-only HEAD~2 HEAD | grep '\.crumb$')" ] && ok "AM1 neither PR changed any .crumb" || bad "AM1 PRs touched crumbs"
+d1=$("$C" digest . | jq -r .digest); echo x >> src/deep/b.c; "$C" verify . >/dev/null && [ "$("$C" digest . | jq -r .digest)" != "$d1" ] && ok "AM1 a source change keeps verify OK and moves the computed root digest" || bad "AM1 source change"
+git checkout -q -- src/deep/b.c
+git show HEAD~3:src/.crumb > src/.crumb; out=$("$C" verify .); rc=$?
+[ $rc -eq 1 ] && echo "$out" | grep -q '^STALE      src (committed generated data' && ok "AM1 a re-added generated block (old tool) fails verify, exit 1" || bad "AM1 re-added generated block passed ($rc)"
+"$C" compile . | grep -q 'STRIPPED   src' && "$C" verify . >/dev/null && ok "AM1 compile strips it and verify is OK again" || bad "AM1 compile strip"
+"$C" status . | grep -c '^CURRENT' | grep -qx 4 && "$C" context src | grep -q '^Crumbs CURRENT at HEAD' && ok "AM1 status and context report CURRENT" || bad "AM1 status/context"
+d1=$("$C" digest . | jq -r .digest); git rm -q docs/.crumb; "$C" verify . >/dev/null && [ "$("$C" digest . | jq -r .digest)" != "$d1" ] && ok "AM1 deleting a crumb moves the root digest (D7 deletion still visible)" || bad "AM1 crumb deletion"
+gc reset -q --hard HEAD; echo '{broken' > docs/.crumb; "$C" verify . >/dev/null; [ $? -eq 1 ] && ok "AM1 a crumb that is not JSON fails verify" || bad "AM1 broken crumb passed"
+git checkout -q -- docs/.crumb
+cd "$SAVE" || exit 1
 # differential vs the shell reference (needs jq, git, sha256sum)
 REF="$HERE/crumb-compile.sh"
 if command -v jq >/dev/null 2>&1 && [ -f "$REF" ]; then

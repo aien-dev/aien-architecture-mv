@@ -30,3 +30,7 @@ The pipeline worker (`aien-test worker`, ADR 0033 amendment) follows the same ta
 6. Any source edit after that commit reopens step 1. A rebase onto a moved `main` goes through `scripts/rebase-crumb.sh`, which takes main's crumbs, recompiles, and commits the crumbs again as the new last commit (proof 20).
 
 Measured on this repository and on sovereign-core main, 2026-10-11: `scripts/pipeline-proofs/RESULTS-2026-10-11.md`.
+
+### On-demand repositories (RFC-0003 amendment 1)
+
+A repository whose root `.crumb` carries `"extensions": {"generated_policy": "on-demand"}` commits no generated data. Steps 2 to 4 still run, but `crumb compile` rewrites nothing unless a crumb carries a committed `extensions.generated` block, so a PR that edits no crumb text has no crumb commit and its final SHA is its last source commit. `crumb verify .` prints the root digest computed from the tree; that line is what the judge records with the SHA. A rebase onto a moved `main` can no longer conflict in a crumb unless both sides edited the same hand-written text. Migrate a repository once with `crumb migrate .` (one commit, crumbs only), together with the bump of the repository's crumb tool pin.
