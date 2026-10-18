@@ -259,10 +259,19 @@ static char *slurp(const char *path) {
     fclose(f);
     return b.p;
 }
+/* Every file this tool creates is mode 0644 (minus umask), never 0666: fopen() would create it world-writable
+ * under a permissive umask (CodeQL cpp/world-writable-file-creation). append=1 opens for appending. */
+static FILE *fcreate(const char *path, int append) {
+    int fd = open(path, O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC), 0644);
+    if (fd < 0) return NULL;
+    FILE *f = fdopen(fd, append ? "a" : "wb");
+    if (!f) close(fd);
+    return f;
+}
 static void spit(const char *path, const char *data) {
     size_t tn = strlen(path) + 32; char *tmp = xmalloc(tn);
     snprintf(tmp, tn, "%s.tmp%ld", path, (long)getpid());
-    FILE *f = fopen(tmp, "wb");
+    FILE *f = fcreate(tmp, 0);
     if (!f) die("cannot write %s: %s", tmp, strerror(errno));
     if (fputs(data, f) < 0 || fclose(f) != 0) die("write failed: %s", tmp);
     if (rename(tmp, path) != 0) die("rename failed: %s", path);
@@ -339,7 +348,7 @@ static void git_exclude_local(const char *dir) {   /* keep .crumb.local out of `
     char *full = gp[0] == '/' ? xstrdup(gp) : pjoin(dir, gp);
     char *txt = slurp(full);
     if (txt) { char *c = xstrdup(txt); for (char *l = strtok(c, "\n"); l; l = strtok(NULL, "\n")) if (!strcmp(l, ".crumb.local")) return; }
-    FILE *f = fopen(full, "a"); if (!f) return;
+    FILE *f = fcreate(full, 1); if (!f) return;
     fputs(txt && *txt && txt[strlen(txt) - 1] != '\n' ? "\n.crumb.local\n" : ".crumb.local\n", f); fclose(f);
 }
 static void local_save(Local *l) {
@@ -2065,7 +2074,7 @@ static int root_on_demand(const char *top) {
 static void write_crumb(const char *full, J *cr) {   /* D9: key-sorted, temp file then rename */
     jsort(cr);
     char *out = jdump(cr), *tmp = xmalloc(strlen(full) + 32); snprintf(tmp, strlen(full) + 32, "%s.tmp.%ld", full, (long)getpid());
-    FILE *f = fopen(tmp, "wb"); if (!f) die("cannot write %s", tmp);
+    FILE *f = fcreate(tmp, 0); if (!f) die("cannot write %s", tmp);
     if (fputs(out, f) < 0 || fclose(f) != 0) die("write failed: %s", tmp);
     if (rename(tmp, full)) die("rename failed: %s", full);
 }
@@ -2144,7 +2153,7 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
             J *g = jclone(nw); jset(g, "generated_at_commit", jstr(head)); jset(g, "compiled_at", jstr(stamp));
             jset(x, "generated", g); jsort(cr);
             char *out = jdump(cr), *tmp = xmalloc(strlen(full) + 32); snprintf(tmp, strlen(full) + 32, "%s.tmp.%ld", full, (long)getpid());
-            FILE *f = fopen(tmp, "wb"); if (!f) die("cannot write %s", tmp);
+            FILE *f = fcreate(tmp, 0); if (!f) die("cannot write %s", tmp);
             if (fputs(out, f) < 0 || fclose(f) != 0) die("write failed: %s", tmp);
             if (rename(tmp, full)) die("rename failed: %s", full);
             changed++; if (!quiet) printf("COMPILED   %s\n", d);

@@ -88,7 +88,7 @@ Caveat for stages 4-5: Omega's program representation is still narrow (unary-u64
 
 ## Amendment 1 (2026-10-18): generated data is derived on demand, not committed
 
-**Status:** PROPOSED. Changes a decision of this RFC (section 2 and the CI rule of section 6: "the generated block is committed and `verify` compares it"). Needs Drake's yes before the per-repo migrations land. The tool change is backward compatible, so merging the tool alone changes nothing for any repository.
+**Status:** ACCEPTED by Drake (owner), 2026-10-18: "Accept: merge #271, then migrate repo by repo once the current merges land." Changes a decision of this RFC (section 2 and the CI rule of section 6: "the generated block is committed and `verify` compares it"). Each repository migrates in its own PR after this tool lands. The tool change is backward compatible, so merging the tool alone changes nothing for any repository.
 
 ### Problem, with evidence
 
