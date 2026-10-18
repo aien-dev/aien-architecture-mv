@@ -49,6 +49,8 @@ Historical `PHYSICS_*` milestone names stay unchanged in old milestones and evid
 
 The [Physics Zero Atlas](docs/plans/physics-zero/PHYSICS_ZERO_LAW_ATLAS_V1.md), [DIRAC-0](docs/adr/0023-dirac-0-program.md) and the [Evolution Arena spec V1](docs/specs/EVOLUTION_ARENA_SPEC_V1.md) are documents. Finite workstream plans under `docs/plans/` must be marked NOT A MASTER PLAN ([PLAN_AUTHORITY.md](PLAN_AUTHORITY.md)); most are, but the `physics-zero` and `adaptive-intelligence` folders do not carry the marker yet.
 
+The [necessary-work programme](docs/plans/necessary-work/README.md) (2026-10-18, PROPOSED) asks which work is unnecessary before making the chip faster; its feasibility research is [docs/research/necessary-work-program-feasibility.md](docs/research/necessary-work-program-feasibility.md).
+
 ## Building
 
 There is no product to build here. The one program is the crumb tool in `tools/crumb` (a C11 program that compiles and verifies the `.crumb` files); `make -C tools/crumb test` builds and tests it, and the shell scripts in `scripts/` have `test_*.sh` companions. On `main` (protected as of 2026-10-01) a CI check named `r16` verifies the R16 status wording against omega evidence and is the only check required on `main`; the `Crumb compiler` and `AIEN Verification` checks also run on pull requests.
