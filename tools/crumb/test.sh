@@ -266,7 +266,10 @@ cd "$SAVE" || exit 1
 # differential vs the shell reference (needs jq, git, sha256sum)
 REF="$HERE/crumb-compile.sh"
 if command -v jq >/dev/null 2>&1 && [ -f "$REF" ]; then
-  wipe() { for f in $(cd "$1" && find . -name .crumb -not -path "./.git/*"); do jq -S "del(.extensions.generated)" "$1/$f" > "$1/$f.t" && mv "$1/$f.t" "$1/$f"; done; }   # compile from nothing, so last_commit is fresh in both
+  # compile from nothing, so last_commit is fresh in both. The differential compares the LEGACY generator (the shell
+  # reference has no on-demand mode), so the RFC-0003 amendment 1 root marker is dropped from the scratch clones too;
+  # the on-demand path is covered by the AM1 cases above.
+  wipe() { for f in $(cd "$1" && find . -name .crumb -not -path "./.git/*"); do jq -S "del(.extensions.generated, .extensions.generated_policy)" "$1/$f" > "$1/$f.t" && mv "$1/$f.t" "$1/$f"; done; }
   diffgen() { # $1 repoA (shell) $2 repoB (C): every .crumb extensions.generated minus stamps must match
     r=0; for f in $(cd "$1" && find . -name .crumb -not -path './.git/*'); do
       a=$(jq -cS '.extensions.generated | del(.generated_at_commit, .compiled_at)' "$1/$f"); b=$(jq -cS '.extensions.generated | del(.generated_at_commit, .compiled_at)' "$2/$f")
