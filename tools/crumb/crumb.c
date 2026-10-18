@@ -2021,20 +2021,6 @@ static J *comp_object(Comp *c, const char *d, char *dig_out) {   /* the generate
  * touches the child, exactly like the stamps of D3. It is written by compile but never decides STALE; otherwise a
  * PR could never pass verify (committing changes last_commit, which would need another compile, forever). */
 static void strip_lc(J *g) { J *k = jget(g, "children"); if (k && k->t == JARR) for (size_t i = 0; i < k->n; i++) if (k->v[i]->t == JOBJ) jdel(k->v[i], "last_commit"); }
-/* D11 migration: verify and status judge a crumb-compile/1 block by structure only, the same rule as /2, so one
- * installed tool reads both formats while repos recompile at their own pace. compile still rewrites /1 into /2. */
-static J *struct_only(const J *g) {
-    const char *cv = jstrval(g, "compiler");
-    if (!cv || strcmp(cv, "crumb-compile/1")) return jclone((J *)g);
-    J *o = jnew(JOBJ), *kids = jnew(JARR), *k = jget(g, "children");
-    if (k && k->t == JARR) for (size_t i = 0; i < k->n; i++) {
-        const J *c = k->v[i]; if (c->t != JOBJ) continue;
-        const char *nm = jstrval(c, "name"), *pu = jstrval(c, "purpose");
-        char *p = xstrdup(pu ? pu : ""); chomp(p);
-        J *e = jnew(JOBJ); jset(e, "name", jstr(nm ? nm : "")); jset(e, "purpose", jstr(p)); jpush(kids, e);
-    }
-    jset(o, "compiler", jstr("crumb-compile/2")); jset(o, "children", kids); jsort(o); return o;
-}
 typedef struct { char *d; int depth; } CDir;
 static int cdcmp(const void *a, const void *b) {
     const CDir *x = a, *y = b;
@@ -2100,7 +2086,6 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
         J *old = jnew(JOBJ);
         if (cr && cr->t == JOBJ) { J *x = jget(cr, "extensions"), *g = x && x->t == JOBJ ? jget(x, "generated") : NULL;
             if (g && g->t == JOBJ) old = jclone(g); }   /* D11: stamps are no longer written, so a leftover stamp means STALE */
-        if (mode != 'c') old = struct_only(old);
         jsort(old);
         strip_lc(old); J *nwc = jclone(nw); strip_lc(nwc);   /* D3a: last_commit is a stamp for staleness */
         char *ns = jcompact_s(nwc), *os = jcompact_s(old);

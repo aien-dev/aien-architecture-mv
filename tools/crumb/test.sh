@@ -169,15 +169,6 @@ else bad "D11 two PRs in different directories conflict on: $(git diff --name-on
 mkdir -p lib && echo 'int l;' > lib/l.c && "$C" seed . >/dev/null && g add -A
 "$C" verify . >/dev/null; [ $? -eq 1 ] && ok "D11 a new crumbed directory still stales its parent (structure is checked)" || bad "D11 structure staleness"
 "$C" compile . >/dev/null && "$C" verify . >/dev/null && g add -A && g commit -qm lib && ok "D11 compile records the new child" || bad "D11 compile new child"
-# D11 migration: a crumb-compile/1 block (fingerprints, stamps) is judged by structure only, so one installed tool reads
-# repos that have not recompiled yet; a structural change still stales it, and compile rewrites it as /2.
-cp .crumb "$T/root.crumb2"
-jq '.extensions.generated |= (.compiler = "crumb-compile/1" | .source_tree = "sha256:00" | .digest = "sha256:00" | .compiled_at = "2026-01-01T00:00:00Z" | .children |= map(. + {digest: "00", last_commit: "0000000"}))' "$T/root.crumb2" > .crumb
-"$C" verify . >/dev/null && ok "D11 verify accepts a /1 block whose structure is current" || bad "D11 verify refused a current /1 block"
-jq '.extensions.generated.children[0].purpose = "something else"' .crumb > "$T/root.crumb1" && cp "$T/root.crumb1" .crumb
-"$C" verify . >/dev/null; [ $? -eq 1 ] && ok "D11 a /1 block with a changed child purpose is STALE" || bad "D11 /1 structure staleness"
-"$C" compile . >/dev/null && [ "$(jq -r .extensions.generated.compiler .crumb)" = crumb-compile/2 ] && [ "$(jq -r '.extensions.generated | has("source_tree")' .crumb)" = false ] && "$C" verify . >/dev/null && ok "D11 compile rewrites a /1 block as /2" || bad "D11 /1 -> /2 rewrite"
-cmp -s .crumb "$T/root.crumb2" && ok "D11 the /2 rewrite equals the original /2 block" || bad "D11 /2 rewrite differs"
 before=$(jq -r .purpose docs/.crumb); sem0=$(jq -cS '{purpose,layer,invariants,exports,related,boundaries}' src/.crumb)
 "$C" propose docs "Design notes and decision records" | grep -q PROPOSED && ok "C3 propose prints PROPOSED" || bad "C3 propose"
 [ "$(jq -r .purpose docs/.crumb)" = "$before" ] && [ "$(jq -r .extensions.proposed.purpose docs/.crumb)" = "Design notes and decision records" ] && [ "$(jq -r .extensions.proposed.status docs/.crumb)" = PROPOSED ] && ok "C3 propose never changes .purpose, writes extensions.proposed" || bad "C3 propose purpose"

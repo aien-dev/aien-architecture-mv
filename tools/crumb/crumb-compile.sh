@@ -24,7 +24,6 @@
 #  D9  Output is written with jq -S (sorted keys) via tmp+rename, byte-stable, so `verify` can be an exact comparison.
 #  D10 (C tool only) <root>/.crumbignore subtrees never take part in compile/verify/status; this shell reference
 #      does not implement D10, so the differential holds only for repositories without a .crumbignore.
-#  D11 migration (C tool only): verify/status read a leftover crumb-compile/1 block by structure; this reference does not.
 set -eu
 die() { echo "crumb-compile: $*" >&2; exit 1; }
 need() { command -v "$1" >/dev/null 2>&1 || die "needs $1"; }
