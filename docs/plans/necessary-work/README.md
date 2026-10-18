@@ -59,4 +59,3 @@ critical path, then E09 and E10 in the first quiet chip slot, then E05 to E08 an
 | E18 | [#261](https://github.com/aien-dev/aien-architecture-mv/issues/261) |
 | E19 | [#262](https://github.com/aien-dev/aien-architecture-mv/issues/262) |
 | E20 | [#263](https://github.com/aien-dev/aien-architecture-mv/issues/263) |
-| EPIC | [#265](https://github.com/aien-dev/aien-architecture-mv/issues/265) |
