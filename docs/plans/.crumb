@@ -41,81 +41,51 @@
     "generated": {
       "children": [
         {
-          "digest": "998ae1dd5e8d72b87d9348d8ace1d94c5e8a3ebfd177e5ce5d827624dd333625",
-          "last_commit": "ac6754c",
           "name": "analog-realization",
           "purpose": "Directory docs/plans/analog-realization. Purpose not yet described by a human."
         },
         {
-          "digest": "eecb93fc776fe3c4d7f45f1755dc77d89cf4fb422e6542c8a6edb944f605a968",
-          "last_commit": "a1febd2",
           "name": "arena-x",
           "purpose": "Directory docs/plans/arena-x. Purpose not yet described by a human."
         },
         {
-          "digest": "9c77f0bfebdad5067e40e3f985dcc03b7cfd5f9f782df211c952f85340cb2c16",
-          "last_commit": "ac6754c",
           "name": "atemporal",
           "purpose": "AT-0 Clock-Free Universe research program: charter, frozen AT0_CASE_V1 and AT0_RESULT_V1 contrac"
         },
         {
-          "digest": "d9a3f043a356154d3e9fc97b097dddc415b02eb1f963d3a940a868299a037eb9",
-          "last_commit": "ac6754c",
           "name": "belief-estimation",
           "purpose": "Directory docs/plans/belief-estimation. Purpose not yet described by a human."
         },
         {
-          "digest": "8454ec48236060321d9c688fa8fad7723258b48fae5d98fc1a081d0d6aa40b99",
-          "last_commit": "ac6754c",
           "name": "dirac",
           "purpose": "Directory docs/plans/dirac. Purpose not yet described by a human."
         },
         {
-          "digest": "694d1efaa7edd1dbbf4e2e5adb8a3942bd900ba5b7996e42f8788d5ac85c517d",
-          "last_commit": "b9aa9a2",
           "name": "discovery",
           "purpose": "Directory docs/plans/discovery. Purpose not yet described by a human."
         },
         {
-          "digest": "f5e2891d09b853edee1bc6c977d83a3669f2ef02aab6322ba5e0fd3c54835011",
-          "last_commit": "6490acc",
           "name": "fabric",
           "purpose": "Directory docs/plans/fabric. Purpose not yet described by a human."
         },
         {
-          "digest": "d6c2ab697f5519d1b1fba2c55377eea6e119fc489f16363a2cfb3c48567df0d1",
-          "last_commit": "ac6754c",
           "name": "mixed-algebra",
           "purpose": "Directory docs/plans/mixed-algebra. Purpose not yet described by a human."
         },
         {
-          "digest": "e40bd1c24076a221bc96cd150c12fb1bd6c39b061a497a99d10b81aac2d80802",
-          "last_commit": "ac6754c",
           "name": "physics-zero",
           "purpose": "Directory docs/plans/physics-zero. Purpose not yet described by a human."
         },
         {
-          "digest": "eac6d699107818822ec7c9acf8cb107ab8221f77783041db7c49a3c46e3a5d67",
-          "last_commit": "4de457b",
           "name": "release-readiness",
           "purpose": "Release-readiness finite workstream (aien-architecture#190): gap assessment, integration plan an"
         },
         {
-          "digest": "a5c37940a9689146af15ca41f6b45e02770522bfe4003f70acaaad1cf0a9e3d5",
-          "last_commit": "ac6754c",
           "name": "vac",
           "purpose": "VAC (Verifiable Autonomous Computing) finite workstream plan. NOT A MASTER PLAN."
         }
       ],
-      "children_root": "sha256:094a3d682cf25c8519eafc56a03e9a24d37d55f0e19f643c855047f2a49026ce",
-      "compiled_at": "2026-10-16T07:40:02Z",
-      "compiler": "crumb-compile/1",
-      "digest": "sha256:e0520531574f3936bfe2031fdae0eb5c3ea63c696d5277e87a84128555055215",
-      "evidence_files": 0,
-      "evidence_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "files": 69,
-      "generated_at_commit": "4de457b65fe64a43deeb19ae495243ae63a44409",
-      "source_tree": "sha256:825d93be5161b35706fb5941509e5d1014a769ab896392b615db4efb1bf4da77"
+      "compiler": "crumb-compile/2"
     },
     "owner_lane": "",
     "provenance": {

@@ -45,8 +45,8 @@ clone_repo "$TMP/c"; clone_repo "$TMP/d"; strip_generated "$TMP/c"; strip_genera
 ( cd "$TMP/c" && $CRUMB compile . >/dev/null ); sleep 1.1; ( cd "$TMP/d" && $CRUMB compile . >/dev/null )
 R2=$(compare "$TMP/c" "$TMP/d" 'del(.extensions.generated.compiled_at)'); num "identical_minus_compiled_at_real_clock=$R2"
 check_eq "real clock, one second apart: identical apart from the compiled_at stamp" "$R2" "$(all_of "$R2")"
-R3=$(compare "$TMP/c" "$TMP/d" '.extensions.generated.digest'); num "identical_digests_real_clock=$R3"
-check_eq "every Merkle digest identical" "$R3" "$(all_of "$R3")"
+D3c=$(cd "$TMP/c" && $CRUMB digest .); D3d=$(cd "$TMP/d" && $CRUMB digest .); num "root_digest_real_clock=$D3c"   # D11: computed on demand, never stored
+check_eq "root Merkle digest identical (crumb digest, D11)" "$D3c" "$D3d"
 R4=$(compare "$TMP/c" "$TMP/d" raw); num "raw_identical_real_clock=$R4"
 note "raw files under the real clock differ only in compiled_at (informational)"
 proof_end

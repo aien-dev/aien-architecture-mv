@@ -21,39 +21,23 @@
     "generated": {
       "children": [
         {
-          "digest": "071993a5efc66bc8d5f02f09bf820ad0930c609a896364645e6d04ca326d4fbd",
-          "last_commit": "4284e85",
           "name": "docs",
           "purpose": "Directory docs. Purpose not yet described by a human."
         },
         {
-          "digest": "852d4f97923032b04f0c24b23c061fce59fda220b5d423465ffec878ca0708b2",
-          "last_commit": "ac6754c",
           "name": "doctrine",
           "purpose": "Directory doctrine. Purpose not yet described by a human."
         },
         {
-          "digest": "44e7c932a7224961a604200108877820fbe57e84fd36764b654a69ca24e1204a",
-          "last_commit": "7291eb3",
           "name": "scripts",
           "purpose": "Directory scripts. Purpose not yet described by a human."
         },
         {
-          "digest": "afa286ef45ae5a0a0fd880a27288f50f82138a2a092a0c3684c59597d20c9070",
-          "last_commit": "7291eb3",
           "name": "tools",
           "purpose": "Directory tools. Purpose not yet described by a human."
         }
       ],
-      "children_root": "sha256:00338bbcee73da197f956fde5d3b3ca998f876b5a6718447cbb9cfe384bbc70a",
-      "compiled_at": "2026-10-16T15:28:03Z",
-      "compiler": "crumb-compile/1",
-      "digest": "sha256:fac7a054bbf20b046d39569b25b3f8b7a62d510ba9e5a8ecd94f44c5b2f96241",
-      "evidence_files": 0,
-      "evidence_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "files": 314,
-      "generated_at_commit": "4284e850fa160e1f37763c7cbf759c9f1b6051ad",
-      "source_tree": "sha256:ed98ac64dfb102f3ed9d382f1090344d4f9cb9e9c4fa77046cb14f22a7ba2842"
+      "compiler": "crumb-compile/2"
     },
     "owner_lane": "",
     "provenance": {

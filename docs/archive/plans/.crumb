@@ -17,27 +17,15 @@
     "generated": {
       "children": [
         {
-          "digest": "cb7edbc99557c3842778fe56dae720842ddf13d57d1a42da55676ff553994d10",
-          "last_commit": "27ac46f",
           "name": "2026-09-22",
           "purpose": "Directory docs/archive/plans/2026-09-22. Purpose not yet described by a human."
         },
         {
-          "digest": "6518fb4d48d841b0247f4325619cc769bb577f8fd75f4c86aa527fcb2869bde8",
-          "last_commit": "38c7cc2",
           "name": "2026-09-25",
           "purpose": "Directory docs/archive/plans/2026-09-25. Purpose not yet described by a human."
         }
       ],
-      "children_root": "sha256:fc059fc7af4514c6c5695b5e7f287974d74b71848b2850dfecca9978d4da74bb",
-      "compiled_at": "2026-10-14T01:16:44Z",
-      "compiler": "crumb-compile/1",
-      "digest": "sha256:1b7d47cac8dcbeed3c2ce178d2c07c188e32fdd743e3b69e00c1980aa93d44ea",
-      "evidence_files": 0,
-      "evidence_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "files": 5,
-      "generated_at_commit": "27ac46f5a8c8950002d48535f838c0982c9e5d35",
-      "source_tree": "sha256:a4bf5d42c6fcb9afa874f59f89de32444c4401c3def48a68b8af60c978822db2"
+      "compiler": "crumb-compile/2"
     },
     "owner_lane": "",
     "provenance": {

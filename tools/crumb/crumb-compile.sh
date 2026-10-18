@@ -28,7 +28,7 @@ set -eu
 die() { echo "crumb-compile: $*" >&2; exit 1; }
 need() { command -v "$1" >/dev/null 2>&1 || die "needs $1"; }
 need git; need jq; need sha256sum
-COMPILER="crumb-compile/1"
+COMPILER="crumb-compile/2"
 sha() { sha256sum | cut -c1-64; }
 
 ROOT_ARG="${2:-.}"
@@ -82,18 +82,16 @@ compute() { # $1 dir -> prints the generated object (without stamps) as JSON
   while IFS="$(printf '\t')" read -r k kd; do
     kdig=$(cat "$WORK/digest/$(enc "$kd")" 2>/dev/null || jq -r '.extensions.generated.digest // "uncompiled"' "$kd/.crumb")
     kpur=$(jq -r '(.purpose // "") | .[0:96]' "$kd/.crumb")
-    klc=$(git log -1 --format=%h HEAD -- "$kd" ':!**/.crumb' 2>/dev/null || echo "")
-    kids=$(printf '%s' "$kids" | jq -c --arg n "$k" --arg g "$kdig" --arg p "$kpur" --arg c "$klc" '. + [{name:$n,digest:$g,purpose:$p,last_commit:$c}]')
+    kids=$(printf '%s' "$kids" | jq -c --arg n "$k" --arg g "$kdig" --arg p "$kpur" '. + [{name:$n,digest:$g,purpose:$p}]')
   done < "$WORK/kids.$$"
   cr=$(printf '%s' "$kids" | jq -r '.[].digest' | sha)
   dig=$(printf '%s%s%s%s' "$sem" "$st" "$cr" "$evr" | sha)
   printf '%s' "$dig" > "$WORK/digest/$(enc "$d")"
-  jq -cn --arg c "$COMPILER" --arg st "$st" --argjson nf "$nfiles" --argjson kids "$kids" --arg cr "$cr" \
-        --argjson evn "$evn" --arg evr "$evr" --arg dig "$dig" \
-        '{compiler:$c, source_tree:("sha256:"+$st), files:$nf, children:$kids, children_root:("sha256:"+$cr),
-          evidence_files:$evn, evidence_root:("sha256:"+$evr), digest:("sha256:"+$dig)}'
+  # D11: digests are computed (above) but never written; the committed block is structure only.
+  : "$nfiles" "$evn"
+  jq -cn --arg c "$COMPILER" --argjson kids "$kids" '{compiler:$c, children:($kids | map({name, purpose}))}'
 }
-strip_stamps() { jq -cS "del(.generated_at_commit, .compiled_at)"; }
+strip_stamps() { jq -cS .; }   # D11: stamps are no longer written; a leftover stamp means STALE
 
 cmd=${1:-help}
 changed=0; stale=0; total=0
@@ -115,7 +113,7 @@ case "$cmd" in
         compile)
           tmp="$d/.crumb.tmp.$$"
           jq -S --argjson g "$new" --arg h "$HEAD" --arg t "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-             '.extensions = (.extensions // {}) | .extensions.generated = ($g + {generated_at_commit:$h, compiled_at:$t})' \
+             '.extensions = (.extensions // {}) | .extensions.generated = $g' \
              "$d/.crumb" > "$tmp" && mv "$tmp" "$d/.crumb"
           changed=$((changed+1)); echo "COMPILED   $d" ;;
       esac

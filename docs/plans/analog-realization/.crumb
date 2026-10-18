@@ -6,15 +6,7 @@
   "extensions": {
     "generated": {
       "children": [],
-      "children_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "compiled_at": "2026-10-14T01:16:44Z",
-      "compiler": "crumb-compile/1",
-      "digest": "sha256:998ae1dd5e8d72b87d9348d8ace1d94c5e8a3ebfd177e5ce5d827624dd333625",
-      "evidence_files": 0,
-      "evidence_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "files": 4,
-      "generated_at_commit": "27ac46f5a8c8950002d48535f838c0982c9e5d35",
-      "source_tree": "sha256:e51e5c9836371129fd2bf95db7192b305670048e89ac0c2017ced713318c6e70"
+      "compiler": "crumb-compile/2"
     },
     "owner_lane": "",
     "provenance": {

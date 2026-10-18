@@ -2000,9 +2000,7 @@ static J *comp_object(Comp *c, const char *d, char *dig_out) {   /* the generate
         }
         char *kt = slurp(kcf); J *kj = kt ? jparse(kt) : NULL; const char *kp = kj ? jstrval(kj, "purpose") : NULL; if (!kp) kp = "";
         char *kpur = xstrdup(kp); kpur[utf8_prefix(kpur, 96)] = 0; chomp(kpur);
-        char gq[PATH_MAX * 2 + 64], *kq = shq(kd); snprintf(gq, sizeof gq, "log -1 --format=%%h HEAD -- %s ':!**/.crumb'", kq);
-        char *lc = run_git_full(c->top, gq); chomp(lc);
-        J *o = jnew(JOBJ); jset(o, "name", jstr(kname)); jset(o, "digest", jstr(kdig)); jset(o, "purpose", jstr(kpur)); jset(o, "last_commit", jstr(lc));
+        J *o = jnew(JOBJ); jset(o, "name", jstr(kname)); jset(o, "purpose", jstr(kpur));   /* D11: structure only */
         jpush(kids, o); sha_add(&crs, kdig, strlen(kdig)); sha_add(&crs, "\n", 1);
         (void)kdig_own;
     }
@@ -2010,14 +2008,13 @@ static J *comp_object(Comp *c, const char *d, char *dig_out) {   /* the generate
     Sha ds; sha_init(&ds); sha_add(&ds, semc, strlen(semc)); sha_add(&ds, sth, 64); sha_add(&ds, crh, 64); sha_add(&ds, evh, 64);
     char dgh[65]; sha_hex(&ds, dgh);   /* D3: content only, no stamps */
     strcpy(dig_out, dgh);
-    J *g = jnew(JOBJ); char t[80];
-    jset(g, "compiler", jstr("crumb-compile/1"));
-    snprintf(t, sizeof t, "sha256:%s", sth); jset(g, "source_tree", jstr(t));
-    jset(g, "files", jnum(nfiles)); jset(g, "children", kids);
-    snprintf(t, sizeof t, "sha256:%s", crh); jset(g, "children_root", jstr(t));
-    jset(g, "evidence_files", jnum(nev));
-    snprintf(t, sizeof t, "sha256:%s", evh); jset(g, "evidence_root", jstr(t));
-    snprintf(t, sizeof t, "sha256:%s", dgh); jset(g, "digest", jstr(t));
+    /* D11 (2026-10-18): the committed block is structure only. The fingerprints above (source_tree, children_root,
+     * evidence_root, digest) changed with every file anywhere below, so every PR rewrote the root .crumb and every pair
+     * of open PRs conflicted on it. They are still computed (dig_out, `crumb digest`) but never written. */
+    (void)nfiles; (void)nev;
+    J *g = jnew(JOBJ);
+    jset(g, "compiler", jstr("crumb-compile/2"));
+    jset(g, "children", kids);
     jsort(g); return g;
 }
 /* D3a (added by the C port): children[].last_commit is derived from history and changes with every commit that
@@ -2049,6 +2046,7 @@ static void find_crumbs(const char *top, const char *rel, CDir **out, size_t *n,
 }
 
 /* mode: 'c' compile, 'v' verify, 's' status. Returns number of stale crumbs; *total set. */
+static char root_digest[72];   /* D11: root fingerprint of the last compile_engine run; printed by `crumb digest`, never stored */
 static int compile_engine(char mode, const char *root, int quiet, int *total_out, char *head_out) {
     Comp c; memset(&c, 0, sizeof c);
     char *rq = shq(root), cmd[PATH_MAX + 80]; snprintf(cmd, sizeof cmd, "git -C %s rev-parse --show-toplevel 2>/dev/null", rq);
@@ -2083,10 +2081,11 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
         if (stat(full, &sb) || !S_ISREG(sb.st_mode)) continue;
         total++;
         char dg[65]; J *nw = comp_object(&c, d, dg); dig_set(&c, d, dg);
+        if (!strcmp(d, ".")) snprintf(root_digest, sizeof root_digest, "sha256:%s", dg);
         char *txt = slurp(full); J *cr = txt ? jparse(txt) : NULL;
         J *old = jnew(JOBJ);
         if (cr && cr->t == JOBJ) { J *x = jget(cr, "extensions"), *g = x && x->t == JOBJ ? jget(x, "generated") : NULL;
-            if (g && g->t == JOBJ) { old = jclone(g); jdel(old, "generated_at_commit"); jdel(old, "compiled_at"); } }
+            if (g && g->t == JOBJ) old = jclone(g); }   /* D11: stamps are no longer written, so a leftover stamp means STALE */
         jsort(old);
         strip_lc(old); J *nwc = jclone(nw); strip_lc(nwc);   /* D3a: last_commit is a stamp for staleness */
         char *ns = jcompact_s(nwc), *os = jcompact_s(old);
@@ -2097,7 +2096,7 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
         else {
             if (!cr || cr->t != JOBJ) die("cannot compile %s: not a JSON object", cp);
             J *x = jget(cr, "extensions"); if (!x || x->t != JOBJ) { x = jnew(JOBJ); jset(cr, "extensions", x); }
-            J *g = jclone(nw); jset(g, "generated_at_commit", jstr(head)); jset(g, "compiled_at", jstr(stamp));
+            J *g = jclone(nw);   /* D11: no generated_at_commit / compiled_at stamps: they put every rewrite on the same line */
             jset(x, "generated", g); jsort(cr);
             char *out = jdump(cr), *tmp = xmalloc(strlen(full) + 32); snprintf(tmp, strlen(full) + 32, "%s.tmp.%ld", full, (long)getpid());
             FILE *f = fopen(tmp, "wb"); if (!f) die("cannot write %s", tmp);
@@ -2118,6 +2117,11 @@ static int compile_engine(char mode, const char *root, int quiet, int *total_out
     return stale;
 }
 static int cmd_compile(char mode, const char *root) { int t; int s = compile_engine(mode, root, 0, &t, NULL); return mode == 'v' && s ? 1 : 0; }
+static int cmd_digest(const char *root) {   /* D11: the fingerprint is computed on demand, never stored */
+    int t; root_digest[0] = 0; compile_engine('s', root, 1, &t, NULL);
+    if (!root_digest[0]) die("crumb digest: no root .crumb in %s", root);
+    printf("%s\n", root_digest); return 0;
+}
 static int cmd_propose(const char *dir, const char *purpose) {   /* D5: only extensions.proposed, never .purpose */
     char *cp = pjoin(dir, ".crumb"), *txt = slurp(cp);
     if (!txt) die("no .crumb in %s", dir);
@@ -2241,6 +2245,7 @@ static void usage(void) {
           "  explain <file-or-dir>                       nearest + inherited crumbs, coordination, commits, evidence, newest continuation\n"
           "  compile [root]                              RFC-0003: regenerate structural crumb data bottom-up (Merkle digests)\n"
           "  verify [root]                               exit 1 if any committed crumb differs from what compile would write\n"
+          "  digest [root]                               print the root fingerprint (computed now, never stored, D11)\n"
           "  status [root]                               CURRENT / STALE / UNCOMPILED per crumb\n"
           "  propose <dir> <purpose>                     write extensions.proposed.purpose (never .purpose)\n"
           "  context [path]                              entry point: tree, what to read, conflicts, continuation, freshness\n"
@@ -2278,6 +2283,7 @@ int main(int argc, char **argv) {
     if (!strcmp(c, "sha256") && a == 0) { Sha s; char h[65]; unsigned char t[8192]; size_t n; sha_init(&s); while ((n = fread(t, 1, sizeof t, stdin)) > 0) sha_add(&s, t, n); sha_hex(&s, h); printf("%s\n", h); return 0; }
     if (!strcmp(c, "compile") && a <= 1) return cmd_compile('c', a ? v[0] : ".");
     if (!strcmp(c, "verify") && a <= 1) return cmd_compile('v', a ? v[0] : ".");
+    if (!strcmp(c, "digest") && a <= 1) return cmd_digest(a ? v[0] : ".");
     if (!strcmp(c, "status") && a <= 1) return cmd_compile('s', a ? v[0] : ".");
     if (!strcmp(c, "propose") && a == 2) return cmd_propose(v[0], v[1]);
     if (!strcmp(c, "context") && a <= 1) return cmd_context(a ? v[0] : ".");

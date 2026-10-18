@@ -13,21 +13,11 @@
     "generated": {
       "children": [
         {
-          "digest": "faeb21e72f69dc4ba2333400b5203027c167c5e24ef68871d9b3c861d9dca7a8",
-          "last_commit": "f1018ec",
           "name": "research",
           "purpose": "Directory docs/plans/mixed-algebra/research. Purpose not yet described by a human."
         }
       ],
-      "children_root": "sha256:783746ff00990d5b134d26b57ba4f06b134a8713811c4785eccb7dadfa812c89",
-      "compiled_at": "2026-10-14T01:16:44Z",
-      "compiler": "crumb-compile/1",
-      "digest": "sha256:d6c2ab697f5519d1b1fba2c55377eea6e119fc489f16363a2cfb3c48567df0d1",
-      "evidence_files": 0,
-      "evidence_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "files": 5,
-      "generated_at_commit": "27ac46f5a8c8950002d48535f838c0982c9e5d35",
-      "source_tree": "sha256:651561a753a2b39e4ac6d42156db77ca172ef644cb9d1eaf350b5b6b8bff4c6b"
+      "compiler": "crumb-compile/2"
     },
     "owner_lane": "",
     "provenance": {

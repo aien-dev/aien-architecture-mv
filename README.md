@@ -51,7 +51,7 @@ The [Physics Zero Atlas](docs/plans/physics-zero/PHYSICS_ZERO_LAW_ATLAS_V1.md), 
 
 ## Building
 
-There is no product to build here. The one program is the crumb tool in `tools/crumb` (a C11 program that compiles and verifies the `.crumb` files); `make -C tools/crumb test` builds and tests it, and the shell scripts in `scripts/` have `test_*.sh` companions. On `main` (protected as of 2026-10-01) a CI check named `r16` verifies the R16 status wording against omega evidence and is the only check required on `main`; the `Crumb compiler` and `AIEN Verification` checks also run on pull requests.
+There is no product to build here. The one program is the crumb tool in `tools/crumb` (a C11 program that compiles and verifies the `.crumb` files); `make -C tools/crumb test` builds and tests it, and the shell scripts in `scripts/` have `test_*.sh` companions. On `main` (protected as of 2026-10-01) a CI check named `r16` verifies the R16 status wording against omega evidence and is the only check required on `main`; the `Crumb compiler` and `AIEN Verification` checks also run on pull requests. Since 2026-10-18 (RFC-0003 D11) a `.crumb` stores only structure (child folders and their purposes), never fingerprints or timestamps, so pull requests no longer collide on the root `.crumb`; `crumb digest` computes the fingerprint on demand.
 
 ## Contributing
 

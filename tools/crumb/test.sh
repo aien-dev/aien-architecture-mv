@@ -151,10 +151,24 @@ git add -A && git -c user.name=t -c user.email=t@t commit -qm compiled
 git -c user.name=t -c user.email=t@t commit -q --allow-empty -m "empty" && "$C" verify . >/dev/null && ok "C3 empty commit keeps verify OK (stamps are not inputs)" || bad "C3 empty commit"
 echo 'int b2;' > src/deep/b.c; git add -A
 out=$("$C" verify .); st=$(echo "$out" | grep '^STALE' | awk '{print $2}' | sort | tr '\n' ' ')
-[ "$st" = ". src src/deep " ] && ok "C3 touching src/deep/b.c: STALE is exactly src/deep, src and the root (ancestors only)" || bad "C3 ancestor-only staleness (got: $st)"
+[ -z "$st" ] && ok "C3 D11 touching src/deep/b.c stales no crumb (file contents are not stored)" || bad "C3 D11 content edit staled crumbs (got: $st)"
 echo "$out" | grep -q 'docs\|evidence' && bad "C3 sibling dirs stay current" || ok "C3 sibling dirs stay current"
 "$C" compile . >/dev/null; "$C" verify . >/dev/null && ok "C3 compile after the change: verify OK again" || bad "C3 recompile"
 git add -A; git -c user.name=t -c user.email=t@t commit -qm "change + compile"; "$C" verify . >/dev/null && ok "C3 verify stays OK after the compiled change is committed (last_commit is not an input, D3a)" || bad "C3 D3a last_commit"
+# D11 (RFC-0003 amendment 2026-10-18): the committed generated block holds structure only (which crumbed children, their
+# purposes), never fingerprints of file contents. Two PRs that touch files in different directories then never both rewrite
+# a .crumb, so they never conflict on one; git already fingerprints every tree, and `crumb digest` computes ours on demand.
+g() { git -c user.name=t -c user.email=t@t "$@"; }
+g checkout -qb d11x && echo 'int x;' > src/a.c && "$C" compile . >/dev/null && g add -A && g commit -qm x
+g checkout -q main && g checkout -qb d11y && echo n2 > docs/n.md && "$C" compile . >/dev/null && g add -A && g commit -qm y
+g checkout -q main
+if g merge -q --no-edit d11x >/dev/null 2>&1 && g merge -q --no-edit d11y >/dev/null 2>&1; then ok "D11 two PRs in different directories merge with no .crumb conflict"
+else bad "D11 two PRs in different directories conflict on: $(git diff --name-only --diff-filter=U | tr '\n' ' ')"; g merge --abort 2>/dev/null; fi
+"$C" verify . >/dev/null && ok "D11 verify OK on main after both merges, without a recompile" || bad "D11 verify after both merges"
+"$C" digest . | grep -qE '^sha256:[0-9a-f]{64}$' && ok "D11 digest computes the root fingerprint on demand" || bad "D11 digest"
+mkdir -p lib && echo 'int l;' > lib/l.c && "$C" seed . >/dev/null && g add -A
+"$C" verify . >/dev/null; [ $? -eq 1 ] && ok "D11 a new crumbed directory still stales its parent (structure is checked)" || bad "D11 structure staleness"
+"$C" compile . >/dev/null && "$C" verify . >/dev/null && g add -A && g commit -qm lib && ok "D11 compile records the new child" || bad "D11 compile new child"
 before=$(jq -r .purpose docs/.crumb); sem0=$(jq -cS '{purpose,layer,invariants,exports,related,boundaries}' src/.crumb)
 "$C" propose docs "Design notes and decision records" | grep -q PROPOSED && ok "C3 propose prints PROPOSED" || bad "C3 propose"
 [ "$(jq -r .purpose docs/.crumb)" = "$before" ] && [ "$(jq -r .extensions.proposed.purpose docs/.crumb)" = "Design notes and decision records" ] && [ "$(jq -r .extensions.proposed.status docs/.crumb)" = PROPOSED ] && ok "C3 propose never changes .purpose, writes extensions.proposed" || bad "C3 propose purpose"
@@ -164,7 +178,7 @@ for h in 'TREE' 'YOUR TASK TOUCHES' 'READ THESE CRUMBS' 'CURRENT CONFLICTS' 'REL
   echo "$ctx" | grep -q "^== $h" && ok "C3 context prints section: $h" || bad "C3 context section: $h"
 done
 "$C" verify . >/dev/null && ok "C3 propose does not stale crumbs (proposal is not a digest input)" || bad "C3 propose stale"
-echo x >> src/a.c; git add -A; "$C" context src/a.c | grep -q "^Crumbs STALE: 2 .*run crumb compile" && ok "C3 context freshness: STALE: n (run crumb compile)" || bad "C3 context stale line"
+jq '.purpose="Deep sources for the context test"' src/deep/.crumb > src/deep/.crumb.t && mv src/deep/.crumb.t src/deep/.crumb; git add -A; "$C" context src/a.c | grep -q "^Crumbs STALE: 1 .*run crumb compile" && ok "C3 context freshness: STALE: n (run crumb compile)" || bad "C3 context stale line"
 "$C" compile . >/dev/null; "$C" context src | grep -q '^Crumbs CURRENT at HEAD' && ok "C3 context freshness: CURRENT at HEAD <sha>" || bad "C3 context current line"
 "$C" context src/deep/b.c | grep -q 'src/.crumb' && "$C" context src/deep/b.c | grep -q 'src/deep/.crumb' && ok "C3 context recommends the path's ancestor crumbs" || bad "C3 context ancestors"
 "$C" context . | grep -q 'PROPOSED: Design notes' && ok "C3 context shows PROPOSED purpose for a child without .purpose" || bad "C3 context proposed"
@@ -177,14 +191,14 @@ echo x >> src/a.c; git add -A; "$C" context src/a.c | grep -q "^Crumbs STALE: 2 
 "$C" compile . >/dev/null; git add -A; git -c user.name=t -c user.email=t@t commit -qm "pre-orphan"
 mkdir -p src/mid/leaf && echo 'int l;' > src/mid/leaf/l.c && "$C" create src/mid/leaf leaf "leaf under an uncrumbed directory" code >/dev/null
 git add -A; st=$("$C" verify . | grep '^STALE' | awk '{print $2}' | sort | tr '\n' ' ')
-[ "$st" = ". src src/mid/leaf " ] && ok "C3 D7 new crumb under an uncrumbed dir stales itself, its nearest crumbed ancestor and the root" || bad "C3 D7 orphan stale set (got: $st)"
+[ "$st" = "src src/mid/leaf " ] && ok "C3 D7+D11 new crumb under an uncrumbed dir stales itself and its nearest crumbed ancestor only" || bad "C3 D7 orphan stale set (got: $st)"
 "$C" compile . >/dev/null; git add -A; git -c user.name=t -c user.email=t@t commit -qm "orphan compiled"
 "$C" verify . >/dev/null && ok "C3 D7 verify OK after compiling the deep crumb" || bad "C3 D7 verify after deep crumb"
 "$C" compile . | grep -q ', 0 rewritten' && ok "C3 D7 fixed point holds with a deep child" || bad "C3 D7 fixed point deep child"
 jq -e '.extensions.generated.children | map(.name) | index("mid/leaf") != null' src/.crumb >/dev/null && ok "C3 D7 deep crumb is listed as child \"mid/leaf\" of src (path relative to the parent crumb)" || bad "C3 D7 deep child not listed"
 jq -e '.extensions.generated.children | map(.name) | index("mid") == null' src/.crumb >/dev/null && ok "C3 D7 the uncrumbed directory itself is not a child" || bad "C3 D7 uncrumbed dir listed"
 git rm -q src/mid/leaf/.crumb; st=$("$C" verify . | grep '^STALE' | awk '{print $2}' | sort | tr '\n' ' ')
-[ "$st" = ". src " ] && ok "C3 D7 deleting the deep crumb stales src and the root (orphan deletion is visible)" || bad "C3 D7 orphan deletion invisible (got: $st)"
+[ "$st" = "src " ] && ok "C3 D7+D11 deleting the deep crumb stales its parent src (orphan deletion is visible)" || bad "C3 D7 orphan deletion invisible (got: $st)"
 "$C" verify . >/dev/null; [ $? -eq 1 ] && ok "C3 D7 verify exits 1 after the orphan deletion" || bad "C3 D7 verify exit after orphan deletion"
 "$C" compile . >/dev/null; "$C" verify . >/dev/null && ok "C3 D7 recompile after the deletion returns to OK" || bad "C3 D7 recompile after deletion"
 jq -e '.extensions.generated.children | map(.name) | index("mid/leaf") == null' src/.crumb >/dev/null && ok "C3 D7 deleted deep crumb is gone from src children" || bad "C3 D7 deleted deep child still listed"
@@ -193,13 +207,13 @@ git add -A; git -c user.name=t -c user.email=t@t commit -qm "orphan removed"
 "$C" compile . >/dev/null; git add -A; git -c user.name=t -c user.email=t@t commit -qm "pre-ignore"
 ev0=$(cat src/deep/.crumb); printf '# guarded tree\nsrc/deep/\n' > .crumbignore
 st=$("$C" verify . | grep '^STALE' | awk '{print $2}' | sort | tr '\n' ' ')
-[ "$st" = ". src " ] && ok "C3 D10 adding .crumbignore stales only the parent and its ancestors (children list changed)" || bad "C3 D10 ignore stale set (got: $st)"
+[ "$st" = "src " ] && ok "C3 D10+D11 adding .crumbignore stales only the parent (children list changed)" || bad "C3 D10 ignore stale set (got: $st)"
 "$C" compile . >/dev/null
 [ "$(cat src/deep/.crumb)" = "$ev0" ] && ok "C3 D10 compile never rewrites a .crumb under an ignored subtree" || bad "C3 D10 ignored crumb rewritten"
 jq -e '.extensions.generated.children | map(.name) | index("deep") == null' src/.crumb >/dev/null && ok "C3 D10 ignored directory is not a child of its parent" || bad "C3 D10 ignored child listed"
 "$C" status . | grep -q 'src/deep' && bad "C3 D10 status lists ignored dir" || ok "C3 D10 status does not list the ignored directory"
 echo 'int b3;' > src/deep/b.c; git add -A; st=$("$C" verify . | grep '^STALE' | awk '{print $2}' | sort | tr '\n' ' ')
-[ "$st" = ". src " ] && ok "C3 D10 a file under the ignored subtree still stales the enclosing crumbs, never the ignored one" || bad "C3 D10 enclosing stale (got: $st)"
+[ -z "$st" ] && ok "C3 D10+D11 a file under the ignored subtree stales nothing" || bad "C3 D10 enclosing stale (got: $st)"
 "$C" compile . >/dev/null; [ "$(cat src/deep/.crumb)" = "$ev0" ] && ok "C3 D10 ignored crumb still untouched after that compile" || bad "C3 D10 ignored crumb touched"
 rm .crumbignore; "$C" compile . >/dev/null; "$C" verify . >/dev/null && ok "C3 D10 removing .crumbignore and recompiling returns to OK" || bad "C3 D10 remove ignore"
 git add -A; git -c user.name=t -c user.email=t@t commit -qm "post-ignore"
