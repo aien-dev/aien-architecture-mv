@@ -25,6 +25,12 @@ AIEN already keeps several tamper-evident diaries: Omega's World logs every reac
 5. Write the resource-contract format and make deadlines and cancels actually stop work.
 6. Later: moving live work between machines, faster guessed-ahead inference, hot replacement, self-improvement evidence.
 
-## What is true today
+## What was true when the decision was written (2026-10-01)
 
-Nothing in this decision has run yet. Omega and aienos have chained diaries that can be checked for tampering, not replayed. The aienos C kernel has only run in the emulator. These limits are listed in the ADR under "Limits at the time of this decision".
+Nothing in this decision had run yet. Omega and aienos had chained diaries that could be checked for tampering, not replayed. The aienos C kernel had only run in the emulator. These limits are listed in the ADR under "Limits at the time of this decision".
+
+## Later changes (checked 2026-10-19)
+
+- ADR 0025 is still PROPOSED (its status line on `main`).
+- The TRN1 folder now exists: [aien-protocols-mv `specs/execution-transcript/`](https://github.com/aien-dev/aien-protocols-mv/tree/main/specs/execution-transcript). This summary has not been rechecked against the omega and sovereign-core checkers.
+- The aienos C kernel has since run on real hardware: a Raspberry Pi 5 on 2026-10-13 (see the [aienos README](https://github.com/aien-dev/aienos-mv#readme)) and a 2017 Intel iMac from 2026-10-17 ([aienos-mv#405](https://github.com/aien-dev/aienos-mv/pull/405)). It is still not qualified on hardware.
