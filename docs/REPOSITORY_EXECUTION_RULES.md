@@ -2,12 +2,12 @@
 
 ## Adoption
 
-Adopted 2026-10-10 from Drake's revised rules for the six-issue campaign (interplane#97 and #98, aien-sovereign-core#397 and #398, aegis-runtime#38 and #39). Tooling: `scripts/pr-gate.sh` and `scripts/rebase-crumb.sh`.
+Adopted 2026-10-10 from Drake's revised rules for the six-issue campaign (interplane#97 and #98, aien-sovereign-core#397 and #398, aegis-runtime#38 and #39). Tooling: `scripts/pr-gate.sh`. Amended 2026-10-19 by RFC-0003 Amendment 2: crumbs are advisory notes and are no longer part of these rules (sections 2 and 3 below).
 
 ## Recorded facts (2026-10-10)
 
 - (a) Branch protection read from GitHub: interplane requires the checks schemas-and-fixtures, rust, python, cross-language, adapter-aien and adapter-odysseus, in strict mode, with no review count. aien-sovereign-core requires the check "Workspace Verification & Invariant Audit", 0 reviews, enforce_admins on. aegis-runtime requires the check "Test & Invariant Verification", 0 reviews, enforce_admins on. Therefore `--admin` is never needed for a green PR.
-- (b) interplane has no .crumb files, so the crumb step is skipped there with a notice. aegis-runtime and aien-sovereign-core use crumbs.
+- (b) interplane has no .crumb files; aegis-runtime and aien-sovereign-core use crumbs. Since 2026-10-19 this makes no difference to a merge (section 2).
 - (c) INTERPLANE carries a Python SDK by Drake's 2026-10-04 direction (approved exception). The Motus adapter for interplane#97 lives only under interplane adapters/motus. No Python enters any AIEN-owned repository.
 
 
@@ -25,43 +25,28 @@ Use separate branches and worktrees for concurrent development.
 
 One worker owns each writable worktree. Never allow two workers to modify the same worktree concurrently.
 
-## 2. Crumb Compilation
+## 2. Crumbs (advisory since 2026-10-19)
 
-Every applicable PR must have `.crumb` compilation and verification completed after its final source change.
+Crumbs are notes a person writes for the next reader (RFC-0003 Amendment 2, `docs/CRUMB_PROTOCOL.md`). Read the crumb chain of a path with `crumb context <path>` before changing it, and respect its invariants.
 
-Required commands: `crumb compile .` then `crumb verify .`
-
-Commit generated `.crumb` changes separately as the final commit.
-
-Do not modify source files after that commit without rerunning compilation and verification.
-
-If a repository does not support these commands, report the discrepancy and follow its explicit repository policy. Never silently skip a required check.
+There is no crumb compilation, no crumb verification and no separate crumb commit. A PR may edit a `.crumb` together with source when the note is wrong. No gate, readiness check or merge rule looks at crumbs.
 
 ## 2a. Local verification
 
-`scripts/pr-gate.sh` reads GitHub's CLEAN state. It does not prove the commit was verified. The local admission check that complements CLEAN is `aien-test verify COMMIT` (sovereign-core `tools/aien-test`, ADR 0033 amendment 2026-10-11): it prints READY when every gate required at the base ref has a PASS receipt for that exact commit and the crumbs are CURRENT there, and BLOCKED otherwise, with the reason (a missing or NOT_RUN gate, STALE crumbs, an UNMAPPED changed path, or a BLOCKED_OPERATOR head). Run it on the final SHA, the one that includes the crumb commit (`docs/crumbs/LOCAL_PIPELINE.md` section 2); a pre-crumb SHA is never READY.
+`scripts/pr-gate.sh` reads GitHub's CLEAN state. It does not prove the commit was verified. The local admission check that complements CLEAN is `aien-test verify COMMIT` (sovereign-core `tools/aien-test`, ADR 0033 amendment 2026-10-11): it prints READY when every gate required at the base ref has a PASS receipt for that exact commit and BLOCKED otherwise, with the reason (a missing or NOT_RUN gate, an UNMAPPED changed path, or a BLOCKED_OPERATOR head). Run it on the head of the branch. Crumbs are not part of readiness since RFC-0003 Amendment 2 (the readiness change itself lives in sovereign-core `tools/aien-test`).
 
-Trust anchors come from the base ref, never from the head under test (ADR 0033 amendment, A1): the required gate set, `.aien/verify.pub`, `.aien/always` and `.aien/unmapped-ok` are read from `origin/main`. A head that changes the pipeline's own configuration (`.aien/`, `tests/gates/`, `.github/workflows/`, `.forgejo/`, `tools/aien-test/`) is BLOCKED_OPERATOR: the operator runs its verification by hand and says so in the PR. Acceptance proofs for the crumb side of this rule (determinism, fixed point, staleness, claims, rebase, final SHA) are `scripts/pipeline-proofs/13-*.sh` to `21-*.sh`; measured numbers in `scripts/pipeline-proofs/RESULTS-2026-10-11.md`.
+Trust anchors come from the base ref, never from the head under test (ADR 0033 amendment, A1): the required gate set, `.aien/verify.pub`, `.aien/always` and `.aien/unmapped-ok` are read from `origin/main`. A head that changes the pipeline's own configuration (`.aien/`, `tests/gates/`, `.github/workflows/`, `.forgejo/`, `tools/aien-test/`) is BLOCKED_OPERATOR: the operator runs its verification by hand and says so in the PR.
 
-## 3. Rebase and Crumb Conflicts
+## 3. Rebase
 
-Every sovereign-core merge to main can invalidate `.crumb` files in other open PRs.
+After each merge to main, evaluate remaining PRs for drift and rebase them onto `origin/main` when needed. Since crumbs hold no generated data, a crumb can only conflict when two PRs edit the same note; resolve that like any text conflict. `scripts/rebase-crumb.sh` was retired with RFC-0003 Amendment 2.
 
-After each sovereign-core merge, evaluate remaining PRs for drift.
-
-Approved recovery script: `scripts/rebase-crumb.sh <worktree> <branch>` (this repository).
-
-Before running it:
+Before rebasing:
 
 - Confirm the worktree has no uncommitted changes.
 - Confirm the intended branch and remote.
-- Inspect the script before first use.
 - Preserve the expected remote head for force-with-lease protection.
 - Ensure no other worker is writing to that branch.
-
-The script takes main's `.crumb`, recompiles crumbs as the last commit, and pushes with lease.
-
-If it reports CODE CONFLICT, stop automated rebasing for that branch. Resolve the source conflict before recompiling.
 
 Never discard source changes to manufacture a clean rebase.
 
@@ -74,7 +59,7 @@ A PR may merge only when all of the following hold:
 - Working tree is clean.
 - Changes are based on the intended current main.
 - No unresolved merge conflicts.
-- Required compilation and crumb verification pass.
+- Required compilation passes.
 - Required tests and CI checks pass.
 - Required approvals are present and valid.
 - GitHub reports a mergeable state.
@@ -198,6 +183,6 @@ A task is complete only when the implementation, verification, and required inte
 
 Worker briefs live with each campaign; this document wins when they conflict.
 
-Stable rules and validated scripts live in aien-architecture (`docs/REPOSITORY_EXECUTION_RULES.md`, `scripts/pr-gate.sh`, `scripts/rebase-crumb.sh`).
+Stable rules and validated scripts live in aien-architecture (`docs/REPOSITORY_EXECUTION_RULES.md`, `scripts/pr-gate.sh`).
 
 **Operating principle: Ship correct, verified code. Preserve other workers' changes. Protect main. Never trade correctness for apparent progress.**

@@ -45,6 +45,5 @@ Open an issue when:
 
 ## Crumbs
 
-This repo uses the Crumb Protocol (RFC-0001). Each directory carries a `.crumb` file (what the directory is for, its rules, and a backfilled history). Live coordination between agents goes in `.crumb.local`, which is never committed.
-Before editing a directory, read its `.crumb`. Rules and the `crumb` tool: https://github.com/aien-spark/aien-architecture/blob/main/docs/CRUMB_PROTOCOL.md
-Backfilled history (marked as such, not live whispers) is in `docs/crumbs/BACKFILL.md`.
+Some directories carry a `.crumb` file: a short note a person wrote about what the directory is for and the rules it keeps. Crumbs are advisory (RFC-0003 Amendment 2): no check runs on them and a pull request needs no crumb commit.
+Before editing a directory, read its notes with `crumb context <path>`. If a note is wrong, fix it by hand in the same pull request. Format and rules: [docs/CRUMB_PROTOCOL.md](docs/CRUMB_PROTOCOL.md). Who works where is the lane system on the Spark, not crumbs.

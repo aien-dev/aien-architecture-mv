@@ -2,7 +2,8 @@
 
 **Status:** Proposed, 2026-10-04. Decided by the operator, Drake Stapleton, through his approved compiler spec of 2026-10-04 (pasted; the paste is the decision). Source of record: `~/handoffs/rfc-0002/crumb-compiler-spec-drake-2026-10-04.md` on the Spark.
 **Extends:** RFC-0002 (`docs/CRUMB_PROTOCOL_RFC_0002.md`). RFC-0001 and RFC-0002 are not changed; this adds a generated block inside `.crumb` and five commands.
-**Implementation:** `tools/crumb/crumb.c` (C11, no dependencies, own SHA-256). Reference implementation and the binding design decisions D1-D9: `tools/crumb/crumb-compile.sh` (POSIX sh + git + jq). Code is the truth; where this text and the code differ, the difference is a bug in one of them.
+**Implementation:** `tools/crumb/crumb.c` (C11, no dependencies, own SHA-256). The shell reference `tools/crumb/crumb-compile.sh` was deleted by Amendment 2. Code is the truth; where this text and the code differ, the difference is a bug in one of them.
+**Amended:** Amendment 1 (2026-10-18) and Amendment 2 (2026-10-19, at the end of this file). Amendment 2 makes crumbs advisory notes and supersedes sections 2, 3, 5 and 6 and the verify rule of Amendment 1. Read it first.
 
 ## In plain words
 
@@ -112,3 +113,39 @@ The committed values carry no information that is not already in the commit: `di
 - A PR that changes no hand-written crumb text carries no `.crumb` change and no `crumb compile` commit. `LOCAL_PIPELINE.md` steps 2 to 4 become a no-op unless a crumb was edited; `rebase-crumb.sh` and `pr-gate.sh` work unchanged (verify still prints a line with `OK`).
 - Agents that read one crumb to learn its children use `crumb digest <dir>` or `crumb context <path>` instead of reading `extensions.generated` from the file.
 - Rejected alternatives, in order: dropping only the roll-up (keeps the conflict for any two PRs in the same crumbed directory, which the repro shows with `tools/aien-local-ci`); auto-rebasing crumb-only conflicts (removes the manual step but not the rebase-and-re-judge on every merge); a `.gitattributes` merge driver (GitHub's server-side merge and its mergeability check do not run custom drivers, so the PR stays DIRTY).
+
+## Amendment 2 (2026-10-19): crumbs are advisory notes
+
+**Status:** ACCEPTED by Drake (owner), 2026-10-19, in the chat "reimagine the crumb".
+**Supersedes:** sections 2 (generated block), 3 (Merkle rule), 5 (commands) and 6 (CI rule) of this RFC, and the verify rule of Amendment 1 (decision points 2 and 3: a committed generated block is STALE and fails verify; verify prints a root digest). Section 7 (PROPOSED purpose) is retired with `crumb propose`. RFC-0002 claims, locks, whispers and Continuation Crumbs are retired by the same decision.
+
+### Why (measured 2026-10-19)
+
+- 70 failed CRUMB-* gate judgements since 2026-10-14.
+- 93 PRs DIRTY on crumb-only conflicts overnight.
+- 4 different crumb tool builds in use at once (gate, readiness, hosted, author). Keeping them in step needed a shim, `crumb-doctor` and an alarm.
+- Agents ran `crumb verify` or `crumb compile` about 7,200 times in 3 days, and `crumb context` or `crumb explain` 23 times. The checks cost far more than the notes were used.
+- Most crumbs are placeholders ("Purpose not yet described by a human"): aien-architecture 24 of 28, omega 111 of 158, aien-protocols 33 of 41, spark-rsi 17 of 31.
+- The root `.crumb` of this repository was 23 KB, mostly a commit log frozen on 2026-10-01 (`extensions.provenance`).
+
+### Decision: the new model
+
+1. A crumb holds only what a person writes: `schema_version`, `name`, `purpose`, and optionally `layer`, `invariants`, `exports`, `related`, `boundaries`, `above`, `below`. Nothing generated, no provenance, no seed block, no `generated_policy` marker.
+2. Crumbs are never a merge check. No CRUMB-VERIFY gate, no crumb step in hosted workflows, no crumb in readiness (`aien-test verify`), no `crumb.lock` pin, no final `crumb compile` commit, no `rebase-crumb.sh`.
+3. Anything derived (files, recent commits, digests) is computed live from git when asked, and never stored.
+4. Crumb claims, locks, whispers and checkpoints are retired. The lane system (Spark `~/.local/state/aien-local-ci/LANES` and `DESK`) owns who works where.
+5. Agents get the crumb for a path automatically (a Claude Code hook) instead of being trusted to ask.
+
+### What the tool does now
+
+- `crumb context <path>` (also `explain`, and `sniff` for a directory): the crumb chain for the path, root first, with purpose, invariants, exports, related and boundaries, then the last 5 commits that touched the path, read live from git. Output is bounded. There is no freshness line, no lock section and no continuation section.
+- `crumb verify [root]`: a readability lint. Every `.crumb` (honouring `.crumbignore` and the build directory exclusions) must be JSON with string `schema_version`, `name` and `purpose`. It exits 1 only for unreadable or invalid files. A stored generated block is a warning line. The first line is `crumb verify: OK: <n> crumbs readable (advisory, RFC-0003 Am2)`. Nothing runs it as a gate.
+- `crumb compile [root]` (alias `migrate`): a cleanup. It removes `extensions.generated`, `extensions.generated_policy`, `extensions.provenance` and `extensions.seed`, prints how many crumbs it rewrote, and is idempotent. It never writes generated data.
+- `crumb status [root]`: readable or unreadable per crumb. `crumb digest [dir]`: the structural digest of a directory, computed now.
+- `claim`, `update`, `whisper`, `close`, `checkpoint`, `resume`, `list`, `store-id`, `seed`, `backfill` and `propose` print one line saying they are retired and exit 0, so old scripts do not break.
+
+### Consequences
+
+- A PR never needs a crumb commit, and two PRs can only conflict in a crumb when both edit its text.
+- `CRUMB-VERIFY` left `.aien/always`, `tests/gates/crumb.gate` and the hosted crumb step are gone, and `scripts/pr-gate.sh` no longer checks crumbs. `ARCH-CRUMB-TOOL-TEST` still runs the tool's own unit tests.
+- Placeholder crumbs were deleted. A crumb is worth keeping only when a person has written something in it.

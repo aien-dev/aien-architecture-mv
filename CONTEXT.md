@@ -113,7 +113,7 @@ _Avoid_: production secret resolution, implicit fallback
 ### Dependencies
 
 **Verified Crumb**:
-A content-addressed, immutable library object keyed by Omega semantic id and bound to a passing evidence receipt. It is the only thing Omega may resolve an import to (ARCH-0029). Always written in full; it is neither a `.crumb` coordination file (RFC-0001, `docs/CRUMB_PROTOCOL.md`) nor a Crumbline curriculum item.
+A content-addressed, immutable library object keyed by Omega semantic id and bound to a passing evidence receipt. It is the only thing Omega may resolve an import to (ARCH-0029). Always written in full; it is neither a `.crumb` note (advisory, `docs/CRUMB_PROTOCOL.md`) nor a Crumbline curriculum item.
 _Avoid_: crumb (alone), package, library file, dependency by name or version
 
 ### Status

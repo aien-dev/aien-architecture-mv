@@ -43,8 +43,8 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `docs/archive/` | Superseded plans, kept for history only |
 | `qualification/` | Release candidates (`candidates/CAND-*.toml` and their gate results) and recorded exceptions |
 | `formal/invariants/` | Invariants written down for formal checking ([ADR 0027](docs/adr/0027-formal-oracle-lean-bootstrap.md)) |
-| `tools/crumb/` | The crumb tool (C11), which compiles and checks the `.crumb` files |
-| `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate, crumb rebase helper) and their `test_*.sh` tests |
+| `tools/crumb/` | The crumb tool (C11), which shows the `.crumb` notes for a path (`crumb context`) |
+| `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate) and their `test_*.sh` tests |
 | `tests/gates/` | The gate manifests the Spark runs on every pull request |
 
 `AIEN_COMPLETE_SYSTEM_ARCHITECTURE.md` and `AIEN_MASTER_ARCHITECTURAL_PLAN.md` at the root are superseded pointers; the old versions are in `docs/archive/plans/`. The second one is stored in Git as a symbolic link whose target is the pointer text, so it does not open as a normal file; read [docs/archive/plans](docs/archive/plans/README.md) instead.
@@ -81,19 +81,18 @@ The [necessary-work programme](docs/plans/necessary-work/README.md) (2026-10-18,
 
 ## Building and testing
 
-There is no product to build here. The one program is the crumb tool in `tools/crumb`. It needs only a C11 compiler and `make`. Build it, run its tests, and check that every `.crumb` file matches what the tool produces now:
+There is no product to build here. The one program is the crumb tool in `tools/crumb`. It needs only a C11 compiler and `make`. Build it and run its tests:
 
 ```sh
 make -C tools/crumb test
-./tools/crumb/crumb verify .
+./tools/crumb/crumb context docs     # read the crumb notes for a path
 ```
 
-The Spark runs five gates on every pull request. Each manifest in `tests/gates/` calls `tests/gates/run.sh` with one step word, so you can run the same steps yourself (the script needs `bash`; plain `sh` stops at `set -o pipefail`):
+The Spark runs four gates on pull requests. Each manifest in `tests/gates/` calls `tests/gates/run.sh` with one step word, so you can run the same steps yourself (the script needs `bash`; plain `sh` stops at `set -o pipefail`):
 
 ```sh
-bash tests/gates/run.sh crumb-verify          # gate CRUMB-VERIFY: the crumbs are current
 bash tests/gates/run.sh crumb-tool-test       # gate ARCH-CRUMB-TOOL-TEST: the crumb tool tests
-bash tests/gates/run.sh script-tests          # gate ARCH-SCRIPT-TESTS: tests of the four checked scripts
+bash tests/gates/run.sh script-tests          # gate ARCH-SCRIPT-TESTS: tests of the three checked scripts
 bash tests/gates/run.sh doctrine              # gate ARCH-DOCTRINE: doctrine consistency
 bash tests/gates/run.sh qualification-status  # gate ARCH-QUALIFICATION-STATUS: R16 status wording
 ```
@@ -102,9 +101,9 @@ bash tests/gates/run.sh qualification-status  # gate ARCH-QUALIFICATION-STATUS: 
 
 ## How a pull request is judged
 
-Since 2026-10-16 the DGX Spark is the only test judge for pull requests ([ADR 0033](docs/adr/0033-aien-verification-pipeline.md)). On 2026-10-18 the hosted test workflows were removed (pull request #270); the one workflow left in `.github/workflows/` is `aien-verification.yml`. The Spark runs the five gates above and signs the result. `main` is protected and requires only the `AIEN Verification` check, which confirms that the signed bundle is in [aien-receipts](https://github.com/aien-dev/aien-receipts). The verdict of record is the commit status "AIEN Verification (Spark)". [docs/PIPELINE.md](docs/PIPELINE.md) explains the flow.
+Since 2026-10-16 the DGX Spark is the only test judge for pull requests ([ADR 0033](docs/adr/0033-aien-verification-pipeline.md)). On 2026-10-18 the hosted test workflows were removed (pull request #270); the one workflow left in `.github/workflows/` is `aien-verification.yml`. The Spark runs the gates above and signs the result. `main` is protected and requires only the `AIEN Verification` check, which confirms that the signed bundle is in [aien-receipts](https://github.com/aien-dev/aien-receipts). The verdict of record is the commit status "AIEN Verification (Spark)". [docs/PIPELINE.md](docs/PIPELINE.md) explains the flow.
 
-The crumb tool on `main` can now compute the generated part of each `.crumb` file on demand instead of storing it (RFC-0003 amendment 1, pull request #271, merged 2026-10-18; [docs/CRUMB_PROTOCOL_RFC_0003.md](docs/CRUMB_PROTOCOL_RFC_0003.md)). This repository switched on 2026-10-19 (pull request #272): its `.crumb` files no longer store that data, and `crumb verify .` computes it when it checks.
+Crumbs are advisory notes since 2026-10-19 (RFC-0003 Amendment 2, [docs/CRUMB_PROTOCOL_RFC_0003.md](docs/CRUMB_PROTOCOL_RFC_0003.md)). No gate checks them, they store no generated data, and a pull request needs no crumb commit. Read them with `crumb context <path>`; [docs/CRUMB_PROTOCOL.md](docs/CRUMB_PROTOCOL.md) explains the format.
 
 ## Where the evidence lives
 

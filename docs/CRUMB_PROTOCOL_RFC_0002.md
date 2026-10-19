@@ -1,5 +1,7 @@
 # Crumb Protocol RFC-0002: Common Coordination Plane and Continuation Crumbs
 
+**Retired in part (2026-10-19):** RFC-0003 Amendment 2 retires the coordination plane described here (claims, locks, scents, whispers, Continuation Crumbs, `checkpoint` and `resume`). Coordination is the lane system (Spark `~/.local/state/aien-local-ci/LANES`). `crumb explain` survives as an alias of `crumb context`. This text is kept as the record of the earlier design.
+
 **Status:** Proposed, 2026-10-04. Decided by the operator, Drake Stapleton, through his approved design of 2026-10-04 (pasted; the paste is the decision, no separate ratification). Source of record: `~/handoffs/rfc-0002/master-spec-drake-2026-10-04.md` on the Spark.
 **Extends:** RFC-0001 v1.0.0 (`aien-spark/crumb-spec` `SPEC.md`, `ROLES.md`, frozen at `10b8251`). RFC-0001 is not changed; this document adds a storage scope, a mutation discipline, two commands and one new object. Protocol version becomes **1.1.0**.
 **Related:** `docs/CRUMB_PROTOCOL.md` (how RFC-0001 is used here), ARCH-0029 (Verified Crumbs: untouched), ARCH-0028 (receipts).

@@ -2,6 +2,8 @@
 
 # Phase-2 agreement (A7): local verdict vs hosted checks, 2026-10-11
 
+> Note 2026-10-19: this is a historical record. The CRUMB-VERIFY gate that appears in the tables below was retired by RFC-0003 Amendment 2 (crumbs are advisory notes, `docs/CRUMB_PROTOCOL_RFC_0003.md`) and is no longer judged.
+
 Lane PIPELINE-FINISH. Local = `aien-local-ci once <repo> <sha> --operator` with the engine built from sc main
 bba027d (runs file: `~/handoffs/2026-10-11-lane-FINISH-runs.md`, logs `~/workspace/pipeline/finish/once-*.log`,
 receipts `~/.local/state/aien-local-ci/evidence/<repo>/<sha>/`). Hosted = GitHub Actions jobs and steps on the same
