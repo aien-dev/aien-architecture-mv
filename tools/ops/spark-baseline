@@ -1,0 +1,99 @@
+#!/bin/sh
+# spark-baseline MODEL: the one baseline receipt per model per measurement window.
+#
+#   spark-baseline 27b    one fixed request to the resident 27B server on
+#                         127.0.0.1:18091: fixed prompt, temperature 0, seed 1,
+#                         64 tokens, sent once the GPU lock is quiet, timed through
+#                         spark-receipt. Never starts, stops or restarts a server.
+# Run inside an open window (spark-window run spark-baseline 27b). Writes
+# ~/yardsticks/windows/<id>/baseline-27b.json with tok/s (completion tokens /
+# request wall time, prefill of the short prompt included), wall J/token
+# (receipt wall_J / tokens) and J/token above idle (window calibration idle W),
+# the reply's sha256 (same server build + same request = same reply) and the
+# server process, so a different build is visible.
+set -u
+WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
+model=${1:?usage: spark-baseline 27b}
+case $model in
+  27b) port=18091; mid=qwen3.8-27b-fp8 ;;
+  *) echo "spark-baseline: unknown model $model (known: 27b)" >&2; exit 2 ;;
+esac
+id=${SPARK_WINDOW:-$(spark-window id)} || { echo "spark-baseline: no open window; run spark-window open NAME first" >&2; exit 1; }
+[ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] || { echo "spark-baseline: window $id is not the open, held window" >&2; exit 1; }
+d=$WR/$id; b=$d/baseline-$model; mkdir -p "$b"
+export SPARK_WINDOW=$id SPARK_WINDOW_DIR=$d
+[ -f "$d/calibration.json" ] || echo "spark-baseline: warning: window $id has no calibration.json yet (run spark-calibrate first); J/token above idle will be null" >&2
+
+N=64; SEED=1
+PROMPT="Count upward from one in English words, separated by commas, and do not stop: one, two, three,"
+REQ=$(printf '{"model": "%s", "messages": [{"role": "user", "content": "%s"}], "temperature": 0, "seed": %s, "max_tokens": %s, "stream": false}' "$mid" "$PROMPT" "$SEED" "$N")
+echo "$REQ" > "$b/request.json"
+
+spid=$(ss -ltnpH "sport = :$port" 2>/dev/null | sed -n 's/.*pid=\([0-9]*\).*/\1/p' | head -n 1)
+[ -n "$spid" ] || { echo "spark-baseline: nothing listens on 127.0.0.1:$port; not starting one" >&2; exit 1; }
+sexe=$(readlink "/proc/$spid/exe" 2>/dev/null); sargs=$(tr '\0' ' ' < "/proc/$spid/cmdline" 2>/dev/null | cut -c1-300)
+models=$(curl -s --max-time 10 "http://127.0.0.1:$port/v1/models")
+case $models in *"\"$mid\""*) ;; *) echo "spark-baseline: server on :$port does not serve $mid: $models" >&2; exit 1 ;; esac
+
+# The server takes /tmp/aien-gb10.lock itself for every generation, so holding it here would
+# deadlock. Instead: wait until nobody holds or queues on it, then send, and sample the lock
+# table during the request; any other process seen holding it marks the baseline contaminated.
+G=/tmp/aien-gb10.lock; gino=$(stat -c %i "$G"); t0=$(date +%s); last=$t0
+gb10_busy() { grep -qE ":$gino " /proc/locks; }
+while gb10_busy; do
+  [ $(( $(date +%s) - last )) -ge 60 ] && { last=$(date +%s); echo "spark-baseline: waiting $(( last - t0 )) s for the GB10 lock to go quiet: $(spark-window locks gb10)" >&2; }
+  sleep 1
+done
+gwait=$(( $(date +%s) - t0 ))
+( while :; do grep -E ":$gino " /proc/locks; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
+smp=$!
+spark-receipt "baseline-$model-$id" --idle 10 -- \
+  curl -s -o "$b/response.json" -w '%{time_total} %{http_code}\n' -H 'Content-Type: application/json' \
+  --data-binary @"$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" > "$b/receipt.out" 2>&1
+rc=$?
+kill $smp 2>/dev/null; wait $smp 2>/dev/null
+others=$(awk -v s="$spid" '$2 != "->" && $5 != s { print $5 } $2 == "->" && $6 != s { print $6 }' "$b/gb10-during.txt" | sort -u | tr '\n' ' ')
+r=$(sed -n 's/^receipt: //p' "$b/receipt.out"); cp "$r" "$b/receipt.json" 2>/dev/null
+set -- $(head -n 1 "$b/receipt.out"); secs=${1:-0}; code=${2:-0}
+toks=$(jq -r '.usage.completion_tokens // 0' "$b/response.json" 2>/dev/null); toks=${toks:-0}
+fin=$(jq -r '.choices[0].finish_reason // "none"' "$b/response.json" 2>/dev/null)
+rsha=$(jq -r '.choices[0].message.content // ""' "$b/response.json" 2>/dev/null | sha256sum | cut -c1-64)
+wallJ=$(jq -r '.wall_J // "null"' "$b/receipt.json" 2>/dev/null)
+wallW=$(jq -r '.wall_W_mean // "null"' "$b/receipt.json" 2>/dev/null)
+rsecs=$(jq -r '.seconds // "null"' "$b/receipt.json" 2>/dev/null)
+samples=$(jq -r '.samples // 0' "$b/receipt.json" 2>/dev/null)
+idleW=$(jq -r '.idle.wall_W_mean // "null"' "$d/calibration.json" 2>/dev/null); idleW=${idleW:-null}
+calc() { awk -v a="$1" -v b="$2" -v c="${3:-0}" -v op="$4" 'BEGIN { if (a == "null" || b == "null" || b + 0 == 0) { print "null"; exit }
+  if (op == "div") printf "%.6g\n", a / b; else printf "%.6g\n", (a - c) * b / (op + 0) }'; }
+tps=$(calc "$toks" "$secs" 0 div)
+jpt=$(calc "$wallJ" "$toks" 0 div)
+jpt_inc=null; [ "$idleW" != null ] && [ "$wallW" != null ] && [ "$toks" -gt 0 ] && jpt_inc=$(calc "$wallW" "$rsecs" "$idleW" "$toks")
+ok=true; [ "$rc" = 0 ] && [ "$code" = 200 ] && [ "$toks" = "$N" ] && [ -z "$others" ] || ok=false
+cat > "$b.json.tmp" <<EOF
+{
+ "window_id": "$id",
+ "model": "$mid",
+ "ok": $ok,
+ "request": {"url": "http://127.0.0.1:$port/v1/chat/completions", "max_tokens": $N, "temperature": 0, "seed": $SEED, "file": "$b/request.json"},
+ "http_code": $code,
+ "completion_tokens": $toks,
+ "finish_reason": "$fin",
+ "request_seconds": $secs,
+ "tok_per_s": $tps,
+ "wall_J": $wallJ,
+ "wall_J_per_token": $jpt,
+ "idle_W_calibration": $idleW,
+ "J_per_token_above_idle": $jpt_inc,
+ "sensor_samples": $samples,
+ "reply_sha256": "$rsha",
+ "gb10_quiet_wait_s": $gwait,
+ "gb10_other_users_during": "$others",
+ "server": {"pid": $spid, "exe": "$sexe", "exe_sha256": "$(sha256sum "$sexe" 2>/dev/null | cut -c1-64)", "args": "$(printf '%s' "$sargs" | sed 's/"/\\"/g')"},
+ "receipt": "$r",
+ "calibration": "$( [ -f "$d/calibration.json" ] && echo "$d/calibration.json")",
+ "note": "one request, tok/s includes the short prompt's prefill; wall W is the whole UPS output in 10 W steps every ~2 s, so a few-second run carries only a few samples: read J/token as coarse"
+}
+EOF
+mv -f "$b.json.tmp" "$b.json"
+cat "$b.json"; echo "baseline: $b.json"
+[ "$ok" = true ]

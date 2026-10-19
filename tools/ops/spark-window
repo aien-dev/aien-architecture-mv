@@ -1,0 +1,166 @@
+#!/bin/sh
+# spark-window: one measurement window at a time on the Spark.
+#
+#   spark-window open NAME [--ledger ID] [--lease MIN]
+#        Refuses (exit 3) if a window is already open or queued, and lists it.
+#        Otherwise creates window id <UTC date-time>-<random>, takes the quiet
+#        lock exclusive through quiet-measure (a holder process keeps it until
+#        close or until the lease runs out, default 90 min), records box state
+#        at open in ~/yardsticks/windows/<id>/open.json and prints the id.
+#        While waiting for the lock it prints who holds it and the waiters' ages.
+#   spark-window run CMD...   run CMD inside the open window: sets SPARK_WINDOW and
+#        SPARK_WINDOW_DIR, so spark-receipt stamps the window id and calibration,
+#        and quiet-measure runs CMD directly instead of waiting on our own lock.
+#   spark-window close [ID]   release the quiet lock, record box state at close
+#        (close.json), print what the window holds.
+#   spark-window status       show the open window (or "none") and the lock queue.
+#   spark-window id           print the open, held window id (exit 1 if none).
+#   spark-window locks [gb10|quiet]  who holds and who is queued on the locks (kernel lock table).
+#
+# Rule: one window at a time. Agents who find a window open queue by ledger note
+# (ledger note <your id> "measure: waiting for window <id>") and retry after it closes.
+set -u
+WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
+Q=/tmp/aien-quiet.lock; W=/tmp/aien-quiet.want.d; G=/tmp/aien-gb10.lock
+mkdir -p "$WR"
+now() { date -u +%FT%TZ; }
+esc() { printf '%s' "$1" | tr '\n\t' '  ' | sed 's/\\/\\\\/g; s/"/\\"/g'; }
+age() { echo $(( $(date +%s) - $(stat -c %Y "$1" 2>/dev/null || date +%s) )); }
+
+# holders LOCKFILE: who holds the lock (kernel lock table) and who is queued on it, with ages
+holders() {
+  ino=$(stat -c %i "$1" 2>/dev/null) || return 0
+  grep -E "^[0-9]+: +(-> +)?FLOCK +[A-Z]+ +[A-Z]+ +[0-9]+ [0-9a-f]+:[0-9a-f]+:$ino " /proc/locks 2>/dev/null |
+  while read -r _ a b c d e _; do
+    if [ "$a" = "->" ]; then q="queued"; m=$d; p=$e; else q="holds"; m=$c; p=$d; fi
+    [ "$m" = READ ] && m=shared || m=exclusive
+    printf '%s %s pid %s (%ss) %s; ' "$q" "$m" "$p" "$(ps -o etimes= -p "$p" 2>/dev/null | tr -d ' ')" "$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110)"
+  done
+}
+waiters() {
+  own=$(cat "$WR/$(cur)/qm.pid" 2>/dev/null)
+  for f in "$W"/*; do [ -f "$f" ] || continue; [ "${f##*/}" = "$own" ] && continue
+    printf 'pid %s waiting %ss: %s; ' "${f##*/}" "$(age "$f")" "$(cut -c22-140 "$f")"
+  done
+}
+
+# state: one JSON object with the box state right now
+state() {
+  sr=$(tail -n 1 "$HOME/yardsticks/sensors/$(date +%F).csv" 2>/dev/null)
+  se=${sr%%,*}; sa=$(( $(date +%s) - ${se:-0} ))
+  g=$(nvidia-smi --query-gpu=utilization.gpu,power.draw --format=csv,noheader,nounits 2>/dev/null | tr -d ' ')
+  apps=$(nvidia-smi --query-compute-apps=pid,used_memory,process_name --format=csv,noheader 2>/dev/null | tr '\n' ';')
+  printf '{"utc": "%s", "loadavg": "%s", "mem_avail_kB": %s, "gpu_util_pct": "%s", "gpu_W": "%s",\n' \
+    "$(now)" "$(cat /proc/loadavg)" "$(awk '/MemAvailable/{print $2}' /proc/meminfo)" "${g%%,*}" "${g##*,}"
+  printf ' "gb10_lock_holders": "%s",\n "quiet_lock_holders": "%s",\n "quiet_waiters": "%s",\n "gpu_apps": "%s",\n' \
+    "$(esc "$(holders $G)")" "$(esc "$(holders $Q)")" "$(esc "$(waiters)")" "$(esc "$apps")"
+  printf ' "sensors_row": "%s", "sensors_row_age_s": %s}\n' "$(esc "$sr")" "$sa"
+}
+
+alive() { [ -n "${1:-}" ] && kill -0 "$1" 2>/dev/null; }
+cur() { cat "$WR/OPEN" 2>/dev/null; }
+hpid() { cat "$WR/$1/holder.pid" 2>/dev/null; }
+
+describe() {
+  d=$WR/$1
+  st=queued; [ -f "$d/held" ] && st=held
+  echo "window $1  name=$(cat "$d/name" 2>/dev/null)  owner=$(cat "$d/owner" 2>/dev/null)  state=$st  opened_request=$(cat "$d/requested" 2>/dev/null)  holder_pid=$(hpid "$1")  lease_min=$(cat "$d/lease" 2>/dev/null)"
+  [ -f "$d/held" ] && echo "  held since $(cat "$d/held") ($(age "$d/held") s)"
+}
+
+# called with the state lock held: drop a window whose holder is gone
+reap() {
+  id=$(cur); [ -n "$id" ] || return 0
+  alive "$(hpid "$id")" && return 0
+  why="holder process gone"; [ -f "$WR/$id/expired" ] && why="lease expired $(cat "$WR/$id/expired")"
+  { printf '{"closed_by": "spark-window reap", "reason": "%s", "state": ' "$why"; state; echo '}'; } > "$WR/$id/close.json"
+  rm -f "$WR/OPEN"
+  echo "spark-window: closed stale window $id ($why)" >&2
+}
+
+cmd=${1:-status}; [ $# -gt 0 ] && shift
+case $cmd in
+open)
+  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN]}; shift
+  ledger=""; lease=90
+  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
+  exec 7>"$WR/.state.lock"; flock 7
+  reap
+  if [ -n "$(cur)" ]; then
+    echo "spark-window: refused, a window is already open or queued:" >&2
+    describe "$(cur)" >&2
+    echo "Queue by ledger note (ledger note <your id> \"measure: waiting for window $(cur)\") and retry after it closes." >&2
+    exit 3
+  fi
+  id=$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N3 -tx1 /dev/urandom | tr -d ' \n')
+  d=$WR/$id; mkdir -p "$d"
+  echo "$name" > "$d/name"; echo "${ledger:-${SPARK_WINDOW_OWNER:-$(whoami)@pid$PPID}}" > "$d/owner"
+  echo "$lease" > "$d/lease"; now > "$d/requested"
+  echo "$id" > "$WR/OPEN.tmp" && mv -f "$WR/OPEN.tmp" "$WR/OPEN"
+  setsid quiet-measure "$0" _hold "$id" > "$d/holder.log" 2>&1 < /dev/null &
+  echo $! > "$d/holder.pid"; echo $! > "$d/qm.pid"   # _hold replaces holder.pid with its own pid once it runs
+  flock -u 7; exec 7>&-
+  t0=$(date +%s); last=$t0
+  while [ ! -f "$d/held" ]; do
+    if ! alive "$(hpid "$id")"; then echo "spark-window: holder died before taking the lock; see $d/holder.log" >&2; rm -f "$WR/OPEN"; exit 1; fi
+    if [ $(( $(date +%s) - last )) -ge 60 ]; then
+      last=$(date +%s)
+      echo "spark-window: waiting $(( last - t0 )) s for the quiet lock. holders: $(holders $Q) | waiters: $(waiters)" >&2
+    fi
+    sleep 1
+  done
+  { printf '{"window_id": "%s", "name": "%s", "owner": "%s", "lease_min": %s, "waited_s": %s, "state": ' \
+      "$id" "$(esc "$name")" "$(esc "$(cat "$d/owner")")" "$lease" "$(( $(date +%s) - t0 ))"; state; echo '}'; } > "$d/open.json"
+  echo "spark-window: window $id open, quiet lock held exclusive (waited $(( $(date +%s) - t0 )) s); box state in $d/open.json" >&2
+  echo "$id"
+  ;;
+_hold)
+  id=$1; d=$WR/$id; lease=$(cat "$d/lease")
+  echo $$ > "$d/holder.pid.tmp" && mv -f "$d/holder.pid.tmp" "$d/holder.pid"
+  now > "$d/held"
+  end=$(( $(date +%s) + lease * 60 ))
+  while [ ! -f "$d/close-request" ]; do
+    if [ "$(date +%s)" -ge "$end" ]; then now > "$d/expired"; echo "lease of $lease min ran out" >&2; exit 0; fi
+    sleep 2
+  done
+  exit 0
+  ;;
+run)
+  id=$(cur)
+  if [ -z "$id" ] || [ ! -f "$WR/$id/held" ] || ! alive "$(hpid "$id")"; then echo "spark-window: no open window holds the quiet lock; run spark-window open NAME first" >&2; exit 1; fi
+  [ $# -gt 0 ] || { echo "usage: spark-window run CMD..." >&2; exit 2; }
+  SPARK_WINDOW=$id SPARK_WINDOW_DIR=$WR/$id exec "$@"
+  ;;
+id)
+  id=$(cur)
+  [ -n "$id" ] && [ -f "$WR/$id/held" ] && alive "$(hpid "$id")" && { echo "$id"; exit 0; }
+  exit 1
+  ;;
+close)
+  exec 7>"$WR/.state.lock"; flock 7
+  id=${1:-$(cur)}
+  [ -n "$id" ] && [ -d "$WR/$id" ] || { echo "spark-window: no window to close" >&2; exit 1; }
+  [ -f "$WR/$id/close.json" ] && { echo "spark-window: window $id is already closed" >&2; exit 1; }
+  d=$WR/$id; h=$(hpid "$id")
+  now > "$d/close-request"
+  while alive "$h"; do sleep 1; done
+  why=closed; [ -f "$d/expired" ] && why="lease expired $(cat "$d/expired") before close"
+  { printf '{"window_id": "%s", "closed_by": "spark-window close", "reason": "%s", "held_s": %s, "state": ' \
+      "$id" "$why" "$(( $(date +%s) - $(stat -c %Y "$d/held" 2>/dev/null || date +%s) ))"; state; echo '}'; } > "$d/close.json"
+  [ "$(cur)" = "$id" ] && rm -f "$WR/OPEN"
+  echo "spark-window: window $id closed ($why). It holds:" >&2
+  ls "$d" | grep -E '\.json$' | sed 's/^/  /' >&2
+  ;;
+locks)
+  case ${1:-all} in gb10) holders $G ;; quiet) holders $Q ;; *) echo "quiet: $(holders $Q)"; echo "gb10: $(holders $G)" ;; esac
+  echo
+  ;;
+status)
+  id=$(cur)
+  if [ -n "$id" ]; then describe "$id"; alive "$(hpid "$id")" || echo "  holder process is gone (next open reaps it)"; else echo "no window open"; fi
+  echo "quiet lock holders: $(holders $Q)"
+  echo "quiet waiters: $(waiters)"
+  echo "gb10 lock holders: $(holders $G)"
+  ;;
+*) sed -n '2,21p' "$0"; exit 2 ;;
+esac
