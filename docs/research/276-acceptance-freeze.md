@@ -60,8 +60,8 @@ Consequence: the "overlapping runtime changes wait for this check" gate in #276 
 | #583 DAGSIM held-out precommit | L050 | `research/cost-sim-583` | `evidence/DAGSIM-583-48ca401/PRECOMMIT.md` | `d009a2b0a1ab091c72fb2fd42c2004e99797af12` |
 | #584 LS584 freeze | L048 | `research/learning-search-584` | `research/learning-search-584/FREEZE.md` | `9e1824d798cf045fe3a5ca83f03466537a2eed05` (branch head; history fe29edb5, 31c4c028, 9e1824d7) |
 | #246 E03 payback protocol | L049 | `research/e03-payback-246` | `evidence/PLAN_REUSE/e03-payback/00-frozen-protocol.md` | `293b49a748a0ea63fd8d71288be016c5c531f8f5` (unchanged at head 503f990f) |
-| Entity pilot | L058 | `research/entity-pilot-276` | `evidence/ENTITY-276/FREEZE.md` | pin pending: `research/entity-pilot-276`, `evidence/ENTITY-276/FREEZE.md` |
-| #249 checked elimination | L059 | `research/rewrite-elim-249` | `evidence/REWRITE-249/FREEZE.md` | pin pending: `research/rewrite-elim-249`, `evidence/REWRITE-249/FREEZE.md` |
+| Entity pilot | L058 | `research/entity-pilot-276` | `evidence/ENTITY-276/FREEZE.md` | `ec0c2e2742ac80cdefdc46271eeaf230c06d92a1` (committed before the run of record at 20:56Z; no AMENDMENTS.md; verdicts at 21913232) |
+| #249 checked elimination | L059 | `research/rewrite-elim-249` | `evidence/REWRITE-249/FREEZE.md` | `de779dff5e03ba9b50c6f1839cbc6ca1613ccbb6` (committed 21:07:59Z, first run of record 21:14:33Z; AMENDMENTS.md A1 A2 at 0ca96221; verdicts at 0410739c) |
 
 ### 3.2 OEV1 records (producer #583; consumers #584, #246, #249, entity pilot)
 
@@ -79,7 +79,9 @@ Pin: OEV1 at omega `5d864920`. Format: plain UTF-8 text, one record per line, `k
 - CPU and GPU unified memory are one capacity resource (`unified_mem`) on the Spark.
 
 Consumers: #584 emits one `.oev` per arm (its `oev-emit.sh` at 9e1824d7); #246 maps its per-phase ledger onto OEV1 ops;
-#249 and the entity pilot emit OEV1 for their baseline and transformed DAGs (pin pending for both).
+#249 emits OEV1 at `evidence/REWRITE-249/oev/` (0ca96221; 637 of 637 records accepted by dagsim at omega d8c74201).
+The entity pilot emits OEV1 at `evidence/ENTITY-276/dagsim/` (3be76bd4; the fixture with `unknown` costs was refused
+REFUSED_UNKNOWN as the schema requires, the synthetic-provenance fixture was evaluated and its prediction committed before the run).
 
 ### 3.3 `removed` ledger records (producer #249 and every reuse or incremental arm; consumer #583 `diff` and ablation)
 
@@ -138,7 +140,9 @@ Pin: `src/runtime/rx_cortex.h` at omega a8ffd2b9; use as frozen in LS584 section
 - Reload only through `cx_open` (replay and digest verification). A candidate without a promotion loads as CANDIDATE;
   with one, as VERIFIED. A corrupt or torn journal is refused and the arm starts from empty state (counted).
 - No independent store, no second journal format, no bypass of Cortex promotion.
-- Entity pilot record kinds: pin pending (`research/entity-pilot-276`, `evidence/ENTITY-276/FREEZE.md`).
+- Entity pilot record kinds (FREEZE at ec0c2e27): journal opened CX_OPEN_SYNC (fdatasync per append); retained
+  template journaled as a CX_K_CANDIDATE record; state observations appended through the World's attached writer
+  after each commit (needed because World records carry only the first output's values, prerequisite E, fixer L086).
 
 ### 3.6 Goal object for the bounded command adapter (producers #584 and entity pilot; owner rx_plan / ALLEN)
 
@@ -146,14 +150,15 @@ Pin: `src/runtime/rx_plan.h` at omega a8ffd2b9, object type `PL_OT_GOAL` with fi
 0 seq, 1 kind, 2 max steps, 3 energy budget, 4 facts ref (facts in a separate `PL_OT_GOALFACTS` object, eight packed
 facts). The LS584 adapter (FREEZE section 11 at 9e1824d7) maps bounded text commands onto exactly these five fields and
 nothing else; malformed or ambiguous commands get clarification or abstention and never commit (8 preface commands per
-stream). The entity pilot's use of this layout: pin pending. ALLEN interface ownership is unchanged.
+stream). The entity pilot builds the PL_OT_GOAL mutations in its harness and publishes them through the same World path
+(mapping doc `docs/research/276-entity-mapping.md` at 80b1b5ed, prerequisite C: `allen_goal_mutations` maps only latency intents). ALLEN interface ownership is unchanged.
 
 ### 3.7 Ablation ladder (owner per row)
 
 | Row | Owner | Status on 2026-10-19 |
 |---|---|---|
 | incumbent (no elimination, no reuse, no incremental) | #584 arm A; #246 arm A | frozen (9e1824d7, 293b49a7), NOT_RUN |
-| elimination only | #249 | pin pending: `research/rewrite-elim-249` |
+| elimination only | #249 | frozen de779dff; run of record 0ca96221: H1 PASS (18 of 240 held-out), net saving including search and check FAIL at 10^6 executions |
 | reuse only | #246 arm B; #584 arm B | frozen, NOT_RUN |
 | incremental update only | #584 (combination and policy owner) | not frozen in LS584 at 9e1824d7; pin pending |
 | combined | #584 | not frozen in LS584 at 9e1824d7; pin pending |
@@ -214,7 +219,7 @@ stream). The entity pilot's use of this layout: pin pending. ALLEN interface own
 | Selection regret | NOT_RUN for this family (one candidate per k) |
 | Energy | UNMEASURED |
 
-### 4.4 Entity pilot gates (omega-mv#584 "Additional gates"; numbers pin pending: `research/entity-pilot-276`, `evidence/ENTITY-276/FREEZE.md`)
+### 4.4 Entity pilot gates (omega-mv#584 "Additional gates"; numbers frozen at `research/entity-pilot-276` ec0c2e27, `evidence/ENTITY-276/FREEZE.md`)
 
 1. Same identity and history with the view open, detached, reattached and after restart; no shadow memory authority.
 2. No redundant inference, search or application redraw on the unchanged-state control; required IO, timers and
@@ -224,7 +229,7 @@ stream). The entity pilot's use of this layout: pin pending. ALLEN interface own
    costs, failures and storage (owned per section 3.7; the pilot itself reports NOT_RUN for ablations).
 5. Retained verified knowledge reduces cumulative cost on held-out repeated tasks, or an explicit negative verdict is recorded.
 
-### 4.5 #249 checked elimination (acceptance from #249 issue text; numbers pin pending: `research/rewrite-elim-249`, `evidence/REWRITE-249/FREEZE.md`)
+### 4.5 #249 checked elimination (acceptance from #249 issue text; numbers frozen at `research/rewrite-elim-249` de779dff, `evidence/REWRITE-249/FREEZE.md`)
 
 1. Budgets and held-out cases frozen before measuring.
 2. Invalid assumptions and mutants rejected.
@@ -259,10 +264,10 @@ stream). The entity pilot's use of this layout: pin pending. ALLEN interface own
 | #276 completion line | Status | Where |
 |---|---|---|
 | Existing-code/PR/Symposium overlap matrix and pinned source links recorded | DONE | section 2; omega 1cd04c8e; #276 comment 6274721769 |
-| Child interfaces, budgets and held-out gates frozen before experiments | IN PROGRESS | this document (L060); four pins frozen; entity pilot (L058) and #249 (L059) pin pending |
+| Child interfaces, budgets and held-out gates frozen before experiments | DONE for six pins | this document (L060); OEV1 5d864920, PRECOMMIT d009a2b0, LS584 9e1824d7, E03 293b49a7, entity pilot ec0c2e27, #249 de779dff; open: LS584 incremental, combined and stop-search rows (section 3.7) |
 | Simulator prediction error and selection regret measured on unseen cases under #262 | IN PROGRESS | #583 `research/cost-sim-583` (L050): round 1 G-err FAIL 0 of 4, G-cov FAIL 0 of 4 at omega d8c74201 (source observation, not re-checked here); selection regret NOT_RUN |
 | Lifecycle learning payoff reported, including failures and no-payoff regimes | IN PROGRESS | #246 `research/e03-payback-246` (L049) instrumented at 503f990f, held-out NOT_RUN; #584 `research/learning-search-584` (L048) sealed NOT_RUN |
-| Native pilot uses existing execution and persistence with qualified fallback and no authority bypass | IN PROGRESS | entity pilot `research/entity-pilot-276` (L058), not frozen |
+| Native pilot uses existing execution and persistence with qualified fallback and no authority bypass | RUN (bounded) | entity pilot `research/entity-pilot-276` at 21913232: G1 PASS, G2 PASS, G3 PASS, G4 NOT_RUN, G5 INCONCLUSIVE (retained plan did not pay back over 3 objectives; planning CPU negative); five missing prerequisites named, none built |
 | #263 receives a reproducible dossier and explicitly bounded verdict | NOT_RUN | format below |
 
 Final verdict format for #263: one table, one line per gate, columns gate, owning stream, frozen source sha, evidence
