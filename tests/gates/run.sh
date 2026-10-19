@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # tests/gates/run.sh: the one entry point for the local verification gates of aien-architecture.
-# Every step runs the SAME command as the hosted job it mirrors (.github/workflows/crumb.yml and
-# qualification-status.yml) or the repository's own offline scripts. Manifests under tests/gates/
+# Every step runs the SAME command as the hosted job it mirrors (qualification-status.yml) or the
+# repository's own offline scripts. Crumbs are advisory notes (RFC-0003 Am2): no gate checks them;
+# crumb-tool-test only runs the crumb tool's own unit tests. Manifests under tests/gates/
 # name this script plus one step word, so no manifest needs shell expansion (ADR 0028 P6).
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -10,19 +11,8 @@ step="${1:?usage: tests/gates/run.sh <step>}"
 obs() { printf 'AIEN-OBS %s %s\n' "$1" "$2"; }
 
 case "$step" in
-  crumb-verify)
-    # Hosted crumb.yml step "Crumbs must be exactly what the compiler produces now", with the
-    # same make target. The binary is built in a private copy of tools/crumb, not in place:
-    # crumb-tool-test builds and runs tools/crumb/crumb at the same time, and two gates writing
-    # and executing one file raced ("Text file busy", failed tool tests; SANDBOX lane 2026-10-11).
-    tool=$(mktemp -d)
-    trap 'rm -rf "$tool"' EXIT
-    cp tools/crumb/Makefile tools/crumb/crumb.c "$tool/"
-    make -C "$tool" crumb
-    "$tool/crumb" verify .
-    ;;
   crumb-tool-test)
-    # Hosted crumb.yml step "Build and test the crumb tool".
+    # The crumb tool's own unit tests (tools/crumb/test.sh).
     make -C tools/crumb test
     ;;
   qualification-status)
@@ -43,11 +33,11 @@ case "$step" in
   script-tests)
     # The offline tests of the repository's own operator scripts. Each builds temporary git
     # repos and fake gh/crumb tools under mktemp; no network, no auth (see their headers).
-    for t in scripts/test_pr_gate.sh scripts/test_rebase_crumb.sh scripts/test_check_candidate.sh scripts/test_check_candidate_pins.sh; do
+    for t in scripts/test_pr_gate.sh scripts/test_check_candidate.sh scripts/test_check_candidate_pins.sh; do
       echo "== $t"
       bash "$t"
     done
-    obs script_tests_run 4
+    obs script_tests_run 3
     ;;
   *)
     echo "run.sh: unknown step '$step'" >&2

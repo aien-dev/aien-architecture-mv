@@ -1,5 +1,5 @@
 # tests/gates/arch-crumb-tool-test.gate
-# Mirrors hosted: crumb.yml 'Build and test the crumb tool' (make -C tools/crumb test; hosted job 15 s)
+# The crumb tool's own unit tests (make -C tools/crumb test). Crumbs themselves are advisory (RFC-0003 Am2).
 gate: ARCH-CRUMB-TOOL-TEST
 manifest_version: 2
 owner: aien-architecture

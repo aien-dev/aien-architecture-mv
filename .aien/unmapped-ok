@@ -7,3 +7,7 @@ docs/**
 LICENSE
 .gitignore
 REPOSITORY_TREE.txt
+# Crumbs are advisory notes (RFC-0003 Am2, 2026-10-19): editing one needs only the always-run set.
+.crumb
+**/.crumb
+.crumbignore
