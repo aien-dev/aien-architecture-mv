@@ -28,6 +28,7 @@ Read in this order:
 5. [Architecture decision records](docs/adr/README.md)
 6. [Implementation status snapshot](docs/02-implementation-status.md) and [repository map](docs/01-github-repository-map.md)
 7. [Golden path](docs/13-golden-path.md)
+8. [Seed lineage](docs/SEED_LINEAGE.md): every running artifact, what builds it today, and which rung of the seed chain could birth it
 
 Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/README.md). If two documents disagree, do not write another master plan: record the discrepancy and fix the authority. Code and reproducible evidence beat any plan.
 
