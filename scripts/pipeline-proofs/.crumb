@@ -1,6 +1,0 @@
-{
-  "layer": "tooling",
-  "name": "pipeline-proofs",
-  "purpose": "Acceptance proofs 13-21 of the sovereign local pipeline (ADR 0033 amendment 2026-10-11): bash scripts that prove crumb determinism, fixed point, staleness, claims, crumb-only builds, admission, rebase and the final-SHA rule on temporary clones, plus the measured results.",
-  "schema_version": "1.0.0"
-}
