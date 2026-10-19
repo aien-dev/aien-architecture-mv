@@ -37,7 +37,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | :--- | :--- |
 | `PLAN_AUTHORITY.md`, `CURRENT_EXECUTION_PLAN.md` | Which plan wins, and the one active plan |
 | `doctrine/` | The canonical architecture and the milestone registry |
-| `docs/adr/` | Architecture decision records (37 on `main`, listed in the [index](docs/adr/README.md)) |
+| `docs/adr/` | Architecture decision records (38 on `main`, listed in the [index](docs/adr/README.md)) |
 | `docs/plans/` | Finite workstream plans (not master plans) |
 | `docs/research/` | Research notes, for example the [repository layout note](docs/research/repo-topology-unix-vs-monorepo-vs-hybrid.md) and the [Hermes Agent note](docs/research/hermes-agent-prior-art.md) |
 | `docs/archive/` | Superseded plans, kept for history only |
@@ -46,6 +46,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `tools/crumb/` | The crumb tool (C11), which compiles and checks the `.crumb` files |
 | `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate, crumb rebase helper) and their `test_*.sh` tests |
 | `tests/gates/` | The gate manifests the Spark runs on every pull request |
+| `agents.toml`, `skills/`, `tools/agent-hooks/` | Guidance for coding agents ([ADR 0038](docs/adr/0038-agent-guidance-travels-with-the-tree.md), proposed): the manifest, the component skill, and the hooks that refuse admin merges, force pushes, killing running jobs and edits to pipeline files. `tools/agent-hooks/` is the canonical copy for every repository in the tree |
 
 `AIEN_COMPLETE_SYSTEM_ARCHITECTURE.md` and `AIEN_MASTER_ARCHITECTURAL_PLAN.md` at the root are superseded pointers; the old versions are in `docs/archive/plans/`. The second one is stored in Git as a symbolic link whose target is the pointer text, so it does not open as a normal file; read [docs/archive/plans](docs/archive/plans/README.md) instead.
 
@@ -99,6 +100,8 @@ bash tests/gates/run.sh qualification-status  # gate ARCH-QUALIFICATION-STATUS: 
 ```
 
 `qualification-status` reads omega evidence, so it needs an omega checkout beside this one at `../omega`.
+
+The agent hooks are not a gate; test them with `bash tools/agent-hooks/test.sh` (red and green cases for each hook).
 
 ## How a pull request is judged
 

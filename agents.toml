@@ -1,0 +1,34 @@
+# agents.toml: agent-agnostic guidance manifest (schema v1, ADR 0038).
+# `aien agents sync` (aien-sovereign-core) turns this into each agent's own files.
+schema = 1
+
+[component]
+name = "aien-architecture"
+tree = "core"
+
+[[skills]]
+path = "skills/architecture-basics"
+
+[[hooks]]
+event = "pre-command"
+command = "tools/agent-hooks/no-admin-merge.sh"
+
+[[hooks]]
+event = "pre-command"
+command = "tools/agent-hooks/no-force-push.sh"
+
+[[hooks]]
+event = "pre-command"
+command = "tools/agent-hooks/no-kill-jobs.sh"
+
+[[hooks]]
+event = "pre-edit"
+command = "tools/agent-hooks/protected-paths.sh"
+
+[[hooks]]
+event = "pre-edit"
+command = "tools/agent-hooks/skill-context.sh"
+
+[attachments]
+# Attachments whose agents.toml is loaded at the pin boundary. None yet.
+allow = []
