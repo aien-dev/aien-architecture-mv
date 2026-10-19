@@ -104,7 +104,7 @@ bash tests/gates/run.sh qualification-status  # gate ARCH-QUALIFICATION-STATUS: 
 
 Since 2026-10-16 the DGX Spark is the only test judge for pull requests ([ADR 0033](docs/adr/0033-aien-verification-pipeline.md)). On 2026-10-18 the hosted test workflows were removed (pull request #270); the one workflow left in `.github/workflows/` is `aien-verification.yml`. The Spark runs the five gates above and signs the result. `main` is protected and requires only the `AIEN Verification` check, which confirms that the signed bundle is in [aien-receipts](https://github.com/aien-dev/aien-receipts). The verdict of record is the commit status "AIEN Verification (Spark)". [docs/PIPELINE.md](docs/PIPELINE.md) explains the flow.
 
-The crumb tool on `main` can now compute the generated part of each `.crumb` file on demand instead of storing it (RFC-0003 amendment 1, pull request #271, merged 2026-10-18; [docs/CRUMB_PROTOCOL_RFC_0003.md](docs/CRUMB_PROTOCOL_RFC_0003.md)). This repository has not switched yet: its `.crumb` files still store that data, so a change to any file needs `crumb compile .` and a fresh crumb commit.
+The crumb tool on `main` can now compute the generated part of each `.crumb` file on demand instead of storing it (RFC-0003 amendment 1, pull request #271, merged 2026-10-18; [docs/CRUMB_PROTOCOL_RFC_0003.md](docs/CRUMB_PROTOCOL_RFC_0003.md)). This repository switched on 2026-10-19 (pull request #272): its `.crumb` files no longer store that data, and `crumb verify .` computes it when it checks.
 
 ## Where the evidence lives
 
