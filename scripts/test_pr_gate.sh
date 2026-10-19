@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Offline test for pr-gate.sh. A fake `gh` on PATH answers from fixture JSON chosen by $CASE and
-# records any merge command line. Local and crumb steps use real temporary git repos (bare origin
-# plus worktree) and a fake `crumb`. No network, no auth.
+# records any merge command line. The local step uses real temporary git repos (bare origin plus
+# worktree). Crumbs are advisory (RFC-0003 Am2): the gate must never check them. No network, no auth.
 set -u
 here="$(cd "$(dirname "$0")" && pwd)"
 gate="$here/pr-gate.sh"
@@ -29,11 +29,10 @@ case "$1 $2" in
   *) echo "fake gh: unhandled: $*" >&2; exit 2 ;;
 esac
 S
+# A crumb tool that always fails: if pr-gate.sh ever calls it again, the cases below go red.
 cat > "$tmp/bin/crumb" <<'S'
 #!/usr/bin/env bash
-[ "$1" = verify ] || exit 0
-if [ "${CRUMB_FAIL:-0}" = 1 ]; then echo "crumb verify: FAIL: stale"; exit 1; fi
-echo "crumb verify: OK"
+echo "crumb $1: FAIL: pr-gate.sh must not call crumb"; exit 1
 S
 chmod +x "$tmp/bin/gh" "$tmp/bin/crumb"
 export PATH="$tmp/bin:$PATH"
@@ -66,7 +65,7 @@ fx clean;      export CASE=clean;     expect 0 "clean PR passes dry run" repo1 7
 has "dry run prints pr PASS" 'GATE pr: PASS'
 has "local skipped without worktree" 'GATE local: SKIP no worktree given'
 has "merge skipped in dry run" 'GATE merge: SKIP dry run'
-has "queue marks BEHIND PR as needing rebase" 'QUEUE #9 other BEHIND needs scripts/rebase-crumb.sh'
+has "queue marks BEHIND PR as needing rebase" 'QUEUE #9 other BEHIND needs a rebase onto origin/main'
 has "queue shows clean PR plainly" 'QUEUE #10 third CLEAN$'
 hasnot "queue omits the PR itself" 'QUEUE #7 '
 check_nomerge() { if [ ! -e "$FX/$1/merge.cmd" ]; then ok; else no "$2"; fi; }
@@ -115,24 +114,25 @@ has "reports not MERGED" 'not MERGED'
 CASE=clean expect 2 "bad usage exits 2" repo1
 CASE=clean expect 2 "non-numeric PR exits 2" repo1 abc
 
-# ---- local and crumb cases with real git repos
-# mkrepo <name> [nocrumb]: main has src.txt (+ .crumb); branch feat = commit "feat", then (crumbs) commit "crumb compile".
+# ---- local cases with real git repos
+# mkrepo <name> [nocrumb]: main has src.txt (+ .crumb); branch feat = commit "feat", then (crumbs) a commit
+# that edits .crumb together with source, which is fine now (no separate crumb commit rule).
 mkrepo() {
   d="$tmp/$1"; mkdir -p "$d"; git init -q --bare -b main "$d/origin.git"; git init -q -b main "$d/seed"
   ( cd "$d/seed" && echo base > src.txt && { [ "${2:-}" = nocrumb ] || echo c0 > .crumb; } && git add -A && git commit -q -m base \
     && git remote add origin "$d/origin.git" && git push -q origin main )
   git clone -q "$d/origin.git" "$d/w"
   ( cd "$d/w" && git checkout -q -b feat && echo feat > feat.txt && git add -A && git commit -q -m feat
-    if [ "${2:-}" != nocrumb ]; then echo c1 > .crumb && git add -A && git commit -q -m "crumb compile"; fi
+    if [ "${2:-}" != nocrumb ]; then echo c1 > .crumb && echo src1 > src1.txt && git add -A && git commit -q -m "source and crumb together"; fi
     git push -q origin feat )
   W="$d/w"
 }
 lfx() { # lfx <case> : fixture whose headRefOid is the worktree HEAD
   fx "$1" ".headRefOid=\"$(git -C "$W" rev-parse HEAD)\""
 }
-mkrepo l1; lfx l1; CASE=l1 expect 0 "local+crumb clean passes" repo1 7 --dry-run --worktree "$W"
+mkrepo l1; lfx l1; CASE=l1 expect 0 "local clean passes; last commit mixes source and .crumb" repo1 7 --dry-run --worktree "$W"
 has "local PASS" 'GATE local: PASS'
-has "crumb PASS" 'GATE crumb: PASS'
+hasnot "no crumb step any more" 'GATE crumb'
 
 mkrepo l2; echo dirt >> "$W/feat.txt"; lfx l2; CASE=l2 expect 1 "dirty worktree refuses" repo1 7 --dry-run --worktree "$W"
 has "dirty reason" 'worktree is dirty'
@@ -147,22 +147,14 @@ has "oid mismatch reason" 'differs from GitHub head'
 mkrepo l5
 ( cd "$tmp/l5/seed" && echo more > more.txt && git add -A && git commit -q -m "main moves" && git push -q origin main )
 lfx l5; CASE=l5 expect 1 "stale base refuses" repo1 7 --dry-run --worktree "$W"
-has "stale base points at rebase script" 'run scripts/rebase-crumb.sh'
+has "stale base says rebase" 'rebase onto origin/main'
 
-mkrepo l6; ( cd "$W" && echo src2 > src2.txt && git add -A && git commit -q --amend -m "mixed" )
-lfx l6; CASE=l6 expect 1 "HEAD commit mixing source and .crumb refuses" repo1 7 --dry-run --worktree "$W"
-has "mixed commit reason" 'must be separate and last'
-
-mkrepo l7; lfx l7; CRUMB_FAIL=1 CASE=l7 expect 1 "crumb verify failure refuses" repo1 7 --dry-run --worktree "$W"
-has "verify reason" 'did not print OK'
+# a crumb that is not even JSON never blocks a merge
+mkrepo l6; ( cd "$W" && echo '{broken' > .crumb && git add -A && git commit -q -m "broken note" && git push -q origin feat )
+lfx l6; CASE=l6 expect 0 "a broken .crumb does not block the gate" repo1 7 --dry-run --worktree "$W"
 
 mkrepo l8 nocrumb; lfx l8; CASE=l8 expect 0 "repo without crumbs passes" repo1 7 --dry-run --worktree "$W"
-has "no crumbs gives SKIP notice" 'GATE crumb: SKIP no crumbs in repo \(rule 2 notice\)'
-
-# crumbs exist but this PR does not touch them: HEAD may be a source commit
-mkrepo l9
-( cd "$W" && git reset -q --hard HEAD~1 && git push -q -f origin feat )
-lfx l9; CASE=l9 expect 0 "PR that does not touch crumbs may end on a source commit" repo1 7 --dry-run --worktree "$W"
+hasnot "no crumb notice either" 'GATE crumb'
 
 echo "PASS $pass FAIL $bad"
 [ "$bad" -eq 0 ]

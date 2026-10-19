@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # PR merge gate for aien-dev repositories. Reads GitHub state at the moment of the call, checks
-# docs/REPOSITORY_EXECUTION_RULES.md rules 2, 4 and 5, then (unless --dry-run) squash-merges.
+# docs/REPOSITORY_EXECUTION_RULES.md rules 4 and 5, then (unless --dry-run) squash-merges.
 # It does not replace a human read of the diff, and it never rebases anything by itself.
 #
 # Usage: pr-gate.sh <repo> <pr-number> [--worktree DIR] [--dry-run] [--admin-authorized-by "<who, date, reason>"]
-# Env:   GH (default gh), GIT (default git), CRUMB (default crumb), SLEEP_SECS (default 10, UNKNOWN retry).
+# Env:   GH (default gh), GIT (default git), SLEEP_SECS (default 10, UNKNOWN retry).
+# Crumbs are advisory notes (RFC-0003 Am2): this gate never checks them.
 # Output: one line per step, "GATE <step>: PASS|FAIL|SKIP <reason>". Exit 1 at the first FAIL.
 set -u
 GH=${GH:-gh}
 GIT=${GIT:-git}
-CRUMB=${CRUMB:-crumb}
 SLEEP_SECS=${SLEEP_SECS:-10}
 
 usage() { echo 'usage: pr-gate.sh <repo> <pr-number> [--worktree DIR] [--dry-run] [--admin-authorized-by "<who, date, reason>"]' >&2; exit 2; }
@@ -55,27 +55,11 @@ else
   CUR=$($G rev-parse --abbrev-ref HEAD)
   [ "$CUR" = "$HEADREF" ] || fail local "worktree is on $CUR, PR branch is $HEADREF"
   [ "$($G rev-parse HEAD)" = "$HEADOID" ] || fail local "local HEAD $($G rev-parse --short HEAD) differs from GitHub head ${HEADOID:0:7}"
-  [ "$($G merge-base origin/main HEAD)" = "$($G rev-parse origin/main)" ] || fail local "stale base, branch is not on current origin/main; run scripts/rebase-crumb.sh"
+  [ "$($G merge-base origin/main HEAD)" = "$($G rev-parse origin/main)" ] || fail local "stale base, branch is not on current origin/main; rebase onto origin/main"
   pass local "clean, on $CUR, HEAD matches GitHub, based on current origin/main"
 fi
 
-# 3. crumb
-if [ -z "$WT" ]; then
-  skip crumb "no worktree given"
-elif ! $G ls-files '*.crumb' '**/.crumb' | grep -q .; then
-  skip crumb "no crumbs in repo (rule 2 notice)"
-else
-  VOUT=$(cd "$WT" && $CRUMB verify . 2>&1); VRC=$?
-  VLAST=$(echo "$VOUT" | tail -1)
-  { [ "$VRC" -eq 0 ] && echo "$VLAST" | grep -q 'OK' && ! echo "$VLAST" | grep -q 'FAIL'; } || fail crumb "crumb verify did not print OK: $VLAST"
-  if $G diff --name-only origin/main...HEAD | grep -q '\.crumb$'; then
-    NONCRUMB=$($G diff-tree --no-commit-id --name-only -r HEAD | grep -v '\.crumb$' || true)
-    [ -z "$NONCRUMB" ] || fail crumb "crumbs changed but the HEAD commit also changes source ($(echo "$NONCRUMB" | head -3 | tr '\n' ' ')); the crumb commit must be separate and last (rule 2)"
-  fi
-  pass crumb "verify OK, crumb commit is separate and last"
-fi
-
-# 4. base
+# 3. base
 TRIES=0
 while :; do
   MSS=$(f .mergeStateStatus); MRG=$(f .mergeable)
@@ -98,7 +82,7 @@ case "$MSS" in
   *) fail base "unexpected mergeStateStatus $MSS" ;;
 esac
 
-# 5. checks
+# 4. checks
 RD=$(f '.reviewDecision // ""')
 case "$RD" in
   CHANGES_REQUESTED) fail checks "reviewDecision is CHANGES_REQUESTED" ;;
@@ -123,7 +107,7 @@ else
   pass checks "$(echo "$PROT" | jq 'length') required contexts green, reviewDecision ${RD:-none}"
 fi
 
-# 6. merge
+# 5. merge
 if [ "$DRY" = 1 ]; then
   skip merge "dry run"
 else
@@ -136,9 +120,9 @@ else
   pass merge "$NOTE; merge commit $(echo "$POST" | jq -r '.mergeCommit.oid // "unknown"')"
 fi
 
-# 7. queue
+# 6. queue
 LIST=$($GH pr list -R "$FULL" --json number,headRefName,mergeStateStatus 2>&1) || fail queue "could not list open PRs: $(echo "$LIST" | head -1)"
 echo "$LIST" | jq -r --argjson me "$N" '.[] | select(.number != $me)
-  | "QUEUE #\(.number) \(.headRefName) \(.mergeStateStatus)" + (if (.mergeStateStatus == "BEHIND" or .mergeStateStatus == "DIRTY") then " needs scripts/rebase-crumb.sh" else "" end)'
+  | "QUEUE #\(.number) \(.headRefName) \(.mergeStateStatus)" + (if (.mergeStateStatus == "BEHIND" or .mergeStateStatus == "DIRTY") then " needs a rebase onto origin/main" else "" end)'
 pass queue "$(echo "$LIST" | jq --argjson me "$N" '[.[] | select(.number != $me)] | length') other open PRs listed, none rebased"
 exit 0
