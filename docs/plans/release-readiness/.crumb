@@ -1,18 +1,4 @@
 {
-  "extensions": {
-    "generated": {
-      "children": [],
-      "children_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "compiled_at": "2026-10-16T07:40:02Z",
-      "compiler": "crumb-compile/1",
-      "digest": "sha256:eac6d699107818822ec7c9acf8cb107ab8221f77783041db7c49a3c46e3a5d67",
-      "evidence_files": 0,
-      "evidence_root": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "files": 3,
-      "generated_at_commit": "4de457b65fe64a43deeb19ae495243ae63a44409",
-      "source_tree": "sha256:787d8b9aa98c40a11b2a21d211d2a8bc29e1f10ae3c8b418eb377c59c67f5e4d"
-    }
-  },
   "name": "release-readiness",
   "purpose": "Release-readiness finite workstream (aien-architecture#190): gap assessment, integration plan and the WHOLE-SYSTEM-E2E acceptance test for finishing AIEN as one usable system. NOT A MASTER PLAN.",
   "schema_version": "1.0.0"
