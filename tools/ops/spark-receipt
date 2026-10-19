@@ -1,0 +1,102 @@
+#!/bin/sh
+# spark-receipt: run a command between sensor samples and print a receipt.
+#
+# usage: spark-receipt NAME [--idle SECS] -- CMD ARGS...
+# Records start/end, reads ~/yardsticks/sensors/<date>.csv for the window,
+# and writes ~/yardsticks/receipts/<date>-<NAME>.json with:
+#   wall energy (J) over the run, mean wall W, mean GPU W, idle baseline W
+#   (mean of the --idle seconds before start, default 30), incremental J,
+#   load and MemAvailable at start/end, lock holders, NVRM error delta,
+#   command, exit code, git head of cwd if any. Energy resolution: the UPS
+#   reports 1% of 1000 W every ~2 s, so numbers under ~20 J are noise.
+# Measurement windows (spark-window): when SPARK_WINDOW is set (spark-window
+#   run sets it), the receipt also carries window_id and the path of that
+#   window's calibration.json (null when either is absent).
+# Shell + awk port of the earlier Python version: same keys, same file name,
+#   same stdout (command output, then the JSON, then "receipt: PATH").
+set -u
+usage() { sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'; exit 2; }
+[ $# -ge 1 ] || usage
+name=$1; shift; idle=30
+while [ $# -gt 0 ] && [ "$1" != "--" ]; do
+  case $1 in --idle) idle=${2:?}; shift 2 ;; *) shift ;; esac
+done
+[ $# -gt 0 ] || usage
+shift
+[ $# -gt 0 ] || usage
+S=$HOME/yardsticks/sensors; R=$HOME/yardsticks/receipts; WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
+t_idle0=$(( $(date +%s) - idle ))
+head=$(git rev-parse --short HEAD 2>/dev/null)
+start=$(date +%Y-%m-%dT%H:%M:%S.%6N)
+t0=$(date +%s.%N)
+"$@"; rc=$?
+t1=$(date +%s.%N)
+sleep 3
+win=${SPARK_WINDOW:-}; cal=""
+if [ -n "$win" ]; then
+  wd=${SPARK_WINDOW_DIR:-$WR/$win}
+  [ -f "$wd/calibration.json" ] && cal=$wd/calibration.json
+fi
+i0=${t0%.*}; i1=${t1%.*}
+files=""
+for d in $(date -d "@$t_idle0" +%F) $(date -d "@$i0" +%F) $(date -d "@$i1" +%F); do
+  case " $files " in *" $S/$d.csv "*) ;; *) [ -f "$S/$d.csv" ] && files="$files $S/$d.csv" ;; esac
+done
+mkdir -p "$R"
+p=$R/$(date +%F)-$name.json
+cmd=$(printf '%s ' "$@"); cmd=${cmd% }
+# shellcheck disable=SC2086
+awk -F, -v name="$name" -v cmd="$cmd" -v rc="$rc" -v head="$head" -v start="$start" \
+    -v t0="$t0" -v t1="$t1" -v ti="$t_idle0" -v i0="$i0" -v i1="$i1" -v win="$win" -v cal="$cal" '
+function isnum(s) { return s ~ /^[ \t]*[-+]?([0-9]+\.?[0-9]*|\.[0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+function esc(s) { gsub(/\\/, "\\\\", s); gsub(/"/, "\\\"", s); gsub(/\t/, "\\t", s); gsub(/\n/, "\\n", s); gsub(/\r/, "\\r", s); return s }
+function str(s) { return "\"" esc(s) "\"" }
+function strn(s) { return s == "" ? "null" : str(s) }
+function n(x,  s) { s = sprintf("%.10g", x); if (s !~ /[.eEn]/) s = s ".0"; return s }  # floats keep a decimal point, as the Python version printed them
+!isnum($1) { next }
+{ t = int($1) }
+t >= ti && t <= i0 && isnum($3) { pre_w += $3; pre_n++ }
+t >= i0 && t <= i1 {
+  nr++; ts[nr] = t; ix[nr] = nr; row[nr] = $0
+}
+END {
+  # rows in time order, stable (insertion sort on the epoch)
+  for (i = 2; i <= nr; i++) { v = ts[i]; x = ix[i]; j = i - 1; while (j > 0 && ts[j] > v) { ts[j+1] = ts[j]; ix[j+1] = ix[j]; j-- } ts[j+1] = v; ix[j+1] = x }
+  for (i = 1; i <= nr; i++) {
+    split(row[ix[i]], c, ",")
+    if (isnum(c[3])) { w += c[3]; wn++ }
+    if (isnum(c[4])) { g += c[4]; gn++ }
+    if (isnum(c[5])) { u += c[5]; un++ }
+    if (isnum(c[8]) && (lk == "" || c[8] + 0 > lk + 0)) lk = c[8] + 0
+    if (i == 1) { l0 = c[6]; m0 = c[7]; e0 = c[9] }
+    if (i == nr) { l1 = c[6]; m1 = c[7]; e1 = c[9] }
+  }
+  dur = t1 - t0
+  wm = wn ? w / wn : ""; im = pre_n ? pre_w / pre_n : ""
+  print "{"
+  print " \"name\": " str(name) ","
+  print " \"cmd\": " str(cmd) ","
+  print " \"exit\": " rc ","
+  print " \"git_head\": " strn(head) ","
+  print " \"start\": " str(start) ","
+  print " \"seconds\": " sprintf("%.3f", dur) ","
+  print " \"samples\": " nr + 0 ","
+  print " \"wall_W_mean\": " (wn ? n(wm) : "null") ","
+  print " \"wall_J\": " (wn ? n(wm * dur) : "null") ","
+  print " \"idle_W_before\": " (pre_n ? n(im) : "null") ","
+  print " \"incremental_J\": " ((wn && pre_n) ? n((wm - im) * dur) : "null") ","
+  print " \"gpu_W_mean\": " (gn ? n(g / gn) : "null") ","
+  print " \"gpu_util_mean\": " (un ? n(u / un) : "null") ","
+  print " \"load1_start\": " (nr ? str(l0) : "null") ","
+  print " \"load1_end\": " (nr ? str(l1) : "null") ","
+  print " \"mem_avail_kB_start\": " (nr ? str(m0) : "null") ","
+  print " \"mem_avail_kB_end\": " (nr ? str(m1) : "null") ","
+  print " \"lock_holders_max\": " (lk == "" ? "null" : lk) ","
+  print " \"nvrm_errors_delta\": " ((nr && isnum(e0) && isnum(e1)) ? e1 - e0 : "null") ","
+  print " \"note\": \"wall W = UPS ups.load x 10 (CP1500PFCLCD, 1 percent steps, ~2 s); whole UPS output, not the Spark alone\","
+  print " \"window_id\": " strn(win) ","
+  print " \"calibration\": " strn(cal)
+  print "}"
+}' $files /dev/null > "$p.tmp.$$" && mv -f "$p.tmp.$$" "$p"
+cat "$p"; echo "receipt: $p"
+exit $rc

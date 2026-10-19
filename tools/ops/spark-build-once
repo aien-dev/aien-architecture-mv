@@ -1,0 +1,120 @@
+#!/bin/sh
+# spark-build-once [--out PATH]... [--link] [--] CMD...
+#
+# Build once, reuse everywhere. Run from inside a git worktree. The cache key is
+# the source tree as it is on disk (HEAD tree + uncommitted diff + untracked,
+# not-ignored files), the folder you run from, the exact command, the --out
+# list, the machine type, and the env knobs PHYSICS_DIR / AIENOS_LOCK_REPO (their
+# values, plus their own tree hash when they point into a git worktree).
+#
+#   hit : copies the stored artifacts into your --out paths (or symlinks with
+#         --link) and returns in seconds; the build does not run.
+#   miss: runs CMD through quiet-build, then stores every --out path under
+#         $SPARK_BUILD_CACHE/<key> by atomic rename. A failed build stores nothing.
+#
+# Concurrent callers with the same key: one builds, the others wait on the
+# per-key lock (they print who holds it and for how long) and then take the hit.
+# Every call appends one line to ~/yardsticks/build-once.log.
+# Exit code: the build's own on a miss, 0 on a hit, 2 on usage errors.
+set -u
+C=${SPARK_BUILD_CACHE:-$HOME/.cache/spark-build-once}
+LOG=$HOME/yardsticks/build-once.log
+outs=""; link=0
+while [ $# -gt 0 ]; do
+  case $1 in
+    --out) [ $# -ge 2 ] || { echo "spark-build-once: --out needs a path" >&2; exit 2; }
+           case $2 in /*|*..*) echo "spark-build-once: --out must be a relative path inside the worktree: $2" >&2; exit 2;; esac
+           outs="$outs
+$2"; shift 2 ;;
+    --link) link=1; shift ;;
+    --) shift; break ;;
+    -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
+    *) break ;;
+  esac
+done
+[ $# -gt 0 ] || { echo "usage: spark-build-once [--out PATH]... [--link] [--] CMD..." >&2; exit 2; }
+outs=$(printf '%s\n' "$outs" | sed '/^$/d')
+[ -n "$outs" ] || { echo "spark-build-once: name at least one artifact with --out PATH" >&2; exit 2; }
+top=$(git rev-parse --show-toplevel 2>/dev/null) || { echo "spark-build-once: not inside a git worktree" >&2; exit 2; }
+mkdir -p "$C" "$(dirname "$LOG")"
+
+# tree_hash DIR: HEAD tree + hash of uncommitted diff and untracked files (writes no git objects)
+tree_hash() {
+  ( cd "$1" || exit 1
+    t=$(git rev-parse -q --verify 'HEAD^{tree}' 2>/dev/null || echo none)
+    d=$( { git diff HEAD --binary 2>/dev/null; git ls-files -o --exclude-standard -z | xargs -0 -r sha256sum; } | sha256sum | cut -c1-64)
+    echo "$t $d" )
+}
+src=$(tree_hash "$top")
+knobs=""
+for v in PHYSICS_DIR AIENOS_LOCK_REPO; do
+  eval "val=\${$v:-}"
+  h=""
+  if [ -n "$val" ] && [ -d "$val" ] && kt=$(git -C "$val" rev-parse --show-toplevel 2>/dev/null); then h=$(tree_hash "$kt"); fi
+  knobs="$knobs $v=$val[$h]"
+done
+cmdh=$(printf '%s\0' "$@" | sha256sum | cut -c1-64)
+key=$(printf 'v1\n%s\n%s\n%s\n%s\n%s\n%s\n' "$src" "$(git rev-parse --show-prefix)" "$cmdh" "$outs" "$knobs" "$(uname -m)" | sha256sum | cut -c1-24)
+D=$C/$key
+t0=$(date +%s)
+log() { printf '%s\t%s\t%s\t%ss\t%s\t' "$(date -u +%FT%TZ)" "$key" "$1" "$(( $(date +%s) - t0 ))" "$PWD" >> "$LOG"; shift; printf '%s ' "$@" | tr '\t\n' '  ' >> "$LOG"; echo >> "$LOG"; }
+echo "spark-build-once: key $key (source $(echo "$src" | cut -c1-12), cmd: $*)" >&2
+
+restore() {
+  while IFS= read -r p; do
+    s=$D/out/$p
+    [ -e "$s" ] || [ -L "$s" ] || { echo "spark-build-once: cache entry $key lacks $p" >&2; return 1; }
+    mkdir -p "$(dirname "$p")"
+    if [ "$link" = 1 ]; then
+      if [ -d "$p" ] && [ ! -L "$p" ]; then echo "spark-build-once: --link refuses to replace the real directory $p" >&2; return 1; fi
+      ln -sfn "$s" "$p" || return 1
+    elif [ -d "$s" ] && [ ! -L "$s" ]; then
+      mkdir -p "$p" && cp -a "$s/." "$p/" || return 1
+    else
+      cp -a --remove-destination "$s" "$p" || return 1
+    fi
+  done <<EOF
+$outs
+EOF
+}
+
+hit() {
+  restore || { log FAIL-RESTORE "$@"; exit 1; }
+  echo "spark-build-once: HIT $key (built $(sed -n 's/^built //p' "$D/meta") in $(sed -n 's/^from //p' "$D/meta"); $(( $(date +%s) - t0 )) s)" >&2
+  log HIT "$@"; exit 0
+}
+
+# fast path: already stored, no lock needed (entries are only ever created by rename)
+[ -f "$D/meta" ] && hit "$@"
+
+exec 8>"$D.lock"
+if ! flock -n 8; then
+  while ! flock -w 60 8; do
+    echo "spark-build-once: waiting $(( $(date +%s) - t0 )) s for key $key, held by: $(cat "$D.who" 2>/dev/null || echo unknown)" >&2
+  done
+fi
+echo "pid $$ since $(date -u +%FT%TZ) in $PWD" > "$D.who"
+[ -f "$D/meta" ] && hit "$@"
+
+echo "spark-build-once: MISS $key, building through quiet-build" >&2
+quiet-build "$@"; rc=$?
+if [ $rc -ne 0 ]; then echo "spark-build-once: build failed (exit $rc), nothing stored" >&2; log "FAIL-$rc" "$@"; exit $rc; fi
+T=$C/.tmp.$key.$$
+rm -rf -- "$T"; mkdir -p "$T/out"
+ok=1
+while IFS= read -r p; do
+  if [ ! -e "$p" ]; then echo "spark-build-once: build passed but --out $p does not exist; not stored" >&2; ok=0; continue; fi
+  mkdir -p "$T/out/$(dirname "$p")" && cp -a "$p" "$T/out/$p" || ok=0
+done <<EOF
+$outs
+EOF
+if [ $ok = 1 ]; then
+  { echo "key $key"; echo "built $(date -u +%FT%TZ)"; echo "from $PWD"; echo "seconds $(( $(date +%s) - t0 ))"
+    echo "source $src"; echo "knobs$knobs"; printf 'cmd'; printf ' %s' "$@"; echo; echo "outs"; echo "$outs"; } > "$T/meta"
+  mv -T "$T" "$D" 2>/dev/null || { rm -rf -- "$T"; echo "spark-build-once: another caller stored $key first; kept theirs" >&2; }
+  echo "spark-build-once: stored $key ($(du -sh "$D" | cut -f1))" >&2
+  log MISS-STORED "$@"
+else
+  rm -rf -- "$T"; log MISS-NOTSTORED "$@"
+fi
+exit 0
