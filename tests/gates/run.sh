@@ -11,6 +11,10 @@ step="${1:?usage: tests/gates/run.sh <step>}"
 obs() { printf 'AIEN-OBS %s %s\n' "$1" "$2"; }
 
 case "$step" in
+  # Retired: crumbs are advisory (RFC-0003 Am2). Kept so the CRUMB-VERIFY manifest still resolves.
+  crumb-verify)
+    echo "CRUMB-VERIFY retired: crumbs are advisory notes (RFC-0003 Am2); nothing to check"
+    ;;
   crumb-tool-test)
     # The crumb tool's own unit tests (tools/crumb/test.sh).
     make -C tools/crumb test
