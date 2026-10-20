@@ -15,5 +15,5 @@ with a time stamp per piece, the request, the GPU-lock samples and the receipts,
 | Reply fingerprint (fixed prompt, seed 1, greedy) | sha256 9132f20e... |
 | Checks | ok: 64 tokens, HTTP 200 on the first send, no other GPU-lock holder during the decode, window held throughout, reply streamed (not one burst) |
 
-The client and server decode times agree to 2 ms. The 27B server was busy with other clients for 96 s
+The client and server decode times agree to 2 ms. The 27B server was busy with other clients for at least 96 s
 before our send (480 polls of /health at 0.2 s); the decode itself is unaffected by that wait.
