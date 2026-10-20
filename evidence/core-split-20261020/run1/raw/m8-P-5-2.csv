@@ -1,0 +1,15 @@
+# omega-mv#583 memcpy_probe; cmd=memcpy_probe 1 8 10; bytes_copied=1000000000 (read+write counted twice below, as in M1 block4)
+# before 2026-10-19T23:28:10-0500 loadavg=48.09 43.12 43.20 46/3073 2649102 MemAvailable=   60877132 kB
+# timer=CLOCK_MONOTONIC overhead_ns_per_read=23.1 (1000 reads)
+gb,threads,rep,seconds,GBps_read_plus_write
+1,8,0,0.0270,74.2
+1,8,1,0.0359,55.7
+1,8,2,0.0314,63.6
+1,8,3,0.0399,50.2
+1,8,4,0.0339,59.0
+1,8,5,0.0279,71.6
+1,8,6,0.0319,62.8
+1,8,7,0.0400,50.0
+1,8,8,0.0340,58.9
+1,8,9,0.0429,46.6
+# after 2026-10-19T23:28:11-0500 loadavg=48.09 43.12 43.20 38/3056 2649487 MemAvailable=   60650216 kB

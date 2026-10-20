@@ -51,7 +51,9 @@ trial() {  # cond cycle k
     "$(echo "$s" | sed -n 's/.*ns=\([0-9]*\).*/\1/p')" "$(echo "$s" | sed -n 's/.*cpu_start=\([0-9]*\) cpu_end=\([0-9]*\).*/\1-\2/p')" >> "$T"
 }
 
-exec 9>/tmp/aien-gb10.lock; w0=$(date +%s); flock 9; echo "gb10_lock_wait_s=$(( $(date +%s) - w0 )) at $(date -u +%FT%TZ)" >> "$OUT/start.txt"
+# A window opened with --gb10 exclusive (spark-window default since 10-20) already holds the chip lock for us;
+# taking it again here would wait on our own window (run1 lost 916 s to that).
+exec 9>/tmp/aien-gb10.lock; w0=$(date +%s); [ "$(cat "$WR/$SPARK_WINDOW/gb10" 2>/dev/null)" = exclusive ] || flock 9; echo "gb10_lock_wait_s=$(( $(date +%s) - w0 )) at $(date -u +%FT%TZ)" >> "$OUT/start.txt"
 trial warm 0 0; trial warm 0 1          # warm-up, not analysed
 tail -n 1 "$T" | cut -f7 | grep -q -E "^[0-9]+$" || { echo "GPU slice gave no number; see $OUT/raw/g-warm-0-1.log" >&2; exit 4; }
 c=1

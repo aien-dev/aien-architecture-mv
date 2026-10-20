@@ -1,0 +1,14 @@
+tv q38gu: n 34816 k 5120 (weights 178.3 MB), rows 1, weight cache 1
+tv N 1: emulation check on 1 rows: 0 of 34816 differ (bit-identical)
+tv N 1: rt 1 ct 4 warps 4; 0 of 34816 outputs differ from the N=1 pass (same bits); 0 unwritten, 0 written beyond row N
+tv xf32 N 1: rt 1 ct 4 warps 4; ok, 0 of 34816 differ from the reference (same bits); chip median 1004.4 us (11), weights 177.5 GB/s
+tv f32 call N 1: ok, 0 of 34816 differ from the device pass; whole call median 1113.1 us (5 calls)
+TVGEMM q38gu N 1 (median of 11, min 967.4, max 999.1 us): chip 981.1 us; weights 181.7 GB/s; 0.36 TFLOPS
+tv N 1: rt 1 ct 4 warps 4; 0 of 34816 outputs differ from the N=1 pass (same bits); 0 unwritten, 0 written beyond row N
+tv f32 call N 1: ok, 0 of 34816 differ from the device pass; whole call median 1055.6 us (5 calls)
+TVGEMM q38gu N 1 (median of 11, min 981.9, max 1169.1 us): chip 1006.6 us; weights 177.1 GB/s; 0.35 TFLOPS
+tv mutant 1 (N 1): caught (34816 of 34816 differ)
+tv mutant 2 (N 1): caught (34816 of 34816 differ)
+tv mutant 4 (N 1): caught (34816 of 34816 differ)
+tv: PASS
+GPU_TCGEMM: PASS

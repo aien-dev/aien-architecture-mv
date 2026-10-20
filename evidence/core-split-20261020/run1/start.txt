@@ -1,0 +1,12 @@
+window=20261020T040951Z-ddf3d8 start=2026-10-20T04:09:55Z cycles=6 trials=2
+53cf159bdf2535bfbf24e8c628d3b8bc7208e6f2d5d0df4bf56884ba95243a8f  /home/drakestapleton/workspace/targets/cascade/bin/gpu_tcgemm_test-00659ce6
+a9ef1c14caba26ab55edc1c93cfbbae2c65f467b6d744c429e06f500714cb28c  /home/drakestapleton/.cache/spark-shared/memcpy_probe-a4234222ecc4
+fe65ddb46325195dae6da6c1f938ba3d4418fc07abc0fe27b4fe021a298d70a4  /tmp/l118-build/cpuspin
+omega_src=a8ffd2b912c84197d08f963b05f9c7d8b30a3f8a physics_pin=6d7cf0d4
+50.58 47.80 48.07 62/3164 1067563
+MemAvailable:   49210368 kB
+0 %, 24.24 W, 1371 MHz, [N/A]
+gb10_lock_wait_s=916 at 2026-10-20T04:25:12Z
+gpu_part_end=2026-10-20T04:29:24Z
+end=2026-10-20T04:30:13Z
+50.58 45.17 43.91 47/2962 2788201

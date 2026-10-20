@@ -1,0 +1,15 @@
+%CPU PSR ELAPSED USER     COMMAND
+1020  17    2679 drakest+ ./qwen38_subbit.ref-build /home/drakestapleton/models/qwen3.8-27b-fp8-017b9c7a /home/drakestapleton/workspace/ab-w4-work/seq out-trell
+ 100   7       0 aien-run git status --porcelain
+98.2  15  153570 root     [nvidia-modeset/kthread_q]
+83.6  19       0 aien-run git status --porcelain
+68.6   5       2 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name axum --edition=2021 /var/lib/aien-run/carg
+67.8   5       0 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name mailparse --edition=2018 /var/lib/aien-run
+66.3   3       4 drakest+ /home/drakestapleton/workspace/targets/speed2/pinned/qwen38_spec-e6bd69c9-omega4b20a9c5 suite /home/drakestapleton/models/qwen3.8-27b-
+60.5   6       0 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name aien_probe --edition=2021 /var/lib/aien-ru
+57.4  10       0 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name cortex_path_m1 --edition=2021 crates/corte
+54.3  13       4 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name aien_test --edition=2021 tools/aien-test/s
+52.9  15       3 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name rmcp --edition=2024 /var/lib/aien-run/carg
+50.5   1       9 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name crumbs --edition=2021 crates/crumbs/src/li
+48.9   9       5 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name cortex_rs --edition=2021 crates/cortex-rs/
+44.2   3       3 aien-run /var/lib/aien-run/rustup/toolchains/1.98.1-aarch64-unknown-linux-gnu/bin/rustc --crate-name spark_harness --edition=2021 crates/spark-

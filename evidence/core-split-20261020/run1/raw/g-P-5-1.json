@@ -1,0 +1,3 @@
+{"shape":"q38gu","n":34816,"k":5120,"rows":1,"xform":"f32","rt":1,"ct":4,"warps":4,"weight_cache":1,"reps":11,"chip_median_ns":983672,"weights_gbps":181.22}
+{"shape":"q38gu","n":34816,"k":5120,"rows":1,"rt":1,"ct":4,"warps":4,"weight_cache":1,"reps":11,"chip_median_ns":976168,"chip_min_ns":952088,"weights_gbps":182.61}
+{"shape":"q38gu","n":34816,"k":5120,"rows":1,"rt":1,"ct":4,"warps":4,"weight_cache":1,"reps":11,"chip_median_ns":1061912,"chip_min_ns":970584,"weights_gbps":167.87}
