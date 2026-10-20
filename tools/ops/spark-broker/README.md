@@ -18,3 +18,6 @@ in line, without holding anything.
 Shown on the real Spark: the concurrency tests (`make test`, sandboxed lock files) and
 the replay of the 2026-10-19 evening's job mix. Full write-up and the measured comparison:
 `docs/ops/BROKER.md`. Build: `make`; install: `make install`.
+
+Status (2026-10-20): built and tested, NOT installed. It lost the measured comparison
+against the lock wrappers already in use (4 of 6 numbers to 2), so those stay; see BROKER.md.
