@@ -12,7 +12,7 @@ Scout: read-only. Repos at pins in /home/drakestapleton/workspace/adaptive/PINS.
 | aienos-cortex Rust epistemic store | aienos/crates/aienos-cortex | Implemented, integrated into host-side aienos-aegis/aienos-explain only; declared non-authoritative (rx_cortex.h:18-20) |
 | Operator emergency stop (world level) | omega/src/runtime/rx_world.h:805-830 | Implemented and integrated (tests: omega/tests/r16_qualify/run.sh, tests/runtime/rx_operator_mutants.sh, rx_r12_resident.c) |
 | Capability authority, kernel-native | aienos/crates/aienos-capability/src/lib.rs | Implemented (7 unit tests), consumed by aienos-kernel caps.rs:9; not on Linux path |
-| Resource admission + budgets, kernel | aienos/crates/aienos-kernel/src/{admission,budget}.rs | Implemented (native only; AIENOS is not what runs on this Spark today, per memory) |
+| Resource admission + budgets, kernel | aienos/crates/aienos-kernel/src/{admission,budget}.rs | Implemented (native only; Aienux is not what runs on this Spark today, per memory) |
 | Priority classes (Background/Normal/Latency) | aienos/crates/aienos-kernel/src/scheduler.rs:8-12 | Implemented (native only) |
 | Host effect broker: intent, token, operator grant | aienos/crates/aienos-aegis/src/{effect,broker,capability,evaluator}.rs | Implemented but disconnected (only crate depending on it is itself; grep of crates/*/Cargo.toml) |
 | aegis-runtime ExecutionAuthority trait | aegis-runtime/src/execution/broker.rs:15-18 | Implemented but disconnected (zero `impl ExecutionAuthority` in src or tests) |
@@ -74,7 +74,7 @@ Gap: the "grant, budget, emergency stop" the Adaptive Intelligence loop needs ex
 - aienos-aegis (host-side crate, std + serde, not no_std kernel code): `EffectIntent { id, agent_id, action, parameters, claimed_capability_id, is_reversible, world_id }` effect.rs:12-19; `OperatorGrant`; `AegisDecision { Approved, RequiresOperatorApproval, Rejected }` evaluator.rs:9-13; `EffectBroker::dispatch` broker.rs:114 with `EffectAuditRecord :12`; `CapabilityGraph` HMAC-signed tokens, issue_root_token :230, derive_child_token :265, validate_token :340. Test: tests/phase_3_to_5_integration.rs (one file) plus broker.rs unit tests (:211, :331, :386). Doc comment lib.rs:3-4 "intelligence proposes; deterministic authority disposes". Disconnected: no other crate depends on it.
 - aienos-cortex (src/store.rs `CortexStore` :19; record_observation :31, record_verified_fact :53, record_operator_decision :77): see section 2.
 
-Relevance: this is the only place with unforgeable, revocable, leased capabilities plus resource envelopes, but it targets native AIENOS, not the Linux Spark path used today (memory note aienos-local-copy-stale does not apply; the repo is a fresh clone). UNVERIFIED whether any of it runs on this machine.
+Relevance: this is the only place with unforgeable, revocable, leased capabilities plus resource envelopes, but it targets native Aienux, not the Linux Spark path used today (memory note aienos-local-copy-stale does not apply; the repo is a fresh clone). UNVERIFIED whether any of it runs on this machine.
 
 ## 5. aien-sovereign-core: Worlds, inference, spine, desk, entry point
 

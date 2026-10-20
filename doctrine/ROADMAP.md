@@ -109,7 +109,7 @@ Era ranges: Foundational M0-M3; Omega Core Substrate M4-M7; Program Synthesis & 
 - Specification: [`docs/milestone-3-spec.md`](../docs/milestone-3-spec.md).
 
 ### M5 — `OMEGA_AARCH64`
-- Name note (2026-10-08): this is Omega M5. `CURRENT_EXECUTION_PLAN.md` also says "M5" for the AIENOS encryption and identity milestone (TRUST-1); that is a different milestone.
+- Name note (2026-10-08): this is Omega M5. `CURRENT_EXECUTION_PLAN.md` also says "M5" for the Aienux encryption and identity milestone (TRUST-1); that is a different milestone.
 - Qualified 2026-09-26 under `aien-spark/omega` (commit `2dd41024345d207d57f59d4c7940176b6697b099`, receipt commit `34dbe93e9fa22aee50b8eb426e6d1e43444490f2`).
 - Direct AArch64 machine byte realization generator without LLVM, Clang, GCC, or GNU `as`.
 - Verified pure integer register lowering ($G_S \to$ AArch64) for $F(a, b, c) = (a + b) - c$.

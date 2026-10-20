@@ -64,7 +64,7 @@ Operation: matvec. Two realizations of **one** semantic program with **one** Sem
 | Bounded error | Measured error vs oracle within the contract bound at the declared confidence. |
 | Repeatability | Repeated runs within the declared spread. |
 | Calibration bound | Fresh calibration digest bound into the realization identity; a stale one is refused in a negative test. |
-| No authority bypass | Device access only through an AIENOS capability with a 64-bit generation; a revoked or stale capability is refused. |
+| No authority bypass | Device access only through an Aienux capability with a 64-bit generation; a revoked or stale capability is refused. |
 | Complete evidence | AR3 completeness check passes with `provenance_class` = `PHYSICAL`. |
 | No vendor identity in the semantic program | The program, contract and World objects are byte-identical between the digital and analog runs; vendor data appears only in the FORGE substrate record. |
 | Clean digital fallback | Disconnecting or refusing the device yields the digital result under the same contract. |

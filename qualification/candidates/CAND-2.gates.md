@@ -38,8 +38,8 @@ still name CAND-1. They are not new runs.
 |---|---|---|---|
 | Native model | strict real-model gate; Omega vs CPU reference; Omega vs HF oracle; paged_attention_batch; runtime e2e; daemon; zero CUDA | PASS | aien-cli, aien-test and libomega_gpu.a digests identical; same model inputs |
 | Attention | GB10 attention timing, TinyLlama shape (quiet window 1) | PASS | gpu_attention_test is built from `tests/gpu_attention_test.c`, `src/omega_gpu_attention_api.h` and libomega_gpu.a; the two sources are unchanged cb06d08..79a805d and CFLAGS lost only `-DOMEGA_PHYSICS_DIR` (#296), which neither file uses. Measured: built at cb06d08 and at 79a805d in the same worktree, the binary is byte-identical (sha256 e28bf26b...4299) and so is libomega_gpu.a (evidence `CAND2-ATTN-IDENTITY`, host build only) |
-| AIENOS | ck_gates (QEMU): 18 PASS, 2 MISSING_IMPLEMENTATION | as CAND-1 | aienos images identical |
-| AIENOS | TRUST-1 M5: NOT_QUALIFIED | as CAND-1 | aienos images identical; the attended steps are still blocked on the operator |
+| Aienux | ck_gates (QEMU): 18 PASS, 2 MISSING_IMPLEMENTATION | as CAND-1 | aienos images identical |
+| Aienux | TRUST-1 M5: NOT_QUALIFIED | as CAND-1 | aienos images identical; the attended steps are still blocked on the operator |
 | Continuity | M4_CONTINUITY, M4_RECOVERY, M4_ALLEN, M4_STORE_CRASH (QEMU only) | PASS (QEMU) | aienos images identical |
 
 ## 3. Results rerun on CAND-2 (omegatool changed)
@@ -82,9 +82,9 @@ reader (operator action).
   `~/handoffs/2026-10-05-spbm-energy-operator-steps.md`). R15 refuses to start (omega #295, BLOCKED_INSTRUMENT), so
   G7, which needs an R15 PASS, cannot pass. CAND-1's R15 FAIL (G15 residency 0.849 from one stalled trial, SEQ-06)
   is unexplained; a 30-trial diagnostic later saw 100 % residency in every trial, which is a clue, not a verdict.
-- **AIENOS:** no USB keyboard driver in the C kernel; C loader A/B and rollback parked (MISSING_IMPLEMENTATION).
+- **Aienux:** no USB keyboard driver in the C kernel; C loader A/B and rollback parked (MISSING_IMPLEMENTATION).
 - **TRUST-1 M5:** attended hardware boots and owner-key ceremonies are blocked on the operator; Secure Boot is off.
-- **Physical machine:** every AIENOS result is QEMU. Nothing here qualifies the Spark booting AIENOS.
+- **Physical machine:** every Aienux result is QEMU. Nothing here qualifies the Spark booting Aienux.
 - **Toolchain:** no rust-toolchain file pins the compiler (gap G4); both roots used the same installed toolchain.
 
 ## 5. Published evidence (added 2026-10-05 after publication; nothing above changed)

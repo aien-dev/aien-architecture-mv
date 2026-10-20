@@ -111,11 +111,11 @@ $$\mathcal{A}_0 \equiv \text{Atlas}$$
 
 ## 3. The Oracle Principle
 
-Throughout development, up to `SOVEREIGN_MACHINE_CLOSURE`, external tools (such as Linux, existing AIENOS, NVIDIA CUDA, and PyTorch) may be employed under strict containment as **Oracles** or **Scaffolds**.
+Throughout development, up to `SOVEREIGN_MACHINE_CLOSURE`, external tools (such as Linux, existing Aienux, NVIDIA CUDA, and PyTorch) may be employed under strict containment as **Oracles** or **Scaffolds**.
 
 ### 3.1 The Principle Defined
 > **The Oracle Principle:**
-> *Existing AIENOS, Linux, CUDA, and research runtimes are strictly Oracles, Scaffolds, and Empirical References. They are NEVER deployed ancestors, runtime dependencies, or architectural templates of the permanent lineage.*
+> *Existing Aienux, Linux, CUDA, and research runtimes are strictly Oracles, Scaffolds, and Empirical References. They are NEVER deployed ancestors, runtime dependencies, or architectural templates of the permanent lineage.*
 
 An **Oracle** is an external computational entity queried solely for:
 1. **Mathematical Ground Truth:** Generating reference output tensors ($y_{\text{exact}}$) from known inputs to verify that Omega realizations satisfy error bounds:
