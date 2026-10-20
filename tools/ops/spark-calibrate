@@ -33,9 +33,12 @@ fi
 
 exec 9>"$G"
 t0=$(date +%s)
-while ! flock -w 60 9; do
-  echo "spark-calibrate: waiting $(( $(date +%s) - t0 )) s for the GB10 lock: $(spark-window locks gb10)" >&2
-done
+# Wait in the queue without stepping out of it (a timed retry loses the place to newer waiters);
+# a separate ticker prints who holds the lock every 60 s.
+( exec 9>&-; while sleep 60; do echo "spark-calibrate: waiting $(( $(date +%s) - t0 )) s for the GB10 lock: $(spark-window locks gb10)" >&2; done ) &
+tick=$!
+flock 9
+kill $tick 2>/dev/null
 gwait=$(( $(date +%s) - t0 ))
 held || { echo "spark-calibrate: window $id lapsed (lease ran out or closed) while waiting for the GB10 lock; nothing measured" >&2; exit 1; }
 start=$(date -u +%FT%TZ)

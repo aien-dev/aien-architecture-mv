@@ -89,9 +89,10 @@ hit() {
 
 exec 8>"$D.lock"
 if ! flock -n 8; then
-  while ! flock -w 60 8; do
-    echo "spark-build-once: waiting $(( $(date +%s) - t0 )) s for key $key, held by: $(cat "$D.who" 2>/dev/null || echo unknown)" >&2
-  done
+  ( exec 8>&-; while sleep 60; do echo "spark-build-once: waiting $(( $(date +%s) - t0 )) s for key $key, held by: $(cat "$D.who" 2>/dev/null || echo unknown)" >&2; done ) &
+  tick=$!
+  flock 8
+  kill $tick 2>/dev/null
 fi
 echo "pid $$ since $(date -u +%FT%TZ) in $PWD" > "$D.who"
 [ -f "$D/meta" ] && hit "$@"
