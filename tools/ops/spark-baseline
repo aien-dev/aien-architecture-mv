@@ -49,12 +49,25 @@ G=/tmp/aien-gb10.lock; gino=$(stat -c %i "$G")
 held || { echo "spark-baseline: window $id is not held; nothing measured" >&2; exit 1; }
 ( while :; do grep -E ":$gino " /proc/locks | sed "s/^/$(date +%s.%N) /"; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
 smp=$!
-tsend=$(date +%s.%N)
-# bash for EPOCHREALTIME: a clock read without starting a process per line, so a burst stays a burst
+# bash for EPOCHREALTIME: a clock read without starting a process per line, so a burst stays a burst.
+# The server turns a request away at once with 503 when it is busy with another reply (or its GPU-lock
+# wait of 30 s ran out); retry after its Retry-After, up to 120 tries, and log every try in attempts.txt.
+# A reply line without a final newline (an error body) is kept, not dropped.
+rm -f "$b/attempts.txt" "$b/headers.txt"
 spark-receipt "baseline-$model-$id" --idle 10 -- bash -c '
-  curl -sN -H "Content-Type: application/json" --data-binary @"$1" "$2" | while IFS= read -r l; do printf "%s %s\n" "$EPOCHREALTIME" "$l"; done > "$3"
-  exit 0' bash "$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" "$b/stream.txt" > "$b/receipt.out" 2>&1
+  for i in $(seq 1 120); do
+    echo "send $EPOCHREALTIME" >> "$5"
+    curl -sN -D "$4" -H "Content-Type: application/json" --data-binary @"$1" "$2" |
+      while IFS= read -r l || [ -n "$l" ]; do printf "%s %s\n" "$EPOCHREALTIME" "$l"; done > "$3"
+    c=$(awk "NR == 1 { print \$2 }" "$4" 2>/dev/null)
+    echo "try $i http ${c:-none} $EPOCHREALTIME $(head -c 160 "$3" | tr "\n" " ")" >> "$5"
+    [ "$c" = 503 ] || break
+    ra=$(grep -i "^retry-after:" "$4" | tr -dc 0-9); sleep "${ra:-2}"
+  done
+  exit 0' bash "$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" "$b/stream.txt" "$b/headers.txt" "$b/attempts.txt" > "$b/receipt.out" 2>&1
 rc=$?
+tsend=$(awk '$1 == "send" { t = $2 } END { print t }' "$b/attempts.txt")
+tries=$(grep -c '^try ' "$b/attempts.txt")
 kill $smp 2>/dev/null; wait $smp 2>/dev/null
 held && wheld=true || wheld=false
 # chunks: "<epoch> data: {json}"; content chunks carry choices[0].delta.content
@@ -67,7 +80,7 @@ t_first=$(awk -F'\t' '$2 !~ /^\[""/ {print $1; exit}' "$b/chunks.tsv")
 t_last=$(awk -F'\t' '$2 !~ /^\[""/ {t=$1} END {print t}' "$b/chunks.tsv")
 toks=$(cut -f2 "$b/chunks.tsv" | jq -r '.[1] // empty' | tail -n 1); toks=${toks:-$nchunk}
 fin=$(cut -f2 "$b/chunks.tsv" | jq -r '.[2] // empty' | tail -n 1); fin=${fin:-none}
-code=200; [ "$nchunk" -gt 0 ] || code=0
+code=$(awk 'NR == 1 { print $2 }' "$b/headers.txt" 2>/dev/null); code=${code:-0}
 secs=$(awk -v a="$tsend" -v b="$t_last" 'BEGIN { if (b == "") print "null"; else printf "%.3f\n", b - a }')
 ttft=$(awk -v a="$tsend" -v b="$t_first" 'BEGIN { if (b == "") print "null"; else printf "%.3f\n", b - a }')
 dsecs=$(awk -v a="$t_first" -v b="$t_last" 'BEGIN { if (a == "" || b == "") print "null"; else printf "%.3f\n", b - a }')
@@ -79,13 +92,16 @@ r=$(sed -n 's/^receipt: //p' "$b/receipt.out"); cp "$r" "$b/receipt.json" 2>/dev
 rsha=$(sha256sum < "$b/reply.txt" | cut -c1-64)
 idleW=$(jq -r '.idle.wall_W_mean // "null"' "$d/calibration.json" 2>/dev/null); idleW=${idleW:-null}
 num() { awk -v x="$1" 'BEGIN { if (x == "" || x == "null") print "null"; else print x + 0 }'; }
-f() { awk "BEGIN { $1 }"; }
+# values go in as awk variables, never pasted into the program: a pasted 0 divisor is a gawk error
+q() { awk -v s="$1" -v t="$2" -v w="$3" -v i="$4" -v op="$5" 'BEGIN {
+  if (s == "" || s == "null" || s + 0 <= 0 || t + 0 == 0 || (op != "rate" && (w == "" || w == "null")) || (op == "above" && (i == "" || i == "null"))) { print "null"; exit }
+  if (op == "rate") printf "%.4g\n", t / s; else if (op == "wall") printf "%.4g\n", w * s / t; else printf "%.4g\n", (w - i) * s / t }'; }
 # tokens that arrived after the first content chunk; when chunks carry more than one token, scale by tokens per chunk
 dtoks=$(awk -v t="$toks" -v c="$nchunk" 'BEGIN { if (c < 2) print 0; else if (t == c) print t - 1; else printf "%.6g\n", (c - 1) * t / c }')
-tps=$(f "s = \"$secs\"; if (s == \"null\" || s + 0 <= 0) print \"null\"; else printf \"%.4g\n\", $toks / s")
-dtps=$(f "s = \"$dsecs\"; if (s == \"null\" || s + 0 <= 0 || $dtoks + 0 == 0) print \"null\"; else printf \"%.4g\n\", $dtoks / s")
-djpt=$(f "w = \"$dW\"; s = \"$dsecs\"; if (w == \"null\" || s == \"null\" || $dtoks + 0 == 0) print \"null\"; else printf \"%.4g\n\", w * s / $dtoks")
-djpt_inc=$(f "w = \"$dW\"; i = \"$idleW\"; s = \"$dsecs\"; if (w == \"null\" || i == \"null\" || s == \"null\" || $dtoks + 0 == 0) print \"null\"; else printf \"%.4g\n\", (w - i) * s / $dtoks")
+tps=$(q "$secs" "$toks" "" "" rate)
+dtps=$(q "$dsecs" "$dtoks" "" "" rate)
+djpt=$(q "$dsecs" "$dtoks" "$dW" "" wall)
+djpt_inc=$(q "$dsecs" "$dtoks" "$dW" "$idleW" above)
 # a decode of under 50 ms for many tokens means the server sent the reply in one burst, not as it decoded
 burst=$(awk -v s="$dsecs" -v t="$dtoks" 'BEGIN { print (t + 0 > 4 && (s == "null" || s + 0 < 0.05)) ? "true" : "false" }')
 ok=true; [ "$rc" = 0 ] && [ "$code" = 200 ] && [ "$toks" = "$N" ] && [ -z "$others" ] && [ "$wheld" = true ] && [ "$burst" = false ] || ok=false
@@ -100,6 +116,8 @@ cat > "$b.json.tmp" <<EOJ
  "decode_tokens_counted": $dtoks,
  "stream_arrived_in_one_burst": $burst,
  "finish_reason": "$fin",
+ "http_code": $code,
+ "tries": $tries,
  "request_seconds": $(num "$secs"),
  "first_token_seconds": $(num "$ttft"),
  "tok_per_s_request": $tps,
