@@ -82,8 +82,8 @@ Everything for one window sits in `~/yardsticks/windows/<window id>/`:
 | `open.json`, `close.json` | Box state at open and close: load, free memory, GPU use and power, who holds the GPU and quiet locks, who waits, the latest sensor row |
 | `calibration.json` | Memory bandwidth (median, lowest and highest of 10 copies, with 1 and 8 threads) and idle power at the wall over 30 s |
 | `calibration/` | The raw probe output and the idle receipt |
-| `baseline-27b.json` | Tokens per second, joules per token at the wall and above idle, the reply's fingerprint, the server build |
-| `baseline-27b/` | The exact request, the reply, the receipt, the GPU lock samples taken during the request |
+| `baseline-27b.json` | Decode tokens per second, joules per token over the decode at the wall and above idle, the reply's fingerprint, the server build |
+| `baseline-27b/` | The exact request, the reply, the arrival time of every streamed piece, the receipt, the GPU lock samples |
 
 Receipts still go to `~/yardsticks/receipts/<date>-<name>.json` and now carry `window_id` and
 `calibration` (both `null` outside a window). The build cache lives in `~/.cache/spark-build-once/`
@@ -98,9 +98,13 @@ and its log in `~/yardsticks/build-once.log`.
   window and runs your command straight away instead of waiting on its own lock.
 - **The GPU lock.** `/tmp/aien-gb10.lock` is separate. The calibration holds it for its minute of
   probing and idling so the GPU stays idle. The baseline does not hold it, because the 27B server takes
-  that lock itself for every reply; holding it would make the server wait on us forever. The baseline
-  waits until nobody holds or waits on the GPU lock, sends the request, samples the lock table while it
-  runs, and marks the baseline not ok if anyone else used the GPU meanwhile.
+  that lock itself for every reply; holding it would make the server wait on us forever. Programs that
+  use only the GPU lock keep it busy almost all the time (the first window ran out its hour waiting for
+  it to go quiet), so the baseline asks for the reply word by word and stamps each word as it arrives.
+  From the first word to the last the server is holding the GPU lock for our reply, so the decode rate
+  and its energy are clean however long the reply waited in the GPU queue. The baseline samples the
+  lock table throughout and is marked not ok if anyone else held the GPU lock during the decode, or if
+  the whole reply arrived in one burst (then nothing was timed).
 - **The build cache key** is the source tree as it is on disk (the committed tree, plus uncommitted
   changes, plus new files that git does not ignore), the folder you run from, the exact command, the
   `--out` list and the `PHYSICS_DIR` / `AIENOS_LOCK_REPO` settings. Any change gives a new key, so a
@@ -112,10 +116,12 @@ and its log in `~/yardsticks/build-once.log`.
 
 - Wall power is the whole UPS output in 10 W steps about every 2 s, not the Spark alone. A 64-token
   reply lasts a few seconds, so its joules per token rest on a few samples: read it as coarse.
-- Tokens per second in the baseline is the whole request time, including the short prompt's prefill.
+- The headline speed is the decode rate: words after the first, divided by the time from the first word
+  to the last. The whole-request rate is recorded too, but it includes the wait in the GPU queue and the
+  short prompt's prefill.
 - Programs that take only the GPU lock and not the quiet lock can still run during a window. The
   window records them (lock holders at open and close; the baseline samples the lock during its
-  request), it does not stop them.
+  decode), it does not stop them.
 - The memory probe is the one research/583 used (omega `research/cost-sim-583@3bd56731`,
   `tools/dagsim/memcpy_probe.c`), built with `cc -O2 -pthread`; 583 did not record its compiler
   flags, so its numbers and ours are comparable in method, not guaranteed bit for bit.
