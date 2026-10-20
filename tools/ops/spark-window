@@ -1,8 +1,11 @@
 #!/bin/sh
 # spark-window: one measurement window at a time on the Spark.
 #
-#   spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none]
-#        Refuses (exit 3) if a window is already open or queued, and lists it.
+#   spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none] [--wait]
+#        Refuses (exit 3) if a window is already open or anyone is in line, and
+#        lists them. With --wait it takes a ticket and waits its turn instead:
+#        first come, first served (L113, 2026-10-20: retrying every 15 s lost
+#        the turn for 4 h).
 #        Otherwise creates window id <UTC date-time>-<random>, FIRST takes the
 #        chip lock /tmp/aien-gb10.lock (default exclusive; none skips it), THEN
 #        the quiet lock exclusive, never holding one while blocking on the
@@ -27,8 +30,8 @@
 #   spark-window id           print the open, held window id (exit 1 if none).
 #   spark-window locks [gb10|quiet]  who holds and who is queued on the locks (kernel lock table).
 #
-# Rule: one window at a time. Agents who find a window open queue by ledger note
-# (ledger note <your id> "measure: waiting for window <id>") and retry after it closes.
+# Rule: one window at a time. Wait your turn with open --wait (first come, first served) and
+# say so on the ledger (ledger note <your id> "measure: in line for a window").
 set -u
 WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
 Q=${SPARK_QUIET_LOCK:-/tmp/aien-quiet.lock}; W=/tmp/aien-quiet.want.d; G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}   # overrides: tests only
@@ -70,6 +73,12 @@ state() {
 
 alive() { [ -n "${1:-}" ] && kill -0 "$1" 2>/dev/null; }
 cur() { cat "$WR/OPEN" 2>/dev/null; }
+# the waiting line for --wait: one ticket file per waiter, named <epoch ns>-<pid>; a dead waiter's ticket is dropped
+QD=$WR/QUEUE
+qclean() { for t in "$QD"/*; do [ -f "$t" ] || continue; alive "${t##*-}" || rm -f "$t"; done; }
+qhead() { ls "$QD" 2>/dev/null | sort | head -n 1; }
+qpos() { ls "$QD" 2>/dev/null | sort | grep -n -x -F "${1##*/}" | cut -d: -f1; }
+qlist() { ls "$QD" 2>/dev/null | sort | while read -r t; do echo "  in line: $(cat "$QD/$t" 2>/dev/null) (pid ${t##*-})"; done; }
 hpid() { cat "$WR/$1/holder.pid" 2>/dev/null; }
 
 describe() {
@@ -92,18 +101,38 @@ reap() {
 cmd=${1:-status}; [ $# -gt 0 ] && shift
 case $cmd in
 open)
-  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none]}; shift
-  ledger=""; lease=90; gb10=exclusive
-  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; --gb10) gb10=$2; shift 2 ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
+  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none] [--wait]}; shift
+  ledger=""; lease=90; gb10=exclusive; wait=0
+  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; --gb10) gb10=$2; shift 2 ;; --wait) wait=1; shift ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
   case $gb10 in exclusive) gflag=-x ;; shared) gflag=-s ;; none) gflag= ;; *) echo "spark-window: --gb10 must be exclusive, shared or none" >&2; exit 2 ;; esac
-  exec 7>"$WR/.state.lock"; flock 7
-  reap
-  if [ -n "$(cur)" ]; then
-    echo "spark-window: refused, a window is already open or queued:" >&2
-    describe "$(cur)" >&2
-    echo "Queue by ledger note (ledger note <your id> \"measure: waiting for window $(cur)\") and retry after it closes." >&2
-    exit 3
+  # --wait: take a numbered ticket and wait in line; the oldest live ticket opens next. Without --wait
+  # an open is refused while a window is open or anyone holds a ticket, so nobody jumps the line.
+  mkdir -p "$QD"; tk=""
+  if [ "$wait" = 1 ]; then
+    tk=$QD/$(date +%s%N)-$$; printf '%s owner=%s since=%s\n' "$name" "${ledger:-$(whoami)@pid$PPID}" "$(now)" > "$tk"
+    trap 'rm -f "$tk"' EXIT; trap 'exit 130' INT TERM
   fi
+  tq=$(date +%s); lastq=$tq
+  while :; do
+    exec 7>"$WR/.state.lock"; flock 7
+    reap; qclean
+    first=$(qhead)
+    if [ -z "$(cur)" ] && { [ -z "$first" ] || [ "$QD/$first" = "$tk" ]; }; then break; fi
+    if [ -z "$tk" ]; then
+      echo "spark-window: refused, a window is already open or queued:" >&2
+      [ -n "$(cur)" ] && describe "$(cur)" >&2
+      qlist >&2
+      echo "Wait in line with: spark-window open $name --wait ...  (first come, first served)" >&2
+      exit 3
+    fi
+    flock -u 7; exec 7>&-
+    if [ $(( $(date +%s) - lastq )) -ge 60 ]; then
+      lastq=$(date +%s)
+      echo "spark-window: in line $(( lastq - tq )) s, place $(qpos "$tk"); open now: $(cur || true)" >&2
+    fi
+    sleep 2
+  done
+  [ -n "$tk" ] && { rm -f "$tk"; trap - EXIT INT TERM; }
   id=$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N3 -tx1 /dev/urandom | tr -d ' \n')
   d=$WR/$id; mkdir -p "$d"
   echo "$name" > "$d/name"; echo "${ledger:-${SPARK_WINDOW_OWNER:-$(whoami)@pid$PPID}}" > "$d/owner"
@@ -202,6 +231,7 @@ status)
   echo "quiet lock holders: $(holders $Q)"
   echo "quiet waiters: $(waiters)"
   echo "gb10 lock holders: $(holders $G)"
+  qclean; echo "waiting line (--wait):"; qlist
   ;;
-*) sed -n '2,31p' "$0"; exit 2 ;;
+*) sed -n '2,34p' "$0"; exit 2 ;;
 esac

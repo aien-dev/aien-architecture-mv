@@ -22,8 +22,12 @@ are the same as before, plus the two new keys.
 
 1. One window at a time. `spark-window open` refuses when a window is already open or waiting, and
    shows whose it is.
-2. If you are refused, queue with a ledger note and try again after it closes:
-   `ledger note <your id> "measure: waiting for window <their window id>"`.
+2. To wait your turn, add `--wait`: you get a place in line and your window opens when everyone
+   ahead of you is done, first come, first served. While anyone is in line, an `open` without
+   `--wait` is refused, so nobody jumps ahead. Say so on the ledger:
+   `ledger note <your id> "measure: in line for a window"`. `spark-window status` shows the line.
+   (Retrying a refused `open` every 15 s lost the turn for four hours on 2026-10-20; that is why the
+   line exists.)
 3. Inside your window: calibrate once, take the 27B baseline once (if your work involves the 27B),
    then run only your own measurements. Every receipt carries the window id, so a reader can match it
    to the calibration and the baseline taken under the same conditions.
@@ -38,7 +42,7 @@ Builds are not measurements: do them before you open the window, through `spark-
 Open a window (waits its turn; prints the window id when it holds the box):
 
 ```sh
-id=$(spark-window open my-measurement --ledger L109 --lease 60)
+id=$(spark-window open my-measurement --ledger L109 --lease 60 --wait)
 ```
 
 By default the window also holds the GPU lock (`--gb10 exclusive`, added by L154), so GPU-only jobs
