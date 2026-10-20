@@ -20,6 +20,7 @@ case $model in
 esac
 id=${SPARK_WINDOW:-$(spark-window id)} || { echo "spark-baseline: no open window; run spark-window open NAME first" >&2; exit 1; }
 [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] || { echo "spark-baseline: window $id is not the open, held window" >&2; exit 1; }
+held() { [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] && [ ! -f "$WR/$id/expired" ] && kill -0 "$(cat "$WR/$id/holder.pid" 2>/dev/null)" 2>/dev/null; }
 d=$WR/$id; b=$d/baseline-$model; mkdir -p "$b"
 export SPARK_WINDOW=$id SPARK_WINDOW_DIR=$d
 [ -f "$d/calibration.json" ] || echo "spark-baseline: warning: window $id has no calibration.json yet (run spark-calibrate first); J/token above idle will be null" >&2
@@ -45,6 +46,7 @@ while gb10_busy; do
   sleep 1
 done
 gwait=$(( $(date +%s) - t0 ))
+held || { echo "spark-baseline: window $id lapsed while waiting for the GB10 lock; nothing measured" >&2; exit 1; }
 ( while :; do grep -E ":$gino " /proc/locks; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
 smp=$!
 spark-receipt "baseline-$model-$id" --idle 10 -- \
@@ -52,6 +54,7 @@ spark-receipt "baseline-$model-$id" --idle 10 -- \
   --data-binary @"$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" > "$b/receipt.out" 2>&1
 rc=$?
 kill $smp 2>/dev/null; wait $smp 2>/dev/null
+held && wheld=true || wheld=false
 others=$(awk -v s="$spid" '$2 != "->" && $5 != s { print $5 } $2 == "->" && $6 != s { print $6 }' "$b/gb10-during.txt" | sort -u | tr '\n' ' ')
 r=$(sed -n 's/^receipt: //p' "$b/receipt.out"); cp "$r" "$b/receipt.json" 2>/dev/null
 set -- $(head -n 1 "$b/receipt.out"); secs=${1:-0}; code=${2:-0}
@@ -68,7 +71,7 @@ calc() { awk -v a="$1" -v b="$2" -v c="${3:-0}" -v op="$4" 'BEGIN { if (a == "nu
 tps=$(calc "$toks" "$secs" 0 div)
 jpt=$(calc "$wallJ" "$toks" 0 div)
 jpt_inc=null; [ "$idleW" != null ] && [ "$wallW" != null ] && [ "$toks" -gt 0 ] && jpt_inc=$(calc "$wallW" "$rsecs" "$idleW" "$toks")
-ok=true; [ "$rc" = 0 ] && [ "$code" = 200 ] && [ "$toks" = "$N" ] && [ -z "$others" ] || ok=false
+ok=true; [ "$rc" = 0 ] && [ "$code" = 200 ] && [ "$toks" = "$N" ] && [ -z "$others" ] && [ "$wheld" = true ] || ok=false
 cat > "$b.json.tmp" <<EOF
 {
  "window_id": "$id",
@@ -87,6 +90,7 @@ cat > "$b.json.tmp" <<EOF
  "sensor_samples": $samples,
  "reply_sha256": "$rsha",
  "gb10_quiet_wait_s": $gwait,
+ "window_held_throughout": $wheld,
  "gb10_other_users_during": "$others",
  "server": {"pid": $spid, "exe": "$sexe", "exe_sha256": "$(sha256sum "$sexe" 2>/dev/null | cut -c1-64)", "args": "$(printf '%s' "$sargs" | sed 's/"/\\"/g')"},
  "receipt": "$r",

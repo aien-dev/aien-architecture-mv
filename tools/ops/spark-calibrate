@@ -16,6 +16,7 @@ set -u
 WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
 id=${SPARK_WINDOW:-$(spark-window id)} || { echo "spark-calibrate: no open window; run spark-window open NAME first" >&2; exit 1; }
 [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] || { echo "spark-calibrate: window $id is not the open, held window" >&2; exit 1; }
+held() { [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] && [ ! -f "$WR/$id/expired" ] && kill -0 "$(cat "$WR/$id/holder.pid" 2>/dev/null)" 2>/dev/null; }
 d=$WR/$id; mkdir -p "$d/calibration"
 export SPARK_WINDOW=$id SPARK_WINDOW_DIR=$d
 G=/tmp/aien-gb10.lock
@@ -36,6 +37,7 @@ while ! flock -w 60 9; do
   echo "spark-calibrate: waiting $(( $(date +%s) - t0 )) s for the GB10 lock: $(spark-window locks gb10)" >&2
 done
 gwait=$(( $(date +%s) - t0 ))
+held || { echo "spark-calibrate: window $id lapsed (lease ran out or closed) while waiting for the GB10 lock; nothing measured" >&2; exit 1; }
 start=$(date -u +%FT%TZ)
 
 stat_csv() {  # median/min/max of column 5 (GB/s) in a probe CSV, as JSON
@@ -62,6 +64,7 @@ spark-receipt "calib-idle-$id" --idle 0 -- sleep 30 > "$d/calibration/idle.out" 
 r=$(sed -n 's/^receipt: //p' "$d/calibration/idle.out")
 cp "$r" "$d/calibration/idle-receipt.json"
 jv() { sed -n "s/^ *\"$1\": \([^,]*\),\{0,1\}$/\1/p" "$d/calibration/idle-receipt.json"; }
+held && wheld=true || wheld=false
 flock -u 9
 
 cat > "$d/calibration.json.tmp" <<EOF
@@ -69,6 +72,7 @@ cat > "$d/calibration.json.tmp" <<EOF
  "window_id": "$id",
  "start": "$start",
  "gb10_lock_waited_s": $gwait,
+ "window_held_throughout": $wheld,
  "memcpy_probe": {"source": "omega research/cost-sim-583@$PIN $SRC", "blob": "$blob", "cflags": "$CFLAGS",
    "binary_sha256": "$(sha256sum "$P" | cut -c1-64)", "cmd": "nice -n 10 memcpy_probe 1 K 10",
    "unit": "GB/s, read+write counted twice, as in M1 block4", ${probe_json%, }},
