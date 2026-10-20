@@ -1,0 +1,24 @@
+#!/bin/sh
+# quiet-build CMD...  Run a build or CPU-heavy job politely.
+# Waits while any measurement is waiting or running (flag files younger than
+# 60 minutes in /tmp/aien-quiet.want.d), then holds /tmp/aien-quiet.lock shared.
+# 20-minute rule (spark-measure, 2026-10-19): a build that has waited 20 min runs
+# anyway at nice 19 / ionice idle without the shared lock, and the override is logged,
+# because back-to-back measurement flags otherwise starve builds for hours.
+W=/tmp/aien-quiet.want.d
+LOG=$HOME/.local/state/quiet/build-overrides.log
+CAP=${QUIET_BUILD_CAP:-1200}
+t0=$(date +%s)
+while :; do
+  find "$W" -type f -mmin +60 -delete 2>/dev/null   # drop stale flags
+  n=$(find "$W" -type f 2>/dev/null | wc -l)
+  [ "$n" -eq 0 ] && break
+  if [ $(( $(date +%s) - t0 )) -ge "$CAP" ]; then
+    mkdir -p "$(dirname "$LOG")"
+    printf '%s waited %ss behind %s flag(s), running direct at nice 19: %s | load %s\n' \
+      "$(date -u +%FT%TZ)" "$(( $(date +%s) - t0 ))" "$n" "$*" "$(cut -d' ' -f1-3 /proc/loadavg)" >> "$LOG"
+    exec nice -n 19 ionice -c3 "$@"
+  fi
+  sleep 5
+done
+exec flock -s /tmp/aien-quiet.lock "$@"

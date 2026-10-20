@@ -1,0 +1,5 @@
+builds: 38   median wait 19.4 min   worst 20.0 min
+measurements: 11   median wait 2.1 min   worst 39.5 min
+jobs that waited over 20 min: 4
+jobs that never started: 0
+during measurements: 31.2 build-minutes ran, at least one build running 20% of measurement time, mean builds running 0.25

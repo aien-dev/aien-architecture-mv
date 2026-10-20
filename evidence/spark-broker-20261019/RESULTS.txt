@@ -1,0 +1,64 @@
+# L118 replay results (computed by tools/ops/spark-broker/replay/metrics.sh; trace minutes; 60x compression)
+
+## replay-A-base
+builds: 38   median wait 19.3 min   worst 20.0 min
+measurements: 11   median wait 1.1 min   worst 38.3 min
+jobs that waited over 20 min: 4
+jobs that never started: 0
+during measurements: 31.3 build-minutes ran, at least one build running 21% of measurement time, mean builds running 0.25
+
+## replay-B-base
+builds: 38   median wait 11.7 min   worst 39.3 min
+measurements: 11   median wait 6.8 min   worst 46.1 min
+jobs that waited over 20 min: 11
+jobs that never started: 0
+during measurements: 0.0 build-minutes ran, at least one build running 0% of measurement time, mean builds running 0.00
+
+## replay-A-rep2
+builds: 38   median wait 19.4 min   worst 20.0 min
+measurements: 11   median wait 1.1 min   worst 38.3 min
+jobs that waited over 20 min: 4
+jobs that never started: 0
+during measurements: 31.1 build-minutes ran, at least one build running 20% of measurement time, mean builds running 0.25
+
+## replay-B-rep2
+builds: 38   median wait 5.9 min   worst 39.3 min
+measurements: 11   median wait 7.5 min   worst 46.3 min
+jobs that waited over 20 min: 10
+jobs that never started: 0
+during measurements: 0.0 build-minutes ran, at least one build running 0% of measurement time, mean builds running 0.00
+
+## replay-A0-base
+builds: 38   median wait 26.9 min   worst 134.3 min
+measurements: 11   median wait 1.1 min   worst 38.2 min
+jobs that waited over 20 min: 31
+jobs that never started: 0
+during measurements: 0.0 build-minutes ran, at least one build running 0% of measurement time, mean builds running 0.00
+
+## replay-A-x4
+builds: 38   median wait 19.4 min   worst 20.3 min
+measurements: 11   median wait 3.9 min   worst 39.6 min
+jobs that waited over 20 min: 6
+jobs that never started: 0
+during measurements: 161.4 build-minutes ran, at least one build running 66% of measurement time, mean builds running 1.28
+
+## replay-B-x4
+builds: 38   median wait 6.1 min   worst 20.9 min
+measurements: 11   median wait 34.6 min   worst 107.0 min
+jobs that waited over 20 min: 9
+jobs that never started: 0
+during measurements: 0.0 build-minutes ran, at least one build running 0% of measurement time, mean builds running 0.00
+
+## replay-A-srv
+builds: 38   median wait 19.4 min   worst 20.0 min
+measurements: 11   median wait 2.1 min   worst 39.5 min
+jobs that waited over 20 min: 4
+jobs that never started: 0
+during measurements: 31.2 build-minutes ran, at least one build running 20% of measurement time, mean builds running 0.25
+
+## replay-B-srv
+builds: 38   median wait 2.7 min   worst 38.9 min
+measurements: 11   median wait 8.0 min   worst 46.8 min
+jobs that waited over 20 min: 9
+jobs that never started: 0
+during measurements: 0.0 build-minutes ran, at least one build running 0% of measurement time, mean builds running 0.00

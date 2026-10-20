@@ -1,0 +1,21 @@
+#!/bin/sh
+# quiet-measure CMD...  Run a timing measurement with the box as quiet as possible.
+# Raises a "wanted" flag so quiet-build stops starting new builds, then takes
+# /tmp/aien-quiet.lock exclusive (waits for running builds to drain).
+# Plain flock alone starves measurements: new shared holders keep arriving.
+# Inside a measurement window (SPARK_WINDOW set by spark-window run, and that
+# window is the open one with a live holder) the lock is already held
+# exclusive for us, so CMD runs directly instead of waiting on our own lock.
+if [ -n "${SPARK_WINDOW:-}" ]; then
+  WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
+  if [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$SPARK_WINDOW" ] && [ -f "$WR/$SPARK_WINDOW/held" ] &&
+     kill -0 "$(cat "$WR/$SPARK_WINDOW/holder.pid" 2>/dev/null)" 2>/dev/null; then
+    exec "$@"
+  fi
+  echo "quiet-measure: window $SPARK_WINDOW is not open and held; taking the quiet lock the normal way" >&2
+fi
+W=/tmp/aien-quiet.want.d
+mkdir -p "$W" 2>/dev/null; chmod 1777 "$W" 2>/dev/null
+f="$W/$$"; echo "$(date -u +%FT%TZ) $*" > "$f"
+trap 'rm -f "$f"' EXIT INT TERM
+flock -x /tmp/aien-quiet.lock "$@"

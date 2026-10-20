@@ -45,6 +45,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `qualification/` | Release candidates (`candidates/CAND-*.toml` and their gate results) and recorded exceptions |
 | `formal/invariants/` | Invariants written down for formal checking ([ADR 0027](docs/adr/0027-formal-oracle-lean-bootstrap.md)) |
 | `tools/crumb/` | The crumb tool (C11), which compiles and checks the `.crumb` files |
+| `tools/ops/spark-broker/` | The Spark's job queue (C): one line for the chip and for quiet timing time, so agents wait in line instead of inside lock files. Plain write-up and measured comparison: [docs/ops/BROKER.md](docs/ops/BROKER.md) |
 | `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate, crumb rebase helper) and their `test_*.sh` tests |
 | `tests/gates/` | The gate manifests the Spark runs on every pull request |
 
@@ -82,7 +83,7 @@ The [necessary-work programme](docs/plans/necessary-work/README.md) (2026-10-18,
 
 ## Building and testing
 
-There is no product to build here. The one program is the crumb tool in `tools/crumb`. It needs only a C11 compiler and `make`. Build it, run its tests, and check that every `.crumb` file matches what the tool produces now:
+There is no product to build here. The main program is the crumb tool in `tools/crumb` (the Spark job queue in `tools/ops/spark-broker` builds the same way: `make -C tools/ops/spark-broker test`). It needs only a C11 compiler and `make`. Build it, run its tests, and check that every `.crumb` file matches what the tool produces now:
 
 ```sh
 make -C tools/crumb test

@@ -1,0 +1,230 @@
+2026-10-20T00:14:25.913Z 1792455265913 start pid=2905572 maxb=6 loadcap=100000.0 N_ms=10000 D_ms=10000 tick_ms=20 sock=/tmp/l118-replay.nU4X4g/sock
+2026-10-20T00:14:28.579Z 1792455268579 submit id=1 class=B chip=0 parent=0 pid=2906243 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b01 B 0.583
+2026-10-20T00:14:28.579Z 1792455268579 grant id=1 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:14:28.579Z 1792455268579 state id=1 class=B word=run
+2026-10-20T00:14:29.169Z 1792455269169 end id=1 class=B rc=0 state=running why=done waited_ms=0 ran_ms=590 name=fakejob
+2026-10-20T00:14:30.101Z 1792455270101 submit id=2 class=B chip=0 parent=0 pid=2907903 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b02 B 1.050
+2026-10-20T00:14:30.101Z 1792455270101 grant id=2 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:14:30.101Z 1792455270101 state id=2 class=B word=run
+2026-10-20T00:14:30.302Z 1792455270302 submit id=3 class=M chip=1 parent=0 pid=2908158 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log tvg-tv8-gu-sweep M 9.083
+2026-10-20T00:14:30.302Z 1792455270302 grant id=3 class=M to=granted waited_ms=0 name=qm-fakejob
+2026-10-20T00:14:30.302Z 1792455270302 state id=3 class=M word=lockwait
+2026-10-20T00:14:30.302Z 1792455270302 state id=3 class=M word=chip
+2026-10-20T00:14:30.398Z 1792455270398 submit id=4 class=B chip=0 parent=0 pid=2908312 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b03 B 1.350
+2026-10-20T00:14:31.155Z 1792455271155 end id=2 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1054 name=fakejob
+2026-10-20T00:14:31.155Z 1792455271155 quiet id=3 drained_ms=853 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:14:31.155Z 1792455271155 state id=3 class=M word=run
+2026-10-20T00:14:36.263Z 1792455276263 submit id=5 class=B chip=0 parent=0 pid=2911989 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b04 B 1.667
+2026-10-20T00:14:38.032Z 1792455278032 submit id=6 class=B chip=0 parent=0 pid=2913615 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b05 B 0.583
+2026-10-20T00:14:39.476Z 1792455279476 submit id=7 class=M chip=1 parent=0 pid=2915253 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log tvg-tv8-down-sweep M 12.333
+2026-10-20T00:14:40.242Z 1792455280242 end id=3 class=M rc=0 state=running why=done waited_ms=0 ran_ms=9940 name=qm-fakejob
+2026-10-20T00:14:40.242Z 1792455280242 grant id=7 class=M to=granted waited_ms=766 name=qm-fakejob
+2026-10-20T00:14:40.242Z 1792455280242 grant id=4 class=B to=running waited_ms=9844 name=fakejob
+2026-10-20T00:14:40.242Z 1792455280242 state id=7 class=M word=lockwait
+2026-10-20T00:14:40.242Z 1792455280242 grant id=5 class=B to=running waited_ms=3979 name=fakejob
+2026-10-20T00:14:40.242Z 1792455280242 state id=4 class=B word=run
+2026-10-20T00:14:40.242Z 1792455280242 state id=7 class=M word=chip
+2026-10-20T00:14:40.242Z 1792455280242 state id=5 class=B word=run
+2026-10-20T00:14:40.503Z 1792455280503 submit id=8 class=B chip=0 parent=0 pid=2916640 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b06 B 1.050
+2026-10-20T00:14:41.601Z 1792455281601 end id=4 class=B rc=0 state=running why=done waited_ms=9844 ran_ms=1359 name=fakejob
+2026-10-20T00:14:41.914Z 1792455281914 end id=5 class=B rc=0 state=running why=done waited_ms=3979 ran_ms=1672 name=fakejob
+2026-10-20T00:14:41.915Z 1792455281915 quiet id=7 drained_ms=1672 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:14:41.915Z 1792455281915 state id=7 class=M word=run
+2026-10-20T00:14:44.133Z 1792455284133 submit id=9 class=B chip=0 parent=0 pid=2922194 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b07 B 1.350
+2026-10-20T00:14:50.261Z 1792455290261 submit id=10 class=B chip=0 parent=0 pid=2933236 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b08 B 1.667
+2026-10-20T00:14:50.704Z 1792455290704 submit id=11 class=B chip=0 parent=0 pid=2934219 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b09 B 0.583
+2026-10-20T00:14:51.836Z 1792455291836 submit id=12 class=M chip=1 parent=0 pid=2936852 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log tvg-tv8-amix-sweep M 0.583
+2026-10-20T00:14:52.336Z 1792455292336 submit id=13 class=B chip=0 parent=0 pid=2938396 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b10 B 1.050
+2026-10-20T00:14:52.494Z 1792455292494 submit id=14 class=M chip=1 parent=0 pid=2938822 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log tvg-tv8-head-sweep M 3.483
+2026-10-20T00:14:54.255Z 1792455294255 end id=7 class=M rc=0 state=running why=done waited_ms=766 ran_ms=14013 name=qm-fakejob
+2026-10-20T00:14:54.255Z 1792455294255 grant id=6 class=B to=running waited_ms=16223 name=fakejob
+2026-10-20T00:14:54.255Z 1792455294255 grant id=8 class=B to=running waited_ms=13752 name=fakejob
+2026-10-20T00:14:54.255Z 1792455294255 grant id=9 class=B to=running waited_ms=10122 name=fakejob
+2026-10-20T00:14:54.255Z 1792455294255 grant id=10 class=B to=running waited_ms=3994 name=fakejob
+2026-10-20T00:14:54.255Z 1792455294255 state id=9 class=B word=run
+2026-10-20T00:14:54.255Z 1792455294255 state id=8 class=B word=run
+2026-10-20T00:14:54.255Z 1792455294255 grant id=12 class=M to=granted waited_ms=2419 name=qm-fakejob
+2026-10-20T00:14:54.257Z 1792455294257 grant id=11 class=B to=running waited_ms=3552 name=fakejob
+2026-10-20T00:14:54.257Z 1792455294257 state id=10 class=B word=run
+2026-10-20T00:14:54.257Z 1792455294257 state id=6 class=B word=run
+2026-10-20T00:14:54.257Z 1792455294257 grant id=13 class=B to=running waited_ms=1921 name=fakejob
+2026-10-20T00:14:54.257Z 1792455294257 state id=12 class=M word=lockwait
+2026-10-20T00:14:54.257Z 1792455294257 state id=12 class=M word=chip
+2026-10-20T00:14:54.257Z 1792455294257 state id=11 class=B word=run
+2026-10-20T00:14:54.257Z 1792455294257 state id=13 class=B word=run
+2026-10-20T00:14:54.849Z 1792455294849 end id=11 class=B rc=0 state=running why=done waited_ms=3552 ran_ms=593 name=fakejob
+2026-10-20T00:14:54.851Z 1792455294851 end id=6 class=B rc=0 state=running why=done waited_ms=16223 ran_ms=596 name=fakejob
+2026-10-20T00:14:55.310Z 1792455295310 end id=8 class=B rc=0 state=running why=done waited_ms=13752 ran_ms=1055 name=fakejob
+2026-10-20T00:14:55.315Z 1792455295315 end id=13 class=B rc=0 state=running why=done waited_ms=1921 ran_ms=1058 name=fakejob
+2026-10-20T00:14:55.580Z 1792455295580 submit id=15 class=B chip=0 parent=0 pid=2946634 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b11 B 1.350
+2026-10-20T00:14:55.613Z 1792455295613 end id=9 class=B rc=0 state=running why=done waited_ms=10122 ran_ms=1358 name=fakejob
+2026-10-20T00:14:55.828Z 1792455295828 submit id=16 class=B chip=0 parent=0 pid=2947469 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b12 B 1.667
+2026-10-20T00:14:55.930Z 1792455295930 end id=10 class=B rc=0 state=running why=done waited_ms=3994 ran_ms=1675 name=fakejob
+2026-10-20T00:14:55.931Z 1792455295931 quiet id=12 drained_ms=1674 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:14:55.931Z 1792455295931 state id=12 class=M word=run
+2026-10-20T00:14:56.522Z 1792455296522 end id=12 class=M rc=0 state=running why=done waited_ms=2419 ran_ms=2267 name=qm-fakejob
+2026-10-20T00:14:56.522Z 1792455296522 grant id=14 class=M to=granted waited_ms=4028 name=qm-fakejob
+2026-10-20T00:14:56.522Z 1792455296522 grant id=15 class=B to=running waited_ms=942 name=fakejob
+2026-10-20T00:14:56.522Z 1792455296522 state id=14 class=M word=lockwait
+2026-10-20T00:14:56.522Z 1792455296522 grant id=16 class=B to=running waited_ms=694 name=fakejob
+2026-10-20T00:14:56.522Z 1792455296522 state id=15 class=B word=run
+2026-10-20T00:14:56.522Z 1792455296522 state id=16 class=B word=run
+2026-10-20T00:14:56.522Z 1792455296522 state id=14 class=M word=chip
+2026-10-20T00:14:56.889Z 1792455296889 submit id=17 class=B chip=0 parent=0 pid=2950148 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b13 B 0.583
+2026-10-20T00:14:57.878Z 1792455297878 end id=15 class=B rc=0 state=running why=done waited_ms=942 ran_ms=1356 name=fakejob
+2026-10-20T00:14:58.069Z 1792455298069 submit id=18 class=M chip=1 parent=0 pid=2951341 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log tvw-tree-codelong M 11.567
+2026-10-20T00:14:58.118Z 1792455298118 submit id=19 class=B chip=0 parent=0 pid=2951447 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b14 B 1.050
+2026-10-20T00:14:58.270Z 1792455298270 end id=16 class=B rc=0 state=running why=done waited_ms=694 ran_ms=1748 name=fakejob
+2026-10-20T00:14:58.270Z 1792455298270 quiet id=14 drained_ms=1748 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:14:58.270Z 1792455298270 state id=14 class=M word=run
+2026-10-20T00:14:59.162Z 1792455299162 submit id=20 class=B chip=0 parent=0 pid=2952712 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b15 B 1.350
+2026-10-20T00:15:00.640Z 1792455300640 submit id=21 class=B chip=0 parent=0 pid=2955345 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b16 B 1.667
+2026-10-20T00:15:01.495Z 1792455301495 submit id=22 class=B chip=0 parent=0 pid=2957334 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b17 B 0.583
+2026-10-20T00:15:01.766Z 1792455301766 end id=14 class=M rc=0 state=running why=done waited_ms=4028 ran_ms=5244 name=qm-fakejob
+2026-10-20T00:15:01.766Z 1792455301766 grant id=18 class=M to=granted waited_ms=3697 name=qm-fakejob
+2026-10-20T00:15:01.766Z 1792455301766 grant id=17 class=B to=running waited_ms=4877 name=fakejob
+2026-10-20T00:15:01.766Z 1792455301766 state id=17 class=B word=run
+2026-10-20T00:15:01.766Z 1792455301766 grant id=19 class=B to=running waited_ms=3648 name=fakejob
+2026-10-20T00:15:01.766Z 1792455301766 state id=19 class=B word=run
+2026-10-20T00:15:01.766Z 1792455301766 grant id=20 class=B to=running waited_ms=2604 name=fakejob
+2026-10-20T00:15:01.766Z 1792455301766 state id=18 class=M word=lockwait
+2026-10-20T00:15:01.766Z 1792455301766 state id=18 class=M word=chip
+2026-10-20T00:15:01.767Z 1792455301767 state id=20 class=B word=run
+2026-10-20T00:15:02.358Z 1792455302358 end id=17 class=B rc=0 state=running why=done waited_ms=4877 ran_ms=592 name=fakejob
+2026-10-20T00:15:02.831Z 1792455302831 end id=19 class=B rc=0 state=running why=done waited_ms=3648 ran_ms=1065 name=fakejob
+2026-10-20T00:15:03.124Z 1792455303124 end id=20 class=B rc=0 state=running why=done waited_ms=2604 ran_ms=1358 name=fakejob
+2026-10-20T00:15:03.124Z 1792455303124 quiet id=18 drained_ms=1358 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:15:03.124Z 1792455303124 state id=18 class=M word=run
+2026-10-20T00:15:08.927Z 1792455308927 submit id=23 class=M chip=1 parent=0 pid=2976689 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log cascade-suite-A-mtp M 37.883
+2026-10-20T00:15:09.689Z 1792455309689 submit id=24 class=M chip=1 parent=0 pid=2978629 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log tvw-exact-codelong M 1.367
+2026-10-20T00:15:14.278Z 1792455314278 submit id=25 class=B chip=0 parent=0 pid=2990224 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b18 B 1.050
+2026-10-20T00:15:14.696Z 1792455314696 end id=18 class=M rc=0 state=running why=done waited_ms=3697 ran_ms=12930 name=qm-fakejob
+2026-10-20T00:15:14.696Z 1792455314696 grant id=21 class=B to=running waited_ms=14056 name=fakejob
+2026-10-20T00:15:14.696Z 1792455314696 grant id=22 class=B to=running waited_ms=13201 name=fakejob
+2026-10-20T00:15:14.696Z 1792455314696 grant id=25 class=B to=running waited_ms=418 name=fakejob
+2026-10-20T00:15:14.696Z 1792455314696 state id=25 class=B word=run
+2026-10-20T00:15:14.696Z 1792455314696 state id=21 class=B word=run
+2026-10-20T00:15:14.696Z 1792455314696 state id=22 class=B word=run
+2026-10-20T00:15:14.696Z 1792455314696 grant id=23 class=M to=granted waited_ms=5769 name=qm-fakejob
+2026-10-20T00:15:14.697Z 1792455314697 state id=23 class=M word=lockwait
+2026-10-20T00:15:14.697Z 1792455314697 state id=23 class=M word=chip
+2026-10-20T00:15:15.000Z 1792455315000 submit id=26 class=B chip=0 parent=0 pid=2992066 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b19 B 1.350
+2026-10-20T00:15:15.286Z 1792455315286 end id=22 class=B rc=0 state=running why=done waited_ms=13201 ran_ms=590 name=fakejob
+2026-10-20T00:15:15.758Z 1792455315758 end id=25 class=B rc=0 state=running why=done waited_ms=418 ran_ms=1062 name=fakejob
+2026-10-20T00:15:15.935Z 1792455315935 submit id=27 class=B chip=0 parent=0 pid=2994705 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b20 B 1.667
+2026-10-20T00:15:16.372Z 1792455316372 end id=21 class=B rc=0 state=running why=done waited_ms=14056 ran_ms=1676 name=fakejob
+2026-10-20T00:15:16.372Z 1792455316372 quiet id=23 drained_ms=1675 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:15:16.372Z 1792455316372 state id=23 class=M word=run
+2026-10-20T00:15:17.101Z 1792455317101 submit id=28 class=B chip=0 parent=0 pid=2998141 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b21 B 0.583
+2026-10-20T00:15:18.721Z 1792455318721 submit id=29 class=B chip=0 parent=0 pid=3002467 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b22 B 1.050
+2026-10-20T00:15:21.992Z 1792455321992 submit id=30 class=B chip=0 parent=0 pid=3010692 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b23 B 1.350
+2026-10-20T00:15:29.656Z 1792455329656 submit id=31 class=B chip=0 parent=0 pid=3029219 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b24 B 1.667
+2026-10-20T00:15:47.613Z 1792455347613 submit id=32 class=M chip=1 parent=0 pid=3061005 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log cascade-suite-B-merge M 15.133
+2026-10-20T00:15:54.260Z 1792455354260 end id=23 class=M rc=0 state=running why=done waited_ms=5769 ran_ms=39564 name=qm-fakejob
+2026-10-20T00:15:54.261Z 1792455354261 grant id=26 class=B to=running waited_ms=39261 name=fakejob
+2026-10-20T00:15:54.261Z 1792455354261 grant id=27 class=B to=running waited_ms=38326 name=fakejob
+2026-10-20T00:15:54.261Z 1792455354261 grant id=28 class=B to=running waited_ms=37160 name=fakejob
+2026-10-20T00:15:54.261Z 1792455354261 grant id=29 class=B to=running waited_ms=35540 name=fakejob
+2026-10-20T00:15:54.261Z 1792455354261 grant id=30 class=B to=running waited_ms=32269 name=fakejob
+2026-10-20T00:15:54.261Z 1792455354261 grant id=31 class=B to=running waited_ms=24605 name=fakejob
+2026-10-20T00:15:54.261Z 1792455354261 state id=26 class=B word=run
+2026-10-20T00:15:54.261Z 1792455354261 grant id=24 class=M to=granted waited_ms=44572 name=qm-fakejob
+2026-10-20T00:15:54.261Z 1792455354261 state id=27 class=B word=run
+2026-10-20T00:15:54.261Z 1792455354261 state id=28 class=B word=run
+2026-10-20T00:15:54.261Z 1792455354261 state id=29 class=B word=run
+2026-10-20T00:15:54.261Z 1792455354261 state id=30 class=B word=run
+2026-10-20T00:15:54.262Z 1792455354262 state id=31 class=B word=run
+2026-10-20T00:15:54.262Z 1792455354262 state id=24 class=M word=lockwait
+2026-10-20T00:15:54.262Z 1792455354262 state id=24 class=M word=chip
+2026-10-20T00:15:54.864Z 1792455354864 end id=28 class=B rc=0 state=running why=done waited_ms=37160 ran_ms=603 name=fakejob
+2026-10-20T00:15:55.317Z 1792455355317 end id=29 class=B rc=0 state=running why=done waited_ms=35540 ran_ms=1056 name=fakejob
+2026-10-20T00:15:55.617Z 1792455355617 end id=30 class=B rc=0 state=running why=done waited_ms=32269 ran_ms=1356 name=fakejob
+2026-10-20T00:15:55.621Z 1792455355621 end id=26 class=B rc=0 state=running why=done waited_ms=39261 ran_ms=1360 name=fakejob
+2026-10-20T00:15:55.934Z 1792455355934 end id=27 class=B rc=0 state=running why=done waited_ms=38326 ran_ms=1673 name=fakejob
+2026-10-20T00:15:55.934Z 1792455355934 end id=31 class=B rc=0 state=running why=done waited_ms=24605 ran_ms=1673 name=fakejob
+2026-10-20T00:15:55.934Z 1792455355934 quiet id=24 drained_ms=1672 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:15:55.934Z 1792455355934 state id=24 class=M word=run
+2026-10-20T00:15:57.307Z 1792455357307 end id=24 class=M rc=0 state=running why=done waited_ms=44572 ran_ms=3046 name=qm-fakejob
+2026-10-20T00:15:57.307Z 1792455357307 grant id=32 class=M to=granted waited_ms=9694 name=qm-fakejob
+2026-10-20T00:15:57.307Z 1792455357307 state id=32 class=M word=lockwait
+2026-10-20T00:15:57.307Z 1792455357307 state id=32 class=M word=chip
+2026-10-20T00:15:57.307Z 1792455357307 quiet id=32 drained_ms=0 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:15:57.307Z 1792455357307 state id=32 class=M word=run
+2026-10-20T00:16:04.123Z 1792455364123 submit id=33 class=M chip=1 parent=0 pid=3078331 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log cascade-suite-C-mutants M 15.000
+2026-10-20T00:16:05.525Z 1792455365525 submit id=34 class=B chip=0 parent=0 pid=3079652 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b25 B 0.583
+2026-10-20T00:16:12.444Z 1792455372444 end id=32 class=M rc=0 state=running why=done waited_ms=9694 ran_ms=15137 name=qm-fakejob
+2026-10-20T00:16:12.444Z 1792455372444 grant id=33 class=M to=granted waited_ms=8321 name=qm-fakejob
+2026-10-20T00:16:12.444Z 1792455372444 grant id=34 class=B to=running waited_ms=6919 name=fakejob
+2026-10-20T00:16:12.444Z 1792455372444 state id=33 class=M word=lockwait
+2026-10-20T00:16:12.444Z 1792455372444 state id=34 class=B word=run
+2026-10-20T00:16:13.031Z 1792455373031 end id=34 class=B rc=0 state=running why=done waited_ms=6919 ran_ms=587 name=fakejob
+2026-10-20T00:16:17.863Z 1792455377863 submit id=35 class=M chip=1 parent=0 pid=3094160 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log l113-first-window M 15.000
+2026-10-20T00:16:20.295Z 1792455380295 submit id=36 class=B chip=0 parent=0 pid=3097481 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b26 B 1.050
+2026-10-20T00:16:20.295Z 1792455380295 grant id=36 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:20.299Z 1792455380299 state id=36 class=B word=run
+2026-10-20T00:16:21.357Z 1792455381357 end id=36 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1062 name=fakejob
+2026-10-20T00:16:21.526Z 1792455381526 submit id=37 class=B chip=0 parent=0 pid=3099365 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b27 B 1.350
+2026-10-20T00:16:21.526Z 1792455381526 grant id=37 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:21.526Z 1792455381526 state id=37 class=B word=run
+2026-10-20T00:16:22.881Z 1792455382881 end id=37 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1355 name=fakejob
+2026-10-20T00:16:27.605Z 1792455387605 submit id=38 class=B chip=0 parent=0 pid=3109591 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b28 B 1.667
+2026-10-20T00:16:27.605Z 1792455387605 grant id=38 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:27.605Z 1792455387605 state id=38 class=B word=run
+2026-10-20T00:16:29.288Z 1792455389288 end id=38 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1683 name=fakejob
+2026-10-20T00:16:29.438Z 1792455389438 submit id=39 class=B chip=0 parent=0 pid=3112884 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b29 B 0.583
+2026-10-20T00:16:29.438Z 1792455389438 grant id=39 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:29.438Z 1792455389438 state id=39 class=B word=run
+2026-10-20T00:16:30.032Z 1792455390032 end id=39 class=B rc=0 state=running why=done waited_ms=0 ran_ms=594 name=fakejob
+2026-10-20T00:16:37.033Z 1792455397033 submit id=40 class=M chip=1 parent=0 pid=3128774 name=qm-fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log loadavg-locked-run M 5.000
+2026-10-20T00:16:40.993Z 1792455400993 submit id=41 class=B chip=0 parent=0 pid=3137397 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b30 B 1.050
+2026-10-20T00:16:40.993Z 1792455400993 grant id=41 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:40.993Z 1792455400993 state id=41 class=B word=run
+2026-10-20T00:16:42.048Z 1792455402048 end id=41 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1055 name=fakejob
+2026-10-20T00:16:43.766Z 1792455403766 submit id=42 class=B chip=0 parent=0 pid=3144020 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b31 B 1.350
+2026-10-20T00:16:43.766Z 1792455403766 grant id=42 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:43.766Z 1792455403766 state id=42 class=B word=run
+2026-10-20T00:16:44.984Z 1792455404984 submit id=43 class=B chip=0 parent=0 pid=3147310 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b32 B 1.667
+2026-10-20T00:16:44.984Z 1792455404984 grant id=43 class=B to=running waited_ms=0 name=fakejob
+2026-10-20T00:16:44.985Z 1792455404985 state id=43 class=B word=run
+2026-10-20T00:16:45.146Z 1792455405146 end id=42 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1380 name=fakejob
+2026-10-20T00:16:45.335Z 1792455405335 state id=33 class=M word=chip
+2026-10-20T00:16:46.658Z 1792455406658 end id=43 class=B rc=0 state=running why=done waited_ms=0 ran_ms=1674 name=fakejob
+2026-10-20T00:16:46.658Z 1792455406658 quiet id=33 drained_ms=1323 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:16:46.658Z 1792455406658 state id=33 class=M word=run
+2026-10-20T00:16:47.728Z 1792455407728 submit id=44 class=B chip=0 parent=0 pid=3154269 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b33 B 0.583
+2026-10-20T00:16:49.961Z 1792455409961 submit id=45 class=B chip=0 parent=0 pid=3160140 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b36 B 1.667
+2026-10-20T00:16:49.965Z 1792455409965 submit id=46 class=B chip=0 parent=0 pid=3160206 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b37 B 0.583
+2026-10-20T00:16:50.002Z 1792455410002 submit id=47 class=B chip=0 parent=0 pid=3160354 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b34 B 1.050
+2026-10-20T00:16:50.040Z 1792455410040 submit id=48 class=B chip=0 parent=0 pid=3160532 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b35 B 1.350
+2026-10-20T00:16:50.772Z 1792455410772 submit id=49 class=B chip=0 parent=0 pid=3163221 name=fakejob cmd=fakejob /home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/replay-B-rep2/jobs.log b38 B 1.050
+2026-10-20T00:17:01.667Z 1792455421667 end id=33 class=M rc=0 state=running why=done waited_ms=8321 ran_ms=49223 name=qm-fakejob
+2026-10-20T00:17:01.667Z 1792455421667 grant id=44 class=B to=running waited_ms=13939 name=fakejob
+2026-10-20T00:17:01.667Z 1792455421667 grant id=45 class=B to=running waited_ms=11706 name=fakejob
+2026-10-20T00:17:01.667Z 1792455421667 grant id=46 class=B to=running waited_ms=11702 name=fakejob
+2026-10-20T00:17:01.667Z 1792455421667 grant id=47 class=B to=running waited_ms=11665 name=fakejob
+2026-10-20T00:17:01.667Z 1792455421667 grant id=48 class=B to=running waited_ms=11627 name=fakejob
+2026-10-20T00:17:01.667Z 1792455421667 grant id=49 class=B to=running waited_ms=10895 name=fakejob
+2026-10-20T00:17:01.667Z 1792455421667 state id=46 class=B word=run
+2026-10-20T00:17:01.667Z 1792455421667 grant id=35 class=M to=granted waited_ms=43804 name=qm-fakejob
+2026-10-20T00:17:01.668Z 1792455421668 state id=44 class=B word=run
+2026-10-20T00:17:01.668Z 1792455421668 state id=45 class=B word=run
+2026-10-20T00:17:01.668Z 1792455421668 state id=47 class=B word=run
+2026-10-20T00:17:01.668Z 1792455421668 state id=48 class=B word=run
+2026-10-20T00:17:01.668Z 1792455421668 state id=49 class=B word=run
+2026-10-20T00:17:01.668Z 1792455421668 state id=35 class=M word=lockwait
+2026-10-20T00:17:01.668Z 1792455421668 state id=35 class=M word=chip
+2026-10-20T00:17:02.259Z 1792455422259 end id=44 class=B rc=0 state=running why=done waited_ms=13939 ran_ms=592 name=fakejob
+2026-10-20T00:17:02.270Z 1792455422270 end id=46 class=B rc=0 state=running why=done waited_ms=11702 ran_ms=603 name=fakejob
+2026-10-20T00:17:02.746Z 1792455422746 end id=47 class=B rc=0 state=running why=done waited_ms=11665 ran_ms=1079 name=fakejob
+2026-10-20T00:17:02.754Z 1792455422754 end id=49 class=B rc=0 state=running why=done waited_ms=10895 ran_ms=1087 name=fakejob
+2026-10-20T00:17:03.039Z 1792455423039 end id=48 class=B rc=0 state=running why=done waited_ms=11627 ran_ms=1372 name=fakejob
+2026-10-20T00:17:03.347Z 1792455423347 end id=45 class=B rc=0 state=running why=done waited_ms=11706 ran_ms=1680 name=fakejob
+2026-10-20T00:17:03.347Z 1792455423347 quiet id=35 drained_ms=1679 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:17:03.347Z 1792455423347 state id=35 class=M word=run
+2026-10-20T00:17:18.354Z 1792455438354 end id=35 class=M rc=0 state=running why=done waited_ms=43804 ran_ms=16687 name=qm-fakejob
+2026-10-20T00:17:18.354Z 1792455438354 grant id=40 class=M to=granted waited_ms=41321 name=qm-fakejob
+2026-10-20T00:17:18.354Z 1792455438354 state id=40 class=M word=lockwait
+2026-10-20T00:17:18.354Z 1792455438354 state id=40 class=M word=chip
+2026-10-20T00:17:18.354Z 1792455438354 quiet id=40 drained_ms=0 builds_still_running=0 name=qm-fakejob
+2026-10-20T00:17:18.354Z 1792455438354 state id=40 class=M word=run
+2026-10-20T00:17:23.363Z 1792455443363 end id=40 class=M rc=0 state=running why=done waited_ms=41321 ran_ms=5009 name=qm-fakejob
