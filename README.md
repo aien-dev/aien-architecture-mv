@@ -44,6 +44,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `qualification/` | Release candidates (`candidates/CAND-*.toml` and their gate results) and recorded exceptions |
 | `formal/invariants/` | Invariants written down for formal checking ([ADR 0027](docs/adr/0027-formal-oracle-lean-bootstrap.md)) |
 | `tools/crumb/` | The crumb tool (C11), which compiles and checks the `.crumb` files |
+| `tools/ops/` | The Spark's shared measurement base: build once, one measurement window at a time, per-window calibration and 27B baseline ([how to use it](docs/ops/MEASUREMENT_WINDOWS.md)) |
 | `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate, crumb rebase helper) and their `test_*.sh` tests |
 | `tests/gates/` | The gate manifests the Spark runs on every pull request |
 
