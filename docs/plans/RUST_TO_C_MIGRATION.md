@@ -8,7 +8,7 @@
 
 **Written:** 2026-09-28.
 
-**Why this exists.** On 2026-09-27 Drake decided: no Rust anywhere, AIENOS included. Everything comes from our own lineage, and existing Rust gets rewritten. On 2026-09-28 he agreed the target language is C, with hand-written assembly only where a measurement shows it is faster. This document proposes *how* to get there without breaking what already works.
+**Why this exists.** On 2026-09-27 Drake decided: no Rust anywhere, Aienux included. Everything comes from our own lineage, and existing Rust gets rewritten. On 2026-09-28 he agreed the target language is C, with hand-written assembly only where a measurement shows it is faster. This document proposes *how* to get there without breaking what already works.
 
 **Words used below:**
 
@@ -157,7 +157,7 @@ The rule for every step is the same. **Write the C twin, prove it passes the sam
 
 So the proposal is: **do not port it.** Keep it untouched as the reference oracle, the old system new results are compared against, through R15. At R16 archive the repository. The resident AEGIS work in R8 replaces its job.
 
-Cost of this choice: 9,207 lines of Rust stay alive until R16. They are never linked into AIENOS or Omega.
+Cost of this choice: 9,207 lines of Rust stay alive until R16. They are never linked into Aienux or Omega.
 
 ### Step 3: aienos, in the order boot → kernel → store → crypto
 

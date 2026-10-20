@@ -6,12 +6,12 @@ Part of the finite workstream in `README.md` (not a master plan). Issue: aien-sp
 
 | Concept | Owner | Stored where | Never |
 |---|---|---|---|
-| Identity | AIENOS provisions; host `aien-allen` resolves (read only) | SubjectState kind 24 in the AIENOS Store, host pin `<home>.allen-binding` | Created or edited by host or frontend code. A display name is not identity. |
+| Identity | Aienux provisions; host `aien-allen` resolves (read only) | SubjectState kind 24 in the Aienux Store, host pin `<home>.allen-binding` | Created or edited by host or frontend code. A display name is not identity. |
 | Persona profile | New host crate `aien-allen-profile` is the only writer | `<home>.allen-profile/` beside the binding file | A second copy that claims to be current. Caches carry the revision and refuse identity mismatch. |
 | Working preferences | Same profile record | Same store | Treated as permissions or as facts from model output. |
-| Standing intent | AIENOS (SubjectState) | Subject intents (v0: `GOAL_LATENCY` only) | Written by the profile. Not covered by v1 (see AUDIT-v1). |
+| Standing intent | Aienux (SubjectState) | Subject intents (v0: `GOAL_LATENCY` only) | Written by the profile. Not covered by v1 (see AUDIT-v1). |
 | Memory | Cortex (ARCH-0022) | Cortex journal | Duplicated into the profile. The profile holds no memory content. |
-| Permissions | Approval desk and capability authority (S4 `authorize`, AIENOS) | Their own records | Granted by profile text. |
+| Permissions | Approval desk and capability authority (S4 `authorize`, Aienux) | Their own records | Granted by profile text. |
 | User account/session | Not defined in v1 | n/a | Interchangeable with the logical agent id. One local operator per compose home. |
 
 One subject per configured root. Multi-subject, multi-device sync, clone and fork are out of scope and refused, not implied.
@@ -79,7 +79,7 @@ A reader accepts exactly `aien.allen.profile/1`. Any other schema value is refus
 3. **SubjectState independent of weights, KV, machine, queues.** SubjectState is untouched; the profile is a separate host record.
 4. **ALLEN is not a planner, UI, scheduler or loop.** The profile is passive data read when a request is built.
 5. **Cortex owns memory.** The profile has no memory fields and no journal copy.
-6. **AIENOS is the provisioning and capability authority.** Host code only attaches to an existing subject; permissions stay with the approval desk.
+6. **Aienux is the provisioning and capability authority.** Host code only attaches to an existing subject; permissions stay with the approval desk.
 7. **Missing identity is not repaired by creating another.** Not engaged means profile commands refuse; nothing is minted.
 8. **v0 has one subject per root and limited intent semantics.** v1 supports one subject per root and claims no general goals or multiple subjects.
 9. **INTERPLANE is interface and transport.** v1 changes no INTERPLANE wire format; any presentation extension would be a separate, explicitly versioned contract.

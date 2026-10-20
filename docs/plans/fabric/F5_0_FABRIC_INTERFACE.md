@@ -98,7 +98,7 @@ JsHome*)` (LOCAL for self, REMOTE_OWNED for a live member, refused
 otherwise); `fab_state_digest`. Rebuild of the capq index after an
 ingested record is done by the Fabric.
 
-**AIENOS M6 transport (Lane 5).** Two vtables, nothing else:
+**Aienux M6 transport (Lane 5).** Two vtables, nothing else:
 `FabTransport { send(from, to, bytes), recv(self, buf) }` (untrusted; the
 Fabric authenticates every message itself) and `FabAuth { sign(bytes) ->
 tag[32], verify(claimed AienMachineId, bytes, tag) }`. The real transport

@@ -29,7 +29,7 @@ R1 is what the Linux adapter must run. This section freezes the language so the 
 | Release | Contents | Gate |
 |---|---|---|
 | R1 | Shared Omega core plus Linux adapter: interactive, `-c`, script modes. Interpreter and native ARM64 runs of the same core. | Section 3 |
-| R1.1 | AIENOS native: real console input path, storage locations over the Store, artifact packaging and loading, task and IPC use, QEMU acceptance. Depends on the 13 native services in section 6. | QEMU acceptance from the issue, hosted simulation does not count |
+| R1.1 | Aienux native: real console input path, storage locations over the Store, artifact packaging and loading, task and IPC use, QEMU acceptance. Depends on the 13 native services in section 6. | QEMU acceptance from the issue, hosted simulation does not count |
 | R1.2 | Additions in inventory order (unlock count over 326 scripts, recount 2026-10-08): `$( )`, `set -e/-u/-o pipefail`, `if`, `for` and `while`, `case`, `{ }`. | Each addition gets its own vectors and differential rows before it is accepted |
 | Later | Functions, globbing, here-documents, background jobs, hardware validation (separately authorized, attended). | Not scheduled here |
 
@@ -56,7 +56,7 @@ These are proposals, not ownership decisions. Reconcile with each repo's owners 
 | Compiler additions (OSC-EXT-BYTES, byte load and store, runtime bounds) | omega `src/compiler/` | extends the existing compiler; design merged as omega#169 |
 | Shell core `.osc` (lexer, parser, expander, session) | omega | split across units (32 function limit per unit) |
 | Linux host adapter | omega host scaffolding (ADR 0024), owner to confirm | ordinary C, no second parser |
-| AIENOS native adapter (console, Store locations, artifact loading, tasks) | aienos | R1.1 |
+| Aienux native adapter (console, Store locations, artifact loading, tasks) | aienos | R1.1 |
 | Platform ABI and conformance vectors | aien-protocols, `specs/osh-platform/` | draft in aien-protocols#16; "if consistent with current ownership" per the issue |
 | This record, compatibility matrix, status | aien-architecture | scoped, not a plan |
 | Visor views | omega `src/visor/`, reused through explicit interfaces | section 5 |
@@ -74,7 +74,7 @@ The invariant, quoted: "Invariant: THE VISOR CAN ASK. THE VISOR CANNOT GRANT." (
 
 ## 6. R1.1 dependencies: native services that do not exist
 
-From the AIENOS readiness audit at `c63d6db` (read-only, no QEMU run; citations in the issue's audit are repo-relative). Each is an explicit dependency, to be implemented and reviewed, not assumed.
+From the Aienux readiness audit at `c63d6db` (read-only, no QEMU run; citations in the issue's audit are repo-relative). Each is an explicit dependency, to be implemented and reviewed, not assumed.
 
 1. Serial console input (`console.c` has output only; the USB keyboard is the only key input).
 2. A keyboard session beyond the 60 s total and 15 s idle limits, surviving the recovery choice (`usb_kbd.h:37-41`, `devices.c:75-83`, `xhci_fence.c:101-135`).
@@ -98,7 +98,7 @@ Original record pinned above. **Status update 2026-10-08** (GitHub, omega `main`
 
 | Item | Status |
 |---|---|
-| Audit of compiler, Visor, AIENOS, scripts, parser design | DONE as read-only notes (not committed evidence) |
+| Audit of compiler, Visor, Aienux, scripts, parser design | DONE as read-only notes (not committed evidence) |
 | OSC-EXT-BYTES design | DONE, merged [omega#169](https://github.com/aien-spark/omega/pull/169) (design only) |
 | OSC-EXT-BYTES implementation | DONE, merged [omega#335](https://github.com/aien-spark/omega/pull/335) `5227b88` (bytes and cells parameters) |
 | First-release acceptance frozen | This file; frozen when merged |
@@ -108,8 +108,8 @@ Original record pinned above. **Status update 2026-10-08** (GitHub, omega `main`
 | Differential and hostile suite, pinned bash | IN PROGRESS: GNU bash 5.2.21 (locale not yet pinned); lexer expectations proved against real bash (`bash_verify.sh`); hostile bash differential review of omega#340 (about 1500 cases), fixed in #340 (merged; local evidence: expand 478,635 checks, parse 2,879,236, lex 2,928,338, host 1439, e2e 104 cases and 317 checks, all 0 failures), remaining differences listed in [omega#344](https://github.com/aien-spark/omega/issues/344) |
 | Interpreter versus native ARM64 run | IN PROGRESS: lexer, parser and expander tests compare interpreter, native ARM64 and C reference on the same inputs (merged); e2e runs every case native and interpreted |
 | Real script run (`run_builds.sh`) | NOT STARTED |
-| Core-only step trace for AIENOS | Linux side merged [omega#343](https://github.com/aien-spark/omega/pull/343) `ed7cbf3` (20 fixtures, native == interpreter == committed trace); AIENOS side not merged |
-| AIENOS native services (section 6) | NOT STARTED as merged code |
+| Core-only step trace for Aienux | Linux side merged [omega#343](https://github.com/aien-spark/omega/pull/343) `ed7cbf3` (20 fixtures, native == interpreter == committed trace); Aienux side not merged |
+| Aienux native services (section 6) | NOT STARTED as merged code |
 | Native QEMU acceptance | NOT STARTED |
 | Attended hardware validation | NOT STARTED; needs separate authorization |
 | Compatibility and limits matrix | NOT STARTED as a matrix; known differences tracked in omega#344 |

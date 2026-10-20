@@ -57,7 +57,7 @@ Output checks (used by the verifier, OBSERVED): `report.md` exists, UTF-8, first
 | second-machine verdict | MacBook, verifier built from a clean checkout with `rustc` directly | n/a (verifier only) | E5 cross-machine agreement |
 | RUN-3 | Spark, installed from the release artifact into a clean user | the qualified public model (Qwen3-4B-Instruct-2507 after a frozen qualification PASS, lane L10); a dry-run artifact with the internal model is RUN-3-internal and never a public-release claim | E1 plus the whole chain |
 
-Native AIENOS is NOT_RUN in v1 and is not a row here; v2 of this file adds it when NEXT-PHASE-3 step 5 closes.
+Native Aienux is NOT_RUN in v1 and is not a row here; v2 of this file adds it when NEXT-PHASE-3 step 5 closes.
 
 ## 5. Rules of the run
 
@@ -71,7 +71,7 @@ Native AIENOS is NOT_RUN in v1 and is not a row here; v2 of this file adds it wh
 
 ## 6. What a PASS does not show
 
-Not claimed by any PASS of this test: security against a hostile operator or model, behaviour under concurrent operators, long-running stability, correctness of the model's prose beyond the output checks, anything on the native AIENOS target, anything about the research programs.
+Not claimed by any PASS of this test: security against a hostile operator or model, behaviour under concurrent operators, long-running stability, correctness of the model's prose beyond the output checks, anything on the native Aienux target, anything about the research programs.
 
 ## 7. Freeze procedure
 
