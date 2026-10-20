@@ -27,9 +27,9 @@ case $SYS in
 A)  sand "$H/quiet-build.locks" "$S/bin/quiet-build"; sand "$H/quiet-measure.locks" "$S/bin/quiet-measure" ;;
 A0) sand "$H/replay/quiet-build.pre-bandage" "$S/bin/quiet-build"; sand "$H/quiet-measure.locks" "$S/bin/quiet-measure" ;;
 B)  for f in quiet-build quiet-measure quiet-build.locks quiet-measure.locks spark-job; do ln -s "$H/$f" "$S/bin/$f"; done
-    N=$(( 600000 / SCALE )) D=$(( 600000 / SCALE ))
+    N=$(( ${REPLAY_N_S:-600} * 1000 / SCALE )) D=$(( ${REPLAY_D_S:-600} * 1000 / SCALE ))   # broker age rule and drain cap
     ( "$H/spark-broker" -s "$S/sock" -l "$OUT/broker-events.log" -t 20 -b 6 -L 100000 -N $N -D $D 2>"$S/broker.err" & echo $! > "$S/bp" )
-    export SPARK_BROKER_SOCK=$S/sock SPARK_QUIET_LOCK=$Q SPARK_GB10_LOCK=$G SPARK_JOB_WINDOW=0 SPARK_JOB_LEGACY_DIR=$S/bin
+    export SPARK_BROKER_AUTOSTART=0 SPARK_BROKER_SOCK=$S/sock SPARK_QUIET_LOCK=$Q SPARK_GB10_LOCK=$G SPARK_JOB_WINDOW=0 SPARK_JOB_LEGACY_DIR=$S/bin
     sleep 0.3 ;;
 *)  echo "SYSTEM must be A, A0 or B" >&2; exit 2 ;;
 esac

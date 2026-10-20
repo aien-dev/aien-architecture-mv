@@ -154,6 +154,27 @@ static int legacy(const char *cls, int chip, char **cmd) {
   return run(a, 0);
 }
 
+/* no broker answering: start one (detached, its own session) unless SPARK_BROKER_AUTOSTART=0.
+ * Two callers racing here is safe: the broker refuses to start twice (lock on SOCKET.lock). */
+static int autostart(void) {
+  if (!strcmp(env("SPARK_BROKER_AUTOSTART", "1"), "0")) return 0;
+  char self[512], bin[600]; ssize_t n = readlink("/proc/self/exe", self, sizeof self - 1);
+  if (n <= 0) return 0;
+  self[n] = 0; char *sl = strrchr(self, '/'); if (sl) *sl = 0;
+  snprintf(bin, sizeof bin, "%s/spark-broker", self);
+  if (access(bin, X_OK)) return 0;
+  pid_t p = fork();
+  if (p == 0) {
+    setsid();
+    int nul = open("/dev/null", O_RDWR); if (nul >= 0) { dup2(nul, 0); dup2(nul, 1); dup2(nul, 2); }
+    if (fork() == 0) { execl(bin, "spark-broker", (char *)NULL); _exit(127); }
+    _exit(0);
+  }
+  if (p > 0) waitpid(p, NULL, 0);
+  for (int i = 0; i < 40; i++) { int s = connect_broker(); if (s >= 0) { close(s); fprintf(stderr, "spark-job: started spark-broker (%s)\n", bin); return 1; } usleep(50000); }
+  return 0;
+}
+
 static int status_cmd(void) {
   sock = connect_broker();
   if (sock < 0) printf("spark-broker is not running (jobs fall back to the old lock wrappers)\n");
@@ -215,6 +236,7 @@ int main(int argc, char **argv) {
   if (nested_direct) return run(cmd, 0);
 
   sock = connect_broker();
+  if (sock < 0 && autostart()) sock = connect_broker();
   if (sock < 0) return legacy(cls, chip, cmd);
   sendf("SUB %s %d %ld %ld %s\t%s\n", cls, chip, parent, (long)getpid(), name, cmdline);
   char l[256];

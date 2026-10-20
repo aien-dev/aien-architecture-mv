@@ -5,7 +5,7 @@
 set -u
 H=$(cd "$(dirname "$0")" && pwd)
 S=$(mktemp -d /tmp/l118-test.XXXXXX)
-export SPARK_BROKER_SOCK=$S/sock SPARK_QUIET_LOCK=$S/q.lock SPARK_GB10_LOCK=$S/g.lock SPARK_JOB_WINDOW=0 SPARK_JOB_LEGACY_DIR=$H
+export SPARK_BROKER_AUTOSTART=0 SPARK_BROKER_SOCK=$S/sock SPARK_QUIET_LOCK=$S/q.lock SPARK_GB10_LOCK=$S/g.lock SPARK_JOB_WINDOW=0 SPARK_JOB_LEGACY_DIR=$H
 export PATH=$H:$H/replay:$PATH
 unset SPARK_JOB SPARK_WINDOW AIEN_GB10_LOCK_HELD
 L=$S/jobs.log; : > "$L"

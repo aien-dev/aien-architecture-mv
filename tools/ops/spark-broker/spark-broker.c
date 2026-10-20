@@ -70,7 +70,7 @@ static job_t J[MAXC];
 static done_t D[MAXDONE]; static int nd;
 static long next_id = 1;
 static long long N_ms = 600000, D_ms = 600000, tick_ms = 1000;
-static int maxb = 6; static double loadcap = 20.0;
+static int maxb = 6; static double loadcap = 32.0;
 static const char *loadfile = "/proc/loadavg";
 static FILE *logf;
 
@@ -304,6 +304,7 @@ int main(int argc, char **argv) {
   int lk = open(lockp, O_RDWR | O_CREAT | O_CLOEXEC, 0600);
   if (lk < 0 || flock(lk, LOCK_EX | LOCK_NB) < 0) { fprintf(stderr, "spark-broker: another broker owns %s\n", sockp); return 1; }
   logf = fopen(logp, "a");
+  { char pp[300]; snprintf(pp, sizeof pp, "%s.pid", sockp); FILE *pf = fopen(pp, "w"); if (pf) { fprintf(pf, "%d\n", getpid()); fclose(pf); } }
   if (strlen(sockp) >= sizeof ((struct sockaddr_un *)0)->sun_path) { fprintf(stderr, "spark-broker: socket path too long\n"); return 2; }
   unlink(sockp);
   int ls = socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0);
