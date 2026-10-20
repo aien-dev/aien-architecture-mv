@@ -43,6 +43,13 @@ case_ receipts-path       0 receipts/a.md  "Aienix"
 case_ history-path        0 docs/history/h.md "AIENOS history"
 case_ changelog           0 CHANGELOG.md   "- Aienix renamed"
 case_ glossary-avoid     0 CONTEXT.md     "_Avoid_: Aienix (retired), AIENOS, Aienos"
+# green: quoted older text and program output keep their words
+case_ quoted-text        0 docs/q.md      'the roadmap says "Nothing in AIENOS is qualified" today'
+case_ code-span          0 docs/c.md      'the banner `AIENOS Standalone` appears'
+case_ open-code-span     0 docs/o.md      'Expect the rescue banner `AIENOS Standalone Hardware'
+case_ curly-quote        0 docs/u.md      "he wrote “Aienix is the tree” once"
+# red: an old name outside the quotes still fails
+case_ outside-quote      1 docs/p.md      'AIENOS says "hello"'
 
 echo "name-check tests: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]

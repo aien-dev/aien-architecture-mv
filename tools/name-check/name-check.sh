@@ -50,6 +50,10 @@ L='(?<![A-Za-z0-9_\-/.@$])'
 R='(?![A-Za-z0-9_]|[-./][A-Za-z0-9])'
 pat="${L}(Aienix|AIENIX|AIENOS|Aienos)${R}|Aienix"
 
+# Quoted text keeps its words: `code spans` (also one left open to the end of the line),
+# "quotations" and “curly quotations” of older documents or of program output.
+unquote() { LC_ALL=C sed -E 's/`[^`]*`//g; s/`.*$//; s/"[^"]*"//g; s/\xe2\x80\x9c([^\xe2]|\xe2[^\x80]|\xe2\x80[^\x9d])*\xe2\x80\x9d//g'; }
+
 bad=0 file=""
 while IFS= read -r line; do
   case "$line" in
@@ -58,8 +62,8 @@ while IFS= read -r line; do
     "@@ "*) n="${line#*+}"; n="${n%%[, ]*}" ;;
     "+_Avoid_:"*) n=$((n + 1)) ;;   # glossary lines that name the retired words on purpose
     "+"*)
-      if [ -n "$file" ] && ! allowed "$file" && printf '%s\n' "${line:1}" | grep -qP "$pat"; then
-        word=$(printf '%s\n' "${line:1}" | grep -oP "$pat" | head -1)
+      if [ -n "$file" ] && ! allowed "$file" && printf '%s\n' "${line:1}" | unquote | grep -qP "$pat"; then
+        word=$(printf '%s\n' "${line:1}" | unquote | grep -oP "$pat" | head -1)
         echo "name-check: $file:$n: retired name '$word' (use Aienux for the kernel, AienOS for the whole system)"
         bad=1
       fi
