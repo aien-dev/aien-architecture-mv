@@ -1,0 +1,51 @@
+# offset_s(from 21:30:00Z)	class	run_s	name	source
+141	build	35	b01	transcript: cd ~/workspace/dot-github-allen/.work/render && K=$HOME/workspace/aienos-goodbye-horizon/n (run ASSUMED from observed set 35/63/81/100 s)
+232	build	63	b02	transcript: cd ~/workspace/dot-github-allen/.work/render && rm -f run.log && setsid nohup sh -c "quiet (run ASSUMED from observed set 35/63/81/100 s)
+245	measure	545	tvg-tv8-gu-sweep	receipt
+250	build	81	b03	transcript: cd ~/workspace/aienos-allen-canvas; (setsid nohup quiet-build sh scripts/ck_allen_canvas_t (run ASSUMED from observed set 35/63/81/100 s)
+602	build	100	b04	transcript: cd ~/workspace/aienos-real-sky; mkdir -p ~/handoffs/restart-1619; (quiet-build sh scripts/ (run ASSUMED from observed set 35/63/81/100 s)
+708	build	35	b05	transcript: kill 2391169; cd ~/workspace/aienos-allen-canvas; (setsid nohup quiet-build sh scripts/ck_ (run ASSUMED from observed set 35/63/81/100 s)
+794	measure	740	tvg-tv8-down-sweep	receipt
+856	build	63	b06	transcript: { nohup quiet-build spark-cleanup --apply --only $HOME/workspace/targets/fix-install-crumb (run ASSUMED from observed set 35/63/81/100 s)
+1071	build	81	b07	transcript: cd ~/workspace/hive-worktrees/L088-repo-agents && quiet-build cargo build --release -p aie (run ASSUMED from observed set 35/63/81/100 s)
+1442	build	100	b08	transcript: cd ~/workspace/aienos.com-allen && rm -rf /tmp/allen-dist && quiet-build cargo run -q --re (run ASSUMED from observed set 35/63/81/100 s)
+1468	build	35	b09	transcript: ls /tmp/aien-quiet.want.d | head; cd ~/workspace/aienos.com-manifesto && export CARGO_TARG (run ASSUMED from observed set 35/63/81/100 s)
+1536	measure	35	tvg-tv8-amix-sweep	receipt
+1567	build	63	b10	transcript: cd ~/workspace/omega-runtime-r2-hello && (quiet-build make -j4 PHYSICS_DIR=$PWD/build/phys (run ASSUMED from observed set 35/63/81/100 s)
+1575	measure	209	tvg-tv8-head-sweep	receipt
+1760	build	81	b11	transcript: cd ~/workspace/omega-runtime-r3-portability && ls /tmp/aien-quiet.want.d 2>/dev/null | hea (run ASSUMED from observed set 35/63/81/100 s)
+1775	build	100	b12	transcript: cd ~/workspace/aienos.com-allen && (quiet-build cargo test --release -p site-builder -p al (run ASSUMED from observed set 35/63/81/100 s)
+1840	build	35	b13	transcript: cd ~/workspace/aienos.com-allen && ls -la /tmp/aien-quiet.want.d; (setsid nohup quiet-buil (run ASSUMED from observed set 35/63/81/100 s)
+1911	measure	694	tvw-tree-codelong	receipt
+1914	build	63	b14	ps-live pid 3564022: /quiet-build make -j4 PHYSICS_DIR=/home/drakestapleton/workspace/physics-pf-6d7cf0d4 test-g (run ASSUMED from observed set 35/63/81/100 s)
+1976	build	81	b15	ps-live pid 3618795: /quiet-build scripts/ck_allen_ui_test.sh (run ASSUMED from observed set 35/63/81/100 s)
+2064	build	100	b16	ps-live pid 3708117: /quiet-build /home/drakestapleton/wormhole-scratch/build2.sh (run ASSUMED from observed set 35/63/81/100 s)
+2116	build	35	b17	ps-live pid 3755773: /quiet-build nice -n 5 /home/drakestapleton/workspace/targets/wormhole/release/wormhole_acc (run ASSUMED from observed set 35/63/81/100 s)
+2562	measure	2273	cascade-suite-A-mtp	receipt
+2608	measure	82	tvw-exact-codelong	receipt
+2883	build	63	b18	ps-live pid 4127784: /quiet-build make PHYSICS_DIR=/nonexistent PHYSICS_LOCK_CHECK=0 test-runtime-api (run ASSUMED from observed set 35/63/81/100 s)
+2926	build	81	b19	ps-live pid 4138109: /quiet-build sh -c cargo test --release -p aien-board > /tmp/l088-test.log 2>&1; echo test- (run ASSUMED from observed set 35/63/81/100 s)
+2983	build	100	b20	ps-live pid 4153535: /quiet-build make -s build/compiler/oscc omega-emit checker2 (run ASSUMED from observed set 35/63/81/100 s)
+3052	build	35	b21	ps-live pid 1279: /quiet-build make -j4 -s build/omega_bytes/omega_bytes (run ASSUMED from observed set 35/63/81/100 s)
+3149	build	63	b22	ps-live pid 24861: /quiet-build make -j4 PHYSICS_DIR=/home/drakestapleton/workspace/omega-runtime-r2-hello/bui (run ASSUMED from observed set 35/63/81/100 s)
+3346	build	81	b23	ps-live pid 106117: /quiet-build make -s PHYSICS_DIR=/nonexistent PHYSICS_LOCK_CHECK=0 omega-emit omegese oscc (run ASSUMED from observed set 35/63/81/100 s)
+3806	build	100	b24	ps-live pid 281789: /quiet-build make -s build/omegese/omegese (run ASSUMED from observed set 35/63/81/100 s)
+4883	measure	908	cascade-suite-B-merge	receipt
+5873	chiphold	1973	unconverted-gb10-holder	cascade-suite-C waited 23:07:53-23:40:46 for gb10 inside the quiet lock (ps etimes + gb10 holder start)
+5873	measure	900	cascade-suite-C-mutants	want.d+ps (run 900 s ASSUMED)
+5958	build	35	b25	ps-live pid 1176174: /quiet-build nice cargo test -q -p aien-kv-store --features std --test host_fs_tests corrup (run ASSUMED from observed set 35/63/81/100 s)
+6698	measure	900	l113-first-window	want.d (run 900 s ASSUMED)
+6844	build	63	b26	ps-live pid 1537576: /quiet-build make -j8 all (run ASSUMED from observed set 35/63/81/100 s)
+6918	build	81	b27	ps-live pid 1563736: /quiet-build nice -n 5 make -j 8 PHYSICS_DIR=/home/drakestapleton/workspace/physics-6d7cf0d (run ASSUMED from observed set 35/63/81/100 s)
+7283	build	100	b28	ps-live pid 1701711: /quiet-build make build/omegese/omegese build/omega_emit/omega_emit (run ASSUMED from observed set 35/63/81/100 s)
+7393	build	35	b29	ps-live pid 1753296: /quiet-build sh ./run_m1_gates.sh (run ASSUMED from observed set 35/63/81/100 s)
+7848	measure	300	loadavg-locked-run	want.d (run 300 s ASSUMED)
+8086	build	63	b30	ps-live pid 2070786: /quiet-build cargo test --release -j 8 -p aien-omegese-constraint -p aien-serve-http --feat (run ASSUMED from observed set 35/63/81/100 s)
+8252	build	81	b31	ps-live pid 2149450: /quiet-build cargo build --release -j 8 -p aien-serve-http --features omegese --bin aien-se (run ASSUMED from observed set 35/63/81/100 s)
+8325	build	100	b32	ps-live pid 2172976: /quiet-build make -s -j 8 PHYSICS_DIR=/nonexistent PHYSICS_LOCK_CHECK=0 omegese omega-emit  (run ASSUMED from observed set 35/63/81/100 s)
+8490	build	35	b33	ps-live pid 2249625: /quiet-build nice -n 5 cargo test --locked --release -p aien-serve-http --bin aien-serve-ht (run ASSUMED from observed set 35/63/81/100 s)
+8623	build	100	b36	ps-live pid 2289603: /quiet-build sh -c ls qwen3.8-27b-fp8-017b9c7a | grep -E "safetensors|config.json|tokenizer (run ASSUMED from observed set 35/63/81/100 s)
+8623	build	35	b37	ps-live pid 2289645: /quiet-build tests/one_layer/exp445/pack_dev.sh /tmp/l108-dev (run ASSUMED from observed set 35/63/81/100 s)
+8623	build	63	b34	ps-live pid 2289598: /quiet-build make -s PHYSICS_DIR=/nonexistent PHYSICS_LOCK_CHECK=0 omegese omega-emit (run ASSUMED from observed set 35/63/81/100 s)
+8623	build	81	b35	ps-live pid 2289602: /quiet-build cargo build --release --offline --target-dir /home/drakestapleton/workspace/ta (run ASSUMED from observed set 35/63/81/100 s)
+8671	build	63	b38	ps-live pid 2320107: /quiet-build cc -O1 -w -o build/seed/r6/sm121list seed/sm121/sm121list.c src/omega_blackwel (run ASSUMED from observed set 35/63/81/100 s)
