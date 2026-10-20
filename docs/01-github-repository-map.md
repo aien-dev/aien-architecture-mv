@@ -13,8 +13,15 @@ Snapshot-oriented map of the AIEN GitHub ecosystem, checked against `gh repo lis
 | `aien-spark/aien-protocols` | public | Protocol authority (see below). |
 | `aien-spark/aien-architecture` | public | This repository. |
 | `aien-dev/aien-sealed` | private | Name only. Holds evaluator-only material; never given to a candidate under test. |
+| `aien-dev/allen` | private at creation | Allen's programme home (proposed 2026-10-20): mission, phase ledger P0 to P7 and B0, data contracts, evaluation harness, release manifests and guards. It holds no identity, memory or authority; those keep their owners (see below). |
 
 Other live public repositories: `aien-dev/aien-edge`, `aien-dev/aienos.com`, `aien-spark/drakestapleton.com`, `aien-spark/aien-dev` (profile), `aien-dev/.github`, `aien-spark/aegis-runtime`, `aien-spark/spark-rsi`, `aien-spark/benchmarks`, `aien-spark/open-humanity`.
+
+## Allen programme repository
+
+`aien-dev/allen` is the dedicated home for the Allen programme that the operator asked for on 2026-10-20. It owns the personal-learning programme, its data contracts, evaluation harness, release manifests and guards. It does not mint a second identity, fork memory or create a new authority: ALLEN identity and SubjectState stay with aienos and ADR 0035, Cortex stays with omega `rx_cortex` (ADR 0022, with ADR 0036 for the release v1 memory store), runtime authority stays with sovereign-core, aegis-runtime and INTERPLANE, protocols stay with aien-protocols, and the conversation archive stays with `aien-dev/agent-archive`. The owner-by-owner map with pinned commits is `docs/SOURCE_MAP.md` and the ownership rules are `docs/OWNERS.md` in that repository (branch `map/v0` until merged).
+
+Programme tracker: [aien-dev/allen#1](https://github.com/aien-dev/allen/issues/1); phase plan: `docs/PHASES.md` in `aien-dev/allen`. The issues transferred from this repository are renumbered: architecture #278 (programme) is allen#1, and #279 to #286 (P0 to P7) are allen#2 to allen#9. Architecture #269, #159 and #190 stay here and are linked from the programme. Status: PROPOSED; qualification: NOT_RUN.
 
 ## Canonical composition root
 
