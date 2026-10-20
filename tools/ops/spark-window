@@ -40,6 +40,20 @@ now() { date -u +%FT%TZ; }
 esc() { printf '%s' "$1" | tr '\n\t' '  ' | sed 's/\\/\\\\/g; s/"/\\"/g'; }
 age() { echo $(( $(date +%s) - $(stat -c %Y "$1" 2>/dev/null || date +%s) )); }
 
+# openers FILE: the processes that have FILE open right now (a lock set by a flock that has since
+# exited lives on in whoever inherited the open file), up to 5, as "pid cmd"
+openers() {
+  n=0; seen=" "
+  for f in /proc/[0-9]*/fd/*; do
+    [ "$(readlink "$f" 2>/dev/null)" = "$1" ] || continue
+    p=${f#/proc/}; p=${p%%/*}
+    case $seen in *" $p "*) continue ;; esac
+    seen="$seen$p "; n=$((n + 1)); [ $n -le 5 ] || continue
+    printf '%spid %s %s' "$([ $n -gt 1 ] && echo '; ')" "$p" "$(ps -o args= -p "$p" 2>/dev/null | cut -c1-70)"
+  done
+  [ $n -gt 0 ] || printf 'none found'
+  [ $n -le 5 ] || printf '+%s more' $((n - 5))
+}
 # holders LOCKFILE: who holds the lock (kernel lock table) and who is queued on it, with ages
 holders() {
   ino=$(stat -c %i "$1" 2>/dev/null) || return 0
@@ -47,7 +61,7 @@ holders() {
   while read -r _ a b c d e _; do
     if [ "$a" = "->" ]; then q="queued"; m=$d; p=$e; else q="holds"; m=$c; p=$d; fi
     [ "$m" = READ ] && m=shared || m=exclusive
-    a=$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110); [ -n "$a" ] || a="(set by a finished flock; the open window $(cur) holder $(hpid "$(cur)") keeps it)"
+    a=$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110); [ -n "$a" ] || a="(set by a finished flock; processes with $1 open now: $(openers "$1"))"
     printf '%s %s pid %s (%ss) %s; ' "$q" "$m" "$p" "$(ps -o etimes= -p "$p" 2>/dev/null | tr -d ' ')" "$a"
   done
 }
@@ -161,8 +175,9 @@ _hold)
   # while blocking on the other: the measurement tools take quiet then chip (quiet-measure, then
   # flock gb10), so blocking on quiet while holding the chip could deadlock with them, and
   # blocking on the chip while holding quiet starves every CPU timing (L154). So: wait for the
-  # chip holding nothing, then TRY the quiet lock; if it is taken, let the chip go, wait until
-  # the quiet lock is free (holding nothing), and start again.
+  # chip holding nothing, then TRY the quiet lock; if it is taken, let the chip go, wait for the
+  # quiet lock (holding nothing), then TRY the chip while keeping quiet; if the chip is taken,
+  # let quiet go and start again.
   id=$1; d=$WR/$id; lease=$(cat "$d/lease"); mode=$(cat "$d/gb10" 2>/dev/null || echo legacy)
   echo $$ > "$d/holder.pid.tmp" && mv -f "$d/holder.pid.tmp" "$d/holder.pid"
   case $mode in exclusive) gf=-x ;; shared) gf=-s ;; *) gf= ;; esac
@@ -179,7 +194,13 @@ _hold)
       flock -n -x 8 && break
       flock -u 9
       echo "$(now) chip lock let go: quiet lock busy (try $tries)" > "$d/phase"
-      flock -x 8; flock -u 8
+      # Wait for the quiet lock (holding nothing else). When it is won, do NOT let it go: TRY the
+      # chip without blocking. A blocking wait while holding the other lock could deadlock, a try
+      # cannot. Letting go of a won quiet lock starved this loop for hours (L189, 2026-10-20):
+      # builds and tests took it shared back to back and the try after the release almost never landed.
+      flock -x 8
+      flock -n $gf 9 && break
+      flock -u 8
     done
     echo "$tries" > "$d/tries"
   fi
