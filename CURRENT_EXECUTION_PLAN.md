@@ -261,7 +261,7 @@ Continue the Aienux component roadmap without redefining this plan.
 
 ### D1. M5 encryption and identity
 
-(Naming note 2026-10-08: this is Aienux M5. The roadmap's M5 in `doctrine/ROADMAP.md` is Omega `OMEGA_AARCH64`, a different milestone. Say "AIENOS M5" or "Omega M5" when it is not clear from context.)
+(Naming note 2026-10-08: this is Aienux M5. The roadmap's M5 in `doctrine/ROADMAP.md` is Omega `OMEGA_AARCH64`, a different milestone. Say "Aienux M5" or "Omega M5" when it is not clear from context.)
 
 Finish and qualify:
 
