@@ -50,24 +50,26 @@ held || { echo "spark-baseline: window $id is not held; nothing measured" >&2; e
 ( while :; do grep -E ":$gino " /proc/locks | sed "s/^/$(date +%s.%N) /"; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
 smp=$!
 # bash for EPOCHREALTIME: a clock read without starting a process per line, so a burst stays a burst.
-# The server turns a request away at once with 503 when it is busy with another reply (or its GPU-lock
-# wait of 30 s ran out); retry after its Retry-After, up to 120 tries, and log every try in attempts.txt.
-# A reply line without a final newline (an error body) is kept, not dropped.
+# The server serves one reply at a time and turns a request away at once (503) while another runs
+# (other clients, e.g. aien-translate, use it around the clock; a window cannot stop them). So: watch
+# /health until busy is false, send at once, and on 503 go back to watching; give up after 20 min.
+# Every try is logged in attempts.txt. A reply line without a final newline (an error body) is kept.
 rm -f "$b/attempts.txt" "$b/headers.txt"
 spark-receipt "baseline-$model-$id" --idle 10 -- bash -c '
-  for i in $(seq 1 120); do
-    echo "send $EPOCHREALTIME" >> "$5"
+  end=$(( ${EPOCHREALTIME%.*} + 1200 )); i=0; w=0
+  while [ ${EPOCHREALTIME%.*} -lt $end ]; do
+    case $(curl -s --max-time 2 "$6") in *"\"busy\":false"*) ;; *) w=$((w + 1)); sleep 0.2; continue ;; esac
+    i=$((i + 1)); echo "send $EPOCHREALTIME after $w busy polls" >> "$5"
     curl -sN -D "$4" -H "Content-Type: application/json" --data-binary @"$1" "$2" |
       while IFS= read -r l || [ -n "$l" ]; do printf "%s %s\n" "$EPOCHREALTIME" "$l"; done > "$3"
     c=$(awk "NR == 1 { print \$2 }" "$4" 2>/dev/null)
     echo "try $i http ${c:-none} $EPOCHREALTIME $(head -c 160 "$3" | tr "\n" " ")" >> "$5"
     [ "$c" = 503 ] || break
-    ra=$(grep -i "^retry-after:" "$4" | tr -dc 0-9); sleep "${ra:-2}"
   done
-  exit 0' bash "$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" "$b/stream.txt" "$b/headers.txt" "$b/attempts.txt" > "$b/receipt.out" 2>&1
+  exit 0' bash "$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" "$b/stream.txt" "$b/headers.txt" "$b/attempts.txt" "http://127.0.0.1:$port/health" > "$b/receipt.out" 2>&1
 rc=$?
-tsend=$(awk '$1 == "send" { t = $2 } END { print t }' "$b/attempts.txt")
-tries=$(grep -c '^try ' "$b/attempts.txt")
+tsend=$(awk '$1 == "send" { t = $2 } END { print t }' "$b/attempts.txt" 2>/dev/null)
+tries=$(grep -c '^try ' "$b/attempts.txt" 2>/dev/null); tries=${tries:-0}
 kill $smp 2>/dev/null; wait $smp 2>/dev/null
 held && wheld=true || wheld=false
 # chunks: "<epoch> data: {json}"; content chunks carry choices[0].delta.content
@@ -80,6 +82,10 @@ t_first=$(awk -F'\t' '$2 !~ /^\[""/ {print $1; exit}' "$b/chunks.tsv")
 t_last=$(awk -F'\t' '$2 !~ /^\[""/ {t=$1} END {print t}' "$b/chunks.tsv")
 toks=$(cut -f2 "$b/chunks.tsv" | jq -r '.[1] // empty' | tail -n 1); toks=${toks:-$nchunk}
 fin=$(cut -f2 "$b/chunks.tsv" | jq -r '.[2] // empty' | tail -n 1); fin=${fin:-none}
+# the server logs its own prefill and decode timing per reply under the reply id: keep that line as a cross-check
+cid=$(grep -m 1 -E '^[0-9.]+ data: \{' "$b/stream.txt" | cut -d" " -f3- | jq -r '.id // empty' 2>/dev/null)
+slog=$(readlink "/proc/$spid/fd/2" 2>/dev/null)
+sline=""; [ -n "$cid" ] && [ -f "$slog" ] && sline=$(grep -F "$cid:" "$slog" | tail -n 1 | cut -c1-400)
 code=$(awk 'NR == 1 { print $2 }' "$b/headers.txt" 2>/dev/null); code=${code:-0}
 secs=$(awk -v a="$tsend" -v b="$t_last" 'BEGIN { if (b == "") print "null"; else printf "%.3f\n", b - a }')
 ttft=$(awk -v a="$tsend" -v b="$t_first" 'BEGIN { if (b == "") print "null"; else printf "%.3f\n", b - a }')
@@ -118,6 +124,7 @@ cat > "$b.json.tmp" <<EOJ
  "finish_reason": "$fin",
  "http_code": $code,
  "tries": $tries,
+ "server_log_line": $(printf '%s' "$sline" | jq -Rs .),
  "request_seconds": $(num "$secs"),
  "first_token_seconds": $(num "$ttft"),
  "tok_per_s_request": $tps,
