@@ -53,6 +53,7 @@ trial() {  # cond cycle k
 
 exec 9>/tmp/aien-gb10.lock; w0=$(date +%s); flock 9; echo "gb10_lock_wait_s=$(( $(date +%s) - w0 )) at $(date -u +%FT%TZ)" >> "$OUT/start.txt"
 trial warm 0 0; trial warm 0 1          # warm-up, not analysed
+tail -n 1 "$T" | cut -f7 | grep -q -E "^[0-9]+$" || { echo "GPU slice gave no number; see $OUT/raw/g-warm-0-1.log" >&2; exit 4; }
 c=1
 while [ $c -le "$CYC" ]; do
   case $(( c % 3 )) in 1) ord="Q P U";; 2) ord="P U Q";; 0) ord="U Q P";; esac
