@@ -2,6 +2,14 @@
 # quiet-build CMD...  Run a build or CPU-heavy job politely.
 # Waits while any measurement is waiting or running (flag files younger than
 # 60 minutes in /tmp/aien-quiet.want.d), then holds /tmp/aien-quiet.lock shared.
+case "${1-}" in
+  ""|-h|--help|help)
+    sed -n '2,/^[^#]/{/^#/s/^# \{0,1\}//p}' "$0"
+    exit 0 ;;
+  -*)
+    echo "$(basename "$0"): unknown option '$1' (the first argument must be the command to run; try --help)" >&2
+    exit 2 ;;
+esac
 W=/tmp/aien-quiet.want.d
 while :; do
   find "$W" -type f -mmin +60 -delete 2>/dev/null   # drop stale flags

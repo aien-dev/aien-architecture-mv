@@ -6,6 +6,14 @@
 # Inside a measurement window (SPARK_WINDOW set by spark-window run, and that
 # window is the open one with a live holder) the lock is already held
 # exclusive for us, so CMD runs directly instead of waiting on our own lock.
+case "${1-}" in
+  ""|-h|--help|help)
+    sed -n '2,/^[^#]/{/^#/s/^# \{0,1\}//p}' "$0"
+    exit 0 ;;
+  -*)
+    echo "$(basename "$0"): unknown option '$1' (the first argument must be the command to run; try --help)" >&2
+    exit 2 ;;
+esac
 if [ -n "${SPARK_WINDOW:-}" ]; then
   WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
   if [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$SPARK_WINDOW" ] && [ -f "$WR/$SPARK_WINDOW/held" ] &&
