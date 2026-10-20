@@ -42,6 +42,7 @@ case_ evidence-path       0 evidence/r.md  "AIENOS receipt text, Aienix era"
 case_ receipts-path       0 receipts/a.md  "Aienix"
 case_ history-path        0 docs/history/h.md "AIENOS history"
 case_ changelog           0 CHANGELOG.md   "- Aienix renamed"
+case_ glossary-avoid     0 CONTEXT.md     "_Avoid_: Aienix (retired), AIENOS, Aienos"
 
 echo "name-check tests: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]

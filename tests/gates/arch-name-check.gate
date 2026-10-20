@@ -14,7 +14,7 @@ run:
   args: ["name-check"]
 expects:
   exit: 0
-  observe: ["name_check_cases == 17"]
+  observe: ["name_check_cases == 18"]
   verdict: PASS
 timeout: 5m
 exactness: EXACT

@@ -12,7 +12,7 @@
 # identifiers that only contain the word (AIENOS_DISK, AienosCapRef, AIENOS-PKV-...):
 # those are code and change with their own tests, not with prose.
 # Allowed paths (history is never rewritten): evidence/, receipts/, docs/history/,
-# CHANGELOG*, the naming ADR itself and this tool. Exit 2 on usage or git errors.
+# CHANGELOG*, the naming ADR itself and this tool; glossary lines starting "_Avoid_:". Exit 2 on usage or git errors.
 set -euo pipefail
 
 base="" repo="." allow=()
@@ -56,6 +56,7 @@ while IFS= read -r line; do
     "+++ b/"*) file="${line#+++ b/}" ;;
     "+++ "*) file="" ;;
     "@@ "*) n="${line#*+}"; n="${n%%[, ]*}" ;;
+    "+_Avoid_:"*) n=$((n + 1)) ;;   # glossary lines that name the retired words on purpose
     "+"*)
       if [ -n "$file" ] && ! allowed "$file" && printf '%s\n' "${line:1}" | grep -qP "$pat"; then
         word=$(printf '%s\n' "${line:1}" | grep -oP "$pat" | head -1)
