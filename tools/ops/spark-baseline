@@ -23,6 +23,10 @@ id=${SPARK_WINDOW:-$(spark-window id)} || { echo "spark-baseline: no open window
 held() { [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] && [ ! -f "$WR/$id/expired" ] && kill -0 "$(cat "$WR/$id/holder.pid" 2>/dev/null)" 2>/dev/null; }
 d=$WR/$id; b=$d/baseline-$model; mkdir -p "$b"
 export SPARK_WINDOW=$id SPARK_WINDOW_DIR=$d
+# The 27B server takes the GPU lock itself for each reply. A window that holds that lock (spark-window
+# open --gb10 exclusive|shared, L154) would make the server wait for the window to end: refuse up front.
+case $(cat "$d/gb10" 2>/dev/null) in exclusive|shared)
+  echo "spark-baseline: window $id holds the GPU lock (--gb10 $(cat "$d/gb10")), so the 27B server cannot answer inside it; open the window with --gb10 none" >&2; exit 1 ;; esac
 [ -f "$d/calibration.json" ] || echo "spark-baseline: warning: window $id has no calibration.json yet (run spark-calibrate first); J/token above idle will be null" >&2
 
 N=64; SEED=1

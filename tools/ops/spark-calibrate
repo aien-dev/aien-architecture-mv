@@ -31,14 +31,20 @@ if [ ! -x "$P" ]; then
   git -C "$REPO" cat-file -p "$blob" > "$P.c" && cc $CFLAGS -o "$P.tmp.$$" "$P.c" && mv -f "$P.tmp.$$" "$P" || { echo "spark-calibrate: probe build failed" >&2; exit 1; }
 fi
 
-exec 9>"$G"
 t0=$(date +%s)
-# Wait in the queue without stepping out of it (a timed retry loses the place to newer waiters);
-# a separate ticker prints who holds the lock every 60 s.
-( exec 9>&-; while sleep 60; do echo "spark-calibrate: waiting $(( $(date +%s) - t0 )) s for the GB10 lock: $(spark-window locks gb10)" >&2; done ) &
-tick=$!
-flock 9
-kill $tick 2>/dev/null
+# A window opened with --gb10 exclusive|shared already holds the GPU lock for us (spark-window, L154);
+# taking it again here would wait on our own window forever.
+gmode=$(cat "$WR/$id/gb10" 2>/dev/null || echo legacy)
+case $gmode in
+  exclusive|shared) ;;
+  *) exec 9>"$G"
+    # Wait in the queue without stepping out of it (a timed retry loses the place to newer waiters);
+    # a separate ticker prints who holds the lock every 60 s.
+    ( exec 9>&-; while sleep 60; do echo "spark-calibrate: waiting $(( $(date +%s) - t0 )) s for the GB10 lock: $(spark-window locks gb10)" >&2; done ) &
+    tick=$!
+    flock 9
+    kill $tick 2>/dev/null ;;
+esac
 gwait=$(( $(date +%s) - t0 ))
 held || { echo "spark-calibrate: window $id lapsed (lease ran out or closed) while waiting for the GB10 lock; nothing measured" >&2; exit 1; }
 start=$(date -u +%FT%TZ)
@@ -75,6 +81,7 @@ cat > "$d/calibration.json.tmp" <<EOF
  "window_id": "$id",
  "start": "$start",
  "gb10_lock_waited_s": $gwait,
+ "gb10_lock_held_by": "$( case $gmode in exclusive|shared) echo "window ($gmode)" ;; *) echo calibrate ;; esac )",
  "window_held_throughout": $wheld,
  "memcpy_probe": {"source": "omega research/cost-sim-583@$PIN $SRC", "blob": "$blob", "cflags": "$CFLAGS",
    "binary_sha256": "$(sha256sum "$P" | cut -c1-64)", "cmd": "nice -n 10 memcpy_probe 1 K 10",

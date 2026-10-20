@@ -1,15 +1,25 @@
 #!/bin/sh
 # spark-window: one measurement window at a time on the Spark.
 #
-#   spark-window open NAME [--ledger ID] [--lease MIN]
+#   spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none]
 #        Refuses (exit 3) if a window is already open or queued, and lists it.
-#        Otherwise creates window id <UTC date-time>-<random>, takes the quiet
-#        lock exclusive through quiet-measure (a holder process keeps it until
-#        close or until the lease runs out, default 90 min), records box state
-#        at open in ~/yardsticks/windows/<id>/open.json and prints the id.
-#        While waiting for the lock it prints who holds it and the waiters' ages.
+#        Otherwise creates window id <UTC date-time>-<random>, FIRST takes the
+#        chip lock /tmp/aien-gb10.lock (default exclusive; none skips it), THEN
+#        the quiet lock exclusive, never holding one while blocking on the
+#        other (measurements take quiet then chip, so holding the chip while
+#        blocking on quiet could deadlock), so a window waiting for
+#        the chip never blocks CPU timings (L154, 2026-10-20: a window held the
+#        quiet lock 25 min while its own GPU job queued for the chip). A holder
+#        process keeps both until close or until the lease runs out (default
+#        90 min). Records box state at open in ~/yardsticks/windows/<id>/open.json
+#        and prints the id. While waiting it prints who holds each lock.
 #   spark-window run CMD...   run CMD inside the open window: sets SPARK_WINDOW and
 #        SPARK_WINDOW_DIR, so spark-receipt stamps the window id and calibration,
+#        and, when the window holds the chip lock, AIEN_GB10_LOCK_HELD=1, so a
+#        job that honours it (aien-test gates, the 27B server) does not queue
+#        behind its own window. A job that takes /tmp/aien-gb10.lock itself and
+#        ignores the marker (plain flock) waits until the window closes: open
+#        such windows with --gb10 none.
 #        and quiet-measure runs CMD directly instead of waiting on our own lock.
 #   spark-window close [ID]   release the quiet lock, record box state at close
 #        (close.json), print what the window holds.
@@ -21,7 +31,7 @@
 # (ledger note <your id> "measure: waiting for window <id>") and retry after it closes.
 set -u
 WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
-Q=/tmp/aien-quiet.lock; W=/tmp/aien-quiet.want.d; G=/tmp/aien-gb10.lock
+Q=${SPARK_QUIET_LOCK:-/tmp/aien-quiet.lock}; W=/tmp/aien-quiet.want.d; G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}   # overrides: tests only
 mkdir -p "$WR"
 now() { date -u +%FT%TZ; }
 esc() { printf '%s' "$1" | tr '\n\t' '  ' | sed 's/\\/\\\\/g; s/"/\\"/g'; }
@@ -34,7 +44,8 @@ holders() {
   while read -r _ a b c d e _; do
     if [ "$a" = "->" ]; then q="queued"; m=$d; p=$e; else q="holds"; m=$c; p=$d; fi
     [ "$m" = READ ] && m=shared || m=exclusive
-    printf '%s %s pid %s (%ss) %s; ' "$q" "$m" "$p" "$(ps -o etimes= -p "$p" 2>/dev/null | tr -d ' ')" "$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110)"
+    a=$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110); [ -n "$a" ] || a="(set by a finished flock; the open window $(cur) holder $(hpid "$(cur)") keeps it)"
+    printf '%s %s pid %s (%ss) %s; ' "$q" "$m" "$p" "$(ps -o etimes= -p "$p" 2>/dev/null | tr -d ' ')" "$a"
   done
 }
 waiters() {
@@ -64,7 +75,7 @@ hpid() { cat "$WR/$1/holder.pid" 2>/dev/null; }
 describe() {
   d=$WR/$1
   st=queued; [ -f "$d/held" ] && st=held
-  echo "window $1  name=$(cat "$d/name" 2>/dev/null)  owner=$(cat "$d/owner" 2>/dev/null)  state=$st  opened_request=$(cat "$d/requested" 2>/dev/null)  holder_pid=$(hpid "$1")  lease_min=$(cat "$d/lease" 2>/dev/null)"
+  echo "window $1  name=$(cat "$d/name" 2>/dev/null)  owner=$(cat "$d/owner" 2>/dev/null)  gb10=$(cat "$d/gb10" 2>/dev/null || echo legacy-quiet-only)  state=$st  opened_request=$(cat "$d/requested" 2>/dev/null)  holder_pid=$(hpid "$1")  lease_min=$(cat "$d/lease" 2>/dev/null)"
   [ -f "$d/held" ] && echo "  held since $(cat "$d/held") ($(age "$d/held") s)"
 }
 
@@ -81,9 +92,10 @@ reap() {
 cmd=${1:-status}; [ $# -gt 0 ] && shift
 case $cmd in
 open)
-  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN]}; shift
-  ledger=""; lease=90
-  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
+  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none]}; shift
+  ledger=""; lease=90; gb10=exclusive
+  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; --gb10) gb10=$2; shift 2 ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
+  case $gb10 in exclusive) gflag=-x ;; shared) gflag=-s ;; none) gflag= ;; *) echo "spark-window: --gb10 must be exclusive, shared or none" >&2; exit 2 ;; esac
   exec 7>"$WR/.state.lock"; flock 7
   reap
   if [ -n "$(cur)" ]; then
@@ -97,31 +109,57 @@ open)
   echo "$name" > "$d/name"; echo "${ledger:-${SPARK_WINDOW_OWNER:-$(whoami)@pid$PPID}}" > "$d/owner"
   echo "$lease" > "$d/lease"; now > "$d/requested"
   echo "$id" > "$WR/OPEN.tmp" && mv -f "$WR/OPEN.tmp" "$WR/OPEN"
-  setsid quiet-measure "$0" _hold "$id" > "$d/holder.log" 2>&1 < /dev/null &
-  echo $! > "$d/holder.pid"; echo $! > "$d/qm.pid"   # _hold replaces holder.pid with its own pid once it runs
+  echo "$gb10" > "$d/gb10"
+  setsid "$0" _hold "$id" 7>&- > "$d/holder.log" 2>&1 < /dev/null &
+  echo $! > "$d/holder.pid"
   flock -u 7; exec 7>&-
   t0=$(date +%s); last=$t0
   while [ ! -f "$d/held" ]; do
     if ! alive "$(hpid "$id")"; then echo "spark-window: holder died before taking the lock; see $d/holder.log" >&2; rm -f "$WR/OPEN"; exit 1; fi
     if [ $(( $(date +%s) - last )) -ge 60 ]; then
       last=$(date +%s)
-      echo "spark-window: waiting $(( last - t0 )) s for the quiet lock. holders: $(holders $Q) | waiters: $(waiters)" >&2
+      echo "spark-window: waiting $(( last - t0 )) s: $(cut -c22- "$d/phase" 2>/dev/null). gb10: $(holders $G) | quiet: $(holders $Q) | waiters: $(waiters)" >&2
     fi
     sleep 1
   done
-  { printf '{"window_id": "%s", "name": "%s", "owner": "%s", "lease_min": %s, "waited_s": %s, "state": ' \
-      "$id" "$(esc "$name")" "$(esc "$(cat "$d/owner")")" "$lease" "$(( $(date +%s) - t0 ))"; state; echo '}'; } > "$d/open.json"
+  { printf '{"window_id": "%s", "name": "%s", "owner": "%s", "lease_min": %s, "gb10": "%s", "waited_s": %s, "state": ' \
+      "$id" "$(esc "$name")" "$(esc "$(cat "$d/owner")")" "$lease" "$gb10" "$(( $(date +%s) - t0 ))"; state; echo '}'; } > "$d/open.json"
   echo "spark-window: window $id open, quiet lock held exclusive (waited $(( $(date +%s) - t0 )) s); box state in $d/open.json" >&2
   echo "$id"
   ;;
 _hold)
-  id=$1; d=$WR/$id; lease=$(cat "$d/lease")
+  # Takes the window's locks, then holds them until close or lease end. Never holds one lock
+  # while blocking on the other: the measurement tools take quiet then chip (quiet-measure, then
+  # flock gb10), so blocking on quiet while holding the chip could deadlock with them, and
+  # blocking on the chip while holding quiet starves every CPU timing (L154). So: wait for the
+  # chip holding nothing, then TRY the quiet lock; if it is taken, let the chip go, wait until
+  # the quiet lock is free (holding nothing), and start again.
+  id=$1; d=$WR/$id; lease=$(cat "$d/lease"); mode=$(cat "$d/gb10" 2>/dev/null || echo legacy)
   echo $$ > "$d/holder.pid.tmp" && mv -f "$d/holder.pid.tmp" "$d/holder.pid"
+  case $mode in exclusive) gf=-x ;; shared) gf=-s ;; *) gf= ;; esac
+  # legacy: a window opened by the previous version runs _hold under quiet-measure, which already
+  # holds the quiet lock for it; taking it again here would wait on itself.
+  if [ "$mode" != legacy ]; then
+    exec 8>>"$Q"
+    [ -n "$gf" ] && exec 9>>"$G"
+    tries=0
+    while :; do
+      tries=$((tries + 1))
+      if [ -n "$gf" ]; then echo "$(now) waiting for the chip lock ($mode)" > "$d/phase"; flock $gf 9; fi
+      if [ -z "$gf" ]; then echo "$(now) waiting for the quiet lock" > "$d/phase"; flock -x 8; break; fi
+      flock -n -x 8 && break
+      flock -u 9
+      echo "$(now) chip lock let go: quiet lock busy (try $tries)" > "$d/phase"
+      flock -x 8; flock -u 8
+    done
+    echo "$tries" > "$d/tries"
+  fi
+  echo "$(now) holding" > "$d/phase"
   now > "$d/held"
   end=$(( $(date +%s) + lease * 60 ))
   while [ ! -f "$d/close-request" ]; do
     if [ "$(date +%s)" -ge "$end" ]; then now > "$d/expired"; echo "lease of $lease min ran out" >&2; exit 0; fi
-    sleep 2
+    sleep 2 8>&- 9>&-
   done
   exit 0
   ;;
@@ -129,6 +167,7 @@ run)
   id=$(cur)
   if [ -z "$id" ] || [ ! -f "$WR/$id/held" ] || ! alive "$(hpid "$id")"; then echo "spark-window: no open window holds the quiet lock; run spark-window open NAME first" >&2; exit 1; fi
   [ $# -gt 0 ] || { echo "usage: spark-window run CMD..." >&2; exit 2; }
+  case $(cat "$WR/$id/gb10" 2>/dev/null) in exclusive|shared) AIEN_GB10_LOCK_HELD=1; export AIEN_GB10_LOCK_HELD ;; esac
   SPARK_WINDOW=$id SPARK_WINDOW_DIR=$WR/$id exec "$@"
   ;;
 id)
@@ -143,8 +182,10 @@ close)
   [ -f "$WR/$id/close.json" ] && { echo "spark-window: window $id is already closed" >&2; exit 1; }
   d=$WR/$id; h=$(hpid "$id")
   now > "$d/close-request"
+  # A holder still waiting for its locks holds nothing: stop it (its own process group, from setsid).
+  [ -f "$d/held" ] || { alive "$h" && kill -- -"$h" 2>/dev/null; why_pre="closed while still waiting for its locks"; }
   while alive "$h"; do sleep 1; done
-  why=closed; [ -f "$d/expired" ] && why="lease expired $(cat "$d/expired") before close"
+  why=${why_pre:-closed}; [ -f "$d/expired" ] && why="lease expired $(cat "$d/expired") before close"
   { printf '{"window_id": "%s", "closed_by": "spark-window close", "reason": "%s", "held_s": %s, "state": ' \
       "$id" "$why" "$(( $(date +%s) - $(stat -c %Y "$d/held" 2>/dev/null || date +%s) ))"; state; echo '}'; } > "$d/close.json"
   [ "$(cur)" = "$id" ] && rm -f "$WR/OPEN"
@@ -162,5 +203,5 @@ status)
   echo "quiet waiters: $(waiters)"
   echo "gb10 lock holders: $(holders $G)"
   ;;
-*) sed -n '2,21p' "$0"; exit 2 ;;
+*) sed -n '2,31p' "$0"; exit 2 ;;
 esac
