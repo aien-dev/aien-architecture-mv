@@ -12,8 +12,11 @@ How and when to use them: [docs/ops/MEASUREMENT_WINDOWS.md](../../docs/ops/MEASU
 | `spark-baseline` | Per-window 27B baseline: fixed 64-token streamed reply on 127.0.0.1:18091, decode tok/s and J/token |
 | `spark-receipt` | Energy receipt for any command; now stamps `window_id` and `calibration` |
 | `quiet-measure` | Exclusive quiet lock for a measurement; runs directly inside its own open window |
-| `quiet-build` | Shared quiet lock for builds (unchanged, kept here so the pair is in one place) |
+| `quiet-build` | Builds: since 2026-10-20 (Drake, L118) they never wait; they run on the efficient cores at low priority and are logged for overlap checks. Copy of the installed version |
 
-Shown on the Spark so far (2026-10-19): two callers on one source built once in a scratch repo (the second
-reused the stored result), two windows opened at the same moment (one refused), lease expiry; the real
-window and the real two-worktree build are recorded in the shared-base handoff once they ran.
+Shown on the Spark (2026-10-19/20): two callers on one source built once in a scratch repo (the second
+reused the stored result), two windows opened at the same moment (one refused), lease expiry, the
+`--wait` line in a sandbox (turns in arrival order, a late open refused, a waiter that gave up dropped).
+Real runs: two omega worktrees at one commit built once, identical output, a repeat in 4 s
+(docs/ops/evidence/L113-build-once-two-worktrees.md); window 20261020T095626Z-bd2f56 with a calibration
+and a passing 27B baseline (~/yardsticks/windows/20261020T095626Z-bd2f56/).

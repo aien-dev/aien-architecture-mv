@@ -1,12 +1,21 @@
 #!/bin/sh
-# quiet-build CMD...  Run a build or CPU-heavy job politely.
-# Waits while any measurement is waiting or running (flag files younger than
-# 60 minutes in /tmp/aien-quiet.want.d), then holds /tmp/aien-quiet.lock shared.
-W=/tmp/aien-quiet.want.d
-while :; do
-  find "$W" -type f -mmin +60 -delete 2>/dev/null   # drop stale flags
-  n=$(find "$W" -type f 2>/dev/null | wc -l)
-  [ "$n" -eq 0 ] && break
-  sleep 5
-done
-exec flock -s /tmp/aien-quiet.lock "$@"
+# quiet-build CMD...  Run a build or CPU-heavy job. It never waits (Drake 2026-10-20: builds took 4 s and
+# waited 20 min). Builds run at once on the efficient cores (Cortex-A725: CPUs 0-4,10-14) at nice 19 / idle IO;
+# measurements own the fast cores (Cortex-X925: 5-9,15-19) via quiet-measure. Every build is logged with start,
+# end and duration so any measurement can be checked for overlap (~/.local/state/quiet/builds.log).
+# Verdict on measurement noise: L118 core-split experiment. Old waiting wrapper: quiet-build.bak-20261020.
+case "${1-}" in
+  ""|-h|--help|help)
+    sed -n '2,/^[^#]/{/^#/s/^# \{0,1\}//p}' "$0"
+    exit 0 ;;
+  -*)
+    echo "$(basename "$0"): unknown option '$1' (the first argument must be the command to run; try --help)" >&2
+    exit 2 ;;
+esac
+L=$HOME/.local/state/quiet; mkdir -p "$L" /tmp/aien-build.active.d 2>/dev/null; chmod 1777 /tmp/aien-build.active.d 2>/dev/null
+m=/tmp/aien-build.active.d/$$; echo "$(date -u +%FT%TZ) $*" > "$m"
+t0=$(date +%s.%N)
+taskset -c 0-4,10-14 nice -n 19 ionice -c3 "$@"; rc=$?
+t1=$(date +%s.%N); rm -f "$m"
+printf '%s start=%s end=%s dur_s=%.1f rc=%s %s\n' "$(date -u +%FT%TZ)" "$t0" "$t1" "$(echo "$t1 - $t0" | bc)" "$rc" "$*" >> "$L/builds.log"
+exit $rc
