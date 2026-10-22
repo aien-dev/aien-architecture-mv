@@ -1,0 +1,10 @@
+#!/bin/sh
+# quiet-build CMD...  Run a build or CPU-heavy job politely (shim, ledger L118).
+# The job waits in spark-broker's queue, not inside a lock, and runs (at nice 5)
+# whenever no timing is running; a timing that is only queued does not hold it up.
+# Inside a broker job it runs at once. With no broker running, spark-job falls
+# back to quiet-build.locks (the old wrapper with the 20-minute rule).
+# docs: aien-architecture docs/ops/BROKER.md
+d=$(dirname "$0")
+[ -x "$d/spark-job" ] && exec "$d/spark-job" build "$@"
+exec spark-job build "$@"

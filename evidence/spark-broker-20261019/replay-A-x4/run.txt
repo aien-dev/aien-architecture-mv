@@ -1,0 +1,1 @@
+system=A scale=60 buildx=4 server=0 trace=/home/drakestapleton/workspace/arch-spark-broker/evidence/spark-broker-20261019/trace-20261019.tsv sandbox=/tmp/l118-replay.uMtcJl

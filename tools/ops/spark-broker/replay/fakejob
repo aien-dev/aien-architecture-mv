@@ -1,0 +1,5 @@
+#!/bin/sh
+# fakejob LOG ID CLASS SECONDS: stand-in job for tests and the replay; logs start and end in ms
+printf 'start %s %s %s\n' "$2" "$3" "$(date +%s%3N)" >> "$1"
+sleep "$4"
+printf 'end %s %s %s\n' "$2" "$3" "$(date +%s%3N)" >> "$1"
