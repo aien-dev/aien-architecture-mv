@@ -1,0 +1,28 @@
+#!/bin/sh
+# quiet-measure CMD...  Run a timing with the box quiet (shim, ledger L118).
+# The job waits in spark-broker's queue. If CMD starts with
+# [nice -n N] flock [-x] /tmp/aien-gb10.lock, the broker gets the chip FIRST (builds
+# keep running meanwhile), then drains builds, then opens a spark-window and runs
+# the rest of CMD with the chip lock already held (AIEN_GB10_LOCK_HELD=1). Waiting
+# for the chip therefore no longer holds the quiet state.
+# Inside an open window (SPARK_WINDOW) CMD runs at once, as before (L113).
+# Inside a broker measurement turn (spark-window's own holder) the old exclusive
+# lock path runs: quiet-measure.locks. With no broker, spark-job falls back to it too.
+# docs: aien-architecture docs/ops/BROKER.md
+d=$(dirname "$0")
+L=${SPARK_JOB_LEGACY_DIR:-$d}
+if [ -n "${SPARK_WINDOW:-}" ] || case ${SPARK_JOB:-} in *:M:*) true ;; *) false ;; esac; then
+  exec "$L/quiet-measure.locks" "$@"
+fi
+G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}
+chip=--no-chip; n=""
+if [ "${1:-}" = nice ] && [ "${2:-}" = -n ] && [ $# -ge 3 ]; then n=$3; shift 3; fi
+if [ "${1:-}" = flock ]; then
+  case ${2:-} in -x|-e|--exclusive) f=${3:-}; s=3 ;; *) f=${2:-}; s=2 ;; esac
+  if [ "$f" = "$G" ]; then shift $s; chip=""; fi
+fi
+[ -n "$n" ] && set -- nice -n "$n" "$@"
+name=qm-$(basename "${1:-job}")
+[ "${1:-}" = nice ] && name=qm-$(basename "${4:-job}")
+SJ=spark-job; [ -x "$d/spark-job" ] && SJ=$d/spark-job
+exec "$SJ" measure $chip --no-receipt "$name" "$@"

@@ -40,6 +40,14 @@ case "$step" in
     # Repository script (aien-architecture#7): doctrine consistency, pure text, no network.
     bash scripts/check_doctrine.sh "$ROOT"
     ;;
+  name-check)
+    # ADR 0038: the tool's own red/green test, then the check itself on this head
+    # (added lines since origin/main, else since the previous commit).
+    out=$(bash tools/name-check/test.sh)
+    printf '%s\n' "$out"
+    obs name_check_cases "$(printf '%s\n' "$out" | grep -c '^ok ')"
+    bash tools/name-check/name-check.sh
+    ;;
   script-tests)
     # The offline tests of the repository's own operator scripts. Each builds temporary git
     # repos and fake gh/crumb tools under mktemp; no network, no auth (see their headers).
