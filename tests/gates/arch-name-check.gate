@@ -1,0 +1,21 @@
+# tests/gates/arch-name-check.gate
+# ADR 0038: refuse new uses of the retired project names in added lines (see tools/name-check).
+# Also runs the tool's own offline test (red and green cases) first.
+gate: ARCH-NAME-CHECK
+manifest_version: 2
+owner: aien-architecture
+requires:
+  - host
+inputs:
+  - tools/name-check/
+  - tests/gates/
+run:
+  exec: tests/gates/run.sh
+  args: ["name-check"]
+expects:
+  exit: 0
+  observe: ["name_check_cases == 23"]
+  verdict: PASS
+timeout: 5m
+exactness: EXACT
+cache_scope: machine
