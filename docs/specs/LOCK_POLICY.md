@@ -18,7 +18,8 @@ load went to 62 in one minute. Separately, a test model server held the chip loc
    gates that compare values (tokens, routes, outputs) take no exclusive lock. `quiet-build` caps all its
    waiting at 25 minutes. After that the job runs anyway at nice 19, without the lock. The overrun is written
    to the open window, whose timings are then labelled "shared machine". A measurement waiting in line
-   pauses new builds for at most 1 minute (it was 10).
+   pauses new builds for at most 1 minute (it was 10), and only during its first 10 minutes in line: on
+   2026-10-22 one measurement waiting 80 minutes was pausing every new build. After that it should take a window.
 2. **Exclusive locks are for timing receipts only, and they are short.** `spark-window open` refuses an
    exclusive lease (chip or quiet) over 20 minutes; the default is 20. A window that runs past its lease is
    let go, writes `NO VERDICT` for its timings and posts on the board. A long measurement is split into
@@ -67,7 +68,8 @@ Sandbox harness `test/policy.sh` in the L405 work folder uses its own lock files
 | idle: window asks to open while 5 builds run | FAIL, a new build waited 305.9 s | PASS, the new build ran at once; the window opened once the machine was quiet |
 | q36: test server on port 18098 | FAIL, no lock of its own | PASS, `/tmp/aien-serve-18098.lock` |
 | watch: long raw holder plus a window past its lease | FAIL, nothing posted | PASS, one post each, window closed with NO VERDICT, raw holder left running |
-| flag: a measurement waiting in line | FAIL | PASS, a new build ran after the 1-minute flag wait (2 s in the test) |
+| flag: a measurement waiting in line | FAIL, a new build waited 600.4 s | PASS, a new build ran after the 1-minute flag wait (2 s in the test) |
+| staleflag: a measurement 20 min in line | FAIL, a new build waited 600.6 s | PASS, the new build ran at once |
 | control short: real 20-unit timing window | | PASS, chip exclusive, build held back until close, "quiet machine" |
 | control refuse: lease 21 exclusive, lease 90 shared | | PASS, refused and opened |
 | control measure: 4 s `quiet-measure` | | PASS, a build waited for it and then ran under the lock |
