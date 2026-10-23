@@ -1,0 +1,4 @@
+Initial CLI compilation: error13 for over-eight-byte global ParseError; corrected identifier.
+Initial policy expression compilation: error12 register pool; split independent conditions.
+Initial native mutator compilation: error12; extracted matching function.
+Independent review R1: valid catalogue to /dev/full caused conversion trap105. Fixed signed output check at02ca3df; expected exit23 now passes. Original reviewer raw evidence retained separately.
