@@ -1,0 +1,21 @@
+# Real broker concurrency tests, with private sockets and locks only.
+# Mapping executable inputs is not permission to deploy the experimental broker.
+gate: ARCH-SPARK-BROKER
+manifest_version: 2
+owner: aien-architecture
+requires:
+  - host
+inputs:
+  - tools/ops/spark-broker/
+  - tests/gates/arch-spark-broker.gate
+  - tests/gates/run.sh
+run:
+  exec: tests/gates/run.sh
+  args: ["spark-broker"]
+expects:
+  exit: 0
+  observe: ["spark_broker_suite == 1"]
+  verdict: PASS
+timeout: 3m
+exactness: EXACT
+cache_scope: machine

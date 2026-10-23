@@ -48,6 +48,12 @@ case "$step" in
     obs name_check_cases "$(printf '%s\n' "$out" | grep -c '^ok ')"
     bash tools/name-check/name-check.sh
     ;;
+  spark-broker)
+    # Execute the broker's complete isolated-socket/lock concurrency suite.
+    # This does not install the broker or select it for production use.
+    make -C tools/ops/spark-broker test
+    obs spark_broker_suite 1
+    ;;
   script-tests)
     # The offline tests of the repository's own operator scripts. Each builds temporary git
     # repos and fake gh/crumb tools under mktemp; no network, no auth (see their headers).

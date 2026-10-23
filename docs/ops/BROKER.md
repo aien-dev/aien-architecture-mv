@@ -14,7 +14,7 @@ The Spark has two scarce things: the GB10 chip, and "quiet time" (nothing heavy
 running, so a timing is honest). Agents took turns with two lock files. The fault:
 an agent waited for one thing while holding the other.
 
-Seen live at 23:50Z (evidence `evidence/spark-broker-20261019/live-jam-2350Z.txt`,
+Seen live at 23:50Z (evidence `docs/ops/spark-broker-evidence/live-jam-2350Z.txt`,
 `ps-waiters-2350Z.txt`):
 - A timing (cascade suite C) took the quiet lock at 23:07:53, then waited 33 minutes
   for the chip, which someone else held. For those 33 minutes no build could start.
