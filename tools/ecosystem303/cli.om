@@ -94,6 +94,9 @@ w = write 2 bad 0 len bad
 ret int add 30 s
 end
 w = write 1 ok 0 len ok
+if le w 0
+ret 23
+end
 if ne ulong w len ok
 ret 23
 end
