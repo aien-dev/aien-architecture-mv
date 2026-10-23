@@ -1,0 +1,47 @@
+make: Entering directory '/home/drakestapleton/workspace/hermes-desk/architecture-planner-L700/tools/ops/spark-broker'
+sh ./test.sh
+spark-job: #1 queued as build (spark-job status shows the queue)
+spark-job: #2 queued as build (spark-job status shows the queue)
+spark-job: #3 queued as measure [chip] (spark-job status shows the queue)
+spark-job: #4 queued as build (spark-job status shows the queue)
+PASS 1a two builds submitted together run together
+PASS 1b measurement started only after running builds finished
+PASS 1c build submitted during the measurement waited for it
+spark-job: #1 queued as measure [chip] (spark-job status shows the queue)
+spark-job: #2 queued as build (spark-job status shows the queue)
+PASS 2a build ran and finished while the measurement waited for the chip
+PASS 2b measurement reported it was waiting on the chip lock
+spark-job: #1 queued as chip [chip] (spark-job status shows the queue)
+spark-job: #2 queued as chip [chip] (spark-job status shows the queue)
+spark-job: #3 queued as measure (spark-job status shows the queue)
+spark-job: #4 queued as measure (spark-job status shows the queue)
+PASS 3a two measurements at once ran one after the other
+PASS 3b two chip jobs at once ran one after the other
+PASS 3c no chip job ran during a measurement
+spark-job: #1 queued as measure (spark-job status shows the queue)
+spark-job: #2 queued as build (spark-job status shows the queue)
+spark-job: #3 queued as chip [chip] (spark-job status shows the queue)
+spark-job: #4 queued as chip [chip] (spark-job status shows the queue)
+PASS 4a killed queued caller never ran
+PASS 4b chip turn freed when its caller was killed (next chip job ran)
+PASS 4c broker logged the dead callers
+spark-job: #1 queued as measure (spark-job status shows the queue)
+PASS 5a nested build inside a measurement ran at once
+spark-job: #1 queued as measure (spark-job status shows the queue)
+spark-job: #2 queued as build (spark-job status shows the queue)
+spark-job: #3 queued as measure (spark-job status shows the queue)
+PASS 6a aged build ran before the next measurement started
+spark-job: #1 queued as build (spark-job status shows the queue)
+spark-job: #2 queued as measure (spark-job status shows the queue)
+spark-job: #2 drain cap reached, 1 build(s) still running at nice 19
+spark-job: build asked to yield to a measurement (drain cap): quiet lock released, running at nice 19
+PASS 7a drain cap: measurement started after the cap, not after the long build
+PASS 7b leftover build pushed to nice 19
+spark-job: #1 queued as measure (spark-job status shows the queue)
+spark-job: #2 queued as build (spark-job status shows the queue)
+PASS 8a status lists the running measurement and the queued build with ages
+PASS 9a with no broker, jobs fall back to the old wrappers
+sandbox: /tmp/l118-test.hn9YxO
+ALL PASS
+make: Leaving directory '/home/drakestapleton/workspace/hermes-desk/architecture-planner-L700/tools/ops/spark-broker'
+AIEN-OBS spark_broker_suite 1
