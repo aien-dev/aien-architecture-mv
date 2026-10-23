@@ -1,0 +1,172 @@
+note Independent reviewer fixture. All refs are synthetic, never evidence.
+global RC ulong 1
+global Num uchar 20
+text RP "EC303_REVIEW_PASS checks="
+text RF "EC303_REVIEW_FAIL check="
+text RNL "\n"
+text Masks "0001111310023377137733320030033333311100"
+
+fn rout n ulong to void
+p = ulong 20
+while gt n 0 bound 20
+p = sub p 1
+put Num p uchar add rem n 10 48
+n = div n 10
+end
+w = write 1 Num p sub 20 p
+if ne w long sub 20 p
+exit 90
+end
+end
+
+fn rcheck want ulong got ulong to void
+put RC 0 add get RC 0 1
+if ne want got
+w = write 1 RF 0 len RF
+rout get RC 0
+w = write 1 RNL 0 1
+exit 1
+end
+end
+
+fn rfull to void
+for i ulong 800
+put EC i 0
+end
+for i ulong 40
+b = mul i 20
+put EC b add i 1
+put EC add b 1 1
+put EC add b 2 663
+put EC add b 3 787
+put EC add b 4 4
+put EC add b 5 3
+put EC add b 6 7
+for j ulong 10
+put EC add b add j 8 1
+end
+put EC add b 18 786
+end
+end
+
+fn missing col ulong to ulong
+if or eq col 8 eq col 9
+ret 7
+end
+if or eq col 10 eq col 11
+ret 8
+end
+if or eq col 12 eq col 14
+ret 14
+end
+if eq col 13
+ret 15
+end
+if eq col 15
+ret 12
+end
+if eq col 16
+ret 10
+end
+ret 11
+end
+
+fn allrefs to void
+rfull
+rcheck 0 ecvalidate 1 40
+for i ulong 40
+for j ulong 10
+col = add j 8
+offset = add mul i 20 col
+put EC offset 0
+rcheck missing col ecvalidate 1 40
+put EC offset 1
+end
+b = mul i 20
+put EC add b 18 787
+rcheck 9 ecvalidate 1 40
+put EC add b 18 786
+put EC add b 5 2
+rcheck 13 ecvalidate 1 40
+put EC add b 5 3
+put EC add b 3 0
+rcheck 4 ecvalidate 1 40
+put EC add b 3 787
+put EC add b 19 18446744073709551615
+rcheck 16 ecvalidate 1 40
+put EC add b 19 0
+end
+end
+
+fn graph to void
+rfull
+for i ulong 39
+put EC add mul i 20 7 shl ulong 1 add i 1
+end
+rcheck 0 ecvalidate 1 40
+for i ulong 39
+b = mul add i 1 20
+for s ulong 3
+put EC add b 4 s
+rcheck 18 ecvalidate 1 40
+end
+put EC add b 4 4
+end
+put EC 787 1
+rcheck 17 ecvalidate 1 40
+for i ulong 40
+put EC add mul i 20 4 0
+end
+rcheck 17 ecvalidate 1 40
+put EC 787 0
+for i ulong 40
+put EC add mul i 20 4 4
+end
+note Full reversal tests ID-based dependencies, not row-based traversal.
+for i ulong 20
+a = mul i 20
+b = mul sub 39 i 20
+for j ulong 20
+t = get EC add a j
+put EC add a j get EC add b j
+put EC add b j t
+end
+end
+rcheck 0 ecvalidate 1 40
+put EC 4 2
+rcheck 18 ecvalidate 1 40
+rfull
+put EC 7 1099511627776
+rcheck 6 ecvalidate 1 40
+put EC 7 18446744073709551615
+rcheck 6 ecvalidate 1 40
+end
+
+fn policies to void
+rfull
+rcheck 1 ecvalidate 18446744073709551615 40
+rcheck 2 ecvalidate 1 0
+rcheck 2 ecvalidate 1 18446744073709551615
+for i ulong 40
+b = mul i 20
+put EC add b 6 0
+need = sub ulong get Masks i 48
+rcheck need ecrequire add i 1
+if ne need 0
+rcheck 19 ecvalidate 1 40
+else
+rcheck 0 ecvalidate 1 40
+end
+put EC add b 6 7
+end
+end
+
+fn main to int
+allrefs
+graph
+policies
+w = write 1 RP 0 len RP
+rout get RC 0
+w = write 1 RNL 0 1
+ret 0
+end
