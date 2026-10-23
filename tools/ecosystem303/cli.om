@@ -1,0 +1,101 @@
+note EC303 stream checker. Input is bounded unsigned decimal tokens, ASCII whitespace.
+global Input uchar 65536
+global Position ulong 1
+global Size ulong 1
+global ParseErr ulong 1
+text ok "EC303 STRUCTURE_OK; evidence authenticity and release approval NOT_ESTABLISHED\n"
+text bad "EC303 REFUSED\n"
+
+fn ecspace c uchar to bool
+ret or eq c 32 or eq c 9 or eq c 10 eq c 13
+end
+
+fn ecnumber to ulong
+p = get Position 0
+skip = true
+while and lt p get Size 0 skip
+if ecspace get Input p
+p = add p 1
+else
+skip = false
+end
+end
+v = ulong 0
+digits = ulong 0
+more = true
+while and lt p get Size 0 more
+c = get Input p
+if ecspace c
+more = false
+else
+if or lt c 48 gt c 57
+put ParseErr 0 1
+ret 0
+end
+d = sub ulong c 48
+if or gt v 1844674407370955161 and eq v 1844674407370955161 gt d 5
+put ParseErr 0 1
+ret 0
+end
+v = add mul v 10 d
+p = add p 1
+digits = add digits 1
+if gt digits 20
+put ParseErr 0 1
+ret 0
+end
+end
+end
+put Position 0 p
+if eq digits 0
+put ParseErr 0 1
+end
+ret v
+end
+
+fn main to int
+reading = true
+while reading
+n = get Size 0
+if eq n 65536
+w = write 2 bad 0 len bad
+ret 20
+end
+r = read 0 Input n sub 65536 n
+if lt r 0
+ret 21
+end
+if eq r 0
+reading = false
+else
+put Size 0 add n ulong r
+end
+end
+magic = ecnumber
+version = ecnumber
+count = ecnumber
+for i ulong 800
+put EC i ecnumber
+end
+p = get Position 0
+while lt p get Size 0
+if eq ecspace get Input p false
+put ParseErr 0 1
+end
+p = add p 1
+end
+if or ne magic 303 ne get ParseErr 0 0
+w = write 2 bad 0 len bad
+ret 22
+end
+s = ecvalidate version count
+if ne s 0
+w = write 2 bad 0 len bad
+ret int add 30 s
+end
+w = write 1 ok 0 len ok
+if ne ulong w len ok
+ret 23
+end
+ret 0
+end

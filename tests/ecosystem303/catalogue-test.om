@@ -1,0 +1,159 @@
+note Synthetic metadata only. Test refs do not assert real qualification.
+global Fail ulong 1
+global Checks ulong 1
+text good "EC303 unit PASS\n"
+text fail "EC303 unit FAIL\n"
+
+fn check expected ulong actual ulong to void
+put Checks 0 add get Checks 0 1
+if ne expected actual
+put Fail 0 add get Fail 0 1
+end
+end
+fn fresh to void
+for i ulong 800
+put EC i 0
+end
+for i ulong 40
+b = mul i 20
+put EC b add i 1
+put EC add b 1 1
+put EC add b 2 663
+put EC add b 3 787
+put EC add b 6 ecrequire add i 1
+end
+end
+fn verified row ulong to void
+b = mul row 20
+put EC add b 4 2
+put EC add b 5 1
+put EC add b 8 1
+put EC add b 9 1
+put EC add b 10 1
+put EC add b 11 1
+put EC add b 16 1
+put EC add b 18 786
+end
+fn integrated row ulong to void
+verified row
+b = mul row 20
+put EC add b 4 3
+put EC add b 12 1
+put EC add b 14 1
+end
+fn main to int
+fresh
+check 0 ecvalidate 1 40
+check 1 ecvalidate 2 40
+check 2 ecvalidate 1 39
+check 2 ecvalidate 1 41
+put EC 66 0
+check 19 ecvalidate 1 40
+fresh
+put EC 20 1
+check 3 ecvalidate 1 40
+fresh
+put EC 0 41
+check 3 ecvalidate 1 40
+fresh
+put EC 3 0
+check 4 ecvalidate 1 40
+fresh
+put EC 2 0
+check 4 ecvalidate 1 40
+fresh
+put EC 1 5
+check 4 ecvalidate 1 40
+fresh
+put EC 4 5
+check 5 ecvalidate 1 40
+fresh
+put EC 5 4
+check 5 ecvalidate 1 40
+fresh
+put EC 6 8
+check 5 ecvalidate 1 40
+fresh
+put EC 7 1
+check 6 ecvalidate 1 40
+put EC 7 1099511627776
+check 6 ecvalidate 1 40
+fresh
+put EC 4 1
+check 7 ecvalidate 1 40
+put EC 8 1
+check 7 ecvalidate 1 40
+put EC 9 1
+check 0 ecvalidate 1 40
+fresh
+verified 0
+check 0 ecvalidate 1 40
+put EC 10 0
+check 8 ecvalidate 1 40
+verified 0
+put EC 11 0
+check 8 ecvalidate 1 40
+verified 0
+put EC 18 787
+check 9 ecvalidate 1 40
+put EC 18 0
+check 9 ecvalidate 1 40
+verified 0
+put EC 16 0
+check 10 ecvalidate 1 40
+verified 0
+put EC 6 1
+check 11 ecvalidate 1 40
+put EC 17 1
+check 0 ecvalidate 1 40
+put EC 6 3
+check 12 ecvalidate 1 40
+put EC 15 1
+check 0 ecvalidate 1 40
+put EC 6 7
+check 13 ecvalidate 1 40
+put EC 5 2
+check 13 ecvalidate 1 40
+put EC 5 3
+check 0 ecvalidate 1 40
+put EC 4 3
+check 14 ecvalidate 1 40
+put EC 12 1
+check 14 ecvalidate 1 40
+put EC 14 1
+check 0 ecvalidate 1 40
+put EC 4 4
+check 15 ecvalidate 1 40
+put EC 13 1
+check 0 ecvalidate 1 40
+put EC 19 1
+check 16 ecvalidate 1 40
+fresh
+put EC 7 2
+put EC 27 4
+put EC 47 1
+check 17 ecvalidate 1 40
+fresh
+integrated 0
+put EC 7 2
+check 18 ecvalidate 1 40
+integrated 1
+check 0 ecvalidate 1 40
+put EC 27 4
+check 18 ecvalidate 1 40
+integrated 2
+check 0 ecvalidate 1 40
+note Permuting records leaves dependency identity unchanged.
+for c ulong 20
+t = get EC c
+put EC c get EC add 780 c
+put EC add 780 c t
+end
+check 0 ecvalidate 1 40
+if ne get Fail 0 0
+w = write 1 fail 0 len fail
+ret 1
+end
+w = write 1 good 0 len good
+ret 0
+end

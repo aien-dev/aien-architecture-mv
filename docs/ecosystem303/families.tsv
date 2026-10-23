@@ -1,0 +1,41 @@
+id	family	implementation_issue	accountable_owner	current_source_or_reuse	whole_family_status	acceptance
+1	seed-compiler	omega-mv#660	L408	SOURCES.md profiles A/B/C; separate histories	PENDING	fresh seed plus independent semantics and integrated provenance
+2	host-services	omega-mv#636	L408	feat/seed-native-host f0499f41; positive file/process/network replay	PENDING	qualified composed host and current compiler interfaces
+3	tensor-storage	omega-mv#663	L418; bounded guard L787	omega src/tensor/omega_tensor.c; new native/ecosystem663	PENDING	native storage/view lifetime plus real arithmetic consumers
+4	dense-operators	omega-mv#663	L418	omega src/tensor/omega_tensor_cpu.c; float prerequisite L408	PENDING	native independent numeric oracle and training consumers
+5	dtype-amp	omega-mv#663	L418; compiler L408	omega src/tensor/omega_tensor.h; F16/BF16 storage-only contract	PENDING	declared casts accumulation nonfinite and loss scaling
+6	reverse-autograd	omega-mv#664	L491; migration L418	omega src/autodiff/omega_autodiff.c; L491 native migration needed	PENDING	independent backward/update and saved-generation mutants
+7	functional-transforms	omega-mv#664	L786 routing	JVP VJP Hessian recomputation catalogue not implemented here	PENDING	independent derivative and batching semantics
+8	model-modules	aien-train#6	L384; L491	L491 locality source0daf1a44; first-party C remains	PENDING	parameter registration layers tied weights and train/eval
+9	optimizers	aien-train#6	L491	L491 existing training audit; native FP prerequisite	PENDING	SGD AdamW independent state/update and loss-scale controls
+10	tokenization	aien-train#5	L786 routing to loader owner	Omega host token fixtures and existing loader owners; full model normalization unresolved	PENDING	Unicode malformed bytes special tokens templates golden fixtures
+11	datasets	aien-train#5	L786 routing to data owner	aien-train data/corpus; streaming owner L689	PENDING	bounded shuffle batching cursor split and cancellation
+12	checkpoint-resume	aien-train#5	L491; L689	complete model optimizer RNG sampler state not qualified	PENDING	transactional save resume equivalence and corrupt records
+13	training	aien-train#6	L491	L491 source0daf1a44 C trainer; native float/autograd outstanding	PENDING	train checkpoint resume held-out evaluate export
+14	adaptation	aien-train#3	L491; L775 coordination	Omega606 prerequisite; rich feedback under aien-train4	PENDING	licensed fixed model SFT LoRA freeze merge reload quality
+15	collectives	aien-train#7	L786; bounded admission worker	Omega536 PR538 HTK1 no collective kind; native/distributed7 admission	PENDING	real workers authenticated transport exact reduction failure recovery
+16	sharding	aien-train#7	L786 routing	no qualified native trainer sharding located	PENDING	optimizer gradient parameter shards and restart equivalence
+17	graph-compiler	omega-mv#665	L408; L386	seed compiler profiles plus Omega621/623/632 owned interfaces	PENDING	shape guards alias effects independent lowering verification
+18	export	omega-mv#665	L408; L491	versioned full model export not qualified	PENDING	native optimized/export-reloaded outputs gradients and cache refusal
+19	gb10-model	omega-mv#661	L605; L457; L386	Omega638 CUDApp35/5; native whole-model path incomplete	PENDING	actual seeded source-to-GB10 complete model with logits oracle
+20	second-gpu	CUDApp#62	L444; L617; L641	M2 physically reachable; native AGX lab268a2e9d is simulation	PENDING	same model/workload physical vendor gate; no CPU fallback
+21	inference	omega-mv#666	L457	CUDApp5 canonical motor; existing source owners retained	PENDING	native trained model tokenizer-to-output and actual trace
+22	kv-batching	omega-mv#666	L457; L689	canonical runtime and loader ownership; .om whole path incomplete	PENDING	admission cache reuse isolation cancel OOM and recovery
+23	quantization	omega-mv#666	L284; L457	own-fp4 and rotation-int4-native active branches retained	PENDING	numeric quality size speed and actual consumers
+24	serving-api	omega-mv#666	L457	current server preserved; native HTTP integration incomplete	PENDING	streaming disconnect concurrent isolation and export reload
+25	packages	omega-mv#633	L614; L696	dev/public-distribution-L614; exact source closure outstanding	PENDING	isolated native install rollback and cold reproduction
+26	model-data-registry	omega-mv#667	L786 routing	reuse Omega651/633; full registry closure unresolved	PENDING	versioned manifests provenance offline cache and safe retrieval
+27	evaluation	omega-mv#667	L775; L776	Omega653 native public admission; full model evaluator outstanding	PENDING	held-out disjoint data quality costs and contamination controls
+28	observability	omega-mv#667	L786 routing to trace owners	Omega607/608/609; full native trace closure outstanding	PENDING	actual CPU GPU transfer wait metrics and local privacy
+29	developer-tools	omega-mv#667	L408; L614	definition export43f86be2; editor/debugger/interactive gaps	PENDING	native complete workflow diagnostics and error attribution
+30	vision	aien-train#8	L786 routing	new owned backlog; existing branches must be reconciled before edits	PENDING	convolution gradients image pipeline held-out export reload
+31	audio	aien-train#9	L786 routing	new owned backlog; existing branches must be reconciled before edits	PENDING	resampling spectral transforms waveform model quality
+32	video	aien-train#10	L786 routing	new owned backlog; existing branches must be reconciled before edits	PENDING	codec timestamps temporal batching held-out model quality
+33	diffusion	aien-train#11	L786 routing	new owned backlog; existing branches must be reconciled before edits	PENDING	noise schedule objective sampler seed and quality
+34	classical-ml	aien-train#12	L786 routing	new owned backlog; existing branches must be reconciled before edits	PENDING	fitted preprocessing estimators independent outputs reload
+35	graph-geometric	aien-train#13	L786 routing	new owned backlog; existing branches must be reconciled before edits	PENDING	message passing gradients graph permutation and batching
+36	scientific	omega-mv#668	L786 routing to numerical owners	preserve Omega358/371/440 scientific-model owners	PENDING	conditioned linalg solvers integration statistics consumers
+37	sparse-ragged	omega-mv#663	L418; CUDApp owner	CUDApp feat/sparse-core and feat/csr-transpose retained	PENDING	native sparse layouts indices gradients and numerical oracles
+38	fft-signal	omega-mv#668	L786 routing to numerical owners	CUDApp feat/fft-rng retained	PENDING	FFT normalization complex behavior signal processing oracle
+39	scheduling-deployment	omega-mv#649	L786 routing to lifecycle owner	existing application lifecycle programme298; no deployment authorized	PENDING	native scheduling resource isolation cancel recover and inspectable plan
+40	retirement-audit	aien-architecture-mv#300	L495; L786 inventory	L496 isolated utility port; production retirements0	PENDING	qualified consumer switch then active-tree and dependency deletion
