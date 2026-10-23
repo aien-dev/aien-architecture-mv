@@ -18,6 +18,10 @@ Observed 2026-10-23. These are development inputs, not a successor release freez
 | Tensor metadata candidate | 8975287573f284dd2140b2f2b169619d3e145cf1 | omega-mv feat/ecosystem663-admission; functional source3a995ba8dace538c1532c747d829ca6e4a73582d |
 | Seed qualification candidate | 3b3a67393d4d5d2ea9b70e43353e1946e5e2430a | omega-mv qualify/ecosystem660-seed; stacked on profile B ancestry |
 | Distributed admission candidate | 2ff2144819fb46993d2b373fc83d4de1a8d72990 | aien-train feat/distributed7-admission; independently reviewed component, no collective transport |
+| Numerical consumer candidate | c7642d96c0b84b6d176dbb2dc8558b536cabe729 | aien-train feat/ecosystem6-native-step; functional d79b34352f769687b62cc77ba2e3739445723010; independent review complete |
+| Data packing candidate | 4f93aabb11e584e3f556a3cc9ea2a8d0ce062272 | aien-train feat/ecosystem5-packing; functional088258d0c76c4e3b6c73ad92c12e20948014cc6f; independent review complete |
+| Existing learning benchmark core | 84d03c5523f39ca1045d1c313c5f62597779462b | Omega L775; src/learning/benchmark/core.om, consumed by packing |
+| Existing curriculum admission | d8d14c47647e49774f64b58e3c138335656f175d | Omega L776; published1a14972c3b2d7494ba445df79967e7963359230e, consumed by packing |
 
 Compiler A SHA256:
 `191b776ef98821597c3e30655da6d680a9b66edbc9ceaca3c39c61ea6df098e9`.
@@ -34,8 +38,10 @@ binary32 addition and multiplication in handwritten .om using integer bit
 operations; this is a usable numerical dependency, not a fixed-point substitute.
 Its bounded independent review exercised19041 checks. That does not supply a
 complete tensor engine, division, square root, nonlinearities or general autograd.
-The ecosystem6 lane is consuming the exact existing source for an affine
-forward/VJP/SGD qualification. Self-stage equality establishes consistency,
+The ecosystem6 lane consumes the exact existing source for an affine
+forward/VJP/SGD qualification:374708 author checks,1041 separate reviewer checks
+including14 central differences, and3 compiled mutants caught by both suites.
+Self-stage equality establishes consistency,
 not correctness or diverse-double-compilation trust (Omega650).
 
 These fixed upstream versions define reference starting points, not current-latest
@@ -61,10 +67,22 @@ from upstream. No source implementation was copied into this candidate.
 | [JAX](https://github.com/jax-ml/jax/tree/94233144f5469af28c065aa4263a6849338eeaa1) | 0.7.2 | 94233144f5469af28c065aa4263a6849338eeaa1 |
 | [TensorFlow](https://github.com/tensorflow/tensorflow/tree/72fbba3d20f4616d7312b5e2b7f79daf6e82f2fa) | 2.20.0 | 72fbba3d20f4616d7312b5e2b7f79daf6e82f2fa |
 | [ONNX](https://github.com/onnx/onnx/tree/57b9c6a4f6eebb09ae1b34cfb632078518f72832) | 1.19.0 | 57b9c6a4f6eebb09ae1b34cfb632078518f72832 |
+| [Safetensors](https://github.com/huggingface/safetensors/tree/aa6c43d729868fc43918e862d42bfeaf60485d1d) | 0.6.2 | aa6c43d729868fc43918e862d42bfeaf60485d1d |
+| [vLLM](https://github.com/vllm-project/vllm/tree/b8b302cde434df8c9289a2b465406b47ebab1c2d) | 0.11.0 | b8b302cde434df8c9289a2b465406b47ebab1c2d |
+| [llama.cpp / GGUF](https://github.com/ggml-org/llama.cpp/tree/3f750f8d760ab5a61491e6a9409072dfeee4b4d7) | b6748 | 3f750f8d760ab5a61491e6a9409072dfeee4b4d7 |
+| [TensorRT](https://github.com/NVIDIA/TensorRT/tree/94e2b9ef6d2cce74c76cdad499cca36cc4949197) | 10.13.3 | 94e2b9ef6d2cce74c76cdad499cca36cc4949197 |
+| [MLflow](https://github.com/mlflow/mlflow/tree/78d075062b120597050bf2b3839a426feea5ea4c) | 3.4.0 | 78d075062b120597050bf2b3839a426feea5ea4c |
+| [Ray](https://github.com/ray-project/ray/tree/479fa716904109d9df4b56b98ca3c3350e1ec13c) | 2.49.2 | 479fa716904109d9df4b56b98ca3c3350e1ec13c |
+| [KServe](https://github.com/kserve/kserve/tree/d623ea29e4a7312e509829f9104209cd6f820268) | 0.15.2 | d623ea29e4a7312e509829f9104209cd6f820268 |
+| [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness/tree/d021bf846218f1bb3bdc0603864789329476d464) | 0.4.9.1 | d021bf846218f1bb3bdc0603864789329476d464 |
+| [Triton](https://github.com/triton-lang/triton/tree/c3c476f357f1e9768ea4e45aa5c17528449ab9ef) | 3.5.0 | c3c476f357f1e9768ea4e45aa5c17528449ab9ef |
+| [NCCL](https://github.com/NVIDIA/nccl/tree/ae7aed194dc63c65d1bf5c0385ba3d68d3b64c8c) | 2.28.7-1 | ae7aed194dc63c65d1bf5c0385ba3d68d3b64c8c |
 
 All rows above still need their per-API and actual-consumer inventory.
-Additional external surfaces awaiting exact reference pins include
-GGUF/safetensors (train5/Omega665), vLLM/TensorRT/llama.cpp
-serving comparison (Omega666), hubs/tracking/workflow/IDE/debugger tools (Omega667).
+Additional external surfaces awaiting exact reference pins include hub protocols,
+workflow/IDE/debugger interfaces and non-NVIDIA accelerator libraries (Omega667,
+Omega665, CUDApp36/62). The boundary map is in COMPATIBILITY.md.
+The pinned engine/library sources are reference specifications
+and test-oracle candidates, not installed product dependencies.
 This remaining work keeps architecture301 open. These are reference/interoperation
 targets, never permission to use them as hidden first-party execution engines.

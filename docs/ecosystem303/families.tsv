@@ -7,9 +7,9 @@ id	family	implementation_issue	accountable_owner	current_source_or_reuse	whole_f
 6	reverse-autograd	omega-mv#664	L491; migration L418	omega src/autodiff/omega_autodiff.c; L491 native migration needed	PENDING	independent backward/update and saved-generation mutants
 7	functional-transforms	omega-mv#664	L786 routing	JVP VJP Hessian recomputation catalogue not implemented here	PENDING	independent derivative and batching semantics
 8	model-modules	aien-train#6	L491; L786 routing	L491 locality source0daf1a44; first-party C remains	PENDING	parameter registration layers tied weights and train/eval
-9	optimizers	aien-train#6	L491	L491 existing training audit; bounded native ecosystem6 SGD consumer in progress	PENDING	SGD AdamW independent state/update and loss-scale controls
+9	optimizers	aien-train#6	L491	L491 existing training audit; bounded native ecosystem6 SGD independently qualified c7642d96	PENDING	SGD AdamW independent state/update and loss-scale controls
 10	tokenization	aien-train#5	L786 routing to tokenizer owner	Core tokenizer.rs is Hugging Face Rust wrapper plus templates; Om-Xerj L779 validates supplied packets only	PENDING	Unicode malformed bytes special tokens templates golden fixtures
-11	datasets	aien-train#5	L303 experiment; L776 schema; L786 routing	AIEN_0 trace experiment and public curriculum admission d8d14c47; complete native reader outstanding; L292 dropped	PENDING	bounded shuffle batching cursor split and cancellation
+11	datasets	aien-train#5	L303 experiment; L776 schema; L786 routing	public curriculum d8d14c47 consumed by native packing4f93aabb; complete native reader outstanding; L292 dropped	PENDING	bounded shuffle batching cursor split and cancellation
 12	checkpoint-resume	aien-train#5	L491; L786 routing	L491 C tg_store generations/RNG; Core BF16 Safetensors loader remains foreign; full native migration outstanding	PENDING	transactional save resume equivalence and corrupt records
 13	training	aien-train#6	L491	L491 source0daf1a44 C trainer; composed native trainer/autograd outstanding	PENDING	train checkpoint resume held-out evaluate export
 14	adaptation	aien-train#3	L491; L775 coordination	Omega606 prerequisite; rich feedback under aien-train4	PENDING	licensed fixed model SFT LoRA freeze merge reload quality
