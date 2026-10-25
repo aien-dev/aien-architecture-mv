@@ -1,0 +1,93 @@
+# Zero-legacy closure checker (seeded `.om`)
+
+Owner: [aien-architecture-mv #316](https://github.com/aien-dev/aien-architecture-mv/issues/316)
+under the inventory authority [#300](https://github.com/aien-dev/aien-architecture-mv/issues/300).
+Status: **v0, transitional inventory mode qualified on the host; release mode implemented and
+gate-tested on fixtures; not yet wired into any release decision.**
+
+Two native Omega programs, built only by the pinned seed compiler in `omega.pin`
+(`seed/out/omc` of `aien-dev/omega-mv`, born from `seed/rung0/seed0.hex` by
+`sh seed/omega-from-seed.sh`). No C, Rust, Python or foreign runtime is on their
+implementation path. The shell in `tests/gates/run.sh` only sequences the build and the
+runs; every judgment is made by these programs.
+
+| Program | Role |
+| --- | --- |
+| `closure.om` | walk one checked-out tree, classify every regular file, apply a manifest, print rows and a summary, refuse in release mode |
+| `expect.om` | judge a report against an expected-row file (order free, row counts equal) |
+
+## Build and run
+
+```
+sh seed/omega-from-seed.sh                      # in omega-mv at the pinned commit
+seed/out/omc < tools/zero-legacy/closure.om > closure && chmod +x closure
+./closure ROOT [release] [MANIFEST]
+```
+
+Exit: 0 inventory done (transitional) or release accepted; 1 release refused, outstanding
+first-party rows remain; 2 release refused, unknown rows remain; 64 usage; 65 manifest
+unreadable. Program-mode traps exit 100 + code (103: a path over 4095 bytes or a packet
+over the limits).
+
+Output: one `CATEGORY<TAB>path` row per file, then `# CATEGORY count` lines, `# MODE 0|1`,
+`# OUTSTANDING n`, `# UNKNOWN n`.
+
+## Classification (content first, then name)
+
+| Category | Rule | Counts as |
+| --- | --- | --- |
+| `ELF` | head bytes `7f 45 4c 46` | unknown unless declared `generated`/`external` |
+| `ARCHIVE` | gzip, zip, xz, or `ustar` at byte 257 | unknown unless declared `external` |
+| `OM` | `.om` | native |
+| `WRAPPER` | `.om` whose text contains `= execprog` (a launcher of something else) | outstanding until reviewed |
+| `C_H` `RUST` `PYTHON` `OSC` | `.c` `.h` `.cc` `.cpp` `.hpp` `.cu` `.cuh`, `.rs`, `.py`, `.osc` | outstanding |
+| `SHELL` | `.sh` `.bash` | outstanding |
+| `FOREIGN` | shell whose head mentions `python`, `perl`, `node` or `ruby` | outstanding |
+| `HEXASM` | `.hex` `.hex1` `.s` `.S` `.s2` `.asm` | outstanding; `.hex`/`.hex1` may be declared `data` |
+| `MAKE` | `Makefile`, `.mk` | outstanding (build logic) |
+| `HIDDEN` | any other name whose head starts with `#!`, or contains `#include` or `fn main(` | outstanding |
+| `DOC` | `.md .txt .json .toml .yml .yaml .lock .csv .svg .html .css .png .jpg .gif .pdf .gate .xml .pub .sig .tex .ini .cfg .pem .crumb .log`, dotfiles with one dot, all-capitals names | neither |
+| `OTHER` | everything else | unknown |
+| `SYMLINK` | not followed | neither |
+| `UNREADABLE` | directory or file that could not be opened | unknown |
+
+Only the first 4096 bytes of a file are inspected. `.git` entries are skipped at every depth.
+
+## Manifest
+
+Lines `data P`, `generated P`, `external P`, `skip P`; `P` is a path prefix relative to ROOT.
+Other lines are ignored.
+
+| Kind | Effect | Refused as `FORGED` when the file is |
+| --- | --- | --- |
+| `data` | golden vectors, non-executable hex: row `DATA` | any source category, or `.s/.S/.s2/.asm` assembly text |
+| `generated` | emitted machine code or artifacts: row `GENERATED` | any source category |
+| `external` | third-party or vendor files: row `EXTERNAL`, always listed | never (a reviewer reads these rows) |
+| `skip` | not scanned (build directories): counted under `SKIP` | n/a |
+
+`FORGED` rows are outstanding: a manifest cannot turn a `.c` file into data. A handwritten
+`.hex` seed declared as `data` is accepted by this tool; distinguishing executable from
+golden hex is the manifest owner's claim, reviewed by the issue owner (#725 for the seed
+rungs), not something this tool can decide from bytes.
+
+## Gate
+
+`tests/gates/arch-zero-legacy-closure.gate` runs `tests/gates/run.sh zero-legacy` with
+`AIEN_OMC` pointing at an omc whose sha256 equals `omega.pin`; otherwise NOT_RUN (exit 3).
+The hostile fixture `fixtures/tree` (hidden C in a `.txt`, a shebang file without a suffix,
+shell executing Python, a `.om` launcher, forged `data` over a `.c` and a `.s`, an ELF, an
+archive, a stale `.hex`, a Makefile, a skipped directory) must be refused with exit 1 and match
+`fixtures/tree.expected` row for row; `fixtures/clean` must be accepted with its manifest and
+refused (undeclared hex) without it.
+
+## Limits of v0 (honest scope)
+
+- Source tree only. It does not yet follow the build: linked libraries, process trees, and
+  the ELF closure of a product are the next slice (#316 item 2) and need the device/process
+  words already in the language (`execprog`, `waitpid`, `pipefds`, `readlnk`).
+- Head-only inspection (4096 bytes); a `#include` past that is missed. Names over 8 bytes
+  per the seed grammar keep the code terse; see the category table for exact rules.
+- Capacities: manifest 64 KiB, path 4095 bytes, 999,999 directories per run, 1 MiB directory
+  stack.
+- This repository's own `tools/crumb/crumb.c`, its Makefile and `scripts/*.sh` are reported as
+  outstanding by this checker; they are migration rows of this repository, not exemptions.

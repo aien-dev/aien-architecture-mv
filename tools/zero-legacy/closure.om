@@ -1,0 +1,983 @@
+note SPDX-License-Identifier: Apache-2.0
+note zero-legacy closure checker, v0 (aien-architecture-mv #316, under #300).
+note Seeded Omega program: walks one checked-out tree, classifies every regular
+note file by content and name, applies a declared manifest, prints one row per
+note file and a summary, and in release mode refuses outstanding or unknown rows.
+note usage: closure ROOT [release] [MANIFEST]
+note Built only by seed/out/omc from aien-dev/omega-mv (see omega.pin).
+
+text tuse "usage: closure ROOT [release] [MANIFEST]\n"
+text terr "closure: cannot read MANIFEST\n"
+text tnl "\n"
+text ttab "\t"
+text tsp " "
+text thash "# "
+text tout "OUTSTANDING "
+text tunk "UNKNOWN "
+text tmode "MODE "
+text trel "release"
+text tpy "python"
+text tpl "perl"
+text tnd "node"
+text trb "ruby"
+text tinc "#include"
+text tfnm "fn main("
+text texe "= execpro"
+text tmk "Makefile"
+text tdat "data "
+text tgen "generated "
+text text_ "external "
+text tskp "skip "
+
+text c0 "OM"
+text c1 "C_H"
+text c2 "RUST"
+text c3 "PYTHON"
+text c4 "SHELL"
+text c5 "OSC"
+text c6 "HEXASM"
+text c7 "ELF"
+text c8 "ARCHIVE"
+text c9 "DOC"
+text c10 "OTHER"
+text c11 "HIDDEN"
+text c12 "WRAPPER"
+text c13 "DATA"
+text c14 "GENERATED"
+text c15 "EXTERNAL"
+text c16 "FOREIGN"
+text c17 "SYMLINK"
+text c18 "FORGED"
+text c19 "SKIP"
+text c20 "MAKE"
+text c21 "UNREADABLE"
+
+global path uchar 4096
+global plen ulong 1
+global rootl ulong 1
+global stk uchar 1048576
+global stkt ulong 1
+global dbuf uchar 65536
+global head uchar 4096
+global hlen ulong 1
+global ndl uchar 32
+global ndln ulong 1
+global nb uchar 24
+global cnt ulong 32
+global alw uchar 65536
+global alwn ulong 1
+global pst ulong 1
+global mode ulong 1
+global name uchar 256
+
+note ---- output ----
+
+fn wnl to void
+r = write 1 tnl 0 1
+end
+
+fn wnum v ulong to void
+n = ulong 0
+if eq v 0
+put nb 23 48
+n = 1
+end
+x = v
+while gt x 0 bound 20
+put nb sub 23 n uchar add 48 rem x 10
+x = div x 10
+n = add n 1
+end
+r = write 1 nb sub 24 n n
+end
+
+fn wcat k ulong to void
+if eq k 0
+r = write 1 c0 0 len c0
+end
+if eq k 1
+r = write 1 c1 0 len c1
+end
+if eq k 2
+r = write 1 c2 0 len c2
+end
+if eq k 3
+r = write 1 c3 0 len c3
+end
+if eq k 4
+r = write 1 c4 0 len c4
+end
+if eq k 5
+r = write 1 c5 0 len c5
+end
+if eq k 6
+r = write 1 c6 0 len c6
+end
+if eq k 7
+r = write 1 c7 0 len c7
+end
+if eq k 8
+r = write 1 c8 0 len c8
+end
+if eq k 9
+r = write 1 c9 0 len c9
+end
+if eq k 10
+r = write 1 c10 0 len c10
+end
+if eq k 11
+r = write 1 c11 0 len c11
+end
+if eq k 12
+r = write 1 c12 0 len c12
+end
+if eq k 13
+r = write 1 c13 0 len c13
+end
+if eq k 14
+r = write 1 c14 0 len c14
+end
+if eq k 15
+r = write 1 c15 0 len c15
+end
+if eq k 16
+r = write 1 c16 0 len c16
+end
+if eq k 17
+r = write 1 c17 0 len c17
+end
+if eq k 18
+r = write 1 c18 0 len c18
+end
+if eq k 19
+r = write 1 c19 0 len c19
+end
+if eq k 20
+r = write 1 c20 0 len c20
+end
+if eq k 21
+r = write 1 c21 0 len c21
+end
+end
+
+fn report k ulong to void
+wcat k
+r = write 1 ttab 0 1
+r = write 1 path 0 get plen 0
+wnl
+put cnt k add get cnt k 1
+end
+
+note ---- needles and searches over the file head ----
+
+fn ldpy to void
+for i ulong len tpy
+put ndl i get tpy i
+end
+put ndln 0 len tpy
+end
+
+fn ldpl to void
+for i ulong len tpl
+put ndl i get tpl i
+end
+put ndln 0 len tpl
+end
+
+fn ldnd to void
+for i ulong len tnd
+put ndl i get tnd i
+end
+put ndln 0 len tnd
+end
+
+fn ldrb to void
+for i ulong len trb
+put ndl i get trb i
+end
+put ndln 0 len trb
+end
+
+fn ldinc to void
+for i ulong len tinc
+put ndl i get tinc i
+end
+put ndln 0 len tinc
+end
+
+fn ldfnm to void
+for i ulong len tfnm
+put ndl i get tfnm i
+end
+put ndln 0 len tfnm
+end
+
+fn ldexe to void
+for i ulong len texe
+put ndl i get texe i
+end
+put ndl len texe 103
+put ndln 0 add len texe 1
+end
+
+fn found to bool
+h = get hlen 0
+m = get ndln 0
+if lt h m
+ret false
+end
+e = sub h m
+i = ulong 0
+while le i e bound 4097
+j = ulong 0
+while lt j m bound 32
+if ne get head add i j get ndl j
+break
+end
+j = add j 1
+end
+if eq j m
+ret true
+end
+i = add i 1
+end
+ret false
+end
+
+fn interp to bool
+ldpy
+if found
+ret true
+end
+ldpl
+if found
+ret true
+end
+ldnd
+if found
+ret true
+end
+ldrb
+if found
+ret true
+end
+ret false
+end
+
+fn isshb to bool
+if lt get hlen 0 2
+ret false
+end
+ret and eq get head 0 35 eq get head 1 33
+end
+
+fn m4 a uchar b uchar c uchar d uchar to bool
+if ne get head 0 a
+ret false
+end
+if ne get head 1 b
+ret false
+end
+if ne get head 2 c
+ret false
+end
+ret eq get head 3 d
+end
+
+fn tar to bool
+if ne get head 257 117
+ret false
+end
+if ne get head 258 115
+ret false
+end
+if ne get head 259 116
+ret false
+end
+if ne get head 260 97
+ret false
+end
+ret eq get head 261 114
+end
+
+fn isbin to ulong
+h = get hlen 0
+if lt h 4
+ret 0
+end
+if m4 127 69 76 70
+ret 7
+end
+if and eq get head 0 31 eq get head 1 139
+ret 8
+end
+if m4 80 75 3 4
+ret 8
+end
+if m4 253 55 122 88
+ret 8
+end
+if ge h 262
+if tar
+ret 8
+end
+end
+ret 0
+end
+
+note ---- name suffixes on the current path ----
+
+fn e1 a uchar to bool
+n = get plen 0
+if lt n 2
+ret false
+end
+if ne get path sub n 2 46
+ret false
+end
+ret eq get path sub n 1 a
+end
+
+fn e2 a uchar b uchar to bool
+n = get plen 0
+if lt n 3
+ret false
+end
+if ne get path sub n 3 46
+ret false
+end
+if ne get path sub n 2 a
+ret false
+end
+ret eq get path sub n 1 b
+end
+
+fn e3 a uchar b uchar c uchar to bool
+n = get plen 0
+if lt n 4
+ret false
+end
+if ne get path sub n 4 46
+ret false
+end
+if ne get path sub n 3 a
+ret false
+end
+if ne get path sub n 2 b
+ret false
+end
+ret eq get path sub n 1 c
+end
+
+fn e4 a uchar b uchar c uchar d uchar to bool
+n = get plen 0
+if lt n 5
+ret false
+end
+if ne get path sub n 5 46
+ret false
+end
+if ne get path sub n 4 a
+ret false
+end
+if ne get path sub n 3 b
+ret false
+end
+if ne get path sub n 2 c
+ret false
+end
+ret eq get path sub n 1 d
+end
+
+fn ismake to bool
+if e2 109 107
+ret true
+end
+n = get plen 0
+if lt n 8
+ret false
+end
+for i ulong 8
+if ne get path add sub n 8 i get tmk i
+ret false
+end
+end
+if eq n 8
+ret true
+end
+ret eq get path sub n 9 47
+end
+
+fn e5 a uchar b uchar c uchar d uchar e uchar to bool
+n = get plen 0
+if lt n 6
+ret false
+end
+if ne get path sub n 6 46
+ret false
+end
+if ne get path sub n 5 a
+ret false
+end
+if ne get path sub n 4 b
+ret false
+end
+if ne get path sub n 3 c
+ret false
+end
+if ne get path sub n 2 d
+ret false
+end
+ret eq get path sub n 1 e
+end
+
+note the last path component: a dotfile with one dot, or an all-capitals name
+fn base to ulong
+n = get plen 0
+i = n
+while gt i 0 bound 4096
+if eq get path sub i 1 47
+break
+end
+i = sub i 1
+end
+ret i
+end
+
+fn isdot to bool
+b = base
+n = get plen 0
+if ne get path b 46
+ret false
+end
+i = add b 1
+while lt i n bound 256
+if eq get path i 46
+ret false
+end
+i = add i 1
+end
+ret gt n add b 1
+end
+
+fn iscaps to bool
+b = base
+n = get plen 0
+if ge b n
+ret false
+end
+i = b
+while lt i n bound 256
+c = get path i
+if lt c 65
+if and ne c 45 ne c 95
+ret false
+end
+end
+if gt c 90
+if ne c 95
+ret false
+end
+end
+i = add i 1
+end
+ret true
+end
+
+fn isdoc to bool
+if or e2 109 100 e3 116 120 116
+ret true
+end
+if or e5 99 114 117 109 98 e3 108 111 103
+ret true
+end
+if or isdot iscaps
+ret true
+end
+if or e4 106 115 111 110 e4 116 111 109 108
+ret true
+end
+if or e3 121 109 108 e4 121 97 109 108
+ret true
+end
+if or e4 108 111 99 107 e3 99 115 118
+ret true
+end
+if or e3 115 118 103 e4 104 116 109 108
+ret true
+end
+if or e3 99 115 115 e3 112 110 103
+ret true
+end
+if or e3 106 112 103 e3 103 105 102
+ret true
+end
+if or e3 112 100 102 e4 103 97 116 101
+ret true
+end
+if or e3 120 109 108 e3 112 117 98
+ret true
+end
+if or e3 115 105 103 e3 116 101 120
+ret true
+end
+if or e3 105 110 105 e3 99 102 103
+ret true
+end
+if or e3 112 101 109 e4 116 111 109 108
+ret true
+end
+ret false
+end
+
+note ---- classification of one regular file at path ----
+
+fn readhd to void
+put hlen 0 0
+fd = fopen path 0 get plen 0 0 0
+if lt fd 0
+ret
+end
+r = read int fd head 0 len head
+if gt r 0
+put hlen 0 ulong r
+end
+r = fclose int fd
+end
+
+fn classif to ulong
+readhd
+b = isbin
+if ne b 0
+ret b
+end
+if e2 111 109
+ldexe
+if found
+ret 12
+end
+ret 0
+end
+if or e1 99 e1 104
+ret 1
+end
+if or e2 99 117 or e3 99 117 104 or e3 99 112 112 or e2 99 99 e3 104 112 112
+ret 1
+end
+if e2 114 115
+ret 2
+end
+if e2 112 121
+ret 3
+end
+if or e2 115 104 e4 98 97 115 104
+if interp
+ret 16
+end
+ret 4
+end
+if e3 111 115 99
+ret 5
+end
+if or e3 104 101 120 or e4 104 101 120 49 or e1 115 or e1 83 or e2 115 50 e3 97 115 109
+ret 6
+end
+if ismake
+ret 20
+end
+if isshb
+ret 11
+end
+ldinc
+if found
+ret 11
+end
+ldfnm
+if found
+ret 11
+end
+if isdoc
+ret 9
+end
+ret 10
+end
+
+note assembly text stays source under any manifest; .hex/.hex1 may be declared data
+fn isasm to bool
+if or e1 115 e1 83
+ret true
+end
+ret or e2 115 50 e3 97 115 109
+end
+
+fn issrc c ulong to bool
+if or eq c 1 or eq c 2 or eq c 3 or eq c 4 eq c 5
+ret true
+end
+if or eq c 11 or eq c 12 or eq c 16 eq c 20
+ret true
+end
+if eq c 6
+ret isasm
+end
+ret false
+end
+
+note ---- manifest: lines "data P", "generated P", "external P", "skip P" ----
+
+fn pdat s ulong to bool
+if gt add s len tdat get alwn 0
+ret false
+end
+for i ulong len tdat
+if ne get alw add s i get tdat i
+ret false
+end
+end
+ret true
+end
+
+fn pgen s ulong to bool
+if gt add s len tgen get alwn 0
+ret false
+end
+for i ulong len tgen
+if ne get alw add s i get tgen i
+ret false
+end
+end
+ret true
+end
+
+fn pext s ulong to bool
+if gt add s len text_ get alwn 0
+ret false
+end
+for i ulong len text_
+if ne get alw add s i get text_ i
+ret false
+end
+end
+ret true
+end
+
+fn pskp s ulong to bool
+if gt add s len tskp get alwn 0
+ret false
+end
+for i ulong len tskp
+if ne get alw add s i get tskp i
+ret false
+end
+end
+ret true
+end
+
+fn kindof s ulong to ulong
+if pdat s
+put pst 0 add s len tdat
+ret 1
+end
+if pgen s
+put pst 0 add s len tgen
+ret 2
+end
+if pext s
+put pst 0 add s len text_
+ret 3
+end
+if pskp s
+put pst 0 add s len tskp
+ret 4
+end
+ret 0
+end
+
+fn prefix p ulong m ulong to bool
+rl = add get rootl 0 1
+if gt add rl m get plen 0
+ret false
+end
+for i ulong m
+if ne get alw add p i get path add rl i
+ret false
+end
+end
+ret true
+end
+
+fn allowk to ulong
+n = get alwn 0
+s = ulong 0
+while lt s n bound 100000
+e = s
+while lt e n bound 4096
+if eq get alw e 10
+break
+end
+e = add e 1
+end
+k = kindof s
+if ne k 0
+p = get pst 0
+if prefix p sub e p
+ret k
+end
+end
+s = add e 1
+end
+ret 0
+end
+
+note ---- directory stack of paths: bytes then a two-byte length trailer ----
+
+fn push to void
+t = get stkt 0
+n = get plen 0
+if gt add t add n 2 len stk
+trap 3
+end
+for i ulong n
+put stk add t i get path i
+end
+put stk add t n uchar rem n 256
+put stk add t add n 1 uchar div n 256
+put stkt 0 add t add n 2
+end
+
+fn pop to bool
+t = get stkt 0
+if lt t 2
+ret false
+end
+n = add ulong get stk sub t 2 mul 256 ulong get stk sub t 1
+b = sub sub t 2 n
+for i ulong n
+put path i get stk add b i
+end
+put plen 0 n
+put stkt 0 b
+ret true
+end
+
+note ---- walking ----
+
+fn file to void
+a = allowk
+if eq a 4
+put cnt 19 add get cnt 19 1
+ret
+end
+c = classif
+if eq a 3
+report 15
+ret
+end
+if ne a 0
+if issrc c
+report 18
+ret
+end
+if eq a 1
+report 13
+ret
+end
+report 14
+ret
+end
+report c
+end
+
+fn isgit k ulong m ulong to bool
+if ne m 4
+ret false
+end
+if ne get dbuf k 46
+ret false
+end
+if ne get dbuf add k 1 103
+ret false
+end
+if ne get dbuf add k 2 105
+ret false
+end
+ret eq get dbuf add k 3 116
+end
+
+fn entry o ulong ty uchar dl ulong to void
+k = add o 19
+m = ulong 0
+while ne get dbuf add k m 0 bound 256
+m = add m 1
+end
+if eq m 1
+if eq get dbuf k 46
+ret
+end
+end
+if eq m 2
+if and eq get dbuf k 46 eq get dbuf add k 1 46
+ret
+end
+end
+if gt add dl add m 1 4095
+ret
+end
+put path dl 47
+for i ulong m
+put path add dl add 1 i get dbuf add k i
+end
+put plen 0 add dl add m 1
+if isgit k m
+ret
+end
+if eq ty 4
+if eq allowk 4
+put cnt 19 add get cnt 19 1
+ret
+end
+push
+ret
+end
+if eq ty 10
+report 17
+ret
+end
+if ne ty 8
+report 10
+ret
+end
+file
+end
+
+fn reclen o ulong to ulong
+lo = ulong get dbuf add o 16
+hi = ulong get dbuf add o 17
+ret add lo mul 256 hi
+end
+
+fn scandir to void
+dl = get plen 0
+fd = fopen path 0 dl 16384 0
+if lt fd 0
+report 21
+ret
+end
+while true bound 100000
+r = getdnts int fd dbuf 0 len dbuf
+if le r 0
+break
+end
+o = ulong 0
+while lt o ulong r bound 65536
+rl = reclen o
+ty = get dbuf add o 18
+entry o ty dl
+o = add o rl
+end
+end
+r = fclose int fd
+end
+
+fn summary to void
+for k ulong 22
+r = write 1 thash 0 2
+wcat k
+r = write 1 tsp 0 1
+wnum get cnt k
+wnl
+end
+end
+
+fn outst to ulong
+s = add get cnt 1 get cnt 2
+s = add s get cnt 3
+s = add s get cnt 4
+s = add s get cnt 5
+s = add s get cnt 6
+s = add s get cnt 11
+s = add s get cnt 12
+s = add s get cnt 16
+s = add s get cnt 18
+ret add s get cnt 20
+end
+
+fn unknown to ulong
+s = add get cnt 7 get cnt 8
+s = add s get cnt 10
+ret add s get cnt 21
+end
+
+fn main to int
+if lt argcnt 2
+r = write 2 tuse 0 len tuse
+ret 64
+end
+n = argread 1 path 0 4095
+if lt n 1
+r = write 2 tuse 0 len tuse
+ret 64
+end
+while and gt n 1 eq get path sub ulong n 1 47 bound 4095
+n = sub n 1
+end
+put plen 0 ulong n
+put rootl 0 ulong n
+if ge argcnt 3
+n = argread 2 name 0 255
+if eq n long len trel
+ok = true
+for i ulong len trel
+if ne get name i get trel i
+ok = false
+end
+end
+if ok
+put mode 0 1
+end
+end
+end
+if ge argcnt 4
+n = argread 3 name 0 255
+if lt n 1
+r = write 2 terr 0 len terr
+ret 65
+end
+fd = fopen name 0 ulong n 0 0
+if lt fd 0
+r = write 2 terr 0 len terr
+ret 65
+end
+r = read int fd alw 0 65535
+if gt r 0
+put alwn 0 ulong r
+end
+r = fclose int fd
+end
+push
+while pop bound 999999
+scandir
+end
+summary
+r = write 1 thash 0 2
+r = write 1 tmode 0 len tmode
+wnum get mode 0
+wnl
+r = write 1 thash 0 2
+r = write 1 tout 0 len tout
+wnum outst
+wnl
+r = write 1 thash 0 2
+r = write 1 tunk 0 len tunk
+wnum unknown
+wnl
+if eq get mode 0 1
+if gt outst 0
+ret 1
+end
+if gt unknown 0
+ret 2
+end
+end
+ret 0
+end
