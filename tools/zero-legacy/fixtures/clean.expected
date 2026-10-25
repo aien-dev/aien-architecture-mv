@@ -1,0 +1,7 @@
+# DATA 1
+DATA	fixtures/clean/golden/v.hex
+# DOC 1
+DOC	fixtures/clean/README.md
+# MODE 1
+# OM 1
+OM	fixtures/clean/src/ok.om

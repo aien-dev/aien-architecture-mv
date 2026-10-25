@@ -1,0 +1,20 @@
+# tests/gates/arch-zero-legacy-closure.gate
+# #316: seeded .om closure checker refuses the hostile fixture tree and accepts the clean one (no hosted job)
+gate: ARCH-ZERO-LEGACY-CLOSURE
+manifest_version: 2
+owner: aien-architecture
+requires:
+  - host
+inputs:
+  - tools/zero-legacy/
+  - tests/gates/
+run:
+  exec: tests/gates/run.sh
+  args: ["zero-legacy"]
+expects:
+  exit: 0
+  observe: ["tree_release_exit == 1", "clean_release_exit == 0", "clean_undeclared_exit == 1", "expect_tree_exit == 0", "expect_clean_exit == 0"]
+  verdict: PASS
+timeout: 5m
+exactness: EXACT
+cache_scope: machine

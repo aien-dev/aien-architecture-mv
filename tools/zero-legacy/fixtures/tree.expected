@@ -1,0 +1,47 @@
+# ARCHIVE 1
+ARCHIVE	fixtures/tree/scratch/blob.tgz
+# C_H 1
+C_H	fixtures/tree/src/old.c
+# DATA 1
+DATA	fixtures/tree/golden/vectors.hex
+# DOC 1
+DOC	fixtures/tree/README.md
+# ELF 1
+ELF	fixtures/tree/scratch/a.out
+# EXTERNAL 1
+EXTERNAL	fixtures/tree/vendor/third.h
+# FOREIGN 1
+FOREIGN	fixtures/tree/src/tool.sh
+# FORGED 3
+FORGED	fixtures/tree/golden/elf.bin
+FORGED	fixtures/tree/golden/forged.c
+FORGED	fixtures/tree/golden/stale.s
+# GENERATED 1
+GENERATED	fixtures/tree/scratch/out.bin
+# HEXASM 1
+HEXASM	fixtures/tree/src/seed.hex
+# HIDDEN 3
+HIDDEN	fixtures/tree/src/notes.txt
+HIDDEN	fixtures/tree/src/run
+HIDDEN	fixtures/tree/src/sh.om
+# MAKE 1
+MAKE	fixtures/tree/src/Makefile
+# MODE 1
+# OM 1
+OM	fixtures/tree/src/hello.om
+# OSC 1
+OSC	fixtures/tree/src/old.osc
+# OUTSTANDING 16
+# PYTHON 1
+PYTHON	fixtures/tree/src/gen.py
+# RUST 1
+RUST	fixtures/tree/src/lib.rs
+# SHELL 1
+SHELL	fixtures/tree/src/plain.sh
+# SKIP 1
+# SYMLINK 1
+SYMLINK	fixtures/tree/src/link.om
+# UNKNOWN 2
+# WRAPPER 2
+WRAPPER	fixtures/tree/src/launch2.om
+WRAPPER	fixtures/tree/src/launch.om

@@ -1,0 +1,172 @@
+note SPDX-License-Identifier: Apache-2.0
+note expect: judge a closure report against an expected row file (#316 gate).
+note usage: expect OUTPUT EXPECTED
+note Every line of EXPECTED must occur as a whole line of OUTPUT (order free,
+note because directory enumeration order is filesystem dependent), and the two
+note files must hold the same number of row lines (lines not starting with #).
+note Exit 0 when both hold; 1 and the missing line on stderr otherwise; 2 when
+note the row counts differ; 64 for usage; 65 when a file cannot be read.
+
+text tuse "usage: expect OUTPUT EXPECTED\n"
+text terr "expect: cannot read a file\n"
+text tmiss "expect: missing line: "
+text tcnt "expect: row count differs\n"
+text tnl "\n"
+
+global out uchar 65536
+global outn ulong 1
+global exp uchar 65536
+global expn ulong 1
+global name uchar 256
+
+fn load1 to bool
+n = argread 1 name 0 255
+if lt n 1
+ret false
+end
+fd = fopen name 0 ulong n 0 0
+if lt fd 0
+ret false
+end
+r = read int fd out 0 65535
+if gt r 0
+put outn 0 ulong r
+end
+r = fclose int fd
+ret true
+end
+
+fn load2 to bool
+n = argread 2 name 0 255
+if lt n 1
+ret false
+end
+fd = fopen name 0 ulong n 0 0
+if lt fd 0
+ret false
+end
+r = read int fd exp 0 65535
+if gt r 0
+put expn 0 ulong r
+end
+r = fclose int fd
+ret true
+end
+
+note end of the line that starts at s in out
+fn oend s ulong to ulong
+e = s
+n = get outn 0
+while lt e n bound 65536
+if eq get out e 10
+ret e
+end
+e = add e 1
+end
+ret e
+end
+
+fn eend s ulong to ulong
+e = s
+n = get expn 0
+while lt e n bound 65536
+if eq get exp e 10
+ret e
+end
+e = add e 1
+end
+ret e
+end
+
+note does exp[s..s+m) equal out[t..t+m)
+fn same s ulong t ulong m ulong to bool
+for i ulong m
+if ne get exp add s i get out add t i
+ret false
+end
+end
+ret true
+end
+
+note is the expected line exp[s..s+m) a whole line of out
+fn has s ulong m ulong to bool
+n = get outn 0
+t = ulong 0
+while lt t n bound 65536
+e = oend t
+if eq sub e t m
+if same s t m
+ret true
+end
+end
+t = add e 1
+end
+ret false
+end
+
+fn rows1 to ulong
+n = get outn 0
+c = ulong 0
+t = ulong 0
+while lt t n bound 65536
+e = oend t
+if gt e t
+if ne get out t 35
+c = add c 1
+end
+end
+t = add e 1
+end
+ret c
+end
+
+fn rows2 to ulong
+n = get expn 0
+c = ulong 0
+t = ulong 0
+while lt t n bound 65536
+e = eend t
+if gt e t
+if ne get exp t 35
+c = add c 1
+end
+end
+t = add e 1
+end
+ret c
+end
+
+fn main to int
+if lt argcnt 3
+r = write 2 tuse 0 len tuse
+ret 64
+end
+if not load1
+r = write 2 terr 0 len terr
+ret 65
+end
+if not load2
+r = write 2 terr 0 len terr
+ret 65
+end
+n = get expn 0
+s = ulong 0
+while lt s n bound 65536
+e = eend s
+m = sub e s
+if gt m 0
+if not has s m
+r = write 2 tmiss 0 len tmiss
+r = write 2 exp s m
+r = write 2 tnl 0 1
+ret 1
+end
+end
+s = add e 1
+end
+if ne rows1 rows2
+r = write 2 tcnt 0 len tcnt
+ret 2
+end
+ret 0
+end
