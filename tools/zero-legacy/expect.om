@@ -88,7 +88,8 @@ end
 ret true
 end
 
-note is the expected line exp[s..s+m) a whole line of out
+note is the expected line exp[s..s+m) a whole, not yet used line of out; the match is consumed
+note (its first byte becomes 1, which no text line starts with) so repeated rows must each occur
 fn has s ulong m ulong to bool
 n = get outn 0
 t = ulong 0
@@ -96,6 +97,7 @@ while lt t n bound 65536
 e = oend t
 if eq sub e t m
 if same s t m
+put out t 1
 ret true
 end
 end
@@ -149,6 +151,7 @@ if not load2
 r = write 2 terr 0 len terr
 ret 65
 end
+c1 = rows1
 n = get expn 0
 s = ulong 0
 while lt s n bound 65536
@@ -164,7 +167,7 @@ end
 end
 s = add e 1
 end
-if ne rows1 rows2
+if ne c1 rows2
 r = write 2 tcnt 0 len tcnt
 ret 2
 end
