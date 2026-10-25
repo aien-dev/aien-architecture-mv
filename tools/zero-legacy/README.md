@@ -103,3 +103,25 @@ to its source path in omega-mv a0eafa39 (85 files, 36,232 lines of C) and physic
 from this closure. Ledger rows are `LINKED object source` and `CRATE name`; they are read from a
 built artifact, not from Makefile text, so they are the closure denominator for Core #753 and
 CUDApp #79, not the source-row counts above.
+
+## Gate runner and hasher in `.om` (replaces the shell step)
+
+`gate.om` is the gate: it compiles `closure.om`, `expect.om` and `sha256.om` with the compiler it
+is given, hashes that compiler with the native `sha256` and refuses (exit 3, NOT_RUN) unless the
+digest equals `omc_sha256` in `omega.pin`, runs the hostile and clean fixtures, judges them with
+`expect`, prints the `AIEN-OBS` lines and exits 0 only when every expectation holds. A compiler
+with one semantic edit in `omc.om` (`fail 12`→`fail 13`, digest `ca2aa132…`) is refused by this
+check. `gate.sh` is the three-line loader that compiles `gate.om` and execs it, the same role
+`seed/rung0/load0.sh` has for the seed; no judgment lives in shell any more.
+
+`sha256.om` is FIPS 180-4 SHA-256 (file or stdin, hex on stdout, 16 MiB cap, exit 65/66). Checked
+byte for byte against coreutils on the empty string, `abc`, the million-`a` vector, random inputs of
+55, 56, 64 and 3,000,000 bytes, and the omc binary; 38 MB/s on one Spark core. It is the first
+`.om` implementation of a file that is in the live product closure (`src/sha256.c`,
+`ledgers/aien-serve-http-bin-19173f9e.tsv`); the in-process cutover of that C file waits on an
+`.om` object/C-ABI boundary (OM_COMPLETION FR-7), which belongs to the compiler owners.
+
+Circularity, stated: the compiler under test compiles the hasher that checks the compiler. A
+forged compiler could forge both. The receipt consumer (aien-test, or a human) must check
+`omega.pin` with a hasher it trusts before trusting this gate's NOT_RUN/PASS; the shell step it
+replaced had the same shape with coreutils `sha256sum`.
