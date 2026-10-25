@@ -72,7 +72,8 @@ case "$step" in
     cat "$build/parity.log"
     parity=$(sed -n 's/^parity: //p' "$build/parity.log")
     obs candidate_parity_identical "${parity%% *}"
-    obs candidate_parity_limits "$(printf '%s' "$parity" | sed 's/.*identical, \([0-9]*\) named limits.*/\1/')"
+    obs candidate_parity_naming_deltas "$(printf '%s' "$parity" | sed 's/.*identical, \([0-9]*\) exact naming deltas.*/\1/')"
+    obs candidate_parity_limits "$(printf '%s' "$parity" | sed 's/.*deltas, \([0-9]*\) named limits.*/\1/')"
     obs candidate_parity_different "$(printf '%s' "$parity" | sed 's/.*limits, \([0-9]*\) different$/\1/')"
     [ "$parity_rc" -eq 0 ]
     for t in scripts/test_pr_gate.sh scripts/test_rebase_crumb.sh scripts/test_check_candidate.sh scripts/test_check_candidate_pins.sh; do
