@@ -1,0 +1,1 @@
+bash under a UTF-8 LANG refuses the regex on invalid UTF-8; the .om matches bytes

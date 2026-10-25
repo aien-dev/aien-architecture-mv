@@ -1,0 +1,4 @@
+FAIL: m.amendment-10.toml: candidate 'CAND-X' is not the manifest id 'CAND-0'
+FAIL: m.amendment-1.toml: candidate 'CAND-X' is not the manifest id 'CAND-0'
+FAIL: m.amendment-2.toml: candidate 'CAND-X' is not the manifest id 'CAND-0'
+rc=1

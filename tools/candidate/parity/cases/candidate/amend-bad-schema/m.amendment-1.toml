@@ -1,0 +1,8 @@
+schema = "Nope"
+candidate = "CAND-0"
+amendment = "1"
+reason = "test"
+manifest-sha256 = "ec4343b8d23bb946cd1a4a4ebb7fd2d7d3e80a06071d6ca01f6af2c17ad3bf79"
+
+[model]
+oracle-fixture-safetensors-sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

@@ -1,0 +1,24 @@
+# Candidate manifest, schema CandidateManifestV1. See docs/qualification/CANDIDATE.md.
+schema = "CandidateManifestV1"
+id = "CAND-0"
+status = "draft, not frozen"
+created = "2026-10-01"
+note = "First manifest. Heads taken from main on 2026-10-01 with gh api repos/aien-dev/<repo>/commits/main. Not a qualification candidate until frozen."
+
+[commits]
+omega = "25b4a51141fa48be01d1cdbac8617d41065e523d"
+aienos = "bb3a5f4efb4c632d8485f9d05f615f466aff0f69"
+aien-sovereign-core = "e58742acbb781ad4e472b3355b9b6ac8624617d9"
+aien-protocols = "4a4877a88e141cb0c2d397191459912b8bfa993a"
+aien-architecture = "f11ac55bd96908e004af625c8b53dc02b6188bca"
+
+[contracts]
+crumb-spec = "10b825133580f7a4388ce78aca64b5db52c5d35b"
+spark-crumbs = "98bb7cbf7b7b5aba2d3f03c73b6e7045ad0f07eb"
+
+# Executable digests (SHA-256 or BLAKE3 hex of each built binary or image).
+# "UNBUILT" is allowed only while status starts with "draft".
+[executables]
+omega-runtime = "UNBUILT"
+aienos-boot-image = "UNBUILT"
+aien-proof = "UNBUILT"

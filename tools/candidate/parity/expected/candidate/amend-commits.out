@@ -1,0 +1,2 @@
+FAIL: m.amendment-1.toml: commits.physics cannot be amended (it would change what the candidate is)
+rc=1

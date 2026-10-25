@@ -1,0 +1,13 @@
+# CAND-4 Amendment 1: oracle fixture recorded (2026-10-06). The frozen manifest CAND-4.toml is not edited;
+# this file adds evidence about its already-pinned model input. Note and provenance: CAND-4.gates.md
+# "Amendment 1" and sovereign-core docs/release/ORACLE-FIXTURE-CAND4.md. Checked by scripts/check_candidate.sh.
+schema = "CandidateAmendmentV1"
+candidate = "CAND-4"
+amendment = "1"
+date = "2026-10-06"
+reason = "oracle fixture recorded: independent Hugging Face Transformers FP32 CPU reference for the pinned model (an outside yardstick made as scratch; AIEN does not depend on it at build, test or run time)"
+manifest-sha256 = "5f1cf9d7fefce087f256f25f884e9bb2e1ed21e7c6a8470f795a76fc13dd97ee"   # CAND-4.toml at 7f99d7e
+
+[model]
+oracle-fixture-safetensors-sha256 = "bf1d83edc1b802ad25cfbbce7a043658d3d4797bd67955447ce8630b51f515ed"   # llama32_1b_oracle.safetensors, 50834760 bytes
+oracle-fixture-manifest-sha256 = "6df1b39eb351db7f8626734e8de882b572c8678bab924b932640621b21235e82"      # llama32_1b_oracle_manifest.json, 23139 bytes

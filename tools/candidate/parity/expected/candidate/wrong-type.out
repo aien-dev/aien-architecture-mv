@@ -1,0 +1,6 @@
+FAIL: missing field: status
+FAIL: missing field: created
+FAIL: status must be 'draft, not frozen', 'frozen' or 'superseded'
+FAIL: executables.aien-proof is UNBUILT but status is not draft
+FAIL: executables.aienos-boot-image is UNBUILT but status is not draft
+rc=1

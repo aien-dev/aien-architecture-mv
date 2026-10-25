@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
-# Test for check_candidate_pins.sh. Offline: lock files are served from a temp tree by a CAND_FILE_AT stub.
+# Test for tools/candidate/check_pins.om. Offline: lock files are served from a temp tree by a CAND_FILE_AT stub.
+# The checker is compiled here with the pinned seeded compiler named by AIEN_OMC (exit 3 = NOT_RUN without it).
 set -u
 here="$(cd "$(dirname "$0")" && pwd)"
-chk="$here/check_candidate_pins.sh"
+src="$here/../tools/candidate/check_pins.om"
+omc="${AIEN_OMC:-}"
+[ -n "$omc" ] && [ -x "$omc" ] || { echo "test_check_candidate_pins: AIEN_OMC is not an executable omc (NOT_RUN)" >&2; exit 3; }
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+chk="$tmp/check_pins"
+"$omc" < "$src" > "$chk" && chmod +x "$chk" || { echo "TEST FAIL: $src does not compile with $omc"; exit 1; }
 OM=1111111111111111111111111111111111111111; SC=2222222222222222222222222222222222222222
 AO=3333333333333333333333333333333333333333; PH=4444444444444444444444444444444444444444
 PR=5555555555555555555555555555555555555555; CS=6666666666666666666666666666666666666666

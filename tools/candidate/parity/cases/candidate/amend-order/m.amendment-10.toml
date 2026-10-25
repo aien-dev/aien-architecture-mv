@@ -1,0 +1,9 @@
+schema = "CandidateAmendmentV1"
+candidate = "CAND-X"
+amendment = "10"
+date = "2026-10-06"
+reason = "test"
+manifest-sha256 = "ec4343b8d23bb946cd1a4a4ebb7fd2d7d3e80a06071d6ca01f6af2c17ad3bf79"
+
+[model]
+oracle-fixture-safetensors-sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

@@ -1,0 +1,1 @@
+bash globs <stem>.amendment-*.toml in the locale's collation (en_US: 10, 1, 2); the .om walks the names in byte order (1, 10, 2); only the order of FAIL lines of several amendments differs
