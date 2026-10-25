@@ -1,0 +1,87 @@
+schema = "CandidateAmendmentV1"
+candidate = "CAND-0"
+amendment = "1"
+date = "2026-10-06"
+reason = "test"
+manifest-sha256 = "ec4343b8d23bb946cd1a4a4ebb7fd2d7d3e80a06071d6ca01f6af2c17ad3bf79"
+
+[model]
+oracle-fixture-safetensors-sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+[model]
+k01-sha256
+=
+"zz"
+k02-sha256
+=
+"zz"
+k03-sha256
+=
+"zz"
+k04-sha256
+=
+"zz"
+k05-sha256
+=
+"zz"
+k06-sha256
+=
+"zz"
+k07-sha256
+=
+"zz"
+k08-sha256
+=
+"zz"
+k09-sha256
+=
+"zz"
+k10-sha256
+=
+"zz"
+k11-sha256
+=
+"zz"
+k12-sha256
+=
+"zz"
+k13-sha256
+=
+"zz"
+k14-sha256
+=
+"zz"
+k15-sha256
+=
+"zz"
+k16-sha256
+=
+"zz"
+k17-sha256
+=
+"zz"
+k18-sha256
+=
+"zz"
+k19-sha256
+=
+"zz"
+k20-sha256
+=
+"zz"
+k21-sha256
+=
+"zz"
+k22-sha256
+=
+"zz"
+k23-sha256
+=
+"zz"
+k24-sha256
+=
+"zz"
+[contracts]
+x = "1"
+[consumed_pins]
+y = "2"
+model-id = "dup"

@@ -1,0 +1,4 @@
+FAIL: executables.omega-runtime is UNBUILT but status is not draft
+FAIL: executables.aien-proof is UNBUILT but status is not draft
+FAIL: executables.aienos-boot-image is UNBUILT but status is not draft
+rc=1

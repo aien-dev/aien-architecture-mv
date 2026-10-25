@@ -1,0 +1,2 @@
+FAIL: commit for contracts.crumb-spec is not 40 lowercase hex: abc
+rc=1

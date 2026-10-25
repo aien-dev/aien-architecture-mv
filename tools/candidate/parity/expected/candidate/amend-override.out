@@ -1,0 +1,2 @@
+FAIL: m.amendment-1.toml: model.model-id is already in the manifest; an amendment only adds keys
+rc=1

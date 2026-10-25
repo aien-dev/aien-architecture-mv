@@ -1,0 +1,1 @@
+bash prints 'warning: command substitution: ignored null byte in input' on stderr when a fetched file holds a NUL byte; the .om drops the byte silently

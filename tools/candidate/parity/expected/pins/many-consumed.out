@@ -1,0 +1,44 @@
+OK: sovereign-core omega.lock -> commits.omega = 1111111111111111111111111111111111111111
+OK: sovereign-core Cargo.lock aien-protocols -> commits.aien-protocols = 5555555555555555555555555555555555555555
+OK: sovereign-core Cargo.lock crumb-spec -> contracts.crumb-spec = 6666666666666666666666666666666666666666
+OK: sovereign-core Cargo.lock spark-crumbs -> contracts.spark-crumbs = 7777777777777777777777777777777777777777
+OK: omega aienos.lock -> commits.aienos = 3333333333333333333333333333333333333333
+OK: omega physics.lock -> commits.physics = 4444444444444444444444444444444444444444
+SKIP: consumed_pins.extra-18 (not read by this script)
+SKIP: consumed_pins.extra-19 (not read by this script)
+SKIP: consumed_pins.extra-10 (not read by this script)
+SKIP: consumed_pins.extra-11 (not read by this script)
+SKIP: consumed_pins.extra-12 (not read by this script)
+SKIP: consumed_pins.extra-13 (not read by this script)
+SKIP: consumed_pins.extra-14 (not read by this script)
+SKIP: consumed_pins.extra-15 (not read by this script)
+SKIP: consumed_pins.extra-16 (not read by this script)
+SKIP: consumed_pins.extra-17 (not read by this script)
+FAIL: consumed_pins.sovereign-core-omega-lock: manifest pins 9999999999999999999999999999999999999999, the code consumes 1111111111111111111111111111111111111111
+OK: consumed_pins.omega-aienos-lock = 3333333333333333333333333333333333333333
+SKIP: consumed_pins.extra-21 (not read by this script)
+SKIP: consumed_pins.extra-20 (not read by this script)
+SKIP: consumed_pins.extra-23 (not read by this script)
+SKIP: consumed_pins.extra-22 (not read by this script)
+SKIP: consumed_pins.extra-25 (not read by this script)
+SKIP: consumed_pins.extra-24 (not read by this script)
+SKIP: consumed_pins.extra-27 (not read by this script)
+SKIP: consumed_pins.extra-26 (not read by this script)
+SKIP: consumed_pins.extra-29 (not read by this script)
+SKIP: consumed_pins.extra-28 (not read by this script)
+SKIP: consumed_pins.something-else (not read by this script)
+SKIP: consumed_pins.extra-09 (not read by this script)
+SKIP: consumed_pins.extra-08 (not read by this script)
+SKIP: consumed_pins.extra-03 (not read by this script)
+SKIP: consumed_pins.extra-02 (not read by this script)
+SKIP: consumed_pins.extra-01 (not read by this script)
+SKIP: consumed_pins.extra-07 (not read by this script)
+SKIP: consumed_pins.extra-06 (not read by this script)
+SKIP: consumed_pins.extra-05 (not read by this script)
+SKIP: consumed_pins.extra-04 (not read by this script)
+OK: consumed_pins.omega-argus-lock = 8888888888888888888888888888888888888888
+OK: consumed_pins.omega-physics-lock = 4444444444444444444444444444444444444444
+SKIP: consumed_pins.extra-30 (not read by this script)
+OK: consumed_pins.sovereign-core-cargo-lock-aien-protocols = 5555555555555555555555555555555555555555
+PINS DISAGREE: m.toml
+rc=1

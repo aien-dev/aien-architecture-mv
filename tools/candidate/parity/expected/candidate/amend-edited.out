@@ -1,0 +1,2 @@
+FAIL: m.amendment-1.toml: pins manifest sha256 'ec4343b8d23bb946cd1a4a4ebb7fd2d7d3e80a06071d6ca01f6af2c17ad3bf79' but m.toml is 7bbc202121f3039396f0b5183a296441c22659ad6a9e243fa0b9119cc756fac1 (frozen manifests are not edited)
+rc=1
