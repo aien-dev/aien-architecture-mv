@@ -86,7 +86,7 @@ refused (undeclared hex) without it.
   words already in the language (`execprog`, `waitpid`, `pipefds`, `readlnk`).
 - Head-only inspection (4096 bytes); a `#include`, shebang or `execprog` past that is missed, as is
   C or Python text that carries none of the three markers. The content rules are a floor, not a parser.
-- `expect.om` checks set membership plus total row count, so two swapped duplicates would pass.
+- `expect.om` consumes each matched output line, so repeated rows must each occur (multiset match).
 - A file name containing a newline splits its row; entry types come from `getdents64` `d_type`.
 - Capacities: manifest 64 KiB, path 4095 bytes, 999,999 directories per run, 1 MiB directory
   stack.
