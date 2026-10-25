@@ -94,6 +94,9 @@ jobs:
           rm -rf .aien-test-src
           git status --porcelain --untracked-files=normal
 
+      # ARCH-DOCTRINE is `requires: host` since #316 (tools/doctrine/doctrine.om needs the pinned
+      # AArch64 omc); on this x86 runner its step exits 3 = NOT_RUN. It leaves this set once the
+      # base ref carries that manifest.
       - name: Portable smoke set (gates whose requires is only portable, named at the base ref)
         if: steps.anchors.outputs.enrolled == 'true'
         run: |

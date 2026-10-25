@@ -15,7 +15,7 @@ This file is the **single authoritative source** for Sovereign Machine milestone
 
 - Every other doctrine page references this file instead of restating the milestone table or milestone status.
 - Milestone status is changed **only** here. A status change must cite the qualifying evidence (issue, PR, or receipt).
-- `scripts/check_doctrine.sh` enforces this: it fails if another doctrine page duplicates the roadmap table, carries its own milestone status tags, or cites a milestone code identifier under a milestone number different from the one below.
+- `tools/doctrine/doctrine.om` (the `doctrine` gate step) enforces this: it fails if another doctrine page duplicates the roadmap table, carries its own milestone status tags, or cites a milestone code identifier under a milestone number different from the one below.
 
 > **Historical naming rule:** ADR 0014 renames the current machine-realization subsystem to **FORGE**. Existing milestone identifiers such as `PHYSICS_BOOT`, `PHYSICS_EFFECTS`, and `PHYSICS_ACCELERATOR_LINK` remain unchanged because milestone/evidence identity is historical provenance.
 

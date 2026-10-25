@@ -150,10 +150,11 @@ trusted OS/tools/pin and a compiler file not concurrently replaced.
 ### Bootstrap rejection regression (NOT_RUN)
 
 Run only in an isolated fixture checkout with an independently verified pinned
-`AIEN_OMC`. The direct invocation proves the sentinel works before checking rejection.
+absolute-path `AIEN_OMC`. The direct invocation proves the sentinel works before checking rejection.
 This fixture has not been compiled or executed for this change.
 
 ```sh
+set -eu
 cd tools/zero-legacy
 mkdir -p build
 "$AIEN_OMC" < fixtures/loader-sentinel.om > build/loader-sentinel

@@ -37,8 +37,11 @@ case "$step" in
     sh scripts/verify-r16-status.sh ../omega
     ;;
   doctrine)
-    # Repository script (aien-architecture#7): doctrine consistency, pure text, no network.
-    bash scripts/check_doctrine.sh "$ROOT"
+    # aien-architecture#7 in seeded .om (#316): tools/doctrine/doctrine.om makes every judgment;
+    # gate.sh independently checks the compiler pin before invoking AIEN_OMC; gate.om
+    # repeats the native hash check and runs the checker on $ROOT. NOT_RUN (exit 3) without the
+    # pinned compiler. The retired bash oracle is scripts/check_doctrine.sh before this commit.
+    exec sh tools/doctrine/gate.sh "$ROOT"
     ;;
   script-tests)
     # The offline tests of the repository's own operator scripts. Each builds temporary git
