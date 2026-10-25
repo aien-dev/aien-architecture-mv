@@ -92,3 +92,14 @@ refused (undeclared hex) without it.
   stack.
 - This repository's own `tools/crumb/crumb.c`, its Makefile and `scripts/*.sh` are reported as
   outstanding by this checker; they are migration rows of this repository, not exemptions.
+
+## Product-closure ledgers (`ledgers/`)
+
+`ledgers/aien-serve-http-bin-19173f9e.tsv`: the native closure of the live 35B server, read from
+the `libomega_gpu.a` shipped beside the binary (`ar t`, SHA256SUMS verified), each member resolved
+to its source path in omega-mv a0eafa39 (85 files, 36,232 lines of C) and physics-mv 048e5f5e
+(`nvrm/nvrm.c`, `m16/m16_native.c`), plus the 30 workspace crates `cargo metadata` reaches from
+`aien-serve-http` in sovereign-core 9699d928 (128,931 lines of Rust). `src/compiler/*` is absent
+from this closure. Ledger rows are `LINKED object source` and `CRATE name`; they are read from a
+built artifact, not from Makefile text, so they are the closure denominator for Core #753 and
+CUDApp #79, not the source-row counts above.
