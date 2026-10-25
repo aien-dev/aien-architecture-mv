@@ -3,7 +3,7 @@
 Two first-party tools of `docs/qualification/CANDIDATE.md`, rewritten from bash into seeded
 native Omega (`.om`) for the zero-legacy migration (#300, #316). They replace
 `scripts/check_candidate.sh` and `scripts/check_candidate_pins.sh` (last at 1dd84d1) with the
-same arguments, the same stdout and stderr lines in the same order, and the same exit codes.
+same arguments, output ordering and exit codes, subject to the explicit differences below.
 
 | program | usage | exit |
 |---|---|---|
@@ -27,8 +27,8 @@ or `$CAND_FILE_AT <repo> <sha> <path>`) and compares them with the manifest's pi
 `[consumed_pins]`.
 
 One deliberate change from the frozen bash: the key `commits.aienos` names the kernel repository,
-renamed to aien-dev/aienux, so `check_candidate` checks that pin as `<repo>` = `aienux` (the parity
-outputs that show it were updated from `aienos`).
+renamed to aien-dev/aienux, so `check_candidate` checks that pin as `<repo>` = `aienux`.
+The original oracle outputs remain unchanged; the runner asserts this exact naming delta.
 
 ## The parsed TOML subset
 
@@ -90,15 +90,26 @@ NUL bytes dropped, as `$(...)` does) and leaves stderr alone.
 `parity/run.sh <check_candidate> <check_pins> [record]` runs every case under `parity/cases/`
 and compares stdout+stderr (one pipe, in order) plus `rc=N` with `parity/expected/`. The expected
 files were recorded from the bash scripts at 1dd84d1 (`record`), before they were deleted; the
-.om binaries must reproduce them byte for byte. 74 candidate cases and 43 pins cases: every
+.om binaries must reproduce them byte for byte except for the exact naming delta below and the
+named limits. 74 candidate cases and 43 pins cases: every
 case of the two test suites, the live `CAND-0` and `CAND-4` manifests, the gh code path with its
 argv log, and adversarial inputs (missing, duplicate and wrongly typed keys, extra sections,
 CRLF, trailing spaces, no final newline, NUL and non-ASCII bytes, empty and junk files, 50 bad
 executables, 24 bad amendment keys, three amendments, a directory where a file is expected,
 command words in `CAND_SHA_CHECK`/`CAND_FILE_AT`, empty and comment-only lock files, several and
-forked Cargo.lock revisions, an 800-package Cargo.lock). Result: **113 identical, 4 named
-limits, 0 different**. A case with a `limit` file is a documented difference: it is printed, not
-counted as a failure, and reported if it ever becomes identical.
+forked Cargo.lock revisions, an 800-package Cargo.lock). Expected result: **107 identical,
+6 exact naming deltas, 4 named limits, 0 different**. A case with a `limit` file is a documented
+difference: it is printed, not counted as a failure, and reported if it ever becomes identical.
+
+The six naming cases are `gh-404-contract`, `gh-404`, `gh-good`, `gh-live-cand0`,
+`nonexistent-sha`, and `sha-check-unset-empty`. They are not limits. For these cases only,
+the runner derives a comparison from the frozen output by changing `aienos` to `aienux` in
+complete `api repos/aien-dev/aienos/commits/<40-hex> -q .sha` and
+`FAIL: commit <40-hex> not found in aien-dev/aienos` lines. Every other byte, including
+exit status, ordering, SHA and other repository names, must match. The transformation must
+actually change the oracle: refreshing it to the new name fails, as does reverting the
+checker to the old name. Do not use `record` with the current checker to refresh the frozen
+shell oracle. PR #326's six hand-edited outputs were restored from its parent `a211260`.
 
 The suites `scripts/test_check_candidate.sh` (47 checks, 7 mutants) and
 `scripts/test_check_candidate_pins.sh` (17 checks) compile the .om with `AIEN_OMC` and run it;

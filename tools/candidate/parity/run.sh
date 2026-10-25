@@ -11,6 +11,8 @@
 # word `record`; without it the outputs are compared and any difference is printed. A case with a
 # `limit` file is a named, documented difference (README "Limits"): it is shown, not counted as a
 # failure, and reported if it ever becomes identical.
+# Six candidate cases also assert the exact kernel-repository rename against the frozen oracle;
+# unlike a limit, any other byte difference (or the old repository name) fails.
 set -u
 here="$(cd "$(dirname "$0")" && pwd)"
 cand="$1"; pins="$2"; mode="${3:-compare}"
@@ -45,7 +47,7 @@ if [ "$sha" = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef" ]; then echo "gh: Not F
 echo "$sha"
 S
 chmod +x "$tmp/stub" "$tmp/stubw" "$tmp/stubf" "$tmp/stubfw" "$tmp/bin/gh"
-same=0; diff=0; limits=0
+same=0; diff=0; limits=0; renames=0
 one() { # one <group> <bin> <casedir>
   local g="$1" bin="$2" d="$3" name; name="$(basename "$d")"
   local m; m="$(cat "$d/mode")"
@@ -65,6 +67,21 @@ one() { # one <group> <bin> <casedir>
   ) | sed "s|$bin|<bin>|g" > "$tmp/out"
   local exp="$here/expected/$g/$name.out"
   if [ "$mode" = record ]; then mkdir -p "$here/expected/$g"; cp "$tmp/out" "$exp"; same=$((same+1)); return; fi
+  case "$g/$name" in
+    candidate/gh-404-contract|candidate/gh-404|candidate/gh-good|candidate/gh-live-cand0|candidate/nonexistent-sha|candidate/sha-check-unset-empty)
+      # Transform only complete API/diagnostic lines, never manifest keys or arbitrary text.
+      sed -E \
+        -e 's|^(api repos/aien-dev/)aienos(/commits/[0-9a-f]{40} -q \.sha)$|\1aienux\2|' \
+        -e 's|^(FAIL: commit [0-9a-f]{40} not found in aien-dev/)aienos$|\1aienux|' \
+        "$exp" > "$tmp/renamed"
+      if ! cmp -s "$exp" "$tmp/renamed" && cmp -s "$tmp/out" "$tmp/renamed"; then
+        renames=$((renames+1)); echo "RENAME (exact delta): $g/$name"
+      else
+        diff=$((diff+1)); echo "DIFF (required exact naming delta): $g/$name"
+        diff "$tmp/renamed" "$tmp/out" | sed 's/^/    /'
+      fi
+      return ;;
+  esac
   if cmp -s "$tmp/out" "$exp"; then
     if [ -f "$d/limit" ]; then echo "LIMIT CLOSED (now identical, drop the limit file): $g/$name"; fi
     same=$((same+1))
@@ -74,5 +91,5 @@ one() { # one <group> <bin> <casedir>
 }
 for d in "$here"/cases/candidate/*/; do one candidate "$cand" "${d%/}"; done
 for d in "$here"/cases/pins/*/; do one pins "$pins" "${d%/}"; done
-echo "parity: $same identical, $limits named limits, $diff different"
+echo "parity: $same identical, $renames exact naming deltas, $limits named limits, $diff different"
 [ "$diff" -eq 0 ]
