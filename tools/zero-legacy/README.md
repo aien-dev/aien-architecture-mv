@@ -48,7 +48,7 @@ Output: one `CATEGORY<TAB>path` row per file, then `# CATEGORY count` lines, `# 
 | `DOC` | `.md .txt .json .toml .yml .yaml .lock .csv .svg .html .css .png .jpg .gif .pdf .gate .xml .pub .sig .tex .ini .cfg .pem .crumb .log`, dotfiles with one dot, all-capitals names | neither |
 | `OTHER` | everything else | unknown |
 | `SYMLINK` | not followed | neither |
-| `UNREADABLE` | directory or file that could not be opened, or an entry whose path would exceed 4095 bytes (the parent directory is printed) | unknown |
+| `UNREADABLE` | directory or file that could not be opened or read, or an entry whose path would exceed 4095 bytes (the parent directory is printed) | unknown |
 
 Rules are tried in the table's order after the two magic checks; the first match wins. Only the first 4096 bytes of a file are inspected. `.git` entries are skipped at every depth.
 
@@ -79,6 +79,13 @@ archive, a stale `.hex`, a Makefile, a skipped directory) must be refused with e
 `fixtures/tree.expected` row for row; `fixtures/clean` must be accepted with its manifest and
 refused (undeclared hex) without it.
 
+The I/O-error fixture compiles the same scanner with a test-only entrypoint. Reading
+an opened directory must return UNREADABLE; a bad directory descriptor injected after
+one successful batch must produce an UNREADABLE parent row, not clean EOF. These are
+host filesystem tests, not GB10 compute tests. Native execution of these added tests
+is NOT_RUN until the pinned compiler is available; existing fixture receipts do not
+qualify this changed scanner.
+
 ## Limits of v0 (honest scope)
 
 - Source tree only. It does not yet follow the build: linked libraries, process trees, and
@@ -93,13 +100,23 @@ refused (undeclared hex) without it.
 - This repository's own `tools/crumb/crumb.c`, its Makefile and `scripts/*.sh` are reported as
   outstanding by this checker; they are migration rows of this repository, not exemptions.
 
-## Product-closure ledgers (`ledgers/`)
+## Candidate product-dependency ledgers (`ledgers/`)
 
-`ledgers/aien-serve-http-bin-19173f9e.tsv`: the native closure of the live 35B server, read from
-the `libomega_gpu.a` shipped beside the binary (`ar t`, SHA256SUMS verified), each member resolved
-to its source path in omega-mv a0eafa39 (85 files, 36,232 lines of C) and physics-mv 048e5f5e
-(`nvrm/nvrm.c`, `m16/m16_native.c`), plus the 30 workspace crates `cargo metadata` reaches from
-`aien-serve-http` in sovereign-core 9699d928 (128,931 lines of Rust). `src/compiler/*` is absent
-from this closure. Ledger rows are `LINKED object source` and `CRATE name`; they are read from a
-built artifact, not from Makefile text, so they are the closure denominator for Core #753 and
-CUDApp #79, not the source-row counts above.
+`ledgers/aien-serve-http-bin-19173f9e.tsv` records the 87 members reported by
+`ar t` of the `libomega_gpu.a` shipped beside bin-19173f9e (SHA256SUMS reported
+verified by the author), resolved to 85 omega-mv a0eafa39 source paths (36,232 C lines)
+and two physics-mv 048e5f5e paths (`nvrm/nvrm.c`, `m16/m16_native.c`).
+It also records 30 workspace crates reached by `cargo metadata` from
+`aien-serve-http` in sovereign-core 9699d928 (128,931 Rust lines).
+
+Rows are `ARCHIVE_MEMBER object source` and `WORKSPACE_DEPENDENCY name`.
+Archive membership does not prove an object was extracted into the final executable;
+dependency reachability does not prove which code was linked or executed.
+`src/compiler/*` is absent from this inventory, not thereby proven absent from every
+build/runtime dependency. These are candidate migration rows for Core #753 and
+CUDApp #79, not a qualified live-product closure denominator.
+
+Exact final-ELF/link-map membership, dynamic libraries/process descendants, build
+configuration/source-to-artifact binding and current deployment identity remain
+UNKNOWN pending receipts under #316. The recorded binary hash identifies the
+reported artifact; it is not a fresh observation of the running server.
