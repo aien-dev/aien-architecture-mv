@@ -50,45 +50,10 @@ case "$step" in
     obs script_tests_run 4
     ;;
   zero-legacy)
-    # #316: the seeded .om closure checker and its native comparator, built by the pinned seed
-    # compiler named in tools/zero-legacy/omega.pin. AIEN_OMC must point at that omc binary
-    # (seed/out/omc of aien-dev/omega-mv at the pinned commit, sha256 checked here); without it
-    # the step is NOT_RUN (exit 3), never a pass. This shell only sequences; every judgment is
-    # made by the two .om programs.
-    omc="${AIEN_OMC:-}"
-    if [ -z "$omc" ] || [ ! -x "$omc" ]; then
-      echo "run.sh: AIEN_OMC is not an executable omc; see tools/zero-legacy/omega.pin (NOT_RUN)" >&2
-      exit 3
-    fi
-    want=$(sed -n 's/^omc_sha256: //p' tools/zero-legacy/omega.pin)
-    have=$(sha256sum "$omc" | cut -d' ' -f1)
-    if [ "$have" != "$want" ]; then
-      echo "run.sh: AIEN_OMC sha256 $have is not the pinned $want (NOT_RUN)" >&2
-      exit 3
-    fi
-    b=$(mktemp -d)
-    trap 'rm -rf "$b"' EXIT
-    "$omc" < tools/zero-legacy/closure.om > "$b/closure"
-    "$omc" < tools/zero-legacy/expect.om > "$b/expect"
-    chmod +x "$b/closure" "$b/expect"
-    obs closure_sha256 "\"$(sha256sum "$b/closure" | cut -d' ' -f1)\""
-    cd tools/zero-legacy
-    set +e
-    "$b/closure" fixtures/tree release fixtures/manifest.txt > "$b/tree.out"; rc_tree=$?
-    "$b/closure" fixtures/clean release fixtures/clean-manifest.txt > "$b/clean.out"; rc_clean=$?
-    "$b/closure" fixtures/clean release > "$b/clean2.out"; rc_clean2=$?
-    "$b/expect" "$b/tree.out" fixtures/tree.expected; rc_e1=$?
-    "$b/expect" "$b/clean.out" fixtures/clean.expected; rc_e2=$?
-    set -e
-    cd "$ROOT"
-    obs tree_release_exit "$rc_tree"
-    obs clean_release_exit "$rc_clean"
-    obs clean_undeclared_exit "$rc_clean2"
-    obs expect_tree_exit "$rc_e1"
-    obs expect_clean_exit "$rc_e2"
-    # The hostile tree must be refused (1), the clean tree accepted (0), the clean tree with
-    # its hex vectors undeclared refused (1), and both reports must match their expected rows.
-    [ "$rc_tree" = 1 ] && [ "$rc_clean" = 0 ] && [ "$rc_clean2" = 1 ] && [ "$rc_e1" = 0 ] && [ "$rc_e2" = 0 ]
+    # #316: every judgment is made by tools/zero-legacy/gate.om (seeded .om); gate.sh is the
+    # three-line loader that compiles it with AIEN_OMC and execs it. NOT_RUN (exit 3) without
+    # the pinned compiler; gate.om checks the pin with its own native sha256.
+    exec sh tools/zero-legacy/gate.sh
     ;;
   *)
     echo "run.sh: unknown step '$step'" >&2
