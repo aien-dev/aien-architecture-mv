@@ -8,8 +8,8 @@ gate-tested on fixtures; not yet wired into any release decision.**
 Two native Omega programs, built only by the pinned seed compiler in `omega.pin`
 (`seed/out/omc` of `aien-dev/omega-mv`, born from `seed/rung0/seed0.hex` by
 `sh seed/omega-from-seed.sh`). No C, Rust, Python or foreign runtime is on their
-implementation path. The shell in `tests/gates/run.sh` only sequences the build and the
-runs; every judgment is made by these programs.
+implementation path. The bootstrap loader independently authenticates the compiler;
+scanner and fixture judgments are made by native `.om` programs.
 
 | Program | Role |
 | --- | --- |
@@ -79,12 +79,13 @@ archive, a stale `.hex`, a Makefile, a skipped directory) must be refused with e
 `fixtures/tree.expected` row for row; `fixtures/clean` must be accepted with its manifest and
 refused (undeclared hex) without it.
 
-The I/O-error fixture compiles the same scanner with a test-only entrypoint. Reading
-an opened directory must return UNREADABLE; a bad directory descriptor injected after
-one successful batch must produce an UNREADABLE parent row, not clean EOF. These are
-host filesystem tests, not GB10 compute tests. Native execution of these added tests
-is NOT_RUN until the pinned compiler is available; existing fixture receipts do not
-qualify this changed scanner.
+The native `fixtures/io-build.om` generates an instrumented copy of the actual scanner
+with exact-count anchor checks, appending `fixtures/io-errors.om`. The gate builds and
+runs both error cases: a real negative directory read, and a bad directory descriptor
+after one successful enumeration batch. No production fault switch is added. These
+are host filesystem tests, not GB10 compute tests. Native execution of these added
+tests is NOT_RUN until the pinned compiler is available; old receipts do not qualify
+this changed scanner or gate.
 
 ## Limits of v0 (honest scope)
 
@@ -93,7 +94,7 @@ qualify this changed scanner.
   words already in the language (`execprog`, `waitpid`, `pipefds`, `readlnk`).
 - Head-only inspection (4096 bytes); a `#include`, shebang or `execprog` past that is missed, as is
   C or Python text that carries none of the three markers. The content rules are a floor, not a parser.
-- `expect.om` checks set membership plus total row count, so two swapped duplicates would pass.
+- `expect.om` consumes each matched output line, so repeated rows must each occur (multiset match).
 - A file name containing a newline splits its row; entry types come from `getdents64` `d_type`.
 - Capacities: manifest 64 KiB, path 4095 bytes, 999,999 directories per run, 1 MiB directory
   stack.
@@ -120,3 +121,47 @@ Exact final-ELF/link-map membership, dynamic libraries/process descendants, buil
 configuration/source-to-artifact binding and current deployment identity remain
 UNKNOWN pending receipts under #316. The recorded binary hash identifies the
 reported artifact; it is not a fresh observation of the running server.
+
+## Gate runner and hasher in `.om` (replaces the shell step)
+
+`gate.om` is the gate: it compiles `closure.om`, `expect.om` and `sha256.om` with the compiler it
+is given, hashes that compiler with the native `sha256` and refuses (exit 3, NOT_RUN) unless the
+digest equals `omc_sha256` in `omega.pin`, runs the hostile and clean fixtures, judges them with
+`expect`, prints the `AIEN-OBS` lines and exits 0 only when every expectation holds. A compiler
+with one semantic edit in `omc.om` (`fail 12`→`fail 13`, digest `ca2aa132…`) is refused by this
+check. `gate.sh` is the thin bootstrap loader: it independently authenticates the compiler
+pin before compiling `gate.om` and handing over. Fixture judgments remain native `.om`.
+
+`sha256.om` is FIPS 180-4 SHA-256 (file or stdin, hex on stdout, 16 MiB cap, exit 65/66). Checked
+byte for byte against coreutils on the empty string, `abc`, the million-`a` vector, random inputs of
+55, 56, 64 and 3,000,000 bytes, and the omc binary; 38 MB/s on one Spark core. It is a
+`.om` implementation corresponding to an archive member (`src/sha256.c`,
+`ledgers/aien-serve-http-bin-19173f9e.tsv`); the in-process cutover of that C file waits on an
+`.om` object/C-ABI boundary (OM_COMPLETION FR-7), which belongs to the compiler owners.
+
+The compiler under test compiles the native hasher, so that self-check is defense in depth,
+not an independent root of trust. Before executing the candidate compiler, `gate.sh`
+authenticates it against the reviewed `omega.pin` using trusted system `sed` and
+`sha256sum`. This temporary external bootstrap boundary is disclosed; fixture judgments
+remain native `.om`. The former shell runner also performed an independent pre-execution
+check; replacing that check with self-authentication was not equivalent. This assumes
+trusted OS/tools/pin and a compiler file not concurrently replaced.
+
+### Bootstrap rejection regression (NOT_RUN)
+
+Run only in an isolated fixture checkout with an independently verified pinned
+`AIEN_OMC`. The direct invocation proves the sentinel works before checking rejection.
+This fixture has not been compiled or executed for this change.
+
+```sh
+cd tools/zero-legacy
+mkdir -p build
+"$AIEN_OMC" < fixtures/loader-sentinel.om > build/loader-sentinel
+chmod +x build/loader-sentinel
+rm -f build/untrusted-compiler-ran
+if build/loader-sentinel; then rc=0; else rc=$?; fi
+[ "$rc" -eq 98 ] && [ -f build/untrusted-compiler-ran ] || exit 1
+rm -f build/untrusted-compiler-ran
+if AIEN_OMC="$PWD/build/loader-sentinel" sh ./gate.sh; then rc=0; else rc=$?; fi
+[ "$rc" -eq 3 ] && [ ! -e build/untrusted-compiler-ran ] || exit 1
+```
