@@ -3,7 +3,7 @@
 
 - **Milestone:** Milestone 0 (`DOCTRINE_V1`)
 - **Document Identifier:** `AIEN-DOC-OMEGA-001`
-- **Canonical Path:** `/home/drakestapleton/workspace/aien-architecture/doctrine/OMEGA.md`
+- **Canonical Path:** `doctrine/OMEGA.md` (repository-relative)
 - **Classification:** Foundational System Doctrine
 - **Status:** RATIFIED / ACTIVE
 

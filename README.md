@@ -101,6 +101,8 @@ bash tests/gates/run.sh qualification-status  # gate ARCH-QUALIFICATION-STATUS: 
 
 `qualification-status` reads omega evidence, so it needs an omega checkout beside this one at `../omega`.
 
+For a Cargo repository, `CRUMB="$PWD/tools/crumb/crumb" bash scripts/pipeline-proofs/18-crumb-only-no-rebuild.sh <repo>` checks that a `.crumb`-only commit does not rebuild crates. It uses a persistent target cache at `${XDG_CACHE_HOME:-$HOME/.cache}/aien/pipeline/target-cold`, outside the temporary clone; set `TARGET_DIR` to reuse a different cache. The proof never deletes that cache. `CARGO_ARGS` defaults to `--locked --offline`.
+
 ## How a pull request is judged
 
 Since 2026-10-16 the DGX Spark is the only test judge for pull requests ([ADR 0033](docs/adr/0033-aien-verification-pipeline.md)). On 2026-10-18 the hosted test workflows were removed (pull request #270); the one workflow left in `.github/workflows/` is `aien-verification.yml`. The Spark runs the five gates above and signs the result. `main` is protected and requires only the `AIEN Verification` check, which confirms that the signed bundle is in [aien-receipts](https://github.com/aien-dev/aien-receipts). The verdict of record is the commit status "AIEN Verification (Spark)". [docs/PIPELINE.md](docs/PIPELINE.md) explains the flow.

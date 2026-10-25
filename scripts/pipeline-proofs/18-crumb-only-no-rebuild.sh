@@ -3,12 +3,13 @@
 # (warm-up into TARGET_DIR), build again with no change (noise floor), then commit a change that touches only
 # a .crumb file (`crumb propose` writes extensions.proposed) and build a third time with -v: the third build
 # must report 0 "Compiling" and 0 "Dirty" lines. TARGET_DIR is reused, never deleted.
-# Env: TARGET_DIR (default /home/drakestapleton/workspace/pipeline/target-cold), CARGO_ARGS (default --locked --offline).
+# Env: TARGET_DIR (default ${XDG_CACHE_HOME:-$HOME/.cache}/aien/pipeline/target-cold),
+# CARGO_ARGS (default --locked --offline). The cache stays outside the temporary clone.
 here="$(cd "$(dirname "$0")" && pwd)"; . "$here/lib.sh"
 proof_begin 18 "crumb-only commit avoids unrelated recompilation" "${1:-}"
 [ -f "$SRC/Cargo.toml" ] || proof_na "no Cargo.toml at the repository root"
 command -v cargo >/dev/null 2>&1 || proof_na "cargo not on PATH"
-TD=${TARGET_DIR:-/home/drakestapleton/workspace/pipeline/target-cold}
+TD=${TARGET_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/aien/pipeline/target-cold}
 export CARGO_TARGET_DIR=$TD
 ARGS=${CARGO_ARGS:---locked --offline}
 clone_repo "$TMP/a"; cd "$TMP/a" || exit 1
