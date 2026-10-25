@@ -83,7 +83,7 @@ name = "absent_flag_with_nonzero_value"
 description = "Machine id digest, generation, context id, or observed time is nonzero while its presence flag is clear, and the receipt is accepted."
 
 [[implementation_surfaces]]
-repo = "aien-dev/aienos"
+repo = "aien-dev/aienux"
 path = "crates/aienos-artifact/src/receipt.rs"
 kind = "production"
 observed_at = "2ee61b4b158a385c5fcf2c925a625ac043babb21"

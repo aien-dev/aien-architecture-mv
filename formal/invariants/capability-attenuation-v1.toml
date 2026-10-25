@@ -76,14 +76,14 @@ name = "invalid_parent_delegates"
 description = "An expired or revoked parent successfully derives a child."
 
 [[implementation_surfaces]]
-repo = "aien-dev/aienos"
+repo = "aien-dev/aienux"
 path = "crates/aienos-aegis/src/capability.rs"
 kind = "production"
 observed_at = "2ee61b4b158a385c5fcf2c925a625ac043babb21"
 note = "Rust AEGIS capability graph: CapabilityScope::contains, CapabilityGraph::derive_child_token."
 
 [[implementation_surfaces]]
-repo = "aien-dev/aienos"
+repo = "aien-dev/aienux"
 path = "native/capability/aienos_capability.c"
 kind = "reference"
 observed_at = "2ee61b4b158a385c5fcf2c925a625ac043babb21"

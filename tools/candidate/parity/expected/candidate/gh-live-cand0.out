@@ -2,7 +2,7 @@ OK: m.toml (amendments: 0)
 rc=0
 -- gh calls --
 api repos/aien-dev/omega/commits/e5593ae488fcb9038557a4317a07faa7625649a3 -q .sha
-api repos/aien-dev/aienos/commits/9d41efc9d1bea31be0640ca70eeeec9d1d000fad -q .sha
+api repos/aien-dev/aienux/commits/9d41efc9d1bea31be0640ca70eeeec9d1d000fad -q .sha
 api repos/aien-dev/aien-sovereign-core/commits/0c1d249f2d119c7c2d726a2d252dc913e6185d28 -q .sha
 api repos/aien-dev/aien-protocols/commits/7ac6facb630ca7e9a6ab4125b292203fe2bb6687 -q .sha
 api repos/aien-dev/aien-architecture/commits/c5d80978c7a22cc039e67def9745cede5010f388 -q .sha
