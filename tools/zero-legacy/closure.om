@@ -8,6 +8,7 @@ note Built only by seed/out/omc from aien-dev/omega-mv (see omega.pin).
 
 text tuse "usage: closure ROOT [release] [MANIFEST]\n"
 text terr "closure: cannot read MANIFEST\n"
+text tbig "closure: MANIFEST over 65534 bytes\n"
 text tnl "\n"
 text ttab "\t"
 text tsp " "
@@ -20,9 +21,9 @@ text tpy "python"
 text tpl "perl"
 text tnd "node"
 text trb "ruby"
-text tinc "#include"
-text tfnm "fn main("
-text texe "= execpro"
+text tinc "#includ"
+text tfnm "fn main"
+text texe "execpro"
 text tmk "Makefile"
 text tdat "data "
 text tgen "generated "
@@ -198,18 +199,21 @@ end
 put ndln 0 len trb
 end
 
+note needles are completed at run time so this source does not match itself
 fn ldinc to void
 for i ulong len tinc
 put ndl i get tinc i
 end
-put ndln 0 len tinc
+put ndl len tinc 101
+put ndln 0 add len tinc 1
 end
 
 fn ldfnm to void
 for i ulong len tfnm
 put ndl i get tfnm i
 end
-put ndln 0 len tfnm
+put ndl len tfnm 40
+put ndln 0 add len tfnm 1
 end
 
 fn ldexe to void
@@ -532,31 +536,73 @@ end
 
 note ---- classification of one regular file at path ----
 
-fn readhd to void
+fn readhd to bool
 put hlen 0 0
 fd = fopen path 0 get plen 0 0 0
 if lt fd 0
-ret
+ret false
 end
 r = read int fd head 0 len head
 if gt r 0
 put hlen 0 ulong r
 end
 r = fclose int fd
+ret true
+end
+
+note is head[i-1] (or the start) and head[i+m] (or the end) whitespace
+fn alone i ulong m ulong to bool
+h = get hlen 0
+if gt i 0
+c = get head sub i 1
+if and ne c 32 and ne c 9 ne c 10
+ret false
+end
+end
+e = add i m
+if lt e h
+c = get head e
+if and ne c 32 and ne c 9 ne c 10
+ret false
+end
+end
+ret true
+end
+
+note the needle as a whole word anywhere in the head
+fn token to bool
+h = get hlen 0
+m = get ndln 0
+if lt h m
+ret false
+end
+e = sub h m
+i = ulong 0
+while le i e bound 4097
+j = ulong 0
+while lt j m bound 32
+if ne get head add i j get ndl j
+break
+end
+j = add j 1
+end
+if eq j m
+if alone i m
+ret true
+end
+end
+i = add i 1
+end
+ret false
 end
 
 fn classif to ulong
-readhd
+if not readhd
+ret 21
+end
 b = isbin
 if ne b 0
 ret b
-end
-if e2 111 109
-ldexe
-if found
-ret 12
-end
-ret 0
 end
 if or e1 99 e1 104
 ret 1
@@ -595,6 +641,13 @@ end
 ldfnm
 if found
 ret 11
+end
+if e2 111 109
+ldexe
+if token
+ret 12
+end
+ret 0
 end
 if isdoc
 ret 9
@@ -694,6 +747,9 @@ ret 0
 end
 
 fn prefix p ulong m ulong to bool
+if eq m 0
+ret false
+end
 rl = add get rootl 0 1
 if gt add rl m get plen 0
 ret false
@@ -711,7 +767,7 @@ n = get alwn 0
 s = ulong 0
 while lt s n bound 100000
 e = s
-while lt e n bound 4096
+while lt e n bound 65536
 if eq get alw e 10
 break
 end
@@ -778,8 +834,20 @@ if issrc c
 report 18
 ret
 end
+if eq c 21
+report 21
+ret
+end
 if eq a 1
+if or eq c 7 eq c 8
+report 18
+ret
+end
 report 13
+ret
+end
+if eq c 8
+report 18
 ret
 end
 report 14
@@ -821,6 +889,7 @@ ret
 end
 end
 if gt add dl add m 1 4095
+report 21
 ret
 end
 put path dl 47
@@ -951,6 +1020,10 @@ end
 r = read int fd alw 0 65535
 if gt r 0
 put alwn 0 ulong r
+end
+if ge r 65535
+r = write 2 tbig 0 len tbig
+ret 65
 end
 r = fclose int fd
 end

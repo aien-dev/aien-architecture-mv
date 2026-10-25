@@ -26,8 +26,7 @@ seed/out/omc < tools/zero-legacy/closure.om > closure && chmod +x closure
 
 Exit: 0 inventory done (transitional) or release accepted; 1 release refused, outstanding
 first-party rows remain; 2 release refused, unknown rows remain; 64 usage; 65 manifest
-unreadable. Program-mode traps exit 100 + code (103: a path over 4095 bytes or a packet
-over the limits).
+unreadable. Program-mode traps exit 100 + code (103: the 1 MiB directory stack overflowed).
 
 Output: one `CATEGORY<TAB>path` row per file, then `# CATEGORY count` lines, `# MODE 0|1`,
 `# OUTSTANDING n`, `# UNKNOWN n`.
@@ -39,29 +38,29 @@ Output: one `CATEGORY<TAB>path` row per file, then `# CATEGORY count` lines, `# 
 | `ELF` | head bytes `7f 45 4c 46` | unknown unless declared `generated`/`external` |
 | `ARCHIVE` | gzip, zip, xz, or `ustar` at byte 257 | unknown unless declared `external` |
 | `OM` | `.om` | native |
-| `WRAPPER` | `.om` whose text contains `= execprog` (a launcher of something else) | outstanding until reviewed |
+| `WRAPPER` | `.om` containing the word `execprog` (a launcher of something else) | outstanding until reviewed |
 | `C_H` `RUST` `PYTHON` `OSC` | `.c` `.h` `.cc` `.cpp` `.hpp` `.cu` `.cuh`, `.rs`, `.py`, `.osc` | outstanding |
 | `SHELL` | `.sh` `.bash` | outstanding |
 | `FOREIGN` | shell whose head mentions `python`, `perl`, `node` or `ruby` | outstanding |
 | `HEXASM` | `.hex` `.hex1` `.s` `.S` `.s2` `.asm` | outstanding; `.hex`/`.hex1` may be declared `data` |
 | `MAKE` | `Makefile`, `.mk` | outstanding (build logic) |
-| `HIDDEN` | any other name whose head starts with `#!`, or contains `#include` or `fn main(` | outstanding |
+| `HIDDEN` | any name not in a source row above (including `.om`) whose head starts with `#!`, or contains `#include` or `fn main(` | outstanding |
 | `DOC` | `.md .txt .json .toml .yml .yaml .lock .csv .svg .html .css .png .jpg .gif .pdf .gate .xml .pub .sig .tex .ini .cfg .pem .crumb .log`, dotfiles with one dot, all-capitals names | neither |
 | `OTHER` | everything else | unknown |
 | `SYMLINK` | not followed | neither |
-| `UNREADABLE` | directory or file that could not be opened | unknown |
+| `UNREADABLE` | directory or file that could not be opened, or an entry whose path would exceed 4095 bytes (the parent directory is printed) | unknown |
 
-Only the first 4096 bytes of a file are inspected. `.git` entries are skipped at every depth.
+Rules are tried in the table's order after the two magic checks; the first match wins. Only the first 4096 bytes of a file are inspected. `.git` entries are skipped at every depth.
 
 ## Manifest
 
 Lines `data P`, `generated P`, `external P`, `skip P`; `P` is a path prefix relative to ROOT.
-Other lines are ignored.
+Other lines, and lines with an empty prefix, are ignored. The first matching line wins; `skip` on a directory stops the walk below it and is counted once under `SKIP`. A manifest of 65,535 bytes or more is refused (exit 65). Unreadable files under `data`/`generated` stay `UNREADABLE`.
 
 | Kind | Effect | Refused as `FORGED` when the file is |
 | --- | --- | --- |
-| `data` | golden vectors, non-executable hex: row `DATA` | any source category, or `.s/.S/.s2/.asm` assembly text |
-| `generated` | emitted machine code or artifacts: row `GENERATED` | any source category |
+| `data` | golden vectors, non-executable hex: row `DATA` | any source category, `.s/.S/.s2/.asm` assembly text, an ELF or an archive |
+| `generated` | emitted machine code or artifacts: row `GENERATED` | any source category or an archive |
 | `external` | third-party or vendor files: row `EXTERNAL`, always listed | never (a reviewer reads these rows) |
 | `skip` | not scanned (build directories): counted under `SKIP` | n/a |
 
@@ -85,8 +84,10 @@ refused (undeclared hex) without it.
 - Source tree only. It does not yet follow the build: linked libraries, process trees, and
   the ELF closure of a product are the next slice (#316 item 2) and need the device/process
   words already in the language (`execprog`, `waitpid`, `pipefds`, `readlnk`).
-- Head-only inspection (4096 bytes); a `#include` past that is missed. Names over 8 bytes
-  per the seed grammar keep the code terse; see the category table for exact rules.
+- Head-only inspection (4096 bytes); a `#include`, shebang or `execprog` past that is missed, as is
+  C or Python text that carries none of the three markers. The content rules are a floor, not a parser.
+- `expect.om` checks set membership plus total row count, so two swapped duplicates would pass.
+- A file name containing a newline splits its row; entry types come from `getdents64` `d_type`.
 - Capacities: manifest 64 KiB, path 4095 bytes, 999,999 directories per run, 1 MiB directory
   stack.
 - This repository's own `tools/crumb/crumb.c`, its Makefile and `scripts/*.sh` are reported as

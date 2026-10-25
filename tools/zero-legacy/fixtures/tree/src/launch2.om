@@ -1,0 +1,6 @@
+note two spaces
+global pk uchar 64
+fn main to int
+r =  execprog pk 0 16
+ret int r
+end

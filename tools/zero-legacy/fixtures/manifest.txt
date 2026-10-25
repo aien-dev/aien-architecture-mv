@@ -1,4 +1,7 @@
 # fixture manifest
+data 
+skip 
+external 
 data golden/
 generated scratch/out.bin
 external vendor/
