@@ -70,14 +70,14 @@ name = "revocation_resurrected"
 description = "Re-deriving or re-issuing under an existing id clears a revocation."
 
 [[implementation_surfaces]]
-repo = "aien-dev/aienos"
+repo = "aien-dev/aienux"
 path = "crates/aienos-aegis/src/capability.rs"
 kind = "production"
 observed_at = "2ee61b4b158a385c5fcf2c925a625ac043babb21"
 note = "Rust: CapabilityGraph::revoke and CapabilityGraph::validate_token."
 
 [[implementation_surfaces]]
-repo = "aien-dev/aienos"
+repo = "aien-dev/aienux"
 path = "native/capability/aienos_capability.c"
 kind = "reference"
 observed_at = "2ee61b4b158a385c5fcf2c925a625ac043babb21"

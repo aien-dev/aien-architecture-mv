@@ -2,7 +2,7 @@ FAIL: commit deadbeefdeadbeefdeadbeefdeadbeefdeadbeef not found in aien-dev/spar
 rc=1
 -- gh calls --
 api repos/aien-dev/omega/commits/25b4a51141fa48be01d1cdbac8617d41065e523d -q .sha
-api repos/aien-dev/aienos/commits/bb3a5f4efb4c632d8485f9d05f615f466aff0f69 -q .sha
+api repos/aien-dev/aienux/commits/bb3a5f4efb4c632d8485f9d05f615f466aff0f69 -q .sha
 api repos/aien-dev/aien-sovereign-core/commits/e58742acbb781ad4e472b3355b9b6ac8624617d9 -q .sha
 api repos/aien-dev/aien-protocols/commits/4a4877a88e141cb0c2d397191459912b8bfa993a -q .sha
 api repos/aien-dev/aien-architecture/commits/f11ac55bd96908e004af625c8b53dc02b6188bca -q .sha

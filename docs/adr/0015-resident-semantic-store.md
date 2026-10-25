@@ -508,11 +508,11 @@ This accepted architecture boundary answers 15 core questions; proposed Continui
 
 ### Downstream Builders Blocked on Ratification
 - **Builder 2**: Omega Semantic Persistence Builder (`aien-spark/omega`)
-- **Builder 3**: AIENOS Omega Store Bridge (`aien-spark/aienos`)
-- **Builder 4**: AIENOS Continuity / Resident World (`aien-spark/aienos`)
+- **Builder 3**: AIENOS Omega Store Bridge (`aien-dev/aienux`)
+- **Builder 4**: AIENOS Continuity / Resident World (`aien-dev/aienux`)
 - **Builder 5**: AEGIS Resident-State Verifier (`aien-spark/aegis-runtime`)
 - **Builder 6**: FORGE Machine Realization (`aien-spark/physics`)
 - **Builder 7**: Cortex Integration (`aien-dev/cortex-rs`)
 - **Builder 8**: AIEN Runtime Residency (`aien-spark/aien-sovereign-core`)
-- **Builder 9**: Long-Lived Store / Compaction (`aien-spark/aienos`)
+- **Builder 9**: Long-Lived Store / Compaction (`aien-dev/aienux`)
 - **Builder 10**: Destructive Qualification (`aien-dev/aien-harness`, `aien-dev/spark-inquisitor`)

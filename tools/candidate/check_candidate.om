@@ -1224,7 +1224,8 @@ end
 
 note ---- commit pins ----
 
-note rp = the repo of key-table entry i (the part after its first dot)
+note rp = the repo of key-table entry i (the part after its first dot); the key name aienos
+note names the kernel repository, renamed to aienux, so rp spells aienux for it
 fn kprepo i ulong to void
 kp i
 n = get argl 0
@@ -1239,6 +1240,16 @@ m = sub n d
 end
 for j ulong m
 put rp j get arg add d j
+end
+if eq m 6
+if and eq get rp 0 97 eq get rp 1 105
+if and eq get rp 2 101 eq get rp 3 110
+if and eq get rp 4 111 eq get rp 5 115
+put rp 4 117
+put rp 5 120
+end
+end
+end
 end
 put rpl 0 m
 end

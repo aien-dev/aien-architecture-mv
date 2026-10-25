@@ -26,6 +26,10 @@ or `[consumed_pins]`, `*-sha256` values real). `check_pins` fetches lock files
 or `$CAND_FILE_AT <repo> <sha> <path>`) and compares them with the manifest's pins and
 `[consumed_pins]`.
 
+One deliberate change from the frozen bash: the key `commits.aienos` names the kernel repository,
+renamed to aien-dev/aienux, so `check_candidate` checks that pin as `<repo>` = `aienux` (the parity
+outputs that show it were updated from `aienos`).
+
 ## The parsed TOML subset
 
 Both programs parse exactly what the bash parsed, and every manifest and amendment under

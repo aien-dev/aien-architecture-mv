@@ -51,10 +51,10 @@ Limits:
 ## 2. Boot without a cloud dependency
 
 Evidence:
-- QEMU: the newest committed C kernel gate receipt, [ck_gates_cb14...json](https://github.com/aien-spark/aienos/blob/8641977/evidence/ck_gates_cb1404163d23657165e31bc566fb4c4829a9e1ee7a5d5dc4685454b0c2685948.json), records the boot, Store, network, SMP, crash, continuity, recovery, ALLEN, keyboard, FPU, infer and screen children as PASS, with M0_ROLLBACK NOT_RUN, overall NOT_ALL_GATES_PASS. The runs use local QEMU and local AAVMF firmware, with no cloud service named.
+- QEMU: the newest committed C kernel gate receipt, [ck_gates_cb14...json](https://github.com/aien-dev/aienux/blob/8641977/evidence/ck_gates_cb1404163d23657165e31bc566fb4c4829a9e1ee7a5d5dc4685454b0c2685948.json), records the boot, Store, network, SMP, crash, continuity, recovery, ALLEN, keyboard, FPU, infer and screen children as PASS, with M0_ROLLBACK NOT_RUN, overall NOT_ALL_GATES_PASS. The runs use local QEMU and local AAVMF firmware, with no cloud service named.
 - QEMU console and input: aienos #280 (console session, C3-1a) merged, TEST-ONLY console image, QEMU only.
-- Physical: [M2 first native boot, 2026-09-24](https://github.com/aien-spark/aienos/blob/8641977/evidence/m2_first_boot_2026-09-24.md): native AIENOS code at EL2 with no Linux underneath, a report read back by Linux, return to Linux undamaged. [Attended recovery USB boot](https://github.com/aien-spark/aienos/blob/8641977/evidence/recovery_boot_machine1.md): read-only inspection, return to Linux.
-- Statement of record: [ROADMAP status](https://github.com/aien-spark/aienos/blob/8641977/ROADMAP.md) "Nothing in AIENOS is physically qualified" and "No physical boot of the C kernel has happened"; [CURRENT_EXECUTION_PLAN.md](../../CURRENT_EXECUTION_PLAN.md) §2 correction of 2026-10-08 (arch #163).
+- Physical: [M2 first native boot, 2026-09-24](https://github.com/aien-dev/aienux/blob/8641977/evidence/m2_first_boot_2026-09-24.md): native AIENOS code at EL2 with no Linux underneath, a report read back by Linux, return to Linux undamaged. [Attended recovery USB boot](https://github.com/aien-dev/aienux/blob/8641977/evidence/recovery_boot_machine1.md): read-only inspection, return to Linux.
+- Statement of record: [ROADMAP status](https://github.com/aien-dev/aienux/blob/8641977/ROADMAP.md) "Nothing in AIENOS is physically qualified" and "No physical boot of the C kernel has happened"; [CURRENT_EXECUTION_PLAN.md](../../CURRENT_EXECUTION_PLAN.md) §2 correction of 2026-10-08 (arch #163).
 
 Limits:
 - The C kernel in CAND-4 (`aienos-ck-core-image`) has never booted on the physical Spark. The 2026-09-24 boot ran an earlier image.
@@ -66,7 +66,7 @@ Limits:
 
 Evidence:
 - Design record: [ADR 0035](../adr/0035-persistent-cognitive-entity-boundary-allen.md) (ALLEN, accepted). Persona profile bound to the existing identity: sovereign-core #302 (merged, `37039ec`). Identity crates on main after CAND-4 (not in the CAND-4 package): `crates/aien-allen`, `aien-allen-profile`, `aien-allen-memory` ([identity_test.rs](https://github.com/aien-spark/aien-sovereign-core/blob/f5ba66bf3a1bd064e6cd5cf7e323508a459d2e7a/crates/aien-allen/tests/identity_test.rs)). Environment: host.
-- QEMU: gates M4_STORE_CRASH, M4_CONTINUITY, M4_RECOVERY and M4_ALLEN are PASS in the [receipt above](https://github.com/aien-spark/aienos/blob/8641977/evidence/ck_gates_cb1404163d23657165e31bc566fb4c4829a9e1ee7a5d5dc4685454b0c2685948.json). aienos #260 (merged): ALLEN native genesis at provisioning and QEMU cold restore.
+- QEMU: gates M4_STORE_CRASH, M4_CONTINUITY, M4_RECOVERY and M4_ALLEN are PASS in the [receipt above](https://github.com/aien-dev/aienux/blob/8641977/evidence/ck_gates_cb1404163d23657165e31bc566fb4c4829a9e1ee7a5d5dc4685454b0c2685948.json). aienos #260 (merged): ALLEN native genesis at provisioning and QEMU cold restore.
 - Main after CAND-4: sovereign-core #322 (`6bbe2ec`), [RESULT-v3.md](https://github.com/aien-spark/aien-sovereign-core/blob/6bbe2ec269768c7c9b94b9484c757ca45f55f564/docs/campaigns/allen-e2e/RESULT-v3.md), ALLEN end-to-end demo v3 PASS 10/10: S1 one identity, S2 profile and memory, S5 kill -9 restart kept the identity, profile, notes, goal and the DONE result without re-executing it, S6 forget removed a note from every state file. Environment: real CPU, Linux host. Earlier runs v1 and v2 FAILED and stay recorded.
 
 Limits:
@@ -80,7 +80,7 @@ Limits:
 Evidence:
 - Linux-hosted GB10: in the [CAND-4 release demo](https://github.com/aien-spark/aien-sovereign-core/blob/f5ba66bf3a1bd064e6cd5cf7e323508a459d2e7a/docs/release/receipts/2026-10-06-cand4-release-demo.md) the installed CAND-4 `aien` ran one GB10 StreamTurn (rc 0, 16 tokens) and the NP1 workflow steps S1 to S8 all returned `ok:true`. The same receipt reports text-level agreement with a Hugging Face oracle (token ids and logits not exposed, so only decoded text was compared).
 - Host, main after CAND-4 (not the CAND-4 source d5b78ff): the golden path and effect ledger tests in sovereign-core ([effects.rs](https://github.com/aien-spark/aien-sovereign-core/blob/f5ba66bf3a1bd064e6cd5cf7e323508a459d2e7a/crates/aien-runtime/src/effects.rs)).
-- QEMU: gate INFER is PASS. Per [GATES.md rows 129 to 134](https://github.com/aien-spark/aienos/blob/8641977/native/kernel/GATES.md) it checks that the kernel ingests the model file, hashes it, and probes tensor count and vocabulary. It is not token generation.
+- QEMU: gate INFER is PASS. Per [GATES.md rows 129 to 134](https://github.com/aien-dev/aienux/blob/8641977/native/kernel/GATES.md) it checks that the kernel ingests the model file, hashes it, and probes tensor count and vocabulary. It is not token generation.
 
 Limits:
 - Real inference runs on Linux (CPU, or GB10 through the Linux NVIDIA driver). Native AIENOS CPU or GPU inference is not done. aienos issue #34 (runtime and native CPU inference) is OPEN; #31, #32, #33, #35 are also OPEN.
@@ -109,7 +109,7 @@ Evidence:
 Limits:
 - Real power loss and filesystem-level crashes are NOT_RUN. kill -9 does not test unflushed data.
 - Physical Spark rollback has NOT been run. The hardware rollback gate was recorded BLOCKED in the ROADMAP history (M0_NATIVE_ROLLBACK_MACHINE1).
-- The hang lane uses a host-forced reset; there is no in-guest watchdog ([GATES.md row 44](https://github.com/aien-spark/aienos/blob/8641977/native/kernel/GATES.md)).
+- The hang lane uses a host-forced reset; there is no in-guest watchdog ([GATES.md row 44](https://github.com/aien-dev/aienux/blob/8641977/native/kernel/GATES.md)).
 - The package demos used a "local" signing key; the throwaway-key v2 demo did not use the pinned key (receipt v2). The C loader A/B path is parked, and the `M0_ROLLBACK` row in the cb14 receipt is NOT_RUN because that receipt predates #273.
 - The kill during the single rename was tested only at the pause points added in #308, not at the system call itself.
 

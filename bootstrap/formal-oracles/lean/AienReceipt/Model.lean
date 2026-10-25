@@ -1,7 +1,7 @@
 /-!
 # Abstract model of the Rust admission receipt (DEVELOPMENT_ORACLE)
 
-Source modelled: aien-dev/aienos `crates/aienos-artifact/src/receipt.rs` at 2ee61b4
+Source modelled: aien-dev/aienux `crates/aienos-artifact/src/receipt.rs` at 2ee61b4
 (`validate`, `decode`, `encode`, `valid_reason`; consumer `build_receipt` in
 `crates/aienos-kernel/src/artifact_loader.rs` is read for context only).
 

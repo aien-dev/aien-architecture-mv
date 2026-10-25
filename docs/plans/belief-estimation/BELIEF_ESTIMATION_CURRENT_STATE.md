@@ -8,7 +8,7 @@
 |---|---|
 | aien-spark/omega | `6b9d4b7` (main; `b608dff` after a docs-only merge during the audit) |
 | aien-spark/aien-architecture | `ede9f16` |
-| aien-spark/aienos | `f0facc7` |
+| aien-dev/aienux | `f0facc7` |
 | aien-spark/physics | `f63a6ef` |
 
 Status words: IMPLEMENTED, PARTIAL, EXPERIMENTAL, PLANNED, MISSING, CONFLICTING, OBSOLETE. "Host reference" means C code exercised by tests but not wired into a live service.

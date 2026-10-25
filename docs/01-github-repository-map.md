@@ -6,7 +6,7 @@ Snapshot-oriented map of the AIEN GitHub ecosystem, checked against `gh repo lis
 
 | Repository | Visibility | Role |
 |---|---|---|
-| `aien-spark/aienos` | public | AienOS, the sovereign operating system (pre-alpha). |
+| `aien-dev/aienux` | public | AienOS, the sovereign operating system (pre-alpha). |
 | `aien-spark/omega` | public | Omega, the C reaction runtime and compiler. |
 | `aien-spark/physics` | public | FORGE machine realization plus historical Atlas/PHYSICS boot evidence. The subsystem was renamed FORGE by [ADR 0014](adr/0014-rename-machine-physics-to-forge.md), which keeps the existing `aien-spark/physics` repository name and history. The GitHub description is empty. |
 | `aien-dev/atlas` | public | Atlas, the bare-metal boot layer. The GitHub description is empty. |
