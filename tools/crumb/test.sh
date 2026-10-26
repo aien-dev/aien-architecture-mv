@@ -116,6 +116,15 @@ done
 echo "$ex" | grep -q 'purpose: Hand written C sources' && echo "$ex" | grep -q 'invariant: no globals' && ok "explain shows nearest .crumb purpose + invariants" || bad "explain nearest"
 echo "$ex" | grep -q 'feat: add b (#7)' && ok "explain lists commits touching the path" || bad "explain commits"
 "$C" explain src/a.c | grep -q 'repository path: src/a.c' && ok "explain accepts a file" || bad "explain file"
+# The path is tracked repository data, not a shell command. A quoted Git argument
+# must preserve the apostrophe and metacharacters without touching the marker.
+evil="src/quote'; touch EXPLAIN_INJECTED; echo '"
+printf 'test\n' > "$evil"
+git add -- "$evil" && git -c user.name=t -c user.email=t@t commit -qm "explain hostile pathname"
+ex=$("$C" explain "$evil")
+echo "$ex" | grep -q 'explain hostile pathname' && [ ! -e EXPLAIN_INJECTED ] && ok "explain quotes hostile tracked pathname" || bad "explain shell injection or missing commit"
+plain=$("$C" explain src/a.c)
+echo "$plain" | grep -q 'repository path: src/a.c' && [ ! -e EXPLAIN_INJECTED ] && ok "explain ordinary pathname control" || bad "explain ordinary pathname control"
 echo "$ex" | grep -q '(none touches this path)' && ok "explain: no continuation yet" || bad "explain none"
 echo '{"version":1,"dir_path":"x","history":[]}' > /dev/null
 "$C" claim agent-x src a.c "explain test" >/dev/null; "$C" whisper agent-x src - "explain whisper" >/dev/null

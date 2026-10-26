@@ -105,7 +105,7 @@ For a Cargo repository, `CRUMB="$PWD/tools/crumb/crumb" bash scripts/pipeline-pr
 
 ## How a pull request is judged
 
-Since 2026-10-16 the DGX Spark is the only test judge for pull requests ([ADR 0033](docs/adr/0033-aien-verification-pipeline.md)). On 2026-10-18 the hosted test workflows were removed (pull request #270); the one workflow left in `.github/workflows/` is `aien-verification.yml`. The Spark runs the five gates above and signs the result. `main` is protected and requires only the `AIEN Verification` check, which confirms that the signed bundle is in [aien-receipts](https://github.com/aien-dev/aien-receipts). The verdict of record is the commit status "AIEN Verification (Spark)". [docs/PIPELINE.md](docs/PIPELINE.md) explains the flow.
+Since the 2026-10-24 merge-policy change, GitHub-hosted **AIEN Checks** on pull requests and `main` are advisory: they run `crumb verify` and, for enrolled repositories, portable smoke gates. They do not download a signed Spark bundle or gate a merge. The **AIEN Alpha** job runs only on `alpha/*` tags, requiring a signed full Spark bundle for a tagged commit on `main`. See [docs/PIPELINE.md](docs/PIPELINE.md) for the current flow and the older process.
 
 The crumb tool on `main` can now compute the generated part of each `.crumb` file on demand instead of storing it (RFC-0003 amendment 1, pull request #271, merged 2026-10-18; [docs/CRUMB_PROTOCOL_RFC_0003.md](docs/CRUMB_PROTOCOL_RFC_0003.md)). This repository switched on 2026-10-19 (pull request #272): its `.crumb` files no longer store that data, and `crumb verify .` computes it when it checks.
 
@@ -113,11 +113,11 @@ The crumb tool on `main` can now compute the generated part of each `.crumb` fil
 
 - Release candidates and their gate results: [qualification/candidates](qualification/candidates) and [qualification/exceptions](qualification/exceptions).
 - Receipts for runs: in the repository that ran them, mostly omega [`evidence/`](https://github.com/aien-dev/omega-mv/tree/main/evidence), cited from [CURRENT_EXECUTION_PLAN.md](CURRENT_EXECUTION_PLAN.md) and [doctrine/ROADMAP.md](doctrine/ROADMAP.md).
-- Signed pull request verdicts from the Spark: [aien-receipts](https://github.com/aien-dev/aien-receipts).
+- Signed Spark bundles, when produced: [aien-receipts](https://github.com/aien-dev/aien-receipts). Their absence on an ordinary PR is not a hosted-check failure.
 
 ## Contributing
 
-Open a pull request against `main` with docs-only or doctrine changes, cite the receipt or code you are relying on, and state any outside review you obtained. `main` is protected: no direct pushes. A pull request merges only after the Spark judge passes it and a maintainer adds the `ready-to-merge` label. Questions and design ideas are welcome as issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Open a pull request against `main` with docs-only or doctrine changes, cite the receipt or code you are relying on, and state any outside review you obtained. Hosted PR checks are advisory, not a signed Spark qualification or permission to merge; do not add the `ready-to-merge` label without the maintainer's approval. Questions and design ideas are welcome as issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
