@@ -84,6 +84,7 @@ while :; do
   [ "$TRIES" -le 5 ] || fail base "GitHub has not computed mergeability"
   sleep "$SLEEP_SECS"
   PR=$(view) || fail base "could not re-read PR"
+  [ "$(f .headRefOid)" = "$HEADOID" ] || fail base "PR head changed during mergeability wait; restart inspection"
 done
 [ "$MRG" != CONFLICTING ] || fail base "mergeable is CONFLICTING (merge conflicts)"
 case "$MSS" in
@@ -127,7 +128,7 @@ fi
 if [ "$DRY" = 1 ]; then
   skip merge "dry run"
 else
-  ARGS=(pr merge "$N" -R "$FULL" --squash --delete-branch)
+  ARGS=(pr merge "$N" -R "$FULL" --squash --delete-branch --match-head-commit "$HEADOID")
   NOTE="squash"
   if [ -n "$ADMIN" ]; then ARGS+=(--admin); NOTE="squash with --admin, authorized by: $ADMIN"; fi
   MOUT=$($GH "${ARGS[@]}" 2>&1) || fail merge "gh pr merge failed: $(echo "$MOUT" | head -1)"
