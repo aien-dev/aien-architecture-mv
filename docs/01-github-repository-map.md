@@ -15,7 +15,7 @@ Snapshot-oriented map of the AIEN GitHub ecosystem, checked against `gh repo lis
 | `aien-spark/aien-architecture` | public | This repository. |
 | `aien-dev/aien-sealed` | private | Name only. Holds evaluator-only material; never given to a candidate under test. |
 
-Other live public repositories: `aien-dev/aien-edge`, `aien-dev/aienos.com`, `aien-spark/drakestapleton.com`, `aien-spark/aien-dev` (profile), `aien-dev/.github`, `aien-spark/aegis-runtime`, `aien-spark/spark-rsi`, `aien-spark/benchmarks`, `aien-spark/open-humanity`.
+Other live public repositories: `aien-dev/aien-edge`, `aien-dev/aienos.com`, `aien-spark/drakestapleton.com` (merged into https://www.aienos.com/engineer/ on 2026-10-26; now serves only redirect stubs), `aien-spark/aien-dev` (profile), `aien-dev/.github`, `aien-spark/aegis-runtime`, `aien-spark/spark-rsi`, `aien-spark/benchmarks`, `aien-spark/open-humanity`.
 
 ## Canonical composition root
 
