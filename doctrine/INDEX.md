@@ -221,7 +221,7 @@ The `DOCTRINE_V1` Gate requires satisfying seven strict verification criteria be
 
 | Gate Criterion | Verification Standard | Audited Evidence | Status |
 | :--- | :--- | :--- | :---: |
-| **G0-1: Corpus Completeness** | All seven foundational doctrine documents authored, formatted, and cross-referenced in `/home/drakestapleton/workspace/aien-architecture/doctrine/`. | Verified on physical filesystem. | `PASSED` |
+| **G0-1: Corpus Completeness** | All seven foundational doctrine documents authored, formatted, and cross-referenced in `doctrine/`. | Verified on physical filesystem. | `PASSED` |
 | **G0-2: Ontological Consistency** | Zero terminological or authority contradictions across documents. Unidirectional dependency hierarchy verified. | Cross-audit of layers and definitions. | `PASSED` |
 | **G0-3: Epistemic Boundary** | Search, optimization, and neural inference strictly designated untrusted; verification and physics designated trusted. | Enforced in `TRUST.md` and `FORGE.md`. | `PASSED` |
 | **G0-4: Mathematical Rigor** | Formal definitions provided for Omega Tri-Graphs, Verification Ladder ($V_0 \to V_5$), and Epistemic Merkle DAGs. | Evaluated in `OMEGA.md` and `TRUST.md`. | `PASSED` |

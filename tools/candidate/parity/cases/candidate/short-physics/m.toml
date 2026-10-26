@@ -79,7 +79,7 @@ omega = "make -j6 PHYSICS_DIR=<physics worktree> OUT_DIR=<omega worktree>/build 
 aien-sovereign-core = "cargo build --release --locked --offline -p aien-cli -p aien-proof -p aien-test, default features (dev-fallback off), AIEN_OMEGA_DIR and AIEN_PHYSICS_DIR set, AIEN_DEV_FALLBACK and AIEN_FORCE_CPU_STUB unset"
 release-profile = "opt-level 3, lto true, codegen-units 1, panic abort, strip true (workspace Cargo.toml)"
 aienos = "make -C native/kernel -j4, then make -C native/kernel -j4 full (core image and full image)"
-aien-cli-target-dir = "/home/drakestapleton/workspace/overnight-1005/target-L1-CAND-sc"
+aien-cli-target-dir = "/home/alice/workspace/overnight-1005/target-L1-CAND-sc"
 native-engine-linked = "cargo:rustc-cfg=has_omega_gpu printed by crates/aien-omega-gpu/build.rs; aien-cli carries the string OmegaGb10Backend (native Omega engine, no CUDA, NVIDIA GB10 sm_121)"
 
 # Environment of the production configuration. Dev fallback is a recorded opt-in, never part of a strict run.
@@ -94,7 +94,7 @@ AIEN_E2E_CHECKPOINT = "directory of the TinyLlama checkpoint for the real-model 
 AIEN_MODEL_PATH = "safetensors file for aien-cli; with AIEN_TOKENIZER_PATH, AIEN_MODEL_DIR, AIEN_REQUIRE_CHECKPOINT=1 (no fallback to reference weights)"
 
 [hardware]
-machine = "spark-b87b, NVIDIA DGX Spark (GB10)"
+machine = "spark, NVIDIA DGX Spark (GB10)"
 gpu = "NVIDIA GB10, Blackwell, part 2E12-275-A1, VBIOS 9A.0B.2D.00.00, driver 580.173.02"
 kernel = "Linux 7.0.0-1019-nvidia, aarch64"
 os = "Ubuntu 24.04.5 LTS"

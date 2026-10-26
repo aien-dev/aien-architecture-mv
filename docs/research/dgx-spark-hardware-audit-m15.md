@@ -5,7 +5,7 @@
 Document ID:     AUDIT-SPARK-M15
 Milestone:       Milestone 15 (PHYSICS_ACCELERATOR_LINK)
 Classification:  Sovereign Machine Physical Hardware Audit
-Host Identity:   spark-b87b (Linux 7.0.0-1019-nvidia aarch64)
+Host Identity:   spark (host name redacted 2026-10-26; Linux 7.0.0-1019-nvidia aarch64)
 Target Device:   NVIDIA GB10 (PCI 000f:01:00.0, Device ID 10de:2e12, rev a1)
 IOMMU Substrate: ARM SMMUv3 (arm-smmu-v3.1.auto @ 0x13000000, IOMMU Group 20)
 Date:            September 26, 2026
@@ -18,7 +18,7 @@ Audit Scope:     Empirical, Non-Destructive Hardware Verification
 
 Milestone 15 (`PHYSICS_ACCELERATOR_LINK`) inaugurates **Phase C (Accelerator Cognition Substrate)** in the sovereign architectural roadmap. Where Phase B (Milestones 4–14) synthesized verified machine realizations directly onto host CPU execution pipelines ($G_S \times G_M \to G_R$), Phase C establishes the bounded, coherent interface between the sovereign CPU runtime and physical neural accelerator hardware.
 
-To establish absolute epistemic ground truth prior to designing the hardware command queue abstraction and DMA sandboxing layers, this audit conducted a comprehensive, empirical, non-destructive physical discovery of the NVIDIA DGX Spark host (`spark-b87b`).
+To establish absolute epistemic ground truth prior to designing the hardware command queue abstraction and DMA sandboxing layers, this audit conducted a comprehensive, empirical, non-destructive physical discovery of the NVIDIA DGX Spark host (`spark`).
 
 ### Phase C Epistemic Classification Doctrine
 Every factual finding in this audit is strictly classified under one of the five Phase C epistemic categories:
@@ -33,7 +33,7 @@ Every factual finding in this audit is strictly classified under one of the five
 ## 2. Host Platform & Compute Substrate Topology
 
 ### 2.1 Host SoC & Identification
-- `[OBSERVED]` **Host Identity**: `spark-b87b`, running kernel `Linux spark-b87b 7.0.0-1019-nvidia #19~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Sun Sep 6 18:35:11 UTC 2026 aarch64`.
+- `[OBSERVED]` **Host Identity**: `spark`, running kernel `Linux spark 7.0.0-1019-nvidia #19~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Sun Sep 6 18:35:11 UTC 2026 aarch64`.
 - `[OBSERVED]` **SoC Platform**: MediaTek MTKSGI / NVIDIA co-designed DGX Spark platform (`ACPI OEM ID: MEDTEK MTKSGI`, `BIOS: ALASKA AMI 20130221`).
 - `[OBSERVED]` **NUMA Topology**: Single unified NUMA node (`node 0`) spanning all 20 CPU execution cores and 124,607 MB of accessible DRAM. Node distance is uniform (10).
 
@@ -365,7 +365,7 @@ In accordance with Phase C doctrine, every verified finding from this audit is c
 
 | Architectural Component | Finding / Parameter | Epistemic Status | Empirical Source / Artifact |
 | :--- | :--- | :--- | :--- |
-| **Host Identity** | `spark-b87b`, Ubuntu 24.04.2 LTS, Kernel 7.0.0-1019-nvidia | `OBSERVED` | `uname -a`, `/etc/os-release` |
+| **Host Identity** | `spark`, Ubuntu 24.04.2 LTS, Kernel 7.0.0-1019-nvidia | `OBSERVED` | `uname -a`, `/etc/os-release` |
 | **CPU Architecture** | 10x Cortex-X925 (`0xd85`, 3.9GHz) + 10x Cortex-A725 (`0xd87`, 2.8GHz) | `OBSERVED` | `/proc/cpuinfo`, sysfs `cpuinfo_max_freq` |
 | **Vector Engine** | SVE2, BF16, I8MM hardware execution support | `OBSERVED` | `/proc/cpuinfo` flags |
 | **GPU Identification**| NVIDIA GB10, PCI `000f:01:00.0`, Device `10de:2e12`, Rev `a1` | `OBSERVED` | `lspci -vvv -s 000f:01:00.0` |
