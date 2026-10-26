@@ -1,8 +1,8 @@
 # ADR 0040: Five identities; "same meaning, same identity" holds only under a named normalization
 
-**Status:** PROPOSED (draft, 2026-10-26). Decision taken by Main, the orchestrating agent, adopting
-an outside architecture review that Drake Stapleton forwarded. Operator acceptance is pending.
-Recorded by OmegaIntent.
+**Status:** Accepted (Main, delegated by Drake, 2026-10-26). Main, the orchestrating agent, adopted
+an outside architecture review that Drake Stapleton forwarded, and accepted this ADR under Drake's
+delegation of technical calls. Recorded by OmegaIntent.
 **Amends (reading only, text unchanged):** at main `fabf7b7`, ADR 0015 line 97 (the invariance
 principle), ADR 0018 line 46 ("the same program, with the same identity") and ADR 0019 line 23
 ("the same meaning gets two ids"). This ADR narrows how those lines are read.
