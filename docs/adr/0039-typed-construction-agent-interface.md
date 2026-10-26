@@ -1,8 +1,8 @@
 # ADR 0039: The typed-construction interface is Omega's primary agent programming interface
 
-**Status:** PROPOSED (draft, 2026-10-26). Decision taken by Main, the orchestrating agent, adopting an
-outside architecture review that Drake Stapleton forwarded; operator acceptance pending. Recorded by
-OmegaIntent.
+**Status:** Accepted (Main, delegated by Drake, 2026-10-26). Main, the orchestrating agent, adopted
+an outside architecture review that Drake Stapleton forwarded, and accepted this ADR under Drake's
+delegation of technical calls. Recorded by OmegaIntent.
 **Related:** omega-mv #599 (Omega workstream), #652 (OM-LEARN), #653 (benchmark, owned by OmegaEval),
 #655 (incremental feedback with no false-prefix rejection), #656 (contract-to-.om synthesis),
 #830 (semhash), #838 (omq, stage 1 of this interface); ADR 0040 (identity layers); omega-mv
