@@ -136,7 +136,7 @@ AIEN_OMEGA_GPU_LIB = "unset (would link a prebuilt archive without a sha check)"
 AIEN_MODEL_PATH = "model.safetensors of the [model] snapshot, with AIEN_TOKENIZER_PATH and AIEN_REQUIRE_CHECKPOINT=1"
 
 [hardware]
-machine = "spark-b87b, NVIDIA DGX Spark (GB10)"
+machine = "spark, NVIDIA DGX Spark (GB10)"
 gpu = "NVIDIA GB10, VBIOS 9A.0B.2D.00.00, driver 580.173.02"
 kernel = "Linux 7.0.0-1019-nvidia, aarch64"
 os = "Ubuntu 24.04.5 LTS"

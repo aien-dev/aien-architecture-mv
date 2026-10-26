@@ -10,10 +10,16 @@
 set -eu
 repo="$1"; out="$2"
 good="$repo/scripts/testdata/cand-draft-fixture.toml"
-live="$repo/qualification/candidates/CAND-0.toml"
-live4="$repo/qualification/candidates/CAND-4.toml"
+live0="$repo/qualification/candidates/CAND-0.toml"
+live4src="$repo/qualification/candidates/CAND-4.toml"
 H64a=$(printf 'a%.0s' $(seq 64)); H64b=$(printf 'b%.0s' $(seq 64)); H64c=$(printf 'c%.0s' $(seq 64)); Z64=$(printf '0%.0s' $(seq 64))
 rm -rf "$out"; mkdir -p "$out/candidate" "$out/pins"
+# The live manifests are frozen records naming the build host and its home directory. The corpus
+# copies them with a synthetic home (/home/alice) and host name (spark); nothing the checkers judge
+# reads those two values, and CAND-4's amendment is re-pointed at the copy's own sha256 below.
+synth() { sed -e 's#/home/[a-z]*/#/home/alice/#g' -e 's/"spark-[0-9a-f]\{4\}, /"spark, /' "$1"; }
+live="$out/live-cand0.toml"; synth "$live0" > "$live"
+live4="$out/live-cand4.toml"; synth "$live4src" > "$live4"
 C="$out/candidate"
 mk() { mkdir -p "$C/$1"; echo "${2:-sha}" > "$C/$1/mode"; }
 frozen() { sed -e 's/^status = .*/status = "frozen"/' -e "s/^omega-runtime = .*/omega-runtime = \"$H64a\"/" \
@@ -67,7 +73,10 @@ am amend-dir-skipped; amend "$C/amend-dir-skipped" 1 "$MSHA"; mkdir -p "$C/amend
 am amend-many-bad; amend "$C/amend-many-bad" 1 "$MSHA" "[model]" $(for i in $(seq 1 24); do printf 'k%02d-sha256 = "zz"\n' $i; done | tr '\n' ' ') "[contracts]" 'x = "1"' "[consumed_pins]" 'y = "2"' 'model-id = "dup"' ; sed -i 's/ k\([0-9]*\)-sha256 = "zz"/\nk\1-sha256 = "zz"/g' "$C/amend-many-bad/m.amendment-1.toml"
 am amend-sha-not-real; amend "$C/amend-sha-not-real" 1 "$MSHA" "a-sha256 = \"abc\"" "b-sha256 = \"$Z64\"" "c-sha256 = \"$H64c\""
 am amend-order; for n in 1 2 10; do amend "$C/amend-order" $n "$MSHA"; sed -i 's/^candidate = .*/candidate = "CAND-X"/' "$C/amend-order/m.amendment-$n.toml"; done; echo "bash globs <stem>.amendment-*.toml in the locale's collation (en_US: 10, 1, 2); the .om walks the names in byte order (1, 10, 2); only the order of FAIL lines of several amendments differs" > "$C/amend-order/limit"
-mk live-cand4; cp "$live4" "$C/live-cand4/m.toml"; cp "$repo/qualification/candidates/CAND-4.amendment-1.toml" "$C/live-cand4/m.amendment-1.toml"
+mk live-cand4; cp "$live4" "$C/live-cand4/m.toml"
+sed "s/^manifest-sha256 = \"[0-9a-f]*\"   # CAND-4.toml at /manifest-sha256 = \"$(sha256sum "$live4" | cut -d' ' -f1)\"   # synthetic-host copy of CAND-4.toml at /" \
+  "$repo/qualification/candidates/CAND-4.amendment-1.toml" > "$C/live-cand4/m.amendment-1.toml"
+rm -f "$live" "$live4"
 # adversarial
 mk dup-key; { cat "$good"; printf '\n[commits]\nomega = "abc"\nid = "later"\n'; } > "$C/dup-key/m.toml"
 mk dup-key-section; sed 's/^id = .*/id = "first"\nid = "second"/' "$good" > "$C/dup-key-section/m.toml"; sed -i 's/^aien-proof = .*/aien-proof = "UNBUILT"\naien-proof = "zz"/' "$C/dup-key-section/m.toml"

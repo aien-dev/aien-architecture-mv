@@ -189,7 +189,7 @@ The executable binary (`build/omegatool`) operates strictly without proprietary 
 1. **Implementation Commit**: `aien-spark/omega@27971cda951800c6c6d42201890de67dea0d532e` (PR #22).
 2. **Final Evidence Receipt Commit**: `aien-spark/omega@43f725e24bcf84b55364177eb0c7a52233f27ae5` (PR #23).
 3. **M16 Authority Substrate Dependency**: `aien-spark/physics@b64753d95bacb1114ba48decde48239f0c542e12` (PR #11).
-4. **Physical Silicon Verification**: NVIDIA DGX Spark (`spark-b87b`), Grace Blackwell GB10 (sm_121, 128 GiB unified LPDDR5x RAM).
+4. **Physical Silicon Verification**: NVIDIA DGX Spark, Grace Blackwell GB10 (sm_121, 128 GiB unified LPDDR5x RAM).
 5. **Clean-Clone Verification**: Executed from scratch in isolated `/tmp/omega-clean-m17` on DGX Spark silicon with 18 / 18 M17 gates and 121 / 121 regression gates passing.
 6. **Cortex Memory Receipt**: Space `atlas-memory`, receipt ID `dea831e3-33c8-480c-bff3-2f170bf9b3b0`.
 

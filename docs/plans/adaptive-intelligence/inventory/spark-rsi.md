@@ -1,6 +1,6 @@
 # spark-rsi inventory (Milestone 0, read-only scout)
 
-Repo: /home/drakestapleton/workspace/adaptive/spark-rsi, commit 24f412f (PINS.txt confirms main). Nothing edited; no build/test run (reading only).
+Repo: ~/workspace/adaptive/spark-rsi, commit 24f412f (PINS.txt confirms main). Nothing edited; no build/test run (reading only).
 Note: every `.crumb` in this repo has empty `"role": ""` fields (src/.crumb, tests/.crumb), so the Crumb gave no role/invariant text. Evidence is source only.
 
 ## Classification

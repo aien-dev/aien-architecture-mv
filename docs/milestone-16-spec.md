@@ -131,7 +131,7 @@ Milestone 16 provides the empirical foundation upon which **Milestone 17 (`OMEGA
 
 ## 6. Empirical Verification & Qualification
 
-Milestone 16 was qualified on NVIDIA DGX Spark (`spark-b87b`) on 2026-09-26.
+Milestone 16 was qualified on NVIDIA DGX Spark on 2026-09-26.
 
 ### 6.1 Historical Qualification Audit (Superseded)
 

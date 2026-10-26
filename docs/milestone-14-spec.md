@@ -230,7 +230,7 @@ Milestone 14 is qualified and ratified. All 10 canonical qualification gates pas
 
 - **Implementation Commit**: `c0c8102ecc7f36cb86ab8686e5f1ee08eb59762d` (`aien-spark/omega#19`)
 - **Qualification Receipt Commit**: `03fbcb9` (`aien-spark/omega`)
-- **Qualification Receipt File**: [`evidence/omega_realization_synthesis_qualification_receipt.json`](file:///home/drakestapleton/workspace/omega/evidence/omega_realization_synthesis_qualification_receipt.json)
+- **Qualification Receipt File**: [`evidence/omega_realization_synthesis_qualification_receipt.json`](https://github.com/aien-dev/omega-mv/blob/main/evidence/omega_realization_synthesis_qualification_receipt.json)
 
 ```json
 {
