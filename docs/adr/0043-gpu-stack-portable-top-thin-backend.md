@@ -4,7 +4,8 @@
 Decision 0 is met. Becomes ACCEPTED when Drake, or Main under his delegation, merges this PR after a
 non-author review. Recorded by lane SplitDesign.
 **Related:** ARCH-0042 (PROPOSED, PR #342: Omega owns computation, CUDApp owns GPU execution, Omega
-Bridge owns compatibility), ARCH-0024 (Omega is the destination language), ARCH-0018
+Bridge owns compatibility; Decision 2 superseded in part, see Decision 1), ARCH-0024 (Omega is the
+destination language), ARCH-0018
 (substrate-neutral realization). The companion file-level design is `docs/ARCHITECTURE.md` in
 aien-dev/CUDApp (draft PR linked from this PR).
 **Inputs, all at pinned heads:** CUDApp main `780a0af1`; omega-mv main `e5b32567`; omega-mv
@@ -86,13 +87,19 @@ that touch no shared file are allowed. This restates PLAN.md; it is not new poli
 | **Kernel IR, checker, front end** | Omegese, the kernel IR, checker2 | `.om` destination (omc's IR mode); the C front end on `omegese/gpu-front` is migration | omega-mv (ARCH-0042 Decision 1) |
 | **Integrations** | ggml, vLLM, ONNX Runtime attachments | per-host language at the edge, calling compiled Omega through omega-bridge bindings | connected repos under omega-bridge (ARCH-0042 Decision 3) |
 
-Ownership seam with ARCH-0042: omega-mv owns the IR and the language-level lowering contract; CUDApp
-owns everything from the per-target lowering down (instruction selection, scheduling, encoding,
-code objects, launch). Existing code is not moved or split between repos (ARCH-0042 Decision 7, Drake
-2026-10-27). The C sm_121 lowering (`omega_osc_gpu.c`, omega-mv) stays in omega-mv and CUDApp consumes
-it at a pinned sha; its `.om` successor is new code and lands in CUDApp `backend/gb10/`. PLAN.md line
-27 lists "the sm_121 backend" under omega-mv; ARCH-0042 lists GPU codegen under CUDApp. Reviewers should
-check this seam first; it is the one place the two documents read differently.
+Ownership seam with ARCH-0042, **settled by Main's ruling of 2026-10-27** (recorded in
+`~/handoffs/GpuStack/PLAN.md`, Rules → "Where code lives"): the existing C lowering in omega-mv (the
+Omegese → IR → sm_121 path, checker2, host words) stays in omega-mv and is fixed there by lane C1Lang;
+CUDApp consumes it at a pinned sha. Everything else in the GPU stack (driver client, kernels, runtime,
+receipts) lands in CUDApp, as does any new `.om` code generator, including the `.om` successor of the
+sm_121 lowering (`backend/gb10/`). The omega-mv copies of GPU runtime code are not deleted until the
+cutover is proven; removal is a separate PR. Existing code is not moved or split between repos
+(ARCH-0042 Decision 7).
+
+**Supersedes, in part, ARCH-0042 Decision 2.** Where Decision 2 assigns "GPU code generators … the
+register allocator and scheduling bits" to CUDApp, that clause does not cover the existing C sm_121
+lowering of the Omegese → IR → checker2 path, which stays in omega-mv under the ruling above. The rest of
+Decision 2 stands.
 
 **In-process rule.** The top and a backend are linked into one program by omc (both `.om`), so a call
 across the ABI is an ordinary Omega call. A `.om` top cannot call a C backend in-process today (fact 8).
