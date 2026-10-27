@@ -46,15 +46,27 @@ omega-bridge `358c5051`) found the rule already broken in places; see Consequenc
    compiler; it consumes omega-mv's compiler and CUDApp's execution at pinned commits.
 4. **Direction of dependency.** CUDApp and omega-bridge consume omega-mv at a pin. omega-mv consumes
    CUDApp at a pin for GPU execution. omega-bridge consumes CUDApp at a pin when an attachment must run
-   on a GPU. No repository carries a copy of another's owned code; a copy kept for a bootstrap or an
+   on a GPU. No repository gains a new copy of another's owned code; a copy kept for a bootstrap or an
    oracle is declared as such, pinned and checked against the owner.
 5. **Ecosystems are optional.** An attachment exists so an existing program can adopt Omega without
    rewriting, never as a requirement on Omega's own design. A bridge limit (an unsupported dtype, a
    framework's ABI) is not a reason to narrow the language or the GPU path.
 6. **Out of scope.** physics-mv (FORGE) keeps realization policy and its historical receipts. Where it
    carries a GPU driver client, that copy is a duplication of a CUDApp responsibility (Consequences).
+7. **Existing code stays; new components get connected repos** (Drake, 2026-10-27: "embrace the Unix
+   philosophy and keep everything in their own repos. We can keep the repos we've got, but then we
+   make new repos that are connected to the bigger repos."). The copies listed under Consequences are
+   not moved, split or rewritten by this ADR; consolidating any of them needs a separate decision by
+   Drake. Ownership governs where **new** work goes. A new standalone component (a server, kit, bench,
+   library or app) goes in its own aien-dev repository that pins its parent (omega-mv, CUDApp or
+   omega-bridge) by tag or sha, names the parent in its `.crumb`/`.goals.json`, and is linked from the
+   parent README's "Connected repos" line. Each tool does one job: stdin or files in, plain text or
+   JSONL on stdout, diagnostics on stderr, meaningful exit codes.
 
 ## Consequences
+
+Under Decision 7 these copies stay where they are; the table fixes who owns new work on each, and
+each issue is where any later consolidation decision would be recorded.
 
 Duplicated responsibilities found by the 2026-10-26 audit, each with its single owner and an issue in
 the owning repository:
