@@ -7,7 +7,8 @@ non-author review. Recorded by lane SplitDesign.
 Bridge owns compatibility; Decision 2 superseded in part, see Decision 1), ARCH-0024 (Omega is the
 destination language), ARCH-0018
 (substrate-neutral realization). The companion file-level design is `docs/ARCHITECTURE.md` in
-aien-dev/CUDApp (draft PR linked from this PR).
+aien-dev/CUDApp (draft PR linked from this PR). **Merge order:** after ARCH-0042 (#342), whose
+Decision 2 this ADR amends; if #342 changes first, this ADR is re-checked against its merged text.
 **Inputs, all at pinned heads:** CUDApp main `780a0af1`; omega-mv main `e5b32567`; omega-mv
 `omegese/gpu-front` `d1ac019e` and `omegese/gpu` `a99d711c`; the binding plan
 `~/handoffs/GpuStack/PLAN.md` (phases P2–P4); the outside review Drake adopted
@@ -42,7 +43,7 @@ What the code is today (CUDApp `780a0af1`, file and line evidence in `filemap.md
 5. **One submission per token already exists for one model.** `decode_graph` records a whole
    Qwen3-30B-A3B token (436 launches over 48 layers) into one command list. That is 1 submit,
    1 doorbell, 2 marker waits and 1 retire. The CPU still writes about 1 KB of constants and 1 KB of
-   QMD per launch ([INFERENCE] about 872 KB per token into uncached memory).
+   QMD per launch ([INFERENCE] about 872 KiB per token into uncached memory).
 6. **Weights are copied, not shared.** `omega_gpu_fp8_api.c:269-275` does `memcpy` then
    sync-to-GPU, although the GB10's memory is physically one LPDDR5X pool.
 7. **The Omega-language path to the GPU (bar C1) is separate and NVIDIA-shaped.** On
@@ -138,11 +139,11 @@ the top gets them from Omega host words. All calls return a status code (`OK`, `
 | 17 | `ob_code_free(code)` | | `session_free` |
 | 18 | `ob_queue_open(dev, flags, out q)` | flags: priority, shared-process | `queue_open` (one queue today) |
 | 19 | `ob_queue_close(q)` | | `queue_close` |
-| 20 | `ob_dispatch(q, code, dispatch)` | append one launch: grid[3], block[3], dynamic shared bytes, argument bytes, buffer bindings. **The backend encodes it**: QMD + constant bank on GB10, an AQL packet + kernarg on AMD, `vkCmdDispatch` on Vulkan, a compute encoder on Metal | `omega_gpu_session_launch` (session.c:445) and `emit_inline_qmd` / PCAS (cmdlist.c:226, :261), moved below the seam |
+| 20 | `ob_dispatch(q, code, dispatch)` | append one launch: grid[3], block[3], dynamic shared bytes, argument bytes, buffer bindings. **The backend encodes it**: QMD + constant bank on GB10, an AQL packet + kernarg on AMD, `vkCmdDispatch` on Vulkan, a compute encoder on Metal | `omega_gpu_session_launch` (session.c:445) and `emit_inline_qmd` (cmdlist.c:226) with its PCAS method words (cmdlist.c:308-309), moved below the seam |
 | 21 | `ob_submit(q, out seq)` | ring the doorbell once for everything appended since the last submit | `queue_submit` → `m16_native_submit_methods` (1 GPFIFO entry + doorbell) |
 | 22 | `ob_graph_begin(q)` | start recording dispatches into a replayable graph | `omega_gpu_cmdlist` record mode |
 | 23 | `ob_graph_end(q, out graph)` | close the recording; the backend may pre-encode everything | cmdlist finalize |
-| 24 | `ob_graph_launch(q, graph, patches, out seq)` | replay a graph with a small patch list (token position, KV length, buffer offsets) and one doorbell | `decode_graph` submit (cmdlist.c:325); per-token patching is new |
+| 24 | `ob_graph_launch(q, graph, patches, out seq)` | replay a graph with a small patch list (token position, KV length, buffer offsets) and one doorbell | `omega_gpu_cmdlist_submit`'s `queue_submit` call (cmdlist.c:325), which `decode_graph` replays through; per-token patching is new |
 | 25 | `ob_graph_free(graph)` | | cmdlist free |
 | 26 | `ob_fence_wait(q, seq, timeout_ns, out status)` | wait for completion; `TIMEOUT` and `FAULT` are results, not hangs | `poll_word` → `m16_native_wait_marker` |
 | 27 | `ob_event_record(q, out ev)` | a point in a queue other queues or processes can wait on (C4 streams) | none (cmdlist stamps only) |
@@ -159,9 +160,11 @@ Rules on the ABI:
   replaces them). The `m16/` and `nvrm/` gate programs remain backend tests. Within CUDApp the split is
   logical (headers, build groups, CODEOWNERS), not a file move.
 - **Versioning.** The public runtime API stays ABI 0.1 until the cutover. Moving the STABLE
-  `omega_gpu_launch` from raw code + QMD shape to a code object is a MAJOR bump (API.md §2). The
-  decode-path APIs absent from the manifest today (fp8, fp8gemm, bf16_gemv, decode_attn, router, tern,
-  tcgemm, prefill*, moe, decode_graph) enter the manifest as EXPERIMENTAL before any of them moves.
+  `omega_gpu_session_launch` / `OmegaGpuLaunch` from raw code + QMD shape to a code object is a MAJOR
+  bump (API.md §2). The decode-path APIs absent from the manifest today (fp8, fp8gemm, bf16_gemv,
+  decode_attn, router, tern, tcgemm, prefill*, moe, decode_graph) enter the manifest as EXPERIMENTAL
+  before any of them moves (CUDApp#124). API.md §2 counts an added EXPERIMENTAL entry as a MINOR
+  change, so that step is either a 0.2 bump or an exception to "stays 0.1"; open for the merger.
 - **A CPU reference backend** (AArch64, `.om`) implements the same 30 calls with code-object format
   `AARCH64`. It runs every top-level test on a GitHub `ubuntu-24.04-arm` runner without a GPU and is
   the negative-control target: a mutant kernel must fail there before any chip run is requested.
@@ -218,7 +221,7 @@ Three mechanisms, each a measurement target before any claim:
    the GPU. Weights appear once in physical memory and processes that share the file share the pages
    (this feeds C5 multi-process sharing).
 2. **One submission per token.** The decode token is a recorded graph replayed with a patch list
-   (`ob_graph_launch`), removing the per-launch QMD/constant rewrite (about 872 KB per token
+   (`ob_graph_launch`), removing the per-launch QMD/constant rewrite (about 872 KiB per token
    [INFERENCE]).
 3. **A resident whole-model kernel** (experiment, not a commitment): a persistent kernel reads a
    device-side work word per token from host-coherent memory. It is gated on watchdog and preemption
@@ -288,7 +291,7 @@ No Strix Halo, MI300A or Snapdragon machine is reachable. Their rows in Decision
 
 **MI300X cost.** PLAN.md budgets MODELED $18.51 through the renting lane. Public third-party listings
 on 2026-10-26 (not re-verified, not a quote) ranged $2.39–$4.42 per GPU-hour. WolframLanguageEvaluator:
-`{18.51/2.99, 18.51/2.39, 18.51/4.42}` → `{6.19, 7.74, 4.19}` hours. AMD Developer Cloud offers one
+`{18.51/4.42, 18.51/2.39}` → `{4.19, 7.74}` hours. AMD Developer Cloud offers one
 MI300X with $100 credit for 30 days through the AMD AI Developer Program form, at AMD's discretion; a
 powered-off VM is still billed (FreeCompute survey 2026-10-26). Every hour of a rental is planned in
 advance: host-side encoder and HSACO work is finished on lavapipe/CPU and the iMac first.
@@ -308,8 +311,9 @@ Python, Rust, Zig and Go callers on Linux AArch64). Effort is in lane-weeks, [IN
 ### 7. Human review
 
 - CUDApp gets a proposed `CODEOWNERS` (inactive until reviewers exist) and `REVIEWING.md` (draft PR).
-  Core paths: the backend ABI header, every `backend/*/` encoder and driver client, checker2 and the
-  IR lowering, the code-object writers, the runtime API manifest, and `THIRD_PARTY.md`.
+  Core paths: the backend ABI header, every `backend/*/` encoder and driver client, the code-object
+  writers, the runtime API manifest, and `THIRD_PARTY.md`. checker2 and the IR lowering live in
+  omega-mv (Decision 1), so CUDApp's CODEOWNERS cannot cover them; they are reviewed on omega-mv PRs.
 - Merge rule: everything keeps PLAN.md's agent rule (CI green, gates re-run from a fresh clone on the
   exact head, receipts posted, a non-author approval, `--match-head-commit`, no self-merge). **Once
   human reviewers exist, a PR touching a core path also needs one approving human review.**
@@ -325,7 +329,7 @@ Python, Rust, Zig and Go callers on Linux AArch64). Effort is in lane-weeks, [IN
   stack matches it on chip with identical golden tokens.
 - The GB10 C backend stays as migration; new backends and the new top are `.om`. Three Omega extension
   proposals are prerequisites: (E1) the KFD `devctl` allowlist; (E2) checked shared-library calls
-  (Vulkan loader, Metal) and Mach-O output for macOS; (E3) IR v7.
+  (Vulkan loader, Metal) and Mach-O output for macOS; (E3) IR v7, filed as aien-dev/omega-mv#883.
 - Encoding provenance becomes a backend gate. CUDApp `docs/HOW_I_DID_IT.md:35-39` says "Where nvcc and
   NAK disagree for sm_121, I follow what nvcc emits"; PLAN.md requires encodings re-derived from NAK
   plus chip tests, never from nvcc. The GB10 backend's encoder carries an inventory of every field with
