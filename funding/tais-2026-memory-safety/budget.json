@@ -1,0 +1,335 @@
+{
+  "schema": "aien/tais-2026/0.1",
+  "date": "2026-10-27",
+  "status": "UNFUNDED_PROPOSAL",
+  "duration_months": 24,
+  "currency": "USD",
+  "minimum_usd": 250000,
+  "full_goal_usd": 10000000,
+  "categories": {
+    "personnel": 6590000,
+    "hardware": 1235000,
+    "audits": 920000,
+    "infrastructure": 745000,
+    "contingency": 510000
+  },
+  "phases": [
+    {
+      "id": "M1",
+      "period": "Months 0-3",
+      "purpose": "Baseline, audited threat model",
+      "amounts": {
+        "personnel": 150000,
+        "hardware": 35000,
+        "audits": 35000,
+        "infrastructure": 15000,
+        "contingency": 15000
+      },
+      "incremental_usd": 250000
+    },
+    {
+      "id": "M2",
+      "period": "Months 4-6",
+      "purpose": "Restricted C importer proof-of-concept",
+      "amounts": {
+        "personnel": 500000,
+        "hardware": 115000,
+        "audits": 65000,
+        "infrastructure": 45000,
+        "contingency": 25000
+      },
+      "incremental_usd": 750000
+    },
+    {
+      "id": "M3",
+      "period": "Months 7-12",
+      "purpose": "Cross-vendor lab, independent validation",
+      "amounts": {
+        "personnel": 1950000,
+        "hardware": 350000,
+        "audits": 280000,
+        "infrastructure": 250000,
+        "contingency": 170000
+      },
+      "incremental_usd": 3000000
+    },
+    {
+      "id": "M4",
+      "period": "Months 13-24",
+      "purpose": "Maintainable open research platform",
+      "amounts": {
+        "personnel": 3990000,
+        "hardware": 735000,
+        "audits": 540000,
+        "infrastructure": 435000,
+        "contingency": 300000
+      },
+      "incremental_usd": 6000000
+    }
+  ],
+  "line_items": {
+    "personnel": [
+      {
+        "description": "Programming language/formal verification specialists",
+        "quantity": 110,
+        "rate_usd": 18000,
+        "unit": "person-month",
+        "extended_usd": 1980000,
+        "rationale": "Typed memory model, compiler verification, constrained source translation",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "GPU compiler and runtime systems engineers",
+        "quantity": 104,
+        "rate_usd": 15000,
+        "unit": "person-month",
+        "extended_usd": 1560000,
+        "rationale": "CUDApp, CPU/GPU ownership, buffers and cross-vendor validation",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "AI agent security/adversarial researchers",
+        "quantity": 60,
+        "rate_usd": 16000,
+        "unit": "person-month",
+        "extended_usd": 960000,
+        "rationale": "Tool containment, fault injection, isolation and threat models",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Framework integration and test engineers",
+        "quantity": 52,
+        "rate_usd": 15000,
+        "unit": "person-month",
+        "extended_usd": 780000,
+        "rationale": "GGML, PyTorch, numerical and memory regression comparisons",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "OSS maintenance, release and CI engineers",
+        "quantity": 42,
+        "rate_usd": 15000,
+        "unit": "person-month",
+        "extended_usd": 630000,
+        "rationale": "Reproducible release process and upstream interoperability",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Program management and research operations",
+        "quantity": 28,
+        "rate_usd": 15000,
+        "unit": "person-month",
+        "extended_usd": 420000,
+        "rationale": "Procurement, fiscal control, open reporting",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Independent research fellowships",
+        "quantity": 26,
+        "rate_usd": 10000,
+        "unit": "person-month",
+        "extended_usd": 260000,
+        "rationale": "Replication and specialized methods",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      }
+    ],
+    "hardware": [
+      {
+        "description": "Additional DGX Sparks",
+        "quantity": 10,
+        "rate_usd": 5000,
+        "unit": "system",
+        "extended_usd": 50000,
+        "rationale": "Three initial Sparks proposed; independent reproduction and destructive tests",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Discrete NVIDIA GPU development systems",
+        "quantity": 12,
+        "rate_usd": 9000,
+        "unit": "system",
+        "extended_usd": 108000,
+        "rationale": "Separate CPU/device address spaces and driver coverage",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Data-center NVIDIA accelerator host allowances",
+        "quantity": 4,
+        "rate_usd": 75000,
+        "unit": "system",
+        "extended_usd": 300000,
+        "rationale": "Multi-GPU isolation, subject to target support and utilization",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "AMD CPU and ROCm-oriented GPU workstations",
+        "quantity": 12,
+        "rate_usd": 10000,
+        "unit": "system",
+        "extended_usd": 120000,
+        "rationale": "AMD heterogeneous memory, driver and porting tests",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "AMD high-memory server configurations",
+        "quantity": 4,
+        "rate_usd": 35000,
+        "unit": "system",
+        "extended_usd": 140000,
+        "rationale": "Large workloads and memory pressure tests",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Intel discrete GPU workstations",
+        "quantity": 10,
+        "rate_usd": 7000,
+        "unit": "system",
+        "extended_usd": 70000,
+        "rationale": "Intel memory mapping and runtime semantics",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Intel accelerator server allowances",
+        "quantity": 4,
+        "rate_usd": 40000,
+        "unit": "system",
+        "extended_usd": 160000,
+        "rationale": "Larger target experiments contingent on compatibility",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Shared storage, racks, network, RAM, CI servers",
+        "quantity": 1,
+        "rate_usd": 140000,
+        "unit": "lot",
+        "extended_usd": 140000,
+        "rationale": "Lab orchestration and durable reproducibility",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Power, thermal, UPS, measurement and fault-injection tools",
+        "quantity": 1,
+        "rate_usd": 70000,
+        "unit": "lot",
+        "extended_usd": 70000,
+        "rationale": "Adversarial hardware testing and reliable energy readings",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Spares, shipping, maintenance pool",
+        "quantity": 1,
+        "rate_usd": 77000,
+        "unit": "lot",
+        "extended_usd": 77000,
+        "rationale": "Availability, repairs and replacements",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      }
+    ],
+    "audits": [
+      {
+        "description": "Formal-methods proof audits",
+        "quantity": 8,
+        "rate_usd": 50000,
+        "unit": "review",
+        "extended_usd": 400000,
+        "rationale": "External proof and trusted-computing-base scrutiny",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Adversarial security/red-team audits",
+        "quantity": 6,
+        "rate_usd": 50000,
+        "unit": "review",
+        "extended_usd": 300000,
+        "rationale": "Attempt to break host/GPU/agent protections",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Driver/runtime binary and source audits",
+        "quantity": 4,
+        "rate_usd": 30000,
+        "unit": "review",
+        "extended_usd": 120000,
+        "rationale": "Unsafe interfaces, memory protection and firmware boundaries",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Independent experiment replication awards",
+        "quantity": 5,
+        "rate_usd": 20000,
+        "unit": "award",
+        "extended_usd": 100000,
+        "rationale": "External reproduction or falsification",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      }
+    ],
+    "infrastructure": [
+      {
+        "description": "Rented GPU compute and experiments",
+        "quantity": 24,
+        "rate_usd": 13000,
+        "unit": "month",
+        "extended_usd": 312000,
+        "rationale": "Flexible capacity where buying hardware is premature",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Power, networking and hosting",
+        "quantity": 24,
+        "rate_usd": 7000,
+        "unit": "month",
+        "extended_usd": 168000,
+        "rationale": "Running the test lab",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "CI artifact storage, provenance and secure observability",
+        "quantity": 24,
+        "rate_usd": 5000,
+        "unit": "month",
+        "extended_usd": 120000,
+        "rationale": "Source/build/evidence retention",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Research workshops and upstream collaboration",
+        "quantity": 24,
+        "rate_usd": 3000,
+        "unit": "month",
+        "extended_usd": 72000,
+        "rationale": "Cross-project verification and dissemination",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      },
+      {
+        "description": "Compliance, publication, essential services",
+        "quantity": 1,
+        "rate_usd": 73000,
+        "unit": "lot",
+        "extended_usd": 73000,
+        "rationale": "Grant and research operations",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      }
+    ],
+    "contingency": [
+      {
+        "description": "Controlled reserve",
+        "quantity": 1,
+        "rate_usd": 510000,
+        "unit": "lot",
+        "extended_usd": 510000,
+        "rationale": "Disbursed only with transparent approvals",
+        "quote_status": "PLANNING_ALLOWANCE_UNQUOTED"
+      }
+    ]
+  },
+  "assumptions": [
+    "All amounts are tentative planning allowances; not vendor quotations or signed contracts.",
+    "No claimed grant award, staff hires, facility contract, hardware procurement, or external review commitment.",
+    "Personal DGX Spark is not included in the purchase budget.",
+    "Additional GPU backends are speculative research, not existing CUDApp support.",
+    "Public spending receipts will supersede allowances after procurement.",
+    "Staff person-month allowances include contractor and employer burden as applicable."
+  ],
+  "grant_income_usd": 0,
+  "grant_expenditure_usd": 0
+}
