@@ -1,0 +1,100 @@
+2026-10-27T07:59:54Z
+$ ls -l /proc/79557/exe; tr "\0" " " </proc/79557/cmdline
+lrwxrwxrwx 1 drakestapleton drakestapleton 0 Oct 27 02:59 /proc/79557/exe -> /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http
+./aien-serve-http --engine omega --model-dir /home/drakestapleton/models/qwen3.6-35b-a3b-fp8-95a723d0 --port 18091 --max-context 49152 --max-tokens-cap 16384 --thinking off --batch-slots 8 
+$ sha256sum /proc/79557/exe
+19173f9ec3b609fe79af644f84741d8808b92ea8eb3ecec4bc945af6f22b3aeb  /proc/79557/exe
+$ cat .../bin-19173f9e/BUILD.txt SHA256SUMS
+aien-serve-http LIVE build, L387 motor ship (NO aien-test-switches: answers 400 to aien_test), pinned 2026-10-22T02:43:29Z; same commit and lib as the train candidate bin-bfc41659
+sc ship/motor-l387 f0230a59 (code 59b05a71: + a negative control leaves no state for a later request) = serve/q36-batch-v2 9c62690a (bin-16b0e6f8 source, L354 batch strokes v2 + tools L374)
+  + serve/merge-train 59b896b1 (L384 per-request switches) + serve/q36-prefill-v2 6127db50 (L369 chip prefill)
+  + hum/exact-head-batch 8dd86a36 (L314 exact head per stroke slot)
+  cargo build --release -p aien-serve-http, CARGO_TARGET_DIR=~/workspace/targets/l387/sc-live; host tests qwen36_batch 12/12 (with and without the feature)
+omega ship/motor-l387 6de999da = serve/q36-prefill-v2 60ba3051 (ab81d8f3 ship lib + L314 exact-head-stroke 41269bd8
+  + L356 CN rows 4b079116 + L369 prefill: multi-token GDN, attention, gate rows) + hum/state-precision 19c3b5d2 (L313 bf16 state)
+  lib sha256 110295ef23dc7561; q36 dec sim 27/27 PASS; q36 kernel hashes identical to L369 lib-v3
+levers ON: L354 batch, L312 strokes v2 (lever 2), L314 exact head, L356 CN rows, L369 prefill (chunks of 128), tools L374
+levers OFF: L313 bf16 state (AIEN_OMEGA_GDN_STATE_BF16 unset; not validated with the prefill's multi-token GDN)
+levers OUT (gate not green): L312 levers 3-7 (motor/serve 881f4397), L375 shared prompt cache, L376 team board
+switches: AIEN_Q36_PREFILL_CHUNK=0 prompts token by token; AIEN_OMEGA_Q36_CN_ROWS=0; AIEN_Q36_STROKE=0 rows in turn; AIEN_Q36_EXACT_HEAD=0
+19173f9ec3b609fe79af644f84741d8808b92ea8eb3ecec4bc945af6f22b3aeb  aien-serve-http
+110295ef23dc7561eea371636347c005835f37b82c22f92401aa8a887a3ca990  libomega_gpu.a
+$ curl -s http://127.0.0.1:18091/health
+{"busy":false,"concurrency":8,"engine":"omega-qwen36-batch","in_flight":1,"model":"qwen3.6-35b-a3b-fp8","status":"ok","uptime_s":14566}
+$ grep -c -E "libcuda|libnvidia" /proc/79557/maps
+0
+$ lsmod | grep ^nvidia
+nvidia_uvm           1912832  4
+nvidia_drm            143360  0
+nvidia_modeset       1892352  2 nvidia_drm
+nvidia              14688256  939 nvidia_uvm,nvidia_modeset
+$ cat /proc/driver/nvidia/version
+NVRM version: NVIDIA UNIX Open Kernel Module for aarch64  580.173.02  Release Build  (dvs-builder@U22-A24-5-4)  Tue Jun 23 08:34:19 UTC 2026
+GCC version:  gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+$ ls /lib/firmware/nvidia/
+580.173.02
+ad102
+ad103
+ad104
+ad106
+ad107
+ga100
+ga102
+ga103
+ga104
+ga106
+ga107
+gb100
+gb102
+gb202
+gb203
+gb205
+gb206
+gb207
+gh100
+gk20a
+gm200
+gm204
+gm206
+gm20b
+gp100
+gp102
+gp104
+gp106
+gp107
+gp108
+gp10b
+gv100
+tegra124
+tegra186
+tegra194
+tegra210
+tu102
+tu104
+tu106
+tu10x
+tu116
+tu117
+$ ls -l /lib/firmware/nvidia/580.173.02/
+total 103016
+-rw-r--r-- 1 root root 75012080 Jun 23 02:51 gsp_ga10x.bin
+-rw-r--r-- 1 root root 30471256 Jun 23 02:51 gsp_tu10x.bin
+$ pgrep -a nvidia-persist
+1755 /usr/bin/nvidia-persistenced --persistence-mode --verbose
+
+2026-10-27T08:08:01Z
+# addendum (RowsRuntime): is omega-mv cmdlist code linked into the live 35B binary?
+$ pgrep -af aien-serve-http
+79557 ./aien-serve-http --engine omega --model-dir /home/drakestapleton/models/qwen3.6-35b-a3b-fp8-95a723d0 --port 18091 --max-context 49152 --max-tokens-cap 16384 --thinking off --batch-slots 8
+$ sha256sum /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http
+19173f9ec3b609fe79af644f84741d8808b92ea8eb3ecec4bc945af6f22b3aeb  /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http
+$ nm /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http
+nm: /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http: no symbols
+$ strings /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http | grep -c 'cmdlist '
+18
+$ strings /home/drakestapleton/.local/state/aien-q36/bin-19173f9e/aien-serve-http | grep 'cmdlist ' | head -5
+cmdlist mark_independent: no launch recorded
+cmdlist create: arguments
+cmdlist create: nop kernel
+cmdlist add: arguments
+cmdlist add: list full

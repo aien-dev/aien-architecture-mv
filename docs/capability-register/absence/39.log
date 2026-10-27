@@ -1,0 +1,73 @@
+2026-10-27T08:12:34Z
+# absence search for audit map row 39: CUDA-GDB: device debugger (breakpoints, single-step, device state inspection)
+# result wording: "not found" in the searched repos/terms; not proof of absence. gh code search misses private/unindexed repos.
+
+$ gh search code --owner aien-dev 'cuda-gdb' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+aien-dev/CUDApp:docs/PAIN_POINTS.md
+aien-dev/CUDApp:evidence/dx/pain-points/counts.json
+
+$ git -C clones/CUDApp grep -I -i -l -E 'cuda-gdb|cuda_gdb|breakpoint|single.?step|debugger' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- ':!third_party' ':!**/third_party/**'
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/TOOL_INVENTORY.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/dx/pain-points/counts.json
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:tests/gpu_fp8gemm_test.c
+
+$ git -C clones/omega-mv grep -I -i -l -E 'cuda-gdb|cuda_gdb|breakpoint|single.?step|debugger' e5b32567a7aff3ce594e3254a622a846a6cd190b -- ':!third_party' ':!**/third_party/**'
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/estimation/protocols/est-v4.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/estimation/protocols/est-v5.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/one_layer/OM2-TUTORIAL.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/one_layer/OMEGESE.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-BUILD-2eec75b/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-BUILD-2eec75b/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/R16-ladder/raw/20261005T061028Z-80ca5d4f5b6c/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-PATH2-2eec75b/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-PATH2-2eec75b/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-R16INV-cb06d08/inventory-after.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-R16INV-cb06d08/inventory.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-R16INV-cb06d08/map-after.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-R16INV-pre/inventory-after.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-R16INV-pre/inventory.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-RECON-2eec75b/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-RECON-2eec75b/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-BUILD-A/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-BUILD-A/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-BUILD-B/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-BUILD-B/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/R16-ladder/raw/20261005T180414Z-c62f47b5ac17/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-BUILD-A/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-BUILD-A/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-BUILD-B/sc-1.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-BUILD-B/sc-2.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-A7c/R16-G7/raw/20261006T121001Z-97ee27584cda/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-A7c/R16-G7/raw/20261006T121001Z-97ee27584cda/r16_operator_host.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-G7b/R16-G7/raw/20261006T140516Z-97ee27584cda/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-G7b/R16-G7/raw/20261006T140516Z-97ee27584cda/r16_operator_host.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-w2/R16-ladder/raw/20261006T014614Z-97ee27584cda/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-w2/R16-ladder/raw/20261006T014614Z-97ee27584cda/r16_operator_host.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/FB1-CUT6A/pre-queue/preflight-local-no-dev-fallback.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/R16/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/R16/raw/20261001T010358Z-850fc5457705/inventory.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:seed/qualification/om2/candidates/sha/RESULTS.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:seed/qualification/om2/oracle/sha/PROVENANCE.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:seed/qualification/om2/oracle/sha/trace.py
+e5b32567a7aff3ce594e3254a622a846a6cd190b:seed/qualification/om2/oracle/sha/trace_child.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:spec/r16-orchestrator-retirement-map.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:tests/estimation/test_est_kf.c
+... (44 files total)
+
+$ git -C clones/omega-blas grep -I -i -l -E 'cuda-gdb|cuda_gdb|breakpoint|single.?step|debugger' 0706265a751b0f0957df918a8a945e35735ce5c4 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-dnn grep -I -i -l -E 'cuda-gdb|cuda_gdb|breakpoint|single.?step|debugger' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/aien-math grep -I -i -l -E 'cuda-gdb|cuda_gdb|breakpoint|single.?step|debugger' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+
+2026-10-27T08:16:19Z # addendum: CUDApp main moved to e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 (PR #119 merged 08:06:46Z); same pattern re-run at the new head
+$ git -C clones/CUDApp grep -I -i -l -E 'cuda-gdb|cuda_gdb|breakpoint|single.?step|debugger' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 -- ':!third_party' ':!**/third_party/**'
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/PAIN_POINTS.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/TOOL_INVENTORY.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:evidence/dx/pain-points/counts.json
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:tests/gpu_fp8gemm_test.c

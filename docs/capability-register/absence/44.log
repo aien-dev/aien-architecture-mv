@@ -1,0 +1,45 @@
+2026-10-27T08:15:42Z
+# absence search for audit map row 44 (NVML/nvidia-smi): NVML use in spark-debugger (archived) and its canonical crate; first-party NVML/nvidia-smi replacement in CUDApp; replacement PRs
+# "not found" in the searched trees; not proof of absence
+
+$ git -C clones/spark-debugger grep -I -i -n -E 'nvml|nvidia-smi|nvidia|gpu' dc907a4ebc0dd6154c483c37efe415d602d8f388
+dc907a4ebc0dd6154c483c37efe415d602d8f388:README.md:22:1. **Continuous Daemon**: Probes all local endpoints (Cortex memory, Sovereign Cockpit, Modular MAX seats, Conduit matrix), audits GPU utilization via NVML, enforces 
+dc907a4ebc0dd6154c483c37efe415d602d8f388:README.md:30:    Probe --> GPU[Grace Blackwell NVML Telemetry]
+dc907a4ebc0dd6154c483c37efe415d602d8f388:README.md:31:    GPU --> Vault[TPM Key Vault Hygiene Scan]
+dc907a4ebc0dd6154c483c37efe415d602d8f388:README.md:78:Part of the AIEN Sovereign Intelligence initiative. Engineered on NVIDIA DGX Spark to democratize artificial intelligence, defend autonomous sovereignty, and pay the 
+
+$ git -C clones/spark-debugger grep -I -i -n -E 'nvml|nvidia|gpu' dc907a4ebc0dd6154c483c37efe415d602d8f388 -- src Cargo.toml
+(no output: 0 hits)
+
+$ git -C clones/aien-sovereign-core-mv grep -I -i -n -E 'nvml|nvidia-smi' f30eb963918d71dd2998b1cb936c251429417de1 -- crates/spark-debugger
+(no output: 0 hits)
+
+$ git -C clones/aien-sovereign-core-mv grep -I -n 'nvidia-smi' f30eb963918d71dd2998b1cb936c251429417de1 -- crates/aien-cli/src/telemetry.rs
+f30eb963918d71dd2998b1cb936c251429417de1:crates/aien-cli/src/telemetry.rs:50:    let output = Command::new("nvidia-smi")
+
+$ git -C clones/CUDApp grep -I -i -n -E 'nvml|nvidia-smi' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- src nvrm m16 native tools ':!tools/figures'
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:41:global nvmlen ulong 96
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:525:npp64 8 get nvmlen slot
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:541:npp64 32 get nvmlen slot
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:569:put nvmlen slot 0
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:603:put nvmlen i 0
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:608:put nvmlen i 0
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:670:put nvmlen slot size
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:1029:size = get nvmlen s
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/nvrm/context.om:1074:size = get nvmlen s
+(end)
+
+$ git -C clones/CUDApp grep -n 'nvidia-smi' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- tools/figures/make_figures.py
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:tools/figures/make_figures.py:677:        ("nvidia-smi · NVML", "status, clocks, power", "not started", "MISSING", ""),
+
+$ gh pr list -R aien-dev/aien-sovereign-core-mv --state all --search 'nvidia-smi OR nvml OR sysfs' --limit 10 --json number,state,title
+656	OPEN	OWN-30B speed numbers say whether the GPU was shared
+72	MERGED	feat(cockpit): deploy industrial obsidian mission control with live PTY, real telemetry, and TPM vault
+
+$ gh pr list -R aien-dev/CUDApp --state all --search 'nvidia-smi OR nvml OR sysfs' --limit 10 --json number,state,title
+
+$ gh pr list -R aien-dev/aienux --state all --search 'nvidia-smi OR nvml OR sysfs' --limit 10 --json number,state,title
+12	MERGED	Replace Python evidence tooling with Rust and recapture a clean Config A
+297	MERGED	aienos#286 B5: GB10 IORT decode (report-only, host-only)
+267	MERGED	ck kernel: operator keyboard input + recovery-access hook (KEYBOARD gate, QEMU only; NEXT-PHASE-3 cut 1)
+

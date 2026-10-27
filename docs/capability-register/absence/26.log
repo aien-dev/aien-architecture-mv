@@ -1,0 +1,44 @@
+2026-10-27T08:03:00Z
+# row 26: cuSPARSE: sparse matrix formats and SpMV/SpMM
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev cusparse --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+(no output)
+[exit 0, 0 lines]
+
+$ gh search code --owner aien-dev spmv --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+(no output)
+[exit 0, 0 lines]
+
+$ gh search code --owner aien-dev SpMM --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+(no output)
+[exit 0, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'cusparse|\bspmv\b|\bspmm\b|\bcsr\b|compressed sparse row|sparsearray' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'cusparse|\bspmv\b|\bspmm\b|\bcsr\b|compressed sparse row|sparsearray' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:om/tls/test/tls/interop.sh
+e5b32567a7aff3ce594e3254a622a846a6cd190b:om/tls/test/x509/gen_pki.sh
+[exit 0, 2 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'cusparse|\bspmv\b|\bspmm\b|\bcsr\b|compressed sparse row|sparsearray' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'cusparse|\bspmv\b|\bspmm\b|\bcsr\b|compressed sparse row|sparsearray' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -iE 'cusparse|\bspmv\b|\bspmm\b|\bcsr\b|compressed sparse row|sparsearray' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/builtins.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/coverage.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/context/cx_data.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/core/known.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/lists/msgs.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/gen_known.py
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/oracle/lists_messages.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/oracle/print.jsonl
+[exit 0, 8 lines]
+

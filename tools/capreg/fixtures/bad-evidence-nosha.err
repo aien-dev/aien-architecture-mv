@@ -1,0 +1,1 @@
+FAIL line 2: evidence must be aien-dev/<repo>@<40-hex sha>:<path> or register:<path> without ..

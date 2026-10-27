@@ -1,0 +1,45 @@
+2026-10-27T08:03:06Z
+# row 31: MathDx: device-callable math building blocks (cuBLASDx/cuFFTDx-style)
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev mathdx --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+(no output)
+[exit 0, 0 lines]
+
+$ gh search code --owner aien-dev cublasdx --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+HTTP 403: API rate limit exceeded for user ID 330927100. If you reach out to GitHub Support for help, please include the request ID 9DFE:175767:EB736B:3109647:6AE05ABA and timestamp 2026-10-27 08:03:06 UTC. For more on scraping GitHub and h
+GitHub guard: GitHub refused the request (burst limit). Every chat on this machine now waits until 08:06Z. Do other work; one try after that time, no loop.
+[exit 1, 2 lines]
+
+$ gh search code --owner aien-dev cufftdx --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'mathdx|cublasdx|cufftdx|cusolverdx|curanddx|device[-_ ]callable' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'mathdx|cublasdx|cufftdx|cusolverdx|curanddx|device[-_ ]callable' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/omega457/ground.txt
+[exit 0, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'mathdx|cublasdx|cufftdx|cusolverdx|curanddx|device[-_ ]callable' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'mathdx|cublasdx|cufftdx|cusolverdx|curanddx|device[-_ ]callable' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -iE 'mathdx|cublasdx|cufftdx|cusolverdx|curanddx|device[-_ ]callable' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+(no output)
+[exit 1, 0 lines]
+
+
+# retry after rate limit, 2026-10-27T08:06:58Z
+$ gh search code --owner aien-dev 'cublasdx' --limit 30 --json repository,path
+exit 0
+[]
+$ gh search code --owner aien-dev 'cufftdx' --limit 30 --json repository,path
+exit 0
+[]

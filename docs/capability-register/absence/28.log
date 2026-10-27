@@ -1,0 +1,39 @@
+2026-10-27T08:03:09Z
+# row 28: cuSOLVER: GPU dense solvers (host side is aien-math)
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev cusolver --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev getrf --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev potrf --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'cusolver|getrf|potrf|geqrf|syevd|gesvd' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'cusolver|getrf|potrf|geqrf|syevd|gesvd' e5b32567a7aff3ce594e3254a622a846a6cd190b
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'cusolver|getrf|potrf|geqrf|syevd|gesvd' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+
+# retry after rate limit, 2026-10-27T08:07:02Z
+$ gh search code --owner aien-dev 'cusolver' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+$ gh search code --owner aien-dev 'getrf' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+$ gh search code --owner aien-dev 'potrf' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.

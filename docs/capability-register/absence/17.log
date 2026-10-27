@@ -1,0 +1,26 @@
+2026-10-27T08:11:37Z
+# absence search for audit map row 17: Graphs: CUDA Graph capture/instantiate/update parity
+# result wording: "not found" in the searched repos/terms; not proof of absence. gh code search misses private/unindexed repos.
+
+$ gh search code --owner aien-dev 'cudaGraphInstantiate' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+(no output: 0 hits)
+
+$ git -C clones/CUDApp grep -I -i -l -E 'cudaGraph|graph.?capture|stream.?capture|BeginCapture|graph.?instantiate|GraphExec' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-mv grep -I -i -l -E 'cudaGraph|graph.?capture|stream.?capture|BeginCapture|graph.?instantiate|GraphExec' e5b32567a7aff3ce594e3254a622a846a6cd190b -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-blas grep -I -i -l -E 'cudaGraph|graph.?capture|stream.?capture|BeginCapture|graph.?instantiate|GraphExec' 0706265a751b0f0957df918a8a945e35735ce5c4 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-dnn grep -I -i -l -E 'cudaGraph|graph.?capture|stream.?capture|BeginCapture|graph.?instantiate|GraphExec' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/aien-math grep -I -i -l -E 'cudaGraph|graph.?capture|stream.?capture|BeginCapture|graph.?instantiate|GraphExec' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+
+2026-10-27T08:16:19Z # addendum: CUDApp main moved to e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 (PR #119 merged 08:06:46Z); same pattern re-run at the new head
+$ git -C clones/CUDApp grep -I -i -l -E 'cudaGraph|graph.?capture|stream.?capture|BeginCapture|graph.?instantiate|GraphExec' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)

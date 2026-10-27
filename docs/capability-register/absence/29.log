@@ -1,0 +1,78 @@
+2026-10-27T08:03:04Z
+# row 29: cuFFT: GPU FFT
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev cufft --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+aien-dev/CUDApp ROADMAP.md
+aien-dev/CUDApp PROVENANCE.md
+aien-dev/CUDApp README.md
+aien-dev/CUDApp docs/PAIN_POINTS.md
+aien-dev/omega-mv docs/OMEGA.md
+aien-dev/CUDApp tools/figures/make_figures.py
+aien-dev/aienos.com crates/site-builder/data/omega.json
+[exit 0, 7 lines]
+
+$ gh search code --owner aien-dev fft --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+aien-dev/CUDApp ROADMAP.md
+aien-dev/CUDApp CONTRIBUTING.md
+aien-dev/CUDApp README.md
+aien-dev/CUDApp docs/PAIN_POINTS.md
+aien-dev/omega-mv docs/OMEGA.md
+aien-dev/CUDApp tools/figures/make_figures.py
+aien-dev/physics-mv forge/v2/forge_substrate_v2.h
+aien-dev/aien-architecture-mv docs/adr/0026-sealed-discovery-examinations.md
+aien-dev/CUDApp PROVENANCE.md
+aien-dev/aienos.com crates/site-builder/data/omega.json
+aien-dev/omega-mv evidence/ARGUS/speed2/raw/main-leaf-0.txt
+aien-dev/omega-mv evidence/ARGUS/speed2/raw/main-leaf-2d.txt
+aien-dev/omega-mv evidence/ARGUS/speed2/raw/main-leaf-2i.txt
+aien-dev/synapse docs/adr/0003-ai-native-source-control-model.md
+aien-dev/CUDApp .github/ISSUE_TEMPLATE/add-a-library.md
+aien-dev/aienux native/kernel/tests/fixtures/continuity_verdicts.txt
+[exit 0, 16 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'cufft|\bfft\b|fourier transform|cooley' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:.github/ISSUE_TEMPLATE/add-a-library.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:CONTRIBUTING.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:PROVENANCE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:ROADMAP.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/img/replacement-map.svg
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:tools/figures/make_figures.py
+[exit 0, 8 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'cufft|\bfft\b|fourier transform|cooley' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/OMEGA.md
+[exit 0, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'cufft|\bfft\b|fourier transform|cooley' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'cufft|\bfft\b|fourier transform|cooley' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -iE 'cufft|\bfft\b|fourier transform|cooley' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/builtins.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/concepts.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/coverage.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/guides.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/reference.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/topics.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:docs/wave.md
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/context/cx_data.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/wave/gw.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/wave/gwcall.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/wave/gwpsd.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/context/catalog.py
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/context/heldout.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/context/package.py
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/context/queries.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/context/results-heldout.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/context/results-tuned.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/wave/gen_ref.py
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/wave/omt/gwpsd.omt
+[exit 0, 19 lines]
+
