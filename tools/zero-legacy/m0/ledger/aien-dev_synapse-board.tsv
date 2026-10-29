@@ -1,0 +1,23 @@
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	synapse.pin	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	omega.pin	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	first-party	OPEN	SHELL	build.sh	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	native	NATIVE	OM	src/20-emit.om	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	native	NATIVE	OM	src/00-util.om	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	native	NATIVE	OM	src/90-main.om	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	native	NATIVE	OM	src/30-serve.om	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	native	NATIVE	OM	src/10-scan.om	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	first-party	OPEN	SHELL	tests/run.sh	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	tests/fixtures/findings.jsonl	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	tests/fixtures/claims.jsonl	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	tests/fixtures/map.jsonl	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	tests/fixtures/bad-map.jsonl	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558	unresolved	UNKNOWN	OTHER	tests/fixtures/bad-claims.jsonl	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+# LEDGER aien-dev/synapse-board	44fc51aa5e903be58fe41d19e059b0b113db5558
+# CLASS native	5
+# CLASS first-party	2
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	9
+# CLASS unresolved	7
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

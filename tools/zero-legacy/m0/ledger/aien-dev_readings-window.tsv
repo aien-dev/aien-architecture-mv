@@ -1,0 +1,15 @@
+aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4	unresolved	UNKNOWN	OTHER	spark.conf.example	aien-dev/readings-window#19	Rust daemon not yet in .om
+aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4	unresolved	UNKNOWN	OTHER	scripts/exposure-watch.timer	aien-dev/readings-window#19	Rust daemon not yet in .om
+aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4	unresolved	UNKNOWN	OTHER	scripts/exposure-watch.service	aien-dev/readings-window#19	Rust daemon not yet in .om
+aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4	first-party	OPEN	SHELL	scripts/exposure-watch.sh	aien-dev/readings-window#19	Rust daemon not yet in .om
+aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4	first-party	OPEN	RUST	src/tls.rs	aien-dev/readings-window#19	Rust daemon not yet in .om
+aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4	first-party	OPEN	RUST	src/main.rs	aien-dev/readings-window#19	Rust daemon not yet in .om
+# LEDGER aien-dev/readings-window	c1e03543fb256ff7e2a9f077541ebba36c106aa4
+# CLASS native	0
+# CLASS first-party	3
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	10
+# CLASS unresolved	3
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

@@ -5,7 +5,7 @@ under the inventory authority [#300](https://github.com/aien-dev/aien-architectu
 Status: **v0, transitional inventory mode qualified on the host; release mode implemented and
 gate-tested on fixtures; not yet wired into any release decision.**
 
-Two native Omega programs, built only by the pinned seed compiler in `omega.pin`
+Native Omega programs, built only by the pinned seed compiler in `omega.pin`
 (`seed/out/omc` of `aien-dev/omega-mv`, born from `seed/rung0/seed0.hex` by
 `sh seed/omega-from-seed.sh`). No C, Rust, Python or foreign runtime is on their
 implementation path. The shell in `tests/gates/run.sh` only sequences the build and the
@@ -15,6 +15,7 @@ runs; every judgment is made by these programs.
 | --- | --- |
 | `closure.om` | walk one checked-out tree, classify every regular file, apply a manifest, print rows and a summary, refuse in release mode |
 | `expect.om` | judge a report against an expected-row file (order free, row counts equal) |
+| `bind.om` | bind one closure report to owning issues and print the M0 ledger rows of #300 |
 
 ## Build and run
 
@@ -40,6 +41,7 @@ Output: one `CATEGORY<TAB>path` row per file, then `# CATEGORY count` lines, `# 
 | `OM` | `.om` | native |
 | `WRAPPER` | `.om` containing the word `execprog` (a launcher of something else) | outstanding until reviewed |
 | `C_H` `RUST` `PYTHON` `OSC` | `.c` `.h` `.cc` `.cpp` `.hpp` `.cu` `.cuh`, `.rs`, `.py`, `.osc` | outstanding |
+| `XLANG` | `.ts .tsx .js .jsx .mjs .cjs .go .swift .zig .rb .vue .ps1 .java .kt .php .lua .mojo .pl .pm .dart .cs .sql .nix` | outstanding (first-party code in another language; before this row these files were `OTHER`) |
 | `SHELL` | `.sh` `.bash` | outstanding |
 | `FOREIGN` | shell whose head mentions `python`, `perl`, `node` or `ruby` | outstanding |
 | `HEXASM` | `.hex` `.hex1` `.s` `.S` `.s2` `.asm` | outstanding; `.hex`/`.hex1` may be declared `data` |
@@ -74,10 +76,43 @@ rungs), not something this tool can decide from bytes.
 `tests/gates/arch-zero-legacy-closure.gate` runs `tests/gates/run.sh zero-legacy` with
 `AIEN_OMC` pointing at an omc whose sha256 equals `omega.pin`; otherwise NOT_RUN (exit 3).
 The hostile fixture `fixtures/tree` (hidden C in a `.txt`, a shebang file without a suffix,
-shell executing Python, a `.om` launcher, forged `data` over a `.c` and a `.s`, an ELF, an
-archive, a stale `.hex`, a Makefile, a skipped directory) must be refused with exit 1 and match
-`fixtures/tree.expected` row for row; `fixtures/clean` must be accepted with its manifest and
-refused (undeclared hex) without it.
+shell executing Python, a `.om` launcher, forged `data` over a `.c`, a `.ts` and a `.s`, a
+TypeScript file, an ELF, an archive, a stale `.hex`, a Makefile, a skipped directory) must be
+refused with exit 1 and match `fixtures/tree.expected` row for row; `fixtures/clean` must be
+accepted with its manifest and refused (undeclared hex) without it. The gate then binds the
+hostile report with `bind` (see below) and requires: bound ledger exit 0 and equal to
+`fixtures/ledger.expected`; owner gap (`owners-gap.tsv`) exit 1 and not equal to the expected
+ledger; unresolved gap (`owners-unres.tsv`) exit 2; an owners line with an empty field
+(`owners-bad.tsv`) exit 65; a report without its final `# UNKNOWN` line (`cut.report`) and a
+report with a category closure never prints (`badcat.report`) exit 66.
+
+## M0 ledger (`bind.om`)
+
+```
+./bind REPORT OWNERS REPO SHA [full]
+```
+
+`REPORT` is one `closure` report of a tree checked out at `SHA` (40 lowercase hex). `OWNERS`
+lines are `REPO<TAB>PREFIX<TAB>OWNER<TAB>BLOCKER`; `PREFIX` `.` is the whole repository; the
+first line whose repository equals `REPO` and whose prefix matches the path wins. Output rows:
+`REPO SHA CLASS STATUS CATEGORY PATH OWNER BLOCKER`, then `# LEDGER`, `# CLASS` and `# UNBOUND`
+summary lines. Classes: `native` (OM), `first-party` (every outstanding category), `generated`,
+`external`, `doc-data` (DOC and DATA, printed only with `full`), `unresolved` (closure's unknown
+categories plus SYMLINK and SKIP). Status: NATIVE, OPEN (first-party with owner), INVENTORIED
+(generated/external/doc-data), UNKNOWN (unresolved with owner), UNBOUND (no owner line).
+Exit: 0 every first-party and unresolved row has an owner; 1 a first-party row is unbound;
+2 only unresolved rows are unbound; 64 usage or a SHA that is not 40 lowercase hex; 65 an
+unreadable or oversized input or an owners line with an empty field; 66 a report that is not
+whole (unknown category, empty path, or no final `# UNKNOWN` line).
+
+`m0/` holds the repository-wide run for #300: `owners.tsv` (one file for every repository),
+`repos.tsv` (every enumerated repository with visibility, archived/fork status, scanned sha and
+closure/bind exit codes; archived and fork repositories are listed, not scanned; namespaces the
+bot cannot enumerate are `UNKNOWN` rows) and `ledger/<owner>_<repo>.tsv` (the bind output per
+repository, without `full`). It is regenerated by shallow-cloning each repository at its default
+branch head and running, from the clone's root, `closure . > R` then
+`bind R owners.tsv OWNER/REPO SHA`. The clone loop is a few lines of shell that only sequence
+these two programs; it is not part of the tool.
 
 ## Limits of v0 (honest scope)
 
@@ -106,12 +141,13 @@ CUDApp #79, not the source-row counts above.
 
 ## Gate runner and hasher in `.om` (replaces the shell step)
 
-`gate.om` is the gate: it compiles `closure.om`, `expect.om` and `sha256.om` with the compiler it
+`gate.om` is the gate: it compiles `closure.om`, `expect.om`, `sha256.om` and `bind.om` with the compiler it
 is given, hashes that compiler with the native `sha256` and refuses (exit 3, NOT_RUN) unless the
 digest equals `omc_sha256` in `omega.pin`, runs the hostile and clean fixtures, judges them with
 `expect`, prints the `AIEN-OBS` lines and exits 0 only when every expectation holds. A compiler
 with one semantic edit in `omc.om` (`fail 12`→`fail 13`, digest `ca2aa132…`) is refused by this
-check. `gate.sh` is the three-line loader that compiles `gate.om` and execs it, the same role
+check. `gate.sh` is the loader that compiles `gate.om` (exit 1 with a message when that compile
+fails, instead of exec'ing an empty binary) and execs it, the same role
 `seed/rung0/load0.sh` has for the seed; no judgment lives in shell any more.
 
 `sha256.om` is FIPS 180-4 SHA-256 (file or stdin, hex on stdout, 16 MiB cap, exit 65/66). Checked

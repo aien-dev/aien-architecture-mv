@@ -1,0 +1,47 @@
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-core/src/firewall.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-core/src/schema.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-core/src/lib.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-core/src/crypto.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-core/src/cuckoo.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/learner.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/carrier.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/teacher.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/lib.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/transport.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/identity.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/wire.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/update.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-core/src/scoring.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-client/src/network.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-client/src/lib.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-client/src/main.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-client/src/preflight.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon-client/src/storage.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/src/lib.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/src/main.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/src/bin/aienet0-run.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/tests/teaching.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/tests/teaching_steps.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/tests/encrypted_transport.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-coordinator/tests/loopback.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/beacon/src/main.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-volunteer/src/lib.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-volunteer/src/main.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-volunteer/src/bin/aienet0-serve.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-volunteer/tests/teaching.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	RUST	crates/oh-volunteer/tests/data_stays_home.rs	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	SHELL	scripts/demo-teach.sh	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	SHELL	scripts/agent-preflight.sh	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	SHELL	scripts/demo-local.sh	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	SHELL	scripts/volunteer-gap.sh	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	SHELL	scripts/aienet0/controls.sh	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756	first-party	OPEN	SHELL	scripts/aienet0/mutants.sh	aien-dev/open-humanity#38	Rust transport not yet in .om
+# LEDGER aien-dev/open-humanity	53c39bf2031c01e28703dfdad7e8cae89de2d756
+# CLASS native	0
+# CLASS first-party	38
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	28
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

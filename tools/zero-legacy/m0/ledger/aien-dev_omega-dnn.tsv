@@ -1,0 +1,12 @@
+aien-dev/omega-dnn	2b7e6b3fee48921337f954c6eae102c3df8e41c0	first-party	OPEN	SHELL	tools/build.sh	aien-dev/omega-dnn#3	Python package not yet in .om
+aien-dev/omega-dnn	2b7e6b3fee48921337f954c6eae102c3df8e41c0	first-party	OPEN	PYTHON	python/omega_dnn/__init__.py	aien-dev/omega-dnn#3	Python package not yet in .om
+aien-dev/omega-dnn	2b7e6b3fee48921337f954c6eae102c3df8e41c0	native	NATIVE	OM	om/dnn.om	aien-dev/omega-dnn#3	Python package not yet in .om
+# LEDGER aien-dev/omega-dnn	2b7e6b3fee48921337f954c6eae102c3df8e41c0
+# CLASS native	1
+# CLASS first-party	2
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	7
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

@@ -1,0 +1,80 @@
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	vite.config.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/telemetry.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/agent_status.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/main.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/state.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/routes/health.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/routes/pages.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/routes/chat.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/routes/mod.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-server/src/routes/stream.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	RUST	crates/site-builder/src/main.rs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	scripts/verify-build.mjs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	scripts/spa-fallback.mjs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	scripts/check-copy.mjs	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	PYTHON	scripts/symphony_dispatch.py	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/main.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/App.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/vite-env.d.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/entry-server.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/data/operators.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/data/portfolio.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/data/practice.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/data/worksCatalog.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/data/claims.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/data/historyAudit.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/lib/tracking.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/lib/usePageMeta.ts	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/OmegaPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/DadPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/AienPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/WorksIndexPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/WaitlistPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/NotFoundPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/InterestPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/PathPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/AtlasPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/ResearchPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/SymphonyPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/MapPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/ScholarPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/WorkflowPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/AegisPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/HomePage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/WorkReaderPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/WhatILearnedPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/EvidencePage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/SoftwarePage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/pages/FirstRunPage.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/diagrams/CommandTree.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/diagrams/Birdseye.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/diagrams/CyclePhases.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/BenchmarkSection.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/PagePrimitives.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/PracticeTimeline.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/StickyChapterNav.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/SiteFooter.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/VoiceMark.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/FirstRunDiagram.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/VolumeChart.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/SiteNav.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/Layout.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	src/components/InterestForm.tsx	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	PYTHON	server/test_waitlist_api.py	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	PYTHON	server/waitlist_api.py	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	PYTHON	server/__init__.py	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	unresolved	UNKNOWN	OTHER	ops/drake-waitlist-api.service	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	SHELL	ops/renew-waitlist-cert.sh	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	unresolved	UNKNOWN	OTHER	ops/systemd/drakestapleton-site.service	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	unresolved	UNKNOWN	OTHER	public/images/aien-avatar-poster.webp	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	unresolved	UNKNOWN	OTHER	public/images/aien-avatar.mp4	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc	first-party	OPEN	XLANG	public/js/live-ticker.js	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+# LEDGER drakestapleton/drakestapleton.com-old	86e0b7dcb72e40cbc93da645fba8eabb378d72cc
+# CLASS native	0
+# CLASS first-party	67
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	42
+# CLASS unresolved	4
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

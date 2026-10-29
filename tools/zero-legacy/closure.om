@@ -52,6 +52,7 @@ text c18 "FORGED"
 text c19 "SKIP"
 text c20 "MAKE"
 text c21 "UNREADABLE"
+text c22 "XLANG"
 
 global path uchar 4096
 global plen ulong 1
@@ -158,6 +159,9 @@ r = write 1 c20 0 len c20
 end
 if eq k 21
 r = write 1 c21 0 len c21
+end
+if eq k 22
+r = write 1 c22 0 len c22
 end
 end
 
@@ -625,6 +629,9 @@ end
 if e3 111 115 99
 ret 5
 end
+if isxl
+ret 22
+end
 if or e3 104 101 120 or e4 104 101 120 49 or e1 115 or e1 83 or e2 115 50 e3 97 115 109
 ret 6
 end
@@ -655,6 +662,28 @@ end
 ret 10
 end
 
+note first-party source in a language closure has no own category for (#300 M0): TypeScript,
+note JavaScript, Go, Swift, Zig, Ruby, Vue, PowerShell, Java, Kotlin, PHP, Lua, Mojo, Perl,
+note Dart, C#, SQL and Nix; before this they fell to OTHER and counted as unknown
+fn isxl to bool
+if or e2 116 115 or e3 116 115 120 or e2 106 115 e3 106 115 120
+ret true
+end
+if or e3 109 106 115 or e3 99 106 115 or e2 103 111 e5 115 119 105 102 116
+ret true
+end
+if or e3 122 105 103 or e2 114 98 or e3 118 117 101 e3 112 115 49
+ret true
+end
+if or e4 106 97 118 97 or e2 107 116 or e3 112 104 112 e3 108 117 97
+ret true
+end
+if or e4 109 111 106 111 or e2 112 108 or e2 112 109 e4 100 97 114 116
+ret true
+end
+ret or e2 99 115 or e3 115 113 108 e3 110 105 120
+end
+
 note assembly text stays source under any manifest; .hex/.hex1 may be declared data
 fn isasm to bool
 if or e1 115 e1 83
@@ -667,7 +696,7 @@ fn issrc c ulong to bool
 if or eq c 1 or eq c 2 or eq c 3 or eq c 4 eq c 5
 ret true
 end
-if or eq c 11 or eq c 12 or eq c 16 eq c 20
+if or eq c 11 or eq c 12 or eq c 16 or eq c 20 eq c 22
 ret true
 end
 if eq c 6
@@ -949,7 +978,7 @@ r = fclose int fd
 end
 
 fn summary to void
-for k ulong 22
+for k ulong 23
 r = write 1 thash 0 2
 wcat k
 r = write 1 tsp 0 1
@@ -968,7 +997,8 @@ s = add s get cnt 11
 s = add s get cnt 12
 s = add s get cnt 16
 s = add s get cnt 18
-ret add s get cnt 20
+s = add s get cnt 20
+ret add s get cnt 22
 end
 
 fn unknown to ulong

@@ -1,0 +1,30 @@
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	vite.config.ts	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	tailwind.config.js	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	eslint.config.js	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/main.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/store.ts	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/App.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/api.ts	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/utils/units.ts	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/Sidebar.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/LayoutManager.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/PropertiesPanel.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/SettingsModal.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/HistoryManager.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/Toolbar.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/Canvas.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/ElementComponent.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	src/components/FloorSelector.tsx	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	server/db.js	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	server/schema.sql	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	server/check_db.js	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270	first-party	OPEN	XLANG	server/index.js	aien-spark/flooredit#2	host-mandated TS: browser UI
+# LEDGER aien-spark/flooredit	6b7653282c8e48e08dc018e2cb7f89b847306270
+# CLASS native	0
+# CLASS first-party	21
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

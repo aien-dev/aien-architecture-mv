@@ -1,0 +1,28 @@
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	unresolved	UNKNOWN	OTHER	.env.example	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	tests/test_guards.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	tests/test_interfaces.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	native	NATIVE	OM	om/approval.om	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	unresolved	UNKNOWN	OTHER	units/drake-voice-telegram.service	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	unresolved	UNKNOWN	OTHER	units/drake-voice-web.service	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/xapi.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/telegram.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/evaluation.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/mail.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/corpus.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/config.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/__init__.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/__main__.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/model.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	XLANG	drake_voice/ui.js	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/core.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/store.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146	first-party	OPEN	PYTHON	drake_voice/web.py	aien-dev/drake-voice#4	Python assistant not yet in .om
+# LEDGER aien-dev/drake-voice	82811f93246cb852ed576b62dd093d115b9e5146
+# CLASS native	1
+# CLASS first-party	15
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	9
+# CLASS unresolved	3
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

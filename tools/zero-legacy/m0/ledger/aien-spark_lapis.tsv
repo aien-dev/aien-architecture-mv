@@ -1,0 +1,87 @@
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	tsup.config.ts	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	tailwind.config.ts	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/PageHeader.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Separator.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Tooltip.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Badge.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/DiffView.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/DropdownMenu.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Toast.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/EmptyState.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/StatsCard.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Card.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Button.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Skeleton.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Switch.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Alert.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Drawer.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/TagInput.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Progress.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Select.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Tabs.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/FormField.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Command.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Input.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Avatar.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/RadioGroup.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Checkbox.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/ChartContainer.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Pagination.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Accordion.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Table.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Calendar.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Dialog.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Popover.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Label.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Slider.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Textarea.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	.design-sync/previews/Breadcrumbs.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/index.ts	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/lib/cn.ts	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/badge.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/accordion.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/command.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/popover.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/input.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/tooltip.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/drawer.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/empty-state.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/breadcrumbs.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/skeleton.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/label.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/avatar.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/switch.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/select.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/dialog.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/separator.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/card.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/textarea.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/stats-card.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/dropdown-menu.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/slider.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/page-header.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/alert.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/toast.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/table.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/progress.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/checkbox.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/tag-input.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/form-field.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/chart.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/pagination.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/radio-group.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/calendar.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/tabs.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/diff-view.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	first-party	OPEN	XLANG	src/components/button.tsx	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	unresolved	UNKNOWN	OTHER	fonts/LibreFranklin-Variable.woff2	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec	unresolved	UNKNOWN	OTHER	fonts/SplineSansMono-Variable.woff2	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+# LEDGER aien-spark/lapis	860cd59d348faf0d282c6d1f5efcf5003a9a36ec
+# CLASS native	0
+# CLASS first-party	76
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	46
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

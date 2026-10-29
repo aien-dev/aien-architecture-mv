@@ -1,0 +1,39 @@
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	vite.config.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	unresolved	UNKNOWN	OTHER	.dev.vars.example	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	cloudflare-env.d.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	next.config.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	eslint.config.mjs	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	drizzle.config.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	postcss.config.mjs	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	drizzle/0001_marvelous_amazoness.sql	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	drizzle/0000_rare_joshua_kane.sql	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	lib/xbox.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	tests/xbox.test.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	tests/rendered-html.test.mjs	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	db/index.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	db/schema.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/page.tsx	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/layout.tsx	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/MessageArchive.tsx	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/xbox/_shared.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/xbox/connection/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/xbox/status/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/xbox/sync/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/xbox/auth/callback/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/xbox/auth/start/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/messages/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/messages/_shared.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/messages/import/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/messages/[id]/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	app/api/messages/contacts/route.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	build/sites-vite-plugin.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4	first-party	OPEN	XLANG	worker/index.ts	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+# LEDGER aien-spark/phone-import	8e15a8b252c547cc02a26dbf1c2cae1dc075bec4
+# CLASS native	0
+# CLASS first-party	29
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	12
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

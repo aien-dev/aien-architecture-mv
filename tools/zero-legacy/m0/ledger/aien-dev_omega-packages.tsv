@@ -1,0 +1,19 @@
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	first-party	OPEN	XLANG	flake.nix	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	unresolved	UNKNOWN	OTHER	pins.env	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	first-party	OPEN	SHELL	scripts/check-pins.sh	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	first-party	OPEN	SHELL	scripts/omc-from-seed.sh	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	first-party	OPEN	SHELL	scripts/sbom.sh	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	unresolved	UNKNOWN	OTHER	docker/Dockerfile	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	first-party	OPEN	SHELL	debian/build-deb.sh	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	unresolved	UNKNOWN	OTHER	debian/control.in	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	unresolved	UNKNOWN	OTHER	guix/aien/omega.scm	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599	native	NATIVE	OM	examples/hello.om	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+# LEDGER aien-dev/omega-packages	da121553fab77459320010b439fe06d018047599
+# CLASS native	1
+# CLASS first-party	5
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	11
+# CLASS unresolved	4
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

@@ -1,0 +1,5 @@
+# fixture owners for bind.om (#300): the foreign repo line comes first and must never match
+other/repo	.	arch#9999	must never match
+fixture/tree	fixtures/tree/src/old.c	arch#9001	C retirement
+fixture/tree	fixtures/tree/src/	arch#9002	src retirement
+fixture/tree	fixtures/tree/golden/	arch#9003	golden forgeries

@@ -1,0 +1,15 @@
+aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568	first-party	OPEN	XLANG	next.config.ts	aien-spark/attendance#2	host-mandated TS: Next.js browser
+aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568	first-party	OPEN	XLANG	eslint.config.mjs	aien-spark/attendance#2	host-mandated TS: Next.js browser
+aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568	first-party	OPEN	XLANG	postcss.config.mjs	aien-spark/attendance#2	host-mandated TS: Next.js browser
+aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568	unresolved	UNKNOWN	OTHER	src/app/favicon.ico	aien-spark/attendance#2	host-mandated TS: Next.js browser
+aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568	first-party	OPEN	XLANG	src/app/page.tsx	aien-spark/attendance#2	host-mandated TS: Next.js browser
+aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568	first-party	OPEN	XLANG	src/app/layout.tsx	aien-spark/attendance#2	host-mandated TS: Next.js browser
+# LEDGER aien-spark/attendance	4ace8f74fdaeb490234c491bf477c0392210e568
+# CLASS native	0
+# CLASS first-party	5
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

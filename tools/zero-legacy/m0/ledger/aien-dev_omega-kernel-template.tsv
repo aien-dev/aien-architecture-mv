@@ -1,0 +1,15 @@
+aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402	first-party	OPEN	PYTHON	reference.py	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402	unresolved	UNKNOWN	OTHER	cases.tsv	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402	native	NATIVE	OM	kernel.om	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402	first-party	OPEN	FOREIGN	tools/check.sh	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402	first-party	OPEN	SHELL	tools/fetch.sh	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402	first-party	OPEN	PYTHON	tools/cases.py	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+# LEDGER aien-dev/omega-kernel-template	02050226cf240c9b6fbcd77c7fc4bf12319f1402
+# CLASS native	1
+# CLASS first-party	4
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	9
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

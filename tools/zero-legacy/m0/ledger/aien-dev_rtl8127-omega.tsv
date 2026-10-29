@@ -1,0 +1,22 @@
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	first-party	OPEN	SHELL	install.sh	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	unresolved	UNKNOWN	OTHER	omega.pin	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	first-party	OPEN	SHELL	tools/omc.sh	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	first-party	OPEN	SHELL	tools/build.sh	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	first-party	OPEN	SHELL	tests/install/run.sh	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	native	NATIVE	OM	om/rtl8127/model.om	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	native	NATIVE	OM	om/rtl8127/hw.om	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	native	NATIVE	OM	om/rtl8127/rtl8127.om	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	native	NATIVE	OM	om/rtl8127/test/driver.om	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	first-party	OPEN	FOREIGN	om/rtl8127/test/run.sh	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	unresolved	UNKNOWN	ELF	dist/rtl8127-probe-linux-aarch64	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	native	NATIVE	OM	cmd/rtl8127d/probe.om	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8	first-party	OPEN	SHELL	cmd/rtl8127d/test/run.sh	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+# LEDGER aien-dev/rtl8127-omega	4c757d7adb4bd929341324ec2c0f5530d97cf8f8
+# CLASS native	5
+# CLASS first-party	6
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	4
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

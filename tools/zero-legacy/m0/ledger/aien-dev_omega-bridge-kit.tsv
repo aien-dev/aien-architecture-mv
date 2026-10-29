@@ -1,0 +1,19 @@
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	HIDDEN	start	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	HIDDEN	omb	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	PYTHON	ui/test_file_containment.py	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	PYTHON	ui/server.py	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	C_H	samples/gcd.c	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	native	NATIVE	OM	samples/power.om	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	native	NATIVE	OM	samples/gcd.om	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	PYTHON	samples/gcd.py	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	SHELL	remote/setup.sh	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70	first-party	OPEN	FOREIGN	remote/omb-remote.sh	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+# LEDGER aien-dev/omega-bridge-kit	3191f50d70ddb5bcff95ca865bce97a88bbcbf70
+# CLASS native	2
+# CLASS first-party	8
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	10
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

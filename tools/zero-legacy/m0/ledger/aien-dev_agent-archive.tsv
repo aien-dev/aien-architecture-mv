@@ -1,0 +1,17 @@
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	first-party	OPEN	RUST	src/pb.rs	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	first-party	OPEN	RUST	src/collectors.rs	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	first-party	OPEN	RUST	src/core.rs	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	first-party	OPEN	RUST	src/main.rs	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	unresolved	UNKNOWN	OTHER	tests/fixtures/omp.jsonl	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	unresolved	UNKNOWN	OTHER	tests/fixtures/muse.jsonl	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	unresolved	UNKNOWN	OTHER	tests/fixtures/codex.jsonl	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30	unresolved	UNKNOWN	OTHER	tests/fixtures/claude.jsonl	aien-dev/agent-archive#10	Rust collector not yet in .om
+# LEDGER aien-dev/agent-archive	3211d0b88de2f6f40f0cbf9d5e48ffd78410fb30
+# CLASS native	0
+# CLASS first-party	4
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	7
+# CLASS unresolved	4
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

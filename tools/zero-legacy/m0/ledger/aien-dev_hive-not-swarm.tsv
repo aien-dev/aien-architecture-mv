@@ -1,0 +1,17 @@
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	unresolved	UNKNOWN	ARCHIVE	Hive_Not_Swarm.docx	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	first-party	OPEN	PYTHON	build_latex.py	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	first-party	OPEN	PYTHON	build_article.py	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	first-party	OPEN	PYTHON	verify_model.py	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	unresolved	UNKNOWN	OTHER	CITATION.cff	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	unresolved	UNKNOWN	OTHER	SHA256SUMS	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	first-party	OPEN	PYTHON	sources/count_pr_links.py	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364	unresolved	UNKNOWN	OTHER	sources/verify_main_model.wl	aien-dev/hive-not-swarm#1	Python article builders not in .om
+# LEDGER aien-dev/hive-not-swarm	bc6d30e5a1beb531fc5650bd82f101babb807364
+# CLASS native	0
+# CLASS first-party	4
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	31
+# CLASS unresolved	4
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

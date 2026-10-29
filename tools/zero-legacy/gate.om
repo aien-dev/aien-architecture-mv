@@ -1,13 +1,14 @@
 note SPDX-License-Identifier: Apache-2.0
 note gate: the ARCH-ZERO-LEGACY-CLOSURE gate runner (#316), seeded native Omega.
 note usage: gate OMC          (run from tools/zero-legacy; writes under build/)
-note Builds closure.om, expect.om and sha256.om with OMC, hashes OMC with the native sha256 and
-note compares it to omega.pin, runs the hostile and clean fixtures in release mode, judges the
-note reports with expect, prints AIEN-OBS lines. Exit 0 only when every expectation holds;
-note 3 when OMC is missing or does not match the pin (NOT_RUN); 1 otherwise.
-note The only thing outside this program is whoever compiled it (gate.sh, three lines).
+note Builds closure.om, expect.om, sha256.om and bind.om with OMC, hashes OMC with the native
+note sha256 and compares it to omega.pin, runs the hostile and clean fixtures in release mode,
+note binds the hostile report to fixture owners (and runs the binder's negative controls),
+note judges the reports with expect, prints AIEN-OBS lines. Exit 0 only when every expectation
+note holds; 3 when OMC is missing or does not match the pin (NOT_RUN); 1 otherwise.
+note The only thing outside this program is whoever compiled it (gate.sh, the loader).
 
-text tbl "closure.om\nexpect.om\nsha256.om\nbuild/closure\nbuild/expect\nbuild/sha256\nfixtures/tree\nrelease\nfixtures/manifest.txt\nfixtures/clean\nfixtures/clean-manifest.txt\nfixtures/tree.expected\nfixtures/clean.expected\nbuild/tree.out\nbuild/clean.out\nbuild/clean2.out\nbuild/omc.sha\nbuild/closure.sha\nomega.pin\nbuild\n"
+text tbl "closure.om\nexpect.om\nsha256.om\nbuild/closure\nbuild/expect\nbuild/sha256\nfixtures/tree\nrelease\nfixtures/manifest.txt\nfixtures/clean\nfixtures/clean-manifest.txt\nfixtures/tree.expected\nfixtures/clean.expected\nbuild/tree.out\nbuild/clean.out\nbuild/clean2.out\nbuild/omc.sha\nbuild/closure.sha\nomega.pin\nbuild\nbind.om\nbuild/bind\nfixtures/owners.tsv\nfixture/tree\n0123456789abcdef0123456789abcdef01234567\nfull\nfixtures/ledger.expected\nbuild/ledger.out\nfixtures/owners-gap.tsv\nbuild/ledger-gap.out\nfixtures/owners-unres.tsv\nfixtures/owners-bad.tsv\nfixtures/cut.report\nfixtures/badcat.report\nbuild/ledger-neg.out\nbuild/bind.sha\n"
 text tobs "AIEN-OBS "
 text tcls "closure_sha256 \""
 text tq "\"\n"
@@ -16,6 +17,15 @@ text tcle "clean_release_exit "
 text tcl2 "clean_undeclared_exit "
 text tex1 "expect_tree_exit "
 text tex2 "expect_clean_exit "
+text tbsh "bind_sha256 \""
+text tl0 "ledger_exit "
+text tl1 "ledger_owner_gap_exit "
+text tl2 "ledger_unresolved_gap_exit "
+text tl3 "ledger_bad_owners_exit "
+text tl4 "ledger_cut_report_exit "
+text tl5 "ledger_bad_category_exit "
+text tl6 "expect_ledger_exit "
+text tl7 "expect_ledger_gap_exit "
 text tnl "\n"
 text tuse "usage: gate OMC\n"
 text tnot "gate: OMC missing or not the pinned compiler (NOT_RUN)\n"
@@ -297,6 +307,45 @@ noio
 ret run
 end
 
+note bind REPORT OWNERS fixture/tree SHA full, stdout into table entry out
+fn bindrun rep ulong owf ulong out ulong to long
+pk0
+pkt 21
+pkt rep
+pkt owf
+pkt 23
+pkt 24
+pkt 25
+put finl 0 0
+setout out
+ret run
+end
+
+note the M0 ledger binder on the hostile tree report: bound 0, first-party gap 1,
+note unresolved gap 2, malformed owners 65, truncated and forged reports 66; the bound
+note ledger matches its expected rows and the first-party gap ledger does not
+fn ledger to bool
+a = bindrun 13 22 27
+b = bindrun 13 28 29
+c = bindrun 13 30 34
+d = bindrun 13 31 34
+e = bindrun 32 22 34
+f = bindrun 33 22 34
+g = judge 27 26
+h = judge 29 26
+obsn 5 a
+obsn 6 b
+obsn 7 c
+obsn 8 d
+obsn 9 e
+obsn 10 f
+obsn 11 g
+obsn 12 h
+ok = and eq a 0 and eq b 1 eq c 2
+ok = and ok and eq d 65 and eq e 66 eq f 66
+ret and ok and eq g 0 gt h 0
+end
+
 note ---- output ----
 
 fn wnum v long to void
@@ -327,6 +376,13 @@ r = write 1 sha 0 64
 r = write 1 tq 0 len tq
 end
 
+fn obsb to void
+r = write 1 tobs 0 len tobs
+r = write 1 tbsh 0 len tbsh
+r = write 1 sha 0 64
+r = write 1 tq 0 len tq
+end
+
 fn obsn k ulong v long to void
 r = write 1 tobs 0 len tobs
 if eq k 0
@@ -343,6 +399,30 @@ r = write 1 tex1 0 len tex1
 end
 if eq k 4
 r = write 1 tex2 0 len tex2
+end
+if eq k 5
+r = write 1 tl0 0 len tl0
+end
+if eq k 6
+r = write 1 tl1 0 len tl1
+end
+if eq k 7
+r = write 1 tl2 0 len tl2
+end
+if eq k 8
+r = write 1 tl3 0 len tl3
+end
+if eq k 9
+r = write 1 tl4 0 len tl4
+end
+if eq k 10
+r = write 1 tl5 0 len tl5
+end
+if eq k 11
+r = write 1 tl6 0 len tl6
+end
+if eq k 12
+r = write 1 tl7 0 len tl7
 end
 wnum v
 r = write 1 tnl 0 1
@@ -385,11 +465,20 @@ if not compile 1 4
 r = write 2 tcf 0 len tcf
 ret 1
 end
+if not compile 20 21
+r = write 2 tcf 0 len tcf
+ret 1
+end
 if not hashto 3 17
 r = write 2 tcf 0 len tcf
 ret 1
 end
 obs1
+if not hashto 21 35
+r = write 2 tcf 0 len tcf
+ret 1
+end
+obsb
 a = tree
 b = clean
 c = clean2
@@ -413,6 +502,9 @@ if ne d 0
 ret 1
 end
 if ne e 0
+ret 1
+end
+if not ledger
 ret 1
 end
 ret 0

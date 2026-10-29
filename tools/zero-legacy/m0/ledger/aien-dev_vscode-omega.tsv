@@ -1,0 +1,18 @@
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	XLANG	omc.js	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	XLANG	extension.js	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	unresolved	UNKNOWN	OTHER	tree-sitter-omega.ref	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	unresolved	UNKNOWN	OTHER	omega.ref	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	XLANG	test/agree.js	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	FOREIGN	test/check-vsix.sh	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	XLANG	test/omc.test.js	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	XLANG	test/vscode/run.js	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605	first-party	OPEN	XLANG	test/vscode/suite.js	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+# LEDGER aien-dev/vscode-omega	b71100fe0a118d2ab54ed649fe66ce3ad1e4c605
+# CLASS native	0
+# CLASS first-party	7
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

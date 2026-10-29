@@ -1,0 +1,621 @@
+note SPDX-License-Identifier: Apache-2.0
+note bind: turn one closure report into M0 ledger rows bound to owner issues (#300, #316).
+note usage: bind REPORT OWNERS REPO SHA [full]
+note REPORT is the output of `closure .` run at the root of a checkout of REPO at SHA; a
+note leading ./ is dropped from every path, so PREFIX is relative to the closure ROOT.
+note OWNERS lines are REPO<TAB>PREFIX<TAB>OWNER<TAB>BLOCKER; PREFIX . is the whole
+note repository, otherwise a path prefix relative to the root. The first matching line
+note wins. Lines that start with # and empty lines are ignored.
+note Output rows: REPO SHA CLASS STATUS CATEGORY PATH OWNER BLOCKER, tab separated.
+note CLASS: native, first-party, generated, external, doc-data, unresolved (the #300
+note categories this tool can decide from a closure row). doc-data rows are counted and
+note printed only with `full`.
+note Exit 0 when every first-party and unresolved row has an owner line; 1 when a
+note first-party row has none; 2 when only unresolved rows have none; 64 usage or a SHA
+note that is not 40 lowercase hex digits; 65 an input that cannot be read or is too big,
+note or an OWNERS line without three tabs and an owner; 66 a REPORT that is not a whole
+note closure report (a row without a known category or without a path, or no final
+note `# UNKNOWN` line).
+
+text tuse "usage: bind REPORT OWNERS REPO SHA [full]\n"
+text terr "bind: cannot read REPORT or OWNERS, or one is too big\n"
+text town "bind: OWNERS line without REPO, PREFIX, OWNER and BLOCKER\n"
+text trep "bind: REPORT is not a whole closure report\n"
+text tsha "bind: SHA must be 40 lowercase hex digits\n"
+text tnl "\n"
+text ttab "\t"
+text tcats "OM|C_H|RUST|PYTHON|SHELL|OSC|HEXASM|ELF|ARCHIVE|DOC|OTHER|HIDDEN|WRAPPER|DATA|GENERATED|EXTERNAL|FOREIGN|SYMLINK|FORGED|SKIP|MAKE|UNREADABLE|XLANG|"
+text tunk "# UNKNOWN "
+text tfull "full"
+text k0 "native"
+text k1 "first-party"
+text k2 "generated"
+text k3 "external"
+text k4 "doc-data"
+text k5 "unresolved"
+text snat "NATIVE"
+text sopn "OPEN"
+text sinv "INVENTORIED"
+text sukn "UNKNOWN"
+text subd "UNBOUND"
+text tnone "-\t-"
+text tled "# LEDGER "
+text tcls "# CLASS "
+text tub1 "# UNBOUND first-party\t"
+text tub2 "# UNBOUND unresolved\t"
+
+global rep uchar 16777216
+global repn ulong 1
+global owf uchar 1048576
+global ownn ulong 1
+global hdr uchar 512
+global hdrn ulong 1
+global rpo ulong 1
+global name uchar 4096
+global cnt ulong 6
+global unb ulong 2
+global fulm ulong 1
+global ows ulong 2
+global nb uchar 24
+
+note ---- output ----
+
+fn wnl to void
+r = write 1 tnl 0 1
+end
+
+fn wtab to void
+r = write 1 ttab 0 1
+end
+
+fn wnum v ulong to void
+n = ulong 0
+if eq v 0
+put nb 23 48
+n = 1
+end
+x = v
+while gt x 0 bound 20
+put nb sub 23 n uchar add 48 rem x 10
+x = div x 10
+n = add n 1
+end
+r = write 1 nb sub 24 n n
+end
+
+fn wclass c ulong to void
+if eq c 0
+r = write 1 k0 0 len k0
+end
+if eq c 1
+r = write 1 k1 0 len k1
+end
+if eq c 2
+r = write 1 k2 0 len k2
+end
+if eq c 3
+r = write 1 k3 0 len k3
+end
+if eq c 4
+r = write 1 k4 0 len k4
+end
+if eq c 5
+r = write 1 k5 0 len k5
+end
+end
+
+note status of a row of class c; b says whether an owner line matched
+fn wstat c ulong b bool to void
+if eq c 0
+r = write 1 snat 0 len snat
+ret
+end
+if eq c 1
+if b
+r = write 1 sopn 0 len sopn
+else
+r = write 1 subd 0 len subd
+end
+ret
+end
+if eq c 5
+if b
+r = write 1 sukn 0 len sukn
+else
+r = write 1 subd 0 len subd
+end
+ret
+end
+r = write 1 sinv 0 len sinv
+end
+
+note ---- input ----
+
+note read the file named by argument 1 into rep; false when unreadable or 16 MiB or more
+fn ldrep to bool
+n = argread 1 name 0 4095
+if lt n 1
+ret false
+end
+fd = fopen name 0 ulong n 0 0
+if lt fd 0
+ret false
+end
+t = ulong 0
+go = true
+note every pass either ends the loop, adds bytes to a 16 MiB buffer that refuses when
+note full, or fails; a regular file is returned in large chunks, so few passes are needed
+while go bound 999999
+k = read int fd rep t sub len rep t
+if lt k 0
+r = fclose int fd
+ret false
+end
+if eq k 0
+go = false
+else
+t = add t ulong k
+if eq t len rep
+r = fclose int fd
+ret false
+end
+end
+end
+r = fclose int fd
+put repn 0 t
+ret true
+end
+
+note read the file named by argument 2 into owf; false when unreadable or 1 MiB or more
+fn ldown to bool
+n = argread 2 name 0 4095
+if lt n 1
+ret false
+end
+fd = fopen name 0 ulong n 0 0
+if lt fd 0
+ret false
+end
+t = ulong 0
+go = true
+while go bound 999999
+k = read int fd owf t sub len owf t
+if lt k 0
+r = fclose int fd
+ret false
+end
+if eq k 0
+go = false
+else
+t = add t ulong k
+if eq t len owf
+r = fclose int fd
+ret false
+end
+end
+end
+r = fclose int fd
+put ownn 0 t
+ret true
+end
+
+note hdr = REPO TAB SHA TAB; rpo = length of REPO; false on a bad SHA
+fn ldhdr to bool
+n = argread 3 hdr 0 255
+if lt n 1
+ret false
+end
+p = ulong n
+put rpo 0 p
+put hdr p 9
+p = add p 1
+m = argread 4 hdr p 255
+if ne m 40
+ret false
+end
+for i ulong 40
+c = get hdr add p i
+ok = false
+if and ge c 48 le c 57
+ok = true
+end
+if and ge c 97 le c 102
+ok = true
+end
+if not ok
+ret false
+end
+end
+p = add p 40
+put hdr p 9
+put hdrn 0 add p 1
+ret true
+end
+
+fn isfull to bool
+if lt argcnt 6
+ret false
+end
+n = argread 5 name 0 255
+if ne n long len tfull
+ret false
+end
+for i ulong len tfull
+if ne get name i get tfull i
+ret false
+end
+end
+ret true
+end
+
+note ---- lines ----
+
+fn rend s ulong to ulong
+e = s
+n = get repn 0
+while lt e n bound 999999
+if eq get rep e 10
+ret e
+end
+e = add e 1
+end
+ret e
+end
+
+fn oend s ulong to ulong
+e = s
+n = get ownn 0
+while lt e n bound 999999
+if eq get owf e 10
+ret e
+end
+e = add e 1
+end
+ret e
+end
+
+note first tab in rep[s..e), or e
+fn rtab s ulong e ulong to ulong
+t = s
+while lt t e bound 999999
+if eq get rep t 9
+ret t
+end
+t = add t 1
+end
+ret e
+end
+
+note first tab in owf[s..e), or e
+fn otab s ulong e ulong to ulong
+t = s
+while lt t e bound 999999
+if eq get owf t 9
+ret t
+end
+t = add t 1
+end
+ret e
+end
+
+note ---- categories ----
+
+note does tcats[a..a+m) equal rep[s..s+m)
+fn tsame a ulong s ulong m ulong to bool
+for i ulong m
+if ne get tcats add a i get rep add s i
+ret false
+end
+end
+ret true
+end
+
+note closure category number (closure.om c0..c22) of rep[s..s+m), or 99
+fn catid s ulong m ulong to ulong
+k = ulong 0
+a = ulong 0
+i = ulong 0
+while lt i len tcats bound 1000
+if eq get tcats i 124
+if eq sub i a m
+if tsame a s m
+ret k
+end
+end
+k = add k 1
+a = add i 1
+end
+i = add i 1
+end
+ret 99
+end
+
+note #300 class of closure category k: closure's outstanding set is first-party, its
+note unknown set plus SYMLINK and SKIP is unresolved
+fn classof k ulong to ulong
+if eq k 0
+ret 0
+end
+if or eq k 9 eq k 13
+ret 4
+end
+if eq k 14
+ret 2
+end
+if eq k 15
+ret 3
+end
+if or eq k 7 or eq k 8 or eq k 10 or eq k 17 or eq k 19 eq k 21
+ret 5
+end
+ret 1
+end
+note the path start p moved past a leading ./ that is followed by more path
+fn skipds p ulong e ulong to ulong
+if le sub e p 2
+ret p
+end
+if and eq get rep p 46 eq get rep add p 1 47
+ret add p 2
+end
+ret p
+end
+
+note ---- report validation ----
+
+note is rep[s..e) a row CATEGORY TAB PATH with a known category and a nonempty path
+fn rowok s ulong e ulong to bool
+t = rtab s e
+if ge t e
+ret false
+end
+if eq catid s sub t s 99
+ret false
+end
+if lt sub e t 2
+ret false
+end
+ret true
+end
+
+note is rep[s..e) the closure summary line `# UNKNOWN n`
+fn isunk s ulong e ulong to bool
+if le sub e s len tunk
+ret false
+end
+for i ulong len tunk
+if ne get rep add s i get tunk i
+ret false
+end
+end
+ret true
+end
+
+note 0 whole report, 66 otherwise
+fn chkrep to int
+n = get repn 0
+s = ulong 0
+seen = false
+while lt s n bound 999999
+e = rend s
+if gt e s
+if eq get rep s 35
+if isunk s e
+seen = true
+end
+else
+if not rowok s e
+ret 66
+end
+end
+end
+s = add e 1
+end
+if not seen
+ret 66
+end
+ret 0
+end
+
+note 0 every OWNERS line well formed, 65 otherwise
+fn chkown to int
+n = get ownn 0
+s = ulong 0
+while lt s n bound 999999
+e = oend s
+if gt e s
+if ne get owf s 35
+t1 = otab s e
+if ge t1 e
+ret 65
+end
+t2 = otab add t1 1 e
+if ge t2 e
+ret 65
+end
+t3 = otab add t2 1 e
+if ge t3 e
+ret 65
+end
+if or eq t1 s or eq t2 add t1 1 eq t3 add t2 1
+ret 65
+end
+end
+end
+s = add e 1
+end
+ret 0
+end
+
+note ---- owner lookup ----
+
+note does owf[a..b) equal the REPO argument
+fn isrepo a ulong b ulong to bool
+m = get rpo 0
+if ne sub b a m
+ret false
+end
+for i ulong m
+if ne get owf add a i get hdr i
+ret false
+end
+end
+ret true
+end
+
+note does the path rep[p..p+m) start with owf[a..b), or is owf[a..b) the single byte .
+fn under a ulong b ulong p ulong m ulong to bool
+w = sub b a
+if and eq w 1 eq get owf a 46
+ret true
+end
+if gt w m
+ret false
+end
+for i ulong w
+if ne get owf add a i get rep add p i
+ret false
+end
+end
+ret true
+end
+
+note owner line s..e matching the path rep[p..p+m): ows = owner start, ows+1 = line end
+fn omatch s ulong e ulong p ulong m ulong to bool
+t1 = otab s e
+if not isrepo s t1
+ret false
+end
+t2 = otab add t1 1 e
+if not under add t1 1 t2 p m
+ret false
+end
+put ows 0 add t2 1
+put ows 1 e
+ret true
+end
+
+fn owner p ulong m ulong to bool
+n = get ownn 0
+s = ulong 0
+while lt s n bound 999999
+e = oend s
+if gt e s
+if ne get owf s 35
+if omatch s e p m
+ret true
+end
+end
+end
+s = add e 1
+end
+ret false
+end
+
+note ---- rows ----
+
+fn emit s ulong e ulong to void
+t = rtab s e
+c = classof catid s sub t s
+put cnt c add get cnt c 1
+if and eq c 4 eq get fulm 0 0
+ret
+end
+p = skipds add t 1 e
+m = sub e p
+b = owner p m
+if not b
+if eq c 1
+put unb 0 add get unb 0 1
+end
+if eq c 5
+put unb 1 add get unb 1 1
+end
+end
+r = write 1 hdr 0 get hdrn 0
+wclass c
+wtab
+wstat c b
+wtab
+r = write 1 rep s sub t s
+wtab
+r = write 1 rep p m
+wtab
+if b
+a = get ows 0
+r = write 1 owf a sub get ows 1 a
+else
+r = write 1 tnone 0 len tnone
+end
+wnl
+end
+
+fn summary to void
+r = write 1 tled 0 len tled
+r = write 1 hdr 0 get rpo 0
+wtab
+r = write 1 hdr add get rpo 0 1 40
+wnl
+for c ulong 6
+r = write 1 tcls 0 len tcls
+wclass c
+wtab
+wnum get cnt c
+wnl
+end
+r = write 1 tub1 0 len tub1
+wnum get unb 0
+wnl
+r = write 1 tub2 0 len tub2
+wnum get unb 1
+wnl
+end
+
+fn main to int
+if lt argcnt 5
+r = write 2 tuse 0 len tuse
+ret 64
+end
+if not ldhdr
+r = write 2 tsha 0 len tsha
+ret 64
+end
+if isfull
+put fulm 0 1
+end
+if not ldrep
+r = write 2 terr 0 len terr
+ret 65
+end
+if not ldown
+r = write 2 terr 0 len terr
+ret 65
+end
+if ne chkown 0
+r = write 2 town 0 len town
+ret 65
+end
+if ne chkrep 0
+r = write 2 trep 0 len trep
+ret 66
+end
+n = get repn 0
+s = ulong 0
+while lt s n bound 999999
+e = rend s
+if gt e s
+if ne get rep s 35
+emit s e
+end
+end
+s = add e 1
+end
+summary
+if gt get unb 0 0
+ret 1
+end
+if gt get unb 1 0
+ret 2
+end
+ret 0
+end

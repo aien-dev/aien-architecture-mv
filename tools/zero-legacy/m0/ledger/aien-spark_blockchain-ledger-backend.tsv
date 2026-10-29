@@ -1,0 +1,28 @@
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	unresolved	UNKNOWN	OTHER	Dockerfile	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/Block.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/Transaction.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/index.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/contracts/OracleContract.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/contracts/EscrowStatus.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/contracts/SmartContractBase.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/contracts/EscrowContract.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/blockchain/Block.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/blockchain/Blockchain.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/blockchain/Transaction.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/api/middleware/auth.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/api/routes/journalEntries.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/api/routes/blockchain.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/api/routes/accounts.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/smartContracts/SmartContractBase.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/smartContracts/EscrowContract.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	src/smartContracts/index.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481	first-party	OPEN	XLANG	tests/contracts/EscrowContract.test.js	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+# LEDGER aien-spark/blockchain-ledger-backend	beb13c6021c4497b620eb3387e8092355e056481
+# CLASS native	0
+# CLASS first-party	18
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	7
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

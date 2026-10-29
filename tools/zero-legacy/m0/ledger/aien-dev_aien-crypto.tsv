@@ -1,0 +1,26 @@
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	omega_blake3.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	isa_arm64.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	omega_blake3.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	MAKE	Makefile	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sha256.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sha256_arm64.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sha256.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	tests/hash_test.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/fe25519.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/ct.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/ed25519.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	MAKE	sig/Makefile	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/sha512.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/sig_internal.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/aienos_sig.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/tests/rfc8032_vectors.h	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47	first-party	OPEN	C_H	sig/tests/sig_test.c	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+# LEDGER aien-dev/aien-crypto	7e2ff003ec0cac8306ccc6ad7a95d480e1b95b47
+# CLASS native	0
+# CLASS first-party	17
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	8
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

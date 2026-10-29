@@ -4,5 +4,7 @@
 set -eu
 cd "$(dirname "$0")"
 [ -n "${AIEN_OMC:-}" ] && [ -x "$AIEN_OMC" ] || { echo "gate.sh: AIEN_OMC is not an executable omc (NOT_RUN)" >&2; exit 3; }
-mkdir -p build && "$AIEN_OMC" < gate.om > build/gate && chmod +x build/gate
+mkdir -p build
+"$AIEN_OMC" < gate.om > build/gate || { echo "gate.sh: gate.om did not compile" >&2; exit 1; }
+chmod +x build/gate
 exec build/gate "$AIEN_OMC"

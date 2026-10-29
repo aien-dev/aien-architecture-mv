@@ -12,9 +12,10 @@ ELF	fixtures/tree/scratch/a.out
 EXTERNAL	fixtures/tree/vendor/third.h
 # FOREIGN 1
 FOREIGN	fixtures/tree/src/tool.sh
-# FORGED 3
+# FORGED 4
 FORGED	fixtures/tree/golden/elf.bin
 FORGED	fixtures/tree/golden/forged.c
+FORGED	fixtures/tree/golden/forged.ts
 FORGED	fixtures/tree/golden/stale.s
 # GENERATED 1
 GENERATED	fixtures/tree/scratch/out.bin
@@ -31,7 +32,7 @@ MAKE	fixtures/tree/src/Makefile
 OM	fixtures/tree/src/hello.om
 # OSC 1
 OSC	fixtures/tree/src/old.osc
-# OUTSTANDING 16
+# OUTSTANDING 18
 # PYTHON 1
 PYTHON	fixtures/tree/src/gen.py
 # RUST 1
@@ -45,3 +46,5 @@ SYMLINK	fixtures/tree/src/link.om
 # WRAPPER 2
 WRAPPER	fixtures/tree/src/launch2.om
 WRAPPER	fixtures/tree/src/launch.om
+XLANG	fixtures/tree/src/app.ts
+# XLANG 1

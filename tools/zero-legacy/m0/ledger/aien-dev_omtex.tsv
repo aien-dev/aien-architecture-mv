@@ -1,0 +1,19 @@
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	first-party	OPEN	SHELL	tools/compare.sh	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	first-party	OPEN	SHELL	tools/pin.sh	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	first-party	OPEN	SHELL	tools/build.sh	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	first-party	OPEN	SHELL	tools/zenodo-draft.sh	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	native	NATIVE	OM	lib/omtex.om	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	first-party	OPEN	SHELL	tests/run.sh	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	native	NATIVE	OM	examples/turing-brief/paper.om	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	native	NATIVE	OM	examples/listings/paper.om	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	native	NATIVE	OM	examples/omega-language/paper.om	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834	native	NATIVE	OM	examples/hello/hello.om	aien-dev/omtex#3	shell build and pin tools not yet in .om
+# LEDGER aien-dev/omtex	363500c1b010219ce0b22f8e8e53d0aff7c55834
+# CLASS native	5
+# CLASS first-party	5
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	14
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

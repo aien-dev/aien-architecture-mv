@@ -1,0 +1,102 @@
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	SHELL	exercise.sh	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	omega.ref	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	SHELL	run.sh	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/factorial/factorial.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/factorial/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/prime-decomposition/prime-decomposition.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/prime-decomposition/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/rot-13/rot-13.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/rot-13/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/towers-of-hanoi/towers-of-hanoi.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/towers-of-hanoi/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/n-queens-problem/n-queens-problem.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/n-queens-problem/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/mandelbrot-set/mandelbrot-set.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/mandelbrot-set/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/greatest-common-divisor/greatest-common-divisor.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/greatest-common-divisor/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/fibonacci-sequence/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/fibonacci-sequence/fibonacci-sequence.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/binary-digits/binary-digits.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/binary-digits/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/insertion-sort/insertion-sort.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/insertion-sort/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/binary-search/binary-search.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/binary-search/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/hailstone-sequence/hailstone-sequence.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/hailstone-sequence/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/hello-world/hello-world.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/hello-world/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/ackermann-function/ackermann-function.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/ackermann-function/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/bubble-sort/bubble-sort.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/bubble-sort/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/roman-numerals-encode/roman-numerals-encode.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/roman-numerals-encode/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/99-bottles-of-beer/99-bottles-of-beer.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/99-bottles-of-beer/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/perfect-numbers/perfect-numbers.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/perfect-numbers/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/leap-year/leap-year.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/leap-year/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/reverse-a-string/reverse-a-string.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/reverse-a-string/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/sha-256/sha-256.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/sha-256/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/fizzbuzz/fizzbuzz.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/fizzbuzz/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/crc-32/crc-32.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/crc-32/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	tasks/sieve-of-eratosthenes/sieve-of-eratosthenes.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	first-party	OPEN	PYTHON	tasks/sieve-of-eratosthenes/oracle.py	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/fizzbuzz.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/mandelbrot-set.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/rot-13.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/insertion-sort.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/greatest-common-divisor.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/perfect-numbers.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/Omegese-redirect.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/sha-256.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/Category_Omega-addition.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/fibonacci-sequence.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/roman-numerals-encode.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/Category_Omegese.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/binary-search.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/ackermann-function.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/99-bottles-of-beer.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/factorial.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/crc-32.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/prime-decomposition.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/n-queens-problem.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/hailstone-sequence.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/binary-digits.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/leap-year.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/sieve-of-eratosthenes.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/towers-of-hanoi.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/bubble-sort.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/reverse-a-string.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	unresolved	UNKNOWN	OTHER	drafts/rosettacode/hello-world.wiki	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/collatz-conjecture/collatz-conjecture.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/collatz-conjecture/test.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/collatz-conjecture/.meta/example.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/difference-of-squares/test.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/difference-of-squares/difference-of-squares.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/difference-of-squares/.meta/example.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/leap/test.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/leap/leap.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/leap/.meta/example.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/armstrong-numbers/armstrong-numbers.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/armstrong-numbers/test.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/armstrong-numbers/.meta/example.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/grains/test.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/grains/grains.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f	native	NATIVE	OM	exercises/grains/.meta/example.om	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+# LEDGER aien-dev/omega-rosetta	22e7152473c709662b3c8f0bae39a053f73da06f
+# CLASS native	39
+# CLASS first-party	26
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	33
+# CLASS unresolved	28
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

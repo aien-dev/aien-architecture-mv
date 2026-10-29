@@ -1,0 +1,93 @@
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	SHELL	build.sh	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	PYTHON	tools/gen-reference.py	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	PYTHON	tools/ref_examples.py	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	PYTHON	tools/check-reference.py	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/arith.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/dirs.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/exit.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/contract_fail.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e05.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/structs.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e21.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_out.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e28.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_fresh.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_export.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	WRAPPER	data/examples/procs.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/floats.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t02.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e08.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t14.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/clock.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t04.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e27.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/mapping.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e23.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e06.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/own_refused.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e03.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/calls.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t11.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/files.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t05.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e14.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/free_refused.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t07.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e18.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_abstract.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t10.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/control.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/trapword.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e11.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e29.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_part.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/argsenv.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/contracts.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t06.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/hello.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_layout.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e13.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e30.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e19.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e12.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e16.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t01.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e17.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/sockets.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e20.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e07.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t03.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/consts.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t12.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/ints.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t08.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_rotate.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e15.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/t13.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e09.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e10.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/arrays.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e22.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/om2_unroll.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	data/examples/e04.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	vendor/omega-mv/seed/json/json.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	vendor/omega-mv/seed/json/jsonw.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	vendor/omega-mv/om/sha256/sha256-om2.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	WRAPPER	src/state.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	src/sandbox.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	src/util.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	src/boot.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	src/rpc.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	native	NATIVE	OM	src/tools.om	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	unresolved	UNKNOWN	OTHER	evidence/smoke-transcript.jsonl	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	PYTHON	gates/smoke.py	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100	first-party	OPEN	PYTHON	gates/trust.py	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+# LEDGER aien-dev/omega-mcp	4f4c8820d9f40baff9c3d05b05938095085cd100
+# CLASS native	75
+# CLASS first-party	8
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

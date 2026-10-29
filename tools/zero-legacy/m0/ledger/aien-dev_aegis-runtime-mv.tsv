@@ -1,0 +1,74 @@
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	SHELL	install.sh	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	SHELL	scripts/agent-preflight.sh	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/policy_guard.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/auth.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/failure.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/inference.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/heartbeat.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/gateway.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/security.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/lib.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/enforcement.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/agent.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/vector_math.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/skills.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/main.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/vault.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/sessions/message.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/sessions/session.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/sessions/store.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/sessions/id.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/sessions/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/defense/approval.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/defense/receipt.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/defense/decision.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/defense/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/execution/action.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/execution/receipt.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/execution/broker.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/execution/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/events/envelope.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/events/id.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/events/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/events/event.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/events/bus.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/orchestration/termination.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/orchestration/run.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/orchestration/budget.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/orchestration/trigger.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/orchestration/workflow.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/orchestration/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/legacy.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/async_db.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/error.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/messages.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/schema.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/approvals.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/actions.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/sessions.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/runs.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	src/persistence/sqlite/mod.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/embedded_inference_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/failure_provenance_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/probe_gate_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/install_script_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/workflow_dag_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/stage2_primitives_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/aegis_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/gateway_auth_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/canonical_abi_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/policy_guard_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	RUST	tests/stage3_4_persistence_tests.rs	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	first-party	OPEN	SHELL	tests/gates/run.sh	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	unresolved	UNKNOWN	OTHER	.aien/always	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5	unresolved	UNKNOWN	OTHER	.aien/unmapped-ok	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+# LEDGER aien-dev/aegis-runtime-mv	a39788b0eaaabc694dfa17652420e35b7dc3eda5
+# CLASS native	0
+# CLASS first-party	63
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	41
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

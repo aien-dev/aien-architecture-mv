@@ -1,0 +1,19 @@
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	first-party	OPEN	SHELL	scripts/goal_microjobs/microjobs.sh	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	first-party	OPEN	SHELL	scripts/goal_microjobs/build.sh	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	native	NATIVE	OM	src/goal_microjobs/kernel.om	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	first-party	OPEN	FOREIGN	tests/goal_microjobs/gate.sh	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	unresolved	UNKNOWN	OTHER	evidence/goal-microjobs/offline-20261024T182027Z-rdcMbK/acceptance.plan	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	unresolved	UNKNOWN	OTHER	evidence/goal-microjobs/offline-20261024T182027Z-rdcMbK/acceptance.journal	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	unresolved	UNKNOWN	OTHER	evidence/goal-microjobs/offline-20261024T182027Z-rdcMbK/partial-2.status	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	unresolved	UNKNOWN	OTHER	evidence/goal-microjobs/offline-20261024T182027Z-rdcMbK/mutations.tsv	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	unresolved	UNKNOWN	OTHER	evidence/goal-microjobs/offline-20261024T182027Z-rdcMbK/partial-1.status	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974	unresolved	UNKNOWN	OTHER	evidence/goal-microjobs/offline-20261024T182027Z-rdcMbK/acceptance.status	aien-dev/aien#22	shell goal_microjobs not in .om
+# LEDGER aien-dev/aien	b02bc7fb8c28bf90803d5bd357d1749cabdfc974
+# CLASS native	1
+# CLASS first-party	3
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	17
+# CLASS unresolved	6
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

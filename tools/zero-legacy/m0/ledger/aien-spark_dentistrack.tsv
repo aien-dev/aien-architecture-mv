@@ -1,0 +1,30 @@
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	next.config.ts	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	eslint.config.mjs	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	postcss.config.mjs	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/utils/supabase/server.ts	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/utils/supabase/client.ts	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	unresolved	UNKNOWN	OTHER	src/app/favicon.ico	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/data-actions.ts	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/page.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/layout.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/doctors/page.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/seed/page.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/locations/page.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/credentials/[id]/page.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/app/credentials/new/page.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/types/index.ts	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/components/CredentialForm.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/components/Sidebar.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/components/Providers.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	src/components/EmailComposer.tsx	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	supabase/migrations/20251122000000_initial_schema.sql	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54	first-party	OPEN	XLANG	supabase/migrations/20251122000001_enable_rls.sql	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+# LEDGER aien-spark/dentistrack	3a0ba248b60d6940fe401f55fa7e94634b367e54
+# CLASS native	0
+# CLASS first-party	20
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	11
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

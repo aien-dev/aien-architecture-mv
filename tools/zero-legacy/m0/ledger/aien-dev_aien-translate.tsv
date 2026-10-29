@@ -1,0 +1,20 @@
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	PYTHON	scripts/translate_site.py	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	PYTHON	scripts/translate_readme.py	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	PYTHON	scripts/translate_latex.py	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	src/engine.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	src/lib.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	src/langs.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	src/guard.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	src/cache.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	src/main.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	RUST	tests/protocol.rs	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3	first-party	OPEN	PYTHON	demo/check.py	aien-dev/aien-translate#6	Rust translator not yet in .om
+# LEDGER aien-dev/aien-translate	7a97bf93eb12d5262cb108bdd1b218a1add2c8e3
+# CLASS native	0
+# CLASS first-party	11
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	18
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

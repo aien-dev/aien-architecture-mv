@@ -1,0 +1,50 @@
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	FOREIGN	deploy/install-pi.sh	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-portal-stop-reload-loop.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	unresolved	UNKNOWN	OTHER	deploy/Caddyfile.code.append	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-portal-docs.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/fix-portal-github-openview.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-portal-scroll-follow.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-site-proxy.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-portal-room-ux.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-site-code-host.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-portal-brief-modal.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	unresolved	UNKNOWN	OTHER	deploy/cockpit.service	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	deploy/patch-portal-github-link.mjs	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	SHELL	deploy/persist-caddy-code.sh	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/auth.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/events.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/prod-server.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/demo-fleet.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/donegate.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/approvals.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/server.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/board.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/config.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/costs.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/donegate.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/documents.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/projects.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/model.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/projects.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/queue.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/policy.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/documents.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/loop.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/policy.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/loop.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/queue.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/auth.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/atlas/index.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/atlas/roster.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/atlas/planner.spec.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/atlas/planner.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf	first-party	OPEN	XLANG	src/atlas/persona.ts	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+# LEDGER aien-spark/cockpit	4a0a31b60e51e3d42ae6ff86b4f39b64a09c5caf
+# CLASS native	0
+# CLASS first-party	39
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	9
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

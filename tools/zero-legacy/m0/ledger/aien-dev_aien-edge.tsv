@@ -1,0 +1,16 @@
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	unresolved	UNKNOWN	OTHER	deploy/publish.env.example	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	first-party	OPEN	SHELL	deploy/publish-site.sh	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	unresolved	UNKNOWN	OTHER	deploy/aien-edge.service	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	first-party	OPEN	RUST	src/handler.rs	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	first-party	OPEN	RUST	src/config.rs	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	first-party	OPEN	RUST	src/main.rs	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a	first-party	OPEN	RUST	src/site.rs	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+# LEDGER aien-dev/aien-edge	6d86caf699fd92a7092e97e3e84427e2df79c26a
+# CLASS native	0
+# CLASS first-party	5
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	8
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

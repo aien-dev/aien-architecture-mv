@@ -1,0 +1,77 @@
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	tailwind.config.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	res-publica-argentaria.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	next.config.mjs	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	postcss.config.mjs	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	data/game-data.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	lib/utils.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	app/page.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	app/layout.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	types/game-types.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/game-header.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/event-modal.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/investment-panel.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/services-panel.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/theme-provider.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/financial-dashboard.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/use-mobile.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/badge.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/accordion.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/context-menu.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/command.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/popover.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/input.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/tooltip.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/drawer.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/skeleton.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/label.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/avatar.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/switch.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/toggle.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/select.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/dialog.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/hover-card.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/alert-dialog.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/scroll-area.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/separator.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/card.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/aspect-ratio.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/textarea.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/breadcrumb.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/toggle-group.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/sidebar.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/sonner.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/dropdown-menu.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/menubar.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/slider.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/sheet.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/navigation-menu.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/collapsible.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/alert.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/toast.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/table.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/toaster.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/progress.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/input-otp.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/checkbox.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/form.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/use-toast.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/chart.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/pagination.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/radio-group.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/calendar.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/resizable.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/carousel.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/tabs.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	components/ui/button.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	hooks/use-game-state.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	hooks/use-mobile.tsx	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09	first-party	OPEN	XLANG	hooks/use-toast.ts	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+# LEDGER aien-spark/v0-res-publica-argentaria	627a6067d8468f802dd07711b5e3663688bdff09
+# CLASS native	0
+# CLASS first-party	68
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

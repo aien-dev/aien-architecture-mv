@@ -1,0 +1,21 @@
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	unresolved	UNKNOWN	OTHER	synapse.pin	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	unresolved	UNKNOWN	OTHER	omega.pin	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	first-party	OPEN	SHELL	build.sh	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/30_parse.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/70_cmds.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/40_state.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/20_time_io.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/50_event.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/10_base.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	native	NATIVE	OM	src/90_main.om	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	first-party	OPEN	SHELL	tests/run.sh	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d	first-party	OPEN	RUST	sig/src/main.rs	aien-dev/synapse-claims#2	Rust signer not yet in .om
+# LEDGER aien-dev/synapse-claims	7679a5235e6ce5b3d040b498bde38b1e0e9f483d
+# CLASS native	7
+# CLASS first-party	3
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	10
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

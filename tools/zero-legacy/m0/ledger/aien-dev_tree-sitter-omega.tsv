@@ -1,0 +1,44 @@
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	Package.swift	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	MAKE	Makefile	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	binding.gyp	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	PYTHON	setup.py	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	go.mod	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	grammar.js	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	tree-sitter-cli.sha256	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	omega.ref	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	bindings/c/tree-sitter-omega.pc.in	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	bindings/c/tree_sitter/tree-sitter-omega.h	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	bindings/node/binding.cc	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	bindings/node/binding_test.js	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	bindings/node/index.d.ts	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	bindings/node/index.js	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	RUST	bindings/rust/build.rs	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	RUST	bindings/rust/lib.rs	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	PYTHON	bindings/python/tests/test_binding.py	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	bindings/python/tree_sitter_omega/binding.c	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	bindings/python/tree_sitter_omega/__init__.pyi	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	PYTHON	bindings/python/tree_sitter_omega/__init__.py	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	bindings/python/tree_sitter_omega/py.typed	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	bindings/go/binding.go	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	bindings/go/binding_test.go	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	XLANG	bindings/swift/TreeSitterOmegaTests/TreeSitterOmegaTests.swift	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	bindings/swift/TreeSitterOmega/omega.h	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	native	NATIVE	OM	test/highlight/basics.om	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	native	NATIVE	OM	test/highlight/om1-names.om	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	native	NATIVE	OM	test/negative/malformed.om	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	queries/locals.scm	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	unresolved	UNKNOWN	OTHER	queries/highlights.scm	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	FOREIGN	scripts/coverage.sh	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	src/parser.c	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	src/tree_sitter/array.h	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	src/tree_sitter/alloc.h	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096	first-party	OPEN	C_H	src/tree_sitter/parser.h	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+# LEDGER aien-dev/tree-sitter-omega	33fc2abe55f35b7f2dfea008fc82ee069aca3096
+# CLASS native	3
+# CLASS first-party	23
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	21
+# CLASS unresolved	9
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

@@ -1,0 +1,17 @@
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	unresolved	UNKNOWN	OTHER	mcp.json.snippet	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	unresolved	UNKNOWN	OTHER	synapse.pin	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	unresolved	UNKNOWN	OTHER	omega.pin	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	first-party	OPEN	SHELL	build.sh	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	native	NATIVE	OM	src/10mcp.om	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	native	NATIVE	OM	src/00base.om	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	first-party	OPEN	SHELL	tests/diag.sh	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53	first-party	OPEN	SHELL	tests/run.sh	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+# LEDGER aien-dev/synapse-mcp	c496ff884b11b54c90868ed5e5421676d0da7c53
+# CLASS native	2
+# CLASS first-party	3
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	6
+# CLASS unresolved	3
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

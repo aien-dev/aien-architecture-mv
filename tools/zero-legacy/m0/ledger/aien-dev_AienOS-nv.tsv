@@ -1,0 +1,42 @@
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	SHELL	installer/install.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	SHELL	installer/build.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/hole.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/main.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	WRAPPER	installer/wizard/engine.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/sha256.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/lib.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/doctor.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/net.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/wizard/steps.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	SHELL	installer/tools/sign.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	SHELL	installer/tools/release.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	PYTHON	installer/tools/capture.py	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	PYTHON	installer/tools/ansi-render.py	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	FOREIGN	installer/tests/container.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	native	NATIVE	OM	installer/tests/fake-engine.om	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	SHELL	installer/tests/host-untouched.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	FOREIGN	installer/tests/fake-root.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	first-party	OPEN	FOREIGN	installer/tests/run.sh	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	installer/share/aienos.desktop.in	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	installer/share/model.manifest	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/SHA256SUMS.tested	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/install-fake-gb10.outside	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/canary.diff	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/install-real-sysfs.diff	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/refuse-nogpu.diff	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/tampered.outside	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/install-real-sysfs.outside	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/install-fake-gb10.diff	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/tampered.diff	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/refuse-darwin.diff	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/refuse-darwin.outside	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63	unresolved	UNKNOWN	OTHER	evidence/alpha-20261026.1/container/refuse-nogpu.outside	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+# LEDGER aien-dev/AienOS-nv	f60a62a2a5059743c9ebe8628f80f4090c7d6e63
+# CLASS native	8
+# CLASS first-party	11
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	30
+# CLASS unresolved	14
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

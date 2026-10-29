@@ -1,0 +1,28 @@
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	topics.tsv	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	synapse.pin	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	omega.pin	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	infer.tsv	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	first-party	OPEN	SHELL	build.sh	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/20-infer.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/99-main.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/10-json.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/70-new.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/40-xerj.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/50-cmds.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	first-party	OPEN	WRAPPER	src/75-publish.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/60-route.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/00-base.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	native	NATIVE	OM	src/30-tok.om	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	first-party	OPEN	FOREIGN	tests/run.sh	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	tests/fixtures/extra.jsonl	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	tests/fixtures/infer.tsv	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368	unresolved	UNKNOWN	OTHER	tests/fixtures/skills.jsonl	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+# LEDGER aien-dev/synapse-map	c5b084681cd26113cd98023d0764930036144368
+# CLASS native	9
+# CLASS first-party	3
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	7
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

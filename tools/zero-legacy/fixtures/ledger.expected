@@ -1,0 +1,35 @@
+fixture/tree	0123456789abcdef0123456789abcdef01234567	unresolved	UNKNOWN	ARCHIVE	fixtures/tree/scratch/blob.tgz	arch#9004	scratch evidence review
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	C_H	fixtures/tree/src/old.c	arch#9001	C retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	doc-data	INVENTORIED	DATA	fixtures/tree/golden/vectors.hex	arch#9003	golden forgeries
+fixture/tree	0123456789abcdef0123456789abcdef01234567	doc-data	INVENTORIED	DOC	fixtures/tree/README.md	-	-
+fixture/tree	0123456789abcdef0123456789abcdef01234567	unresolved	UNKNOWN	ELF	fixtures/tree/scratch/a.out	arch#9004	scratch evidence review
+fixture/tree	0123456789abcdef0123456789abcdef01234567	external	INVENTORIED	EXTERNAL	fixtures/tree/vendor/third.h	-	-
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	FOREIGN	fixtures/tree/src/tool.sh	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	FORGED	fixtures/tree/golden/elf.bin	arch#9003	golden forgeries
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	FORGED	fixtures/tree/golden/forged.c	arch#9003	golden forgeries
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	FORGED	fixtures/tree/golden/forged.ts	arch#9003	golden forgeries
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	FORGED	fixtures/tree/golden/stale.s	arch#9003	golden forgeries
+fixture/tree	0123456789abcdef0123456789abcdef01234567	generated	INVENTORIED	GENERATED	fixtures/tree/scratch/out.bin	arch#9004	scratch evidence review
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	HEXASM	fixtures/tree/src/seed.hex	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	HIDDEN	fixtures/tree/src/notes.txt	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	HIDDEN	fixtures/tree/src/run	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	HIDDEN	fixtures/tree/src/sh.om	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	MAKE	fixtures/tree/src/Makefile	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	native	NATIVE	OM	fixtures/tree/src/hello.om	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	OSC	fixtures/tree/src/old.osc	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	PYTHON	fixtures/tree/src/gen.py	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	RUST	fixtures/tree/src/lib.rs	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	SHELL	fixtures/tree/src/plain.sh	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	unresolved	UNKNOWN	SYMLINK	fixtures/tree/src/link.om	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	WRAPPER	fixtures/tree/src/launch2.om	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	WRAPPER	fixtures/tree/src/launch.om	arch#9002	src retirement
+fixture/tree	0123456789abcdef0123456789abcdef01234567	first-party	OPEN	XLANG	fixtures/tree/src/app.ts	arch#9002	src retirement
+# LEDGER fixture/tree	0123456789abcdef0123456789abcdef01234567
+# CLASS native	1
+# CLASS first-party	18
+# CLASS generated	1
+# CLASS external	1
+# CLASS doc-data	2
+# CLASS unresolved	3
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

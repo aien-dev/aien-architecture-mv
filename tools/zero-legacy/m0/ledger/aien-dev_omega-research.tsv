@@ -1,0 +1,96 @@
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	dirac-oracle/src/oracle_clifford.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	SHELL	dirac-oracle/src/oracle_kat_verify.sh	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	r14-failure-modes/exact-20260928-130858/binary.sha256	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	r14-failure-modes/exact-20260928-130858/done	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/pmu/pmu_probe.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/spbm/aien_spbm_readonly.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/spbm/contract_test.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/spbm/contract.h	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	MAKE	m15/spbm/Makefile	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/spbm/reduce.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	SHELL	m15/spbm/collect-c2.sh	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/spbm/sample.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	C_H	m15/spbm/load.c	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	first-party	OPEN	SHELL	m15/spbm/collect.sh	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/load-e-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/load-e-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/idle-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/idle-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/e-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/DSDT.dat	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/load-p-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/e-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/p-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/p-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/idle-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/source-binary.sha256	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/load-p-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/load-p-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/load-e-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/p-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/e-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-03/SHA256SUMS	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/load-e-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/load-e-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/idle-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/idle-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/e-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/DSDT.dat	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/load-p-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/e-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/p-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/p-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/idle-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/source-binary.sha256	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/load-p-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/load-p-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/load-e-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/p-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/e-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-01/SHA256SUMS	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-b2.err	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-cpu-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/gpu-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-b3.err	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/cpu-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-1.err	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/idle-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/idle-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-b2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-cpu-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-b1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/cpu-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-cpu-b2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-2.err	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/gpu-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-3.err	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-b1.err	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/idle-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/source-binary.sha256	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-b3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-cpu-b1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/both-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/cpu-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/gpu-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/both-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/both-2.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-cpu-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-cpu-b3.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/SHA256SUMS	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/c2-20260928-01/load-gpu-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-02/idle-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-02/DSDT.dat	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-02/source-binary.sha256	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-02/load-p-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f	unresolved	UNKNOWN	OTHER	m15/spbm/runs/preflight-20260928-02/p-1.jsonl	aien-dev/omega-research#7	C measurement tools not yet in .om
+# LEDGER aien-dev/omega-research	414e99745cd2a8a58a42f28d175204c33eed262f
+# CLASS native	0
+# CLASS first-party	12
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	71
+# CLASS unresolved	75
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

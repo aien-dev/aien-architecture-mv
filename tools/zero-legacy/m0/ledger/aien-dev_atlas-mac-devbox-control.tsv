@@ -1,0 +1,18 @@
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	SHELL	hosted/verify-hosted.sh	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	SHELL	hosted/bootstrap-hosted.sh	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	SHELL	config/sync-config.sh	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	HIDDEN	bin/spend-idle	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	HIDDEN	bin/spend-inventory	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	HIDDEN	bin/spend-stop	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	HIDDEN	mac-client/atlas-remote	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	FOREIGN	engines/probe-engines.sh	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030	first-party	OPEN	FOREIGN	engines/install-engines.sh	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+# LEDGER aien-dev/atlas-mac-devbox-control	313c714fc8699ee14aa8d61e9a759895a066b030
+# CLASS native	0
+# CLASS first-party	9
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	29
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

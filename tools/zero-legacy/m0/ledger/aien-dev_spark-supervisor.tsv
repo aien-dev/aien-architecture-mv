@@ -1,0 +1,13 @@
+aien-dev/spark-supervisor	371ffbebfbd89512d9fc0d76e260e9ade49ea9d8	first-party	OPEN	RUST	src/proc_telemetry.rs	aien-dev/spark-supervisor#10	Rust supervisor not yet in .om
+aien-dev/spark-supervisor	371ffbebfbd89512d9fc0d76e260e9ade49ea9d8	first-party	OPEN	RUST	src/config.rs	aien-dev/spark-supervisor#10	Rust supervisor not yet in .om
+aien-dev/spark-supervisor	371ffbebfbd89512d9fc0d76e260e9ade49ea9d8	first-party	OPEN	RUST	src/supervisor.rs	aien-dev/spark-supervisor#10	Rust supervisor not yet in .om
+aien-dev/spark-supervisor	371ffbebfbd89512d9fc0d76e260e9ade49ea9d8	first-party	OPEN	RUST	src/main.rs	aien-dev/spark-supervisor#10	Rust supervisor not yet in .om
+# LEDGER aien-dev/spark-supervisor	371ffbebfbd89512d9fc0d76e260e9ade49ea9d8
+# CLASS native	0
+# CLASS first-party	4
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	16
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

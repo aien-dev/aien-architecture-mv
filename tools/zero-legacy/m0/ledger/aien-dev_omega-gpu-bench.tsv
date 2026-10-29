@@ -1,0 +1,28 @@
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	HIDDEN	run	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	kit/bench.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	kit/ck.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tools/validate.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tools/receipt.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tools/board.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tools/import_cloudkernels.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tools/pr_gate.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tests/fakecuda.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	PYTHON	tests/tamper.py	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	FOREIGN	tests/run.sh	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	unresolved	UNKNOWN	OTHER	kernels/WITHDRAWN.sha256	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	unresolved	UNKNOWN	OTHER	kernels/SHA256SUMS	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	HEXASM	kernels/src/neg.cuda.s2	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	first-party	OPEN	HEXASM	kernels/src/vecadd.cuda.s2	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	unresolved	UNKNOWN	OTHER	evidence/cloudkernels/RTX_3090-231552/results.jsonl	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	unresolved	UNKNOWN	OTHER	evidence/cloudkernels/A100_PCIE_40GB-231428/results.jsonl	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	unresolved	UNKNOWN	OTHER	evidence/cloudkernels/RTX_4090-231340/results.jsonl	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd	unresolved	UNKNOWN	OTHER	receipts/imports.sha256	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+# LEDGER aien-dev/omega-gpu-bench	de6e2f4c0168167a00c5211249db654d19b046cd
+# CLASS native	0
+# CLASS first-party	13
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	28
+# CLASS unresolved	6
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

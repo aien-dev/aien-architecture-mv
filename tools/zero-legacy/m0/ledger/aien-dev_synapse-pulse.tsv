@@ -1,0 +1,18 @@
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	unresolved	UNKNOWN	OTHER	synapse.pin	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	unresolved	UNKNOWN	OTHER	omega.pin	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	first-party	OPEN	SHELL	build.sh	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	native	NATIVE	OM	src/20main.om	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	native	NATIVE	OM	src/10pulse.om	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	native	NATIVE	OM	src/00base.om	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	first-party	OPEN	SHELL	tests/diag.sh	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	first-party	OPEN	SHELL	tests/cases.sh	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7	first-party	OPEN	SHELL	tests/run.sh	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+# LEDGER aien-dev/synapse-pulse	0c7ba22f1bebe0e6ab253d885b4badd8dff8bfd7
+# CLASS native	3
+# CLASS first-party	4
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	8
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

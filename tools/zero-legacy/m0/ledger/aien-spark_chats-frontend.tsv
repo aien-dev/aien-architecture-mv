@@ -1,0 +1,15 @@
+aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e	first-party	OPEN	XLANG	src/App.test.js	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e	first-party	OPEN	XLANG	src/App.js	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e	first-party	OPEN	XLANG	src/setupTests.js	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e	first-party	OPEN	XLANG	src/reportWebVitals.js	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e	first-party	OPEN	XLANG	src/index.js	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e	unresolved	UNKNOWN	OTHER	public/favicon.ico	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+# LEDGER aien-spark/chats-frontend	063b6ee46240f8be7b981382c77d68ef7d178d4e
+# CLASS native	0
+# CLASS first-party	5
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	12
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

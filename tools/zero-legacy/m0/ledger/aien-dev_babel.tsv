@@ -1,0 +1,29 @@
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	README.md	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	SHELL	build.sh	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	native	NATIVE	OM	src/00-core.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	src/20-split.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	src/30-pipe.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	native	NATIVE	OM	src/90-main.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	native	NATIVE	OM	src/50-diff.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	native	NATIVE	OM	src/60-report.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	native	NATIVE	OM	src/10-io.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	src/40-gen.om	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	FOREIGN	tests/run.sh	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	demo/python.txt	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	demo/c.txt	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	demo/go.txt	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	demo/rust.txt	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	demo/cpp.txt	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	HIDDEN	demo/zig.txt	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	PYTHON	examples/sample/tools/report.py	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	C_H	examples/sample/src/mix.c	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c	first-party	OPEN	C_H	examples/sample/src/hash.c	aien-dev/babel#3	C and Python sample corpus not yet in .om
+# LEDGER aien-dev/babel	13ad42d9c3383774f34caf9087bf5f7d9d3d675c
+# CLASS native	5
+# CLASS first-party	15
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	14
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

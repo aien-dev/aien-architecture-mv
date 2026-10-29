@@ -1,0 +1,12 @@
+aien-dev/omega-npu	9a0f7b9c442e7cf9ffe15aec4cf21519d2cc1452	first-party	OPEN	PYTHON	oracle/mkmodel.py	aien-dev/omega-npu#13	Python Vela oracle not yet in .om
+aien-dev/omega-npu	9a0f7b9c442e7cf9ffe15aec4cf21519d2cc1452	first-party	OPEN	PYTHON	oracle/vela_raw.py	aien-dev/omega-npu#13	Python Vela oracle not yet in .om
+aien-dev/omega-npu	9a0f7b9c442e7cf9ffe15aec4cf21519d2cc1452	native	NATIVE	OM	om/common.om	aien-dev/omega-npu#13	Python Vela oracle not yet in .om
+# LEDGER aien-dev/omega-npu	9a0f7b9c442e7cf9ffe15aec4cf21519d2cc1452
+# CLASS native	1
+# CLASS first-party	2
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	8
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

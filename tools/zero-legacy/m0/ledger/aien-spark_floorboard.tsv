@@ -1,0 +1,21 @@
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	vite.config.ts	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	unresolved	UNKNOWN	OTHER	deploy/Caddyfile.floorboard	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	unresolved	UNKNOWN	OTHER	deploy/floorboard.service	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	FOREIGN	deploy/vps-root-floorboard.sh	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	deploy/server.mjs	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/main.ts	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/App.vue	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/vite-env.d.ts	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/data/starter-palette.ts	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/lib/board-model.ts	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/lib/storage.ts	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b	first-party	OPEN	XLANG	src/components/BoardCanvas.vue	aien-spark/floorboard#2	host-mandated TS: browser UI
+# LEDGER aien-spark/floorboard	e5875c3690e3d7c4e6ad4b1ff38aa89a24ba5e7b
+# CLASS native	0
+# CLASS first-party	10
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	11
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

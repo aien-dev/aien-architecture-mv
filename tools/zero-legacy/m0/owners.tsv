@@ -1,0 +1,92 @@
+aien-dev/omega-mv	seed/	aien-dev/omega-mv#725	self-hosting rung retirement; hex0 trust anchor
+aien-dev/omega-mv	.	aien-dev/omega-mv#726	C compiler/runtime consumer cutover
+aien-dev/aien-architecture-mv	.	aien-dev/aien-architecture-mv#316	crumb.c and scripts/*.sh rewrite
+aien-dev/aegis-runtime-mv	.	aien-dev/aegis-runtime-mv#75	Rust authority/receipt enforcement not yet in .om
+aien-dev/aien-edge	.	aien-dev/aien-edge#7	Rust edge stack not yet in .om
+aien-dev/aienos.com	.	aien-dev/aienos.com#79	Rust site-builder not yet in .om
+aien-dev/aien-protocols-mv	.	aien-dev/aien-protocols-mv#55	C/Rust protocol checkers not yet in .om
+aien-dev/aien-sovereign-core-mv	.	aien-dev/aien-sovereign-core-mv#753	serving stack consumer cutover; GPU qualification gate
+aien-dev/aienux	.	aien-dev/aienux#452	frozen C kernel and Rust boot/storage not yet in .om
+aien-dev/atlas	.	aien-dev/atlas#9	C/assembly bootstrap tools; boot trust anchor review
+aien-dev/benchmarks-mv	.	aien-dev/benchmarks-mv#44	Rust/C runners not yet qualified in .om
+aien-dev/CUDApp	.	aien-dev/CUDApp#79	C SASS encoder/session; GB10 qualification gate
+aien-dev/interplane-mv	.	aien-dev/interplane-mv#118	Rust adapters not yet in .om
+aien-dev/omega-programs	.	aien-dev/omega-programs#13	C/OSC programs not yet rewritten
+aien-dev/open-humanity	.	aien-dev/open-humanity#38	Rust transport not yet in .om
+aien-dev/physics-mv	.	aien-dev/physics-mv#81	C/assembly NVRM client; device qualification gate
+aien-dev/spark-rsi-mv	.	aien-dev/spark-rsi-mv#72	Rust supervisor not yet in .om
+drakestapleton/drakestapleton.com	.	drakestapleton/drakestapleton.com#84	site generator not yet in .om
+drakestapleton/drakestapleton.com-old	.	drakestapleton/drakestapleton.com#84	superseded site; archive decision is Drake's
+drakestapleton/aien-dev	.	aien-dev/aien-architecture-mv#300	personal namespace; no repo-local leaf
+aien-spark/fap-backend	.	aien-spark/fap-backend#2	TypeScript API not yet in .om
+aien-dev/synapse	.	aien-dev/synapse#131	Rust crates and shell not yet in .om
+aien-dev/omnet	.	aien-dev/omnet#22	Host oracles and scripts not in .om
+aien-dev/cortex	.	aien-dev/cortex#4	Host tests and oracles not in .om
+aien-spark/dentistrack	.	aien-spark/dentistrack#2	host-mandated TS: Next.js browser UI
+aien-dev/omega-research	.	aien-dev/omega-research#7	C measurement tools not yet in .om
+aien-dev/atlas-mac-devbox-control	.	aien-dev/aien-architecture-mv#300	Issues disabled on repo (HTTP 410)
+aien-dev/rtl8127-omega	.	aien-dev/rtl8127-omega#2	Shell install and test drivers not in .om
+aien-dev/agent-archive	.	aien-dev/agent-archive#10	Rust collector not yet in .om
+aien-spark/omega-kernel-smoke	.	aien-spark/omega-kernel-smoke#2	Python reference checker not in .om
+aien-dev/omega-dnn	.	aien-dev/omega-dnn#3	Python package not yet in .om
+aien-dev/omega-seed-challenge	.	aien-dev/omega-seed-challenge#5	Shell checker not yet in .om
+aien-dev/omega-evidence	.	aien-dev/omega-evidence#7	evidence C/shell/OSC runners not in .om
+aien-dev/aien-sealed	.	aien-dev/aien-sealed#25	brownian C producer not in .om
+aien-dev/aien-math	.	aien-dev/aien-math#5	Python oracles not yet in .om
+aien-dev/omega-learn	.	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-spark/blockchain-ledger-backend	.	aien-spark/blockchain-ledger-backend#2	Node ledger not yet in .om
+aien-dev/spark-scrub	.	aien-dev/spark-scrub#9	Rust scanner not yet in .om
+aien-dev/gpu-head-to-head	.	aien-dev/gpu-head-to-head#5	Python bench harness not in .om
+aien-dev/omega-gpu-driver	.	aien-dev/omega-gpu-driver#7	shell QEMU harness not in .om
+aien-dev/hive-not-swarm	.	aien-dev/hive-not-swarm#1	Python article builders not in .om
+aien-dev/aien	.	aien-dev/aien#22	shell goal_microjobs not in .om
+aien-dev/omega-lift	.	aien-dev/omega-lift#2	extensionless host tools not in .om
+aien-dev/pi-register	.	aien-dev/pi-register#11	Rust registrar not yet in .om
+aien-dev/atlas-harness	.	aien-dev/aien-architecture-mv#300	issues disabled on private repo
+aien-dev/omega-bridge	.	aien-dev/omega-bridge#43	C/Python/Rust/Go/Zig host code not in .om
+aien-spark/cockpit	.	aien-spark/cockpit#2	host-mandated TS: browser/Node UI
+aien-spark/phone-import	.	aien-spark/phone-import#2	host-mandated TS: Next.js/Cloudflare
+aien-dev/aien-crypto	.	aien-dev/aien-crypto#3	C hashes and Ed25519 not yet in .om
+aien-dev/AienOS-nv	.	aien-dev/AienOS-nv#4	installer shell and Python not in .om
+aien-dev/omega-bridge-kit	.	aien-dev/omega-bridge-kit#3	Python UI and shell launchers not in .om
+aien-dev/omega-packages	.	aien-dev/omega-packages#2	host-mandated Nix/Debian packaging adapters
+aien-dev/interplane.io	.	aien-dev/interplane.io#12	Rust site-builder not yet in .om
+aien-dev/readings-window	.	aien-dev/readings-window#19	Rust daemon not yet in .om
+aien-dev/omega-npu	.	aien-dev/omega-npu#13	Python Vela oracle not yet in .om
+aien-dev/truthcleanup-secretscan	.	aien-dev/truthcleanup-secretscan#2	shell scanner not yet in .om
+aien-dev/github-atlas-harness	.	aien-dev/aien-architecture-mv#300	issues disabled; host-mandated TS/Tauri
+aien-spark/lapis	.	aien-spark/lapis#2	host-mandated TSX: browser UI, no wasm
+aien-spark/DHG	.	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-dev/omega-rosetta	.	aien-dev/omega-rosetta#4	Python task oracles not yet in .om
+aien-dev/babel	.	aien-dev/babel#3	C and Python sample corpus not yet in .om
+aien-dev/aien-translate	.	aien-dev/aien-translate#6	Rust translator not yet in .om
+aien-dev/omega-mcp	.	aien-dev/omega-mcp#2	Python reference tools not yet in .om
+aien-dev/omtex	.	aien-dev/omtex#3	shell build and pin tools not yet in .om
+aien-dev/omega-kernel-template	.	aien-dev/omega-kernel-template#4	Python case tools not yet in .om
+aien-dev/synapse-claims	.	aien-dev/synapse-claims#2	Rust signer not yet in .om
+aien-dev/synapse-board	.	aien-dev/synapse-board#2	shell build and test runner not yet in .om
+aien-spark/local-mcp	.	aien-spark/local-mcp#3	shell check script not yet in .om
+aien-dev/omega-blas	.	aien-dev/omega-blas#4	C BLAS not yet qualified .om
+aien-dev/mobhub	.	aien-dev/mobhub#18	Rust service not yet in .om
+aien-dev/spark-supervisor	.	aien-dev/spark-supervisor#10	Rust supervisor not yet in .om
+aien-dev/synapse-map	.	aien-dev/synapse-map#3	shell wrappers and forged publish unit
+aien-dev/aienix	.	aien-dev/aienix#16	hidden aienos file not yet in .om
+aien-dev/drake-voice	.	aien-dev/drake-voice#4	Python assistant not yet in .om
+aien-dev/tree-sitter-omega	.	aien-dev/tree-sitter-omega#3	host-mandated tree-sitter grammar JS
+aien-dev/.github	.	aien-dev/.github#29	unresolved profile image needs manifest
+aien-spark/attendance	.	aien-spark/attendance#2	host-mandated TS: Next.js browser
+aien-spark/fap	.	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/v0-res-publica-argentaria	.	aien-spark/v0-res-publica-argentaria#2	host-mandated TS: Next.js browser
+aien-spark/squad-community-group-app	.	aien-spark/squad-community-group-app#2	host-mandated TS: Next.js browser
+aien-dev/sovereign-intelligence	.	aien-dev/sovereign-intelligence#31	Shell academy and installer not yet in .om
+aien-dev/omega-host	.	aien-dev/omega-host#4	C OSH host not yet in .om
+aien-dev/aien-gpu	.	aien-dev/aien-gpu#4	C kernel module not yet in .om
+aien-spark/flooredit	.	aien-spark/flooredit#2	host-mandated TS: browser UI
+aien-dev/omega-gpu-bench	.	aien-dev/omega-gpu-bench#9	Python bench kit not yet in .om
+aien-spark/floorboard	.	aien-spark/floorboard#2	host-mandated TS: browser UI
+aien-dev/vscode-omega	.	aien-dev/vscode-omega#3	host-mandated JS: VS Code API
+aien-spark/chats-frontend	.	aien-spark/chats-frontend#2	host-mandated JS: browser UI
+aien-dev/synapse-pulse	.	aien-dev/synapse-pulse#3	Shell build and tests not yet in .om
+aien-dev/synapse-mcp	.	aien-dev/synapse-mcp#3	Shell build and tests not yet in .om
+aien-dev/homebrew-omega	.	aien-dev/homebrew-omega#2	host-mandated Ruby: Homebrew formula
+aien-dev/aien-train	.	aien-dev/aien-train#43	344 unresolved evidence files need manifest

@@ -1,0 +1,49 @@
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	unresolved	UNKNOWN	OTHER	Dockerfile	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	tailwind.config.js	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	eslint.config.mjs	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	next.config.mjs	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	postcss.config.mjs	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/lib/db.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/lib/auth.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	unresolved	UNKNOWN	OTHER	src/app/favicon.ico	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/layout.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/ares/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/nemesis/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/members/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/posts/[id]/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/notifications/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/members/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/posts/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/posts/[id]/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/posts/[id]/replies/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/posts/[id]/like/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/posts/[id]/history/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/api/users/[username]/posts/route.ts	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/users/[username]/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/hades/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/attendance/[meeting]/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/divisional-gathering-attendance/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/app/schedule/page.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/Navbar.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/Forum.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/NotificationsList.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/DemotionModal.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/ScheduleForm.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/AttendanceDropdown.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/Modal.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/AttendanceForm.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/CreatePostForm.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/SchedulePostTable.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/MeetingsDropdown.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/Post.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10	first-party	OPEN	XLANG	src/components/Notification.tsx	aien-spark/DHG#2	host-mandated TS: Next.js browser app
+# LEDGER aien-spark/DHG	56891d186cddfb0ed3d7eb8dad929538a9f43b10
+# CLASS native	0
+# CLASS first-party	38
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	13
+# CLASS unresolved	2
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

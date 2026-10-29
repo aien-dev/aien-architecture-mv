@@ -1,0 +1,45 @@
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	MAKE	Makefile	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tools/m20_receipt.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tools/tensor_mutations.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	FOREIGN	tools/autodiff_mutations.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tools/m20_receipt_mutations.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tools/omega_tree.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/autodiff/omega_autodiff.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/autodiff/omega_autodiff.h	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/train/tg_sgd.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/train/tg_store.h	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/train/tg_sgd.h	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/train/tg_store.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor_cpu.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor_store.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor_gb10.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor_reduce_seam.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor.h	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor_store.h	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	src/tensor/omega_tensor_reduce_seam.h	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	tests/test_omega_autodiff.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/test_tensor_conversion_equiv.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/test_m20_receipt.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	tests/test_omega_tensor.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/run_tensor_chip.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/test_m20_receipt_mutations_conversion_equiv.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	tests/test_omega_tensor_gb10.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/test_autodiff_conversion_equiv.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	tests/test_omega_tensor_store.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	unresolved	UNKNOWN	OTHER	tests/tensor_reduce_multi_tests.inc	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	C_H	tests/train/test_train.c	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/train/train_receipt.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	SHELL	tests/gates/run-learn.sh	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	MAKE	mk/autodiff.mk	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	MAKE	mk/tensor.mk	aien-dev/omega-learn#4	C tensor/train stack not in .om
+aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e	first-party	OPEN	MAKE	mk/train.mk	aien-dev/omega-learn#4	C tensor/train stack not in .om
+# LEDGER aien-dev/omega-learn	7c36cde6876dea8497493b2fe4bc092933926e1e
+# CLASS native	0
+# CLASS first-party	35
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	30
+# CLASS unresolved	1
+# UNBOUND first-party	0
+# UNBOUND unresolved	0

@@ -1,0 +1,46 @@
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	SHELL	docker-entrypoint.sh	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	SHELL	setup-docker.sh	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	HIDDEN	Dockerfile	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	jest.config.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/sales-lite.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/comparison.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/customers.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/config.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/customers-lite.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/archive.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/sales.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/app.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/tests/jest.setup.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	XLANG	frontend/tests/sales.test.js	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	SHELL	scripts/smoke.sh	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	HIDDEN	tasks/tasks.json	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	HIDDEN	tasks/task_002.txt	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/archive.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/main.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/account.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/transaction.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/blockchain.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/archive.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/block.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/contract.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/mod.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/customer.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/models/comparison.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/services/accounting.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/services/archive.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/services/contract.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/services/mod.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/services/customer.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/services/comparison.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/api/handlers.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/api/mod.rs	aien-spark/fap#2	Rust daemon not yet in .om
+aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d	first-party	OPEN	RUST	src/api/routes.rs	aien-spark/fap#2	Rust daemon not yet in .om
+# LEDGER aien-spark/fap	62c6c699f241f1754d6fb8e1df3f3769d53f4f0d
+# CLASS native	0
+# CLASS first-party	37
+# CLASS generated	0
+# CLASS external	0
+# CLASS doc-data	41
+# CLASS unresolved	0
+# UNBOUND first-party	0
+# UNBOUND unresolved	0
