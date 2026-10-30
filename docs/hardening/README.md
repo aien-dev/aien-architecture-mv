@@ -33,4 +33,4 @@ Nothing in this decision had run yet. Omega and aienos had chained diaries that 
 
 - ADR 0025 is still PROPOSED (its status line on `main`).
 - The TRN1 folder now exists: [aien-protocols-mv `specs/execution-transcript/`](https://github.com/aien-dev/aien-protocols-mv/tree/main/specs/execution-transcript). This summary has not been rechecked against the omega and sovereign-core checkers.
-- The aienos C kernel has since run on real hardware: a Raspberry Pi 5 on 2026-10-13 (see the [aienos README](https://github.com/aien-dev/aienux#readme)) and a 2017 Intel iMac from 2026-10-17 ([aienos-mv#405](https://github.com/aien-dev/aienux/pull/405)). It is still not qualified on hardware.
+- The aienos C kernel has since run on real hardware: a Raspberry Pi 5 on 2026-10-13 (see the [aienos README](https://github.com/aien-dev/aienux#readme)) and a 2017 Intel iMac from 2026-10-17 ([aienux#405](https://github.com/aien-dev/aienux/pull/405)). It is still not qualified on hardware.

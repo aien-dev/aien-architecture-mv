@@ -8,6 +8,12 @@ Part of [AienOS](https://github.com/aien-dev/aienix), the whole system and core 
 
 **Status 2026-10-26: AienOS is in alpha testing; the rest of the stack is research-grade and pre-alpha.** Alpha testers install one bundle: the Core engine built from aien-sovereign-core-mv `main`, the Omega install wizard and compiler (omc), and the CUDApp user-space replacement. Its GPU path runs only on the DGX Spark (GB10), and the three-run physical qualification has not been run. Everything outside that bundle, including the Aienux kernel, is pre-alpha. Nothing in AIEN is described as qualified unless a receipt says so. Details follow.
 
+## Human-Directed Agentic Engineering
+
+Development follows Human-Directed Agentic Engineering (HDAE): humans define goals, architecture, constraints, acceptance criteria and stopping points; agents implement, execute checks, diagnose failures and revise within those boundaries. Human review retains responsibility for claims, acceptance and release decisions. The existing plan authority, milestone registry and qualification requirements remain unchanged.
+
+For the documented method and systems-software case study, see Gregory M. Kurtzer, *Ginux: Building an Independent Kernel That Runs Linux Userspace through Human-Directed Agentic Engineering* (2026), [doi:10.5281/zenodo.23682548](https://doi.org/10.5281/zenodo.23682548). This is a description of the current development method, not a retrospective change to historical experiments or receipts.
+
 ## Current state
 
 Alpha testing for the bundle above; research-grade and pre-alpha for everything else. The live numbers are not repeated in this file because they change daily; read [CURRENT_EXECUTION_PLAN.md](CURRENT_EXECUTION_PLAN.md) and [doctrine/ROADMAP.md](doctrine/ROADMAP.md). What follows is a summary, with the source for each point.
