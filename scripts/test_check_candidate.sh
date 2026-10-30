@@ -98,6 +98,17 @@ amend() { # amend <n> <manifest-sha> [extra line...] : write CX.amendment-<n>.to
 MSHA=$(sha256sum "$amd/CX.toml" | cut -d' ' -f1)
 amend 1 "$MSHA";                                                expect 0 "amendment: valid amendment accepted" "$amd/CX.toml"
 "$chk" "$amd/CX.toml" 2>/dev/null | grep -q '(amendments: 1)' && pass=$((pass+1)) || { bad=$((bad+1)); echo "TEST FAIL: amendment file not picked up"; }
+# Exact-byte amendment binding: parsing may drop NUL, hashing must not.
+cp "$amd/CX.toml" "$amd/CX.raw-orig"
+printf '\0' >> "$amd/CX.toml"
+expect 1 "amendment: NUL-only frozen manifest edit refused" "$amd/CX.toml"
+cp -r "$amd" "$tmp/amdnul"  # original digest + altered bytes; retained for the mutant
+NULSHA=$(sha256sum "$amd/CX.toml" | cut -d' ' -f1)
+[ "$NULSHA" != "$MSHA" ] && pass=$((pass+1)) || { bad=$((bad+1)); echo "TEST FAIL: NUL fixture did not change raw digest"; }
+amend 1 "$NULSHA"
+expect 0 "amendment: actual raw NUL-containing manifest digest accepted" "$amd/CX.toml"
+cp "$amd/CX.raw-orig" "$amd/CX.toml"
+amend 1 "$MSHA"
 amend 1 "$MSHA" "tokenizer-json-sha256 = \"$Z64\"";             expect 1 "amendment: all-zero digest in amendment refused (file is read)" "$amd/CX.toml"
 cp "$amd/CX.toml" "$amd/CX.orig"; amend 1 "$MSHA"
 echo '# edited after the freeze' >> "$amd/CX.toml";              expect 1 "amendment: frozen manifest edited after amendment refused" "$amd/CX.toml"
@@ -131,5 +142,6 @@ mutant "optional pins not checked" '/^optpins$/d' "$tmp/p1.toml"
 mutant "optional pin sha existence not checked" '/^fn optpin /,/^fn optpins /s/^if not shaex i e$/if false/' "$tmp/p2.toml"
 mutant "manifest pin not checked" 's/^if not mfeq e$/if false/' "$amd/CX.toml"
 mutant "amendment may override" 's/^if inmf x$/if false/' "$tmp/amdov/CX.toml"
+mutant "raw manifest hash normalized" 's/^sha256$/dropnul\nsha256/' "$tmp/amdnul/CX.toml"
 echo "passed=$pass failed=$bad"
 [ "$bad" -eq 0 ]
