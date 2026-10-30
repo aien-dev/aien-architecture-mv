@@ -1,6 +1,6 @@
 # ALLEN continuity across model replacement: pre-registered campaign v0
 
-**NOT A MASTER PLAN.** Finite workstream document for ARCH-0035 (ACCEPTED 2026-10-06 by the operator, arch#155 merge bd56a27) and aienos ADR 0018 (Proposed; its format freeze needs its own operator approval). `CURRENT_EXECUTION_PLAN.md` owns sequencing; `doctrine/ROADMAP.md` owns milestone status. This document accepts no ADR, freezes no format, changes no creed, and raises no status. It is subordinate to the active CAND-4 freeze and the NEXT-PHASE-1/2 campaigns and must not take the GPU from them.
+**NOT A MASTER PLAN.** Finite workstream document for ARCH-0035 (ACCEPTED 2026-10-06 by the operator, arch#155 merge bd56a27) and [aienux docs/adr/0018-allen-subject-state-object.md](https://github.com/aien-dev/aienux/blob/9e0e6179140e9571a95f19a1b707ac576e16c859/docs/adr/0018-allen-subject-state-object.md) (Proposed; its format freeze needs its own operator approval). `CURRENT_EXECUTION_PLAN.md` owns sequencing; `doctrine/ROADMAP.md` owns milestone status. This document accepts no ADR, freezes no format, changes no creed, and raises no status. It is subordinate to the active CAND-4 freeze and the NEXT-PHASE-1/2 campaigns and must not take the GPU from them.
 
 **Written:** 2026-10-06. Scope: one durable subject, two separately pinned model artifacts, the same runtime authority boundary, separately recorded results. Dependencies: a production integration seam that does not exist yet (section 3).
 
@@ -32,7 +32,7 @@ sovereign-core `d5b78ff` contains zero code references to `LogicalAgentId`, `Age
 
 Seam candidate, not a decision: `Spine::open_home_marked` (`crates/aien-runtime/src/spine.rs`, ~line 1197 at main 2026-10-07), which already holds `machine_root` and the Cortex-mark check and is the real gate before `Compose::open` (`aien-omega-compose/src/lib.rs:224`). Any cut there goes through the sovereign-core merge queue (merge control session 3649dd from 2026-10-06 ~23:45Z) and follows ADR 0024 language rules.
 
-Known record mismatch (reported, not fixed here): ADR 0035 §3.2/§3.3 call continuity kind 24 "IMPLEMENTED (aienos ADR 0018)", while the aienos ADR 0018 header still reads Proposed and calls ARCH-0035 PROPOSED. This campaign treats the kind-24 format as unfrozen until ADR 0018's own format-freeze approval.
+Known record mismatch (reported, not fixed here): ADR 0035 §3.2/§3.3 call continuity kind 24 "IMPLEMENTED ([aienux docs/adr/0018-allen-subject-state-object.md](https://github.com/aien-dev/aienux/blob/9e0e6179140e9571a95f19a1b707ac576e16c859/docs/adr/0018-allen-subject-state-object.md))", while the [aienux docs/adr/0018-allen-subject-state-object.md](https://github.com/aien-dev/aienux/blob/9e0e6179140e9571a95f19a1b707ac576e16c859/docs/adr/0018-allen-subject-state-object.md) header still reads Proposed and calls ARCH-0035 PROPOSED. This campaign treats the kind-24 format as unfrozen until [aienux docs/adr/0018-allen-subject-state-object.md](https://github.com/aien-dev/aienux/blob/9e0e6179140e9571a95f19a1b707ac576e16c859/docs/adr/0018-allen-subject-state-object.md)'s own format-freeze approval.
 
 ## 4. Frozen acceptance criteria (the campaign may not start until section 3 is closed)
 
@@ -55,7 +55,7 @@ Each step records PASS/FAIL/NOT_RUN with a receipt. Three verdicts are scored se
 | Item | Status | Owner |
 |---|---|---|
 | ALLEN bound into the sovereign-core compose path | MISSING_IMPLEMENTATION | sovereign-core merge queue (ADR 0035 accepted, arch#155 bd56a27; the binding itself is still unbuilt) |
-| Format acceptance (aienos ADR 0018) | PROPOSED | Drake |
+| Format acceptance ([aienux docs/adr/0018-allen-subject-state-object.md](https://github.com/aien-dev/aienux/blob/9e0e6179140e9571a95f19a1b707ac576e16c859/docs/adr/0018-allen-subject-state-object.md)) | PROPOSED | Drake |
 | Physical Spark reboot, attended provisioning | NOT_RUN | Drake (operator boundary) |
 | GPU window for model A/B legs | BLOCKED by CAND-4 / NP1 v6 / Lane Q sequence | quiet-flag holders |
 | Model B (SmolLM2) qualification | NOT_RUN | sovereign-core merge queue |
