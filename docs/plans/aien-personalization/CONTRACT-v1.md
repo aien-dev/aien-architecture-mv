@@ -1,4 +1,4 @@
-# Aien persona profile contract v1 (`aien.subject.profile/1`)
+# Aien persona profile contract v1 (`aien.allen.profile/1`)
 
 Part of the finite workstream in `README.md` (not a master plan). Issue: aien-spark/aien-architecture#159. This is a proposed contract for review. It is not an accepted ADR, freezes no native format, and the SubjectState (aienos ADR 0018, kind 24) is not changed by it. The implementation is the **sovereign-core persona profile PR (pending)**; where this text and that code differ, the code is the evidence and the difference is a bug in one of them.
 
@@ -6,8 +6,8 @@ Part of the finite workstream in `README.md` (not a master plan). Issue: aien-sp
 
 | Concept | Owner | Stored where | Never |
 |---|---|---|---|
-| Identity | Aienux provisions; host `aien-subject` resolves (read only) | SubjectState kind 24 in the Aienux Store, host pin `<home>.aien-binding` | Created or edited by host or frontend code. A display name is not identity. |
-| Persona profile | New host crate `aien-subject-profile` is the only writer | `<home>.aien-profile/` beside the binding file | A second copy that claims to be current. Caches carry the revision and refuse identity mismatch. |
+| Identity | Aienux provisions; host `aien-allen` resolves (read only; rename to `aien-subject` planned) | SubjectState kind 24 in the Aienux Store, host pin `<home>.allen-binding` (rename to `<home>.aien-binding` planned) | Created or edited by host or frontend code. A display name is not identity. |
+| Persona profile | New host crate `aien-allen-profile` is the only writer (rename to `aien-subject-profile` planned) | `<home>.allen-profile/` beside the binding file (rename to `<home>.aien-profile/` planned) | A second copy that claims to be current. Caches carry the revision and refuse identity mismatch. |
 | Working preferences | Same profile record | Same store | Treated as permissions or as facts from model output. |
 | Standing intent | Aienux (SubjectState) | Subject intents (v0: `GOAL_LATENCY` only) | Written by the profile. Not covered by v1 (see AUDIT-v1). |
 | Memory | Cortex (ARCH-0022) | Cortex journal | Duplicated into the profile. The profile holds no memory content. |
@@ -16,13 +16,13 @@ Part of the finite workstream in `README.md` (not a master plan). Issue: aien-sp
 
 One subject per configured root. Multi-subject, multi-device sync, clone and fork are out of scope and refused, not implied.
 
-## 2. Schema `aien.subject.profile/1`
+## 2. Schema `aien.allen.profile/1`
 
 One JSON object per revision file, at most 16 KiB, parsed with unknown fields denied.
 
 | Field | Type and limit |
 |---|---|
-| `schema` | exactly `"aien.subject.profile/1"` |
+| `schema` | exactly `"aien.allen.profile/1"` (rename to `"aien.subject.profile/1"` planned) |
 | `agent` | 64 hex chars, the resolved LogicalAgentId |
 | `root` | 64 hex chars, the resolved AgentRoot |
 | `revision` | integer, starts at 1, increases by exactly 1 |
@@ -70,7 +70,7 @@ The writer refuses: profile with no engaged identity; `agent` or `root` differen
 
 ## 7. Migration
 
-A reader accepts exactly `aien.subject.profile/1`. Any other schema value is refused with a clear message. A future v2 needs an explicit migrator that reads a v1 chain and writes a new revision in the v2 form, never an in-place rewrite and never a silent upgrade on read. Records written before 2026-10-26 carry the schema string `aien.allen.profile/1` under `<home>.allen-profile/`; the sovereign-core Allen-to-Aien rename migrates them once, explicitly and logged, at daemon start: it validates the old chain, writes a new store `<home>.aien-profile/` with the same revisions re-encoded under the new schema and re-hashed, and removes the old directory only after the new store opens cleanly. Old files are never mutated and nothing is upgraded on read. Whether this rename re-encoding satisfies the v2-migrator rule above is a pending decision (see the rename PRs).
+A reader accepts exactly `aien.allen.profile/1`. Any other schema value is refused with a clear message. A future v2 needs an explicit migrator that reads a v1 chain and writes a new revision in the v2 form, never an in-place rewrite and never a silent upgrade on read. Sovereign-core main still ships that schema from crate `aien-allen-profile` under `<home>.allen-profile/`. A rename of the schema string to `aien.subject.profile/1` and of the store directory to `<home>.aien-profile/` is planned, not done; no daemon-start migrator ships on main.
 
 ## 8. The nine issue invariants and how v1 keeps each
 

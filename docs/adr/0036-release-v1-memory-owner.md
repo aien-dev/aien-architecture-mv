@@ -9,9 +9,9 @@
 
 ## Decision
 
-1. For the first public release, the memory that step E4 of `ACCEPTANCE_E2E.md` tests is the existing **aien-subject-memory** store (crate named `aien-allen-memory` until the 2026-10-26 rename) attached to an **engaged Aien identity**. No new store, no new subsystem, no change to ADR 0022's statement about the Omega layer.
+1. For the first public release, the memory that step E4 of `ACCEPTANCE_E2E.md` tests is the existing **aien-allen-memory** store attached to an **engaged Aien identity**. A rename of that crate to `aien-subject-memory` is planned, not done: sovereign-core main still ships `aien-allen-memory`, `aien-allen-profile`, and `aien-allen`. The end-to-end campaign is still `docs/campaigns/allen-e2e/` (driver `scripts/allen_e2e_demo.sh`); there is no `allen-e2e` package. No new store, no new subsystem, no change to ADR 0022's statement about the Omega layer.
 2. **No memory without an engaged identity.** `aien-cli compose remember` and `compose recall` refuse with the existing named refusal (NotEngaged) when Aien is not engaged. Accepting an item that can never be recalled is a silent failure and is forbidden.
-3. **Every declared E2E run engages a host-built fixture Aien subject** before row E3, the way the Aien demo step S1 does (`AIEN_SUBJECT`, `AIEN_SUBJECT_ADOPT`, log line `Aien: engaged`), and records the identity fingerprint in its receipts. Real subjects come only from AIENOS provisioning and stay NOT_RUN in v1, as the demo already states.
+3. **Every declared E2E run engages a host-built fixture Aien subject** before row E3, the way the Aien demo step S1 does (`AIEN_ALLEN_SUBJECT`, `AIEN_ALLEN_ADOPT`, log line `ALLEN: engaged`; rename of those identifiers planned), and records the identity fingerprint in its receipts. Real subjects come only from AIENOS provisioning and stay NOT_RUN in v1, as the demo already states.
 4. The other three stores named in the gap assessment (compose journal records, provenance receipts, Omega rx_cortex) are not "memory" in the sense of E4; they remain what they are (durable execution state, evidence, and the Omega-layer owner respectively). CTRL-E4 (store removed) therefore tests loss of the Aien memory store, not loss of the compose journal; the dry run 2 control, which removed the whole compose home, is recorded as store-loss detection only.
 
 ## Why
@@ -21,9 +21,9 @@ The dry run showed the mechanism already exists and works when engaged; what fai
 ## Consequences
 
 - aien-sovereign-core#386 repair: remember and recall refusals when not engaged; harness engagement; the append budget fix.
-- `ACCEPTANCE_E2E.md` is frozen and names "the store named by lane L3"; this ADR is that name. The E4 receipt field `memory_store` names `aien-subject-memory`.
+- `ACCEPTANCE_E2E.md` is frozen and names "the store named by lane L3"; this ADR is that name. The E4 receipt field `memory_store` is `aien-allen-memory` (rename of that value to `aien-subject-memory` planned).
 - A future ADR may add memory for an un-engaged installation; it is not on the v1 critical path.
 
 ## Not decided here
 
-Whether the Omega-layer owner (ADR 0022) and aien-subject-memory merge or stay layered; the model's use of recalled items beyond the E4 check; anything about native AIENOS provisioning of real subjects.
+Whether the Omega-layer owner (ADR 0022) and aien-allen-memory merge or stay layered; the model's use of recalled items beyond the E4 check; anything about native AIENOS provisioning of real subjects.
