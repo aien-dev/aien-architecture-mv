@@ -12,7 +12,7 @@ plans, research, archive), `qualification/` (release candidate manifests and gat
 `formal/invariants/` and `bootstrap/formal-oracles/lean/` (Lean models). Code that runs:
 
 - `tools/crumb/` (`crumb.c`, 2,380 lines of C11, with `Makefile` and three test scripts).
-- `tools/candidate/check_candidate.om`, `check_pins.om` and a parity oracle with 596 case files.
+- `tools/candidate/check_candidate.om`, `check_pins.om` and a parity oracle with 477 case files and 117 expected outputs.
 - `tools/doctrine/doctrine.om`, `gate.om`; `tools/zero-legacy/closure.om`, `expect.om`,
   `gate.om`, `sha256.om`, with fixtures.
 - `scripts/` shell tools and `scripts/pipeline-proofs/`.
@@ -106,7 +106,7 @@ bash scripts/pipeline-proofs/run-all.sh
 - Crumb tool: libc only (C11, `make`).
 - Omega tools: the omc pin above. Lean models: `lakefile.toml` and `lean-toolchain`.
 - Workflow: `aien-test` built from `aien-spark/aien-sovereign-core` at
-  `a51042b61b87355c0850ef82ba409a46e153a1ff`; actions referenced by tag, not commit sha.
+  `a51042b61b87355c0850ef82ba409a46e153a1ff`; actions pinned by full commit sha (tag noted in a comment).
 
 ## Evidence
 
