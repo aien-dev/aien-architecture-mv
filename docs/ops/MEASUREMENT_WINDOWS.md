@@ -31,18 +31,23 @@ are the same as before, plus the two new keys.
 3. Inside your window: calibrate once, take the 27B baseline once (if your work involves the 27B),
    then run only your own measurements. Every receipt carries the window id, so a reader can match it
    to the calibration and the baseline taken under the same conditions.
-4. Close the window as soon as your timings are done. A window that is forgotten closes itself when
-   its lease runs out (90 minutes unless you ask for another length).
+4. Close the window as soon as your timings are done. A window that holds anything exclusive (the
+   default) lasts at most 20 minutes and `open` refuses a longer `--lease`; other windows default to
+   90 minutes. A window that runs past its lease lets its locks go, writes NO VERDICT in its folder
+   and posts on the board: its timings are not valid (L405, Drake 2026-10-22). Split long measurements.
+5. A timing window opens only when the machine is quiet anyway: at most 3 jobs on the quiet lock and
+   a 1-minute load of at most 10. It waits for that holding nothing (L405).
 
 Builds are not measurements: do them before you open the window, through `spark-build-once` or
-`quiet-build`. While a window is open, builds wait.
+`quiet-build`. While a window is open, builds wait, but at most 25 minutes; then they run anyway and
+the window is marked "shared machine" (L405).
 
 ## Exact commands
 
 Open a window (waits its turn; prints the window id when it holds the box):
 
 ```sh
-id=$(spark-window open my-measurement --ledger L109 --lease 60 --wait)
+id=$(spark-window open my-measurement --ledger L109 --lease 20 --wait)
 ```
 
 By default the window also holds the GPU lock (`--gb10 exclusive`, added by L154), so GPU-only jobs
@@ -67,8 +72,13 @@ spark-window run spark-receipt my-run --idle 30 -- ./my-benchmark args
 Close it:
 
 ```sh
-spark-window close
+spark-window close "$id"
 ```
+
+A bare `spark-window close` closes the open window only if you own it: the shell that ran `open` is
+in your process tree, or `$SPARK_WINDOW` (set by `run`) is its id. Otherwise it refuses with exit 3
+and names the holder (L162, 2026-10-20: one lane's finishing script closed another lane's window).
+`spark-window close <ID>` closes exactly that window.
 
 See what is open and who holds or waits on the locks:
 
@@ -106,6 +116,16 @@ and its log in `~/yardsticks/build-once.log`.
   A window is a long-running `quiet-measure`: a small holder process takes the lock alone and keeps it
   until you close the window or the lease runs out. Inside the window `quiet-measure` sees its own
   window and runs your command straight away instead of waiting on its own lock.
+- **Getting both locks without starving (L154, L189, L322).** The window waits for the GPU lock
+  holding nothing, so it never blocks CPU timings while it queues. Once it has the GPU lock it keeps it
+  and raises a gate (`/tmp/aien-quiet.gate`): new `quiet-build` and `quiet-measure` callers wait outside
+  while the ones already holding the quiet lock finish (L322: without the gate, shared takers kept
+  arriving and the window waited 40+ minutes). It drains the quiet lock for at most 5 minutes, then
+  lets everything go and waits for a quiet machine again (L405). If a process waiting for the GPU lock
+  holds the quiet lock, the window lets the GPU lock go (gate stays up), waits for the quiet lock, then
+  tries the GPU lock without blocking while keeping the quiet lock it won (L189: letting a won quiet
+  lock go starved the window for hours). `--quiet none` takes the GPU lock only, for checks that
+  compare values, never speeds.
 - **The GPU lock.** `/tmp/aien-gb10.lock` is separate. The calibration holds it for its minute of
   probing and idling so the GPU stays idle. The baseline does not hold it, because the 27B server takes
   that lock itself for every reply; holding it would make the server wait on us forever. Programs that

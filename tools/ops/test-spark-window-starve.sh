@@ -10,6 +10,9 @@ set -u
 S=${1:-$(dirname "$0")/spark-window}; LIMIT=${LIMIT:-60}
 T=$(mktemp -d /tmp/spark-window-starve.XXXXXX)
 export SPARK_WINDOWS_ROOT=$T/win SPARK_QUIET_LOCK=$T/quiet.lock SPARK_GB10_LOCK=$T/gb10.lock
+# The L405 gate path, want dir and board are temp too, and the idle check ignores the host load:
+# these temp locks have no other users, so the real machine load says nothing about them.
+export SPARK_QUIET_GATE=$T/quiet.gate SPARK_QUIET_WANT=$T/want.d SPARK_BOARD=$T/BOARD.md SPARK_IDLE_LOAD=100000
 : > "$SPARK_QUIET_LOCK"; : > "$SPARK_GB10_LOCK"
 pids=""
 cleanup() { for p in $pids; do kill "$p" 2>/dev/null; done; for h in "$T"/win/*/holder.pid; do [ -f "$h" ] && kill -- -"$(cat "$h")" 2>/dev/null; done; sleep 0.5; rm -rf "$T"; }

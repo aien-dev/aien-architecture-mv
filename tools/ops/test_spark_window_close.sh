@@ -8,6 +8,9 @@ SW=${1:-$here/spark-window}
 T=$(mktemp -d /tmp/spark-window-close-test.XXXXXX)
 SPARK_WINDOWS_ROOT=$T/windows SPARK_QUIET_LOCK=$T/quiet.lock SPARK_GB10_LOCK=$T/gb10.lock
 export SPARK_WINDOWS_ROOT SPARK_QUIET_LOCK SPARK_GB10_LOCK
+# The L405 gate path, want dir and board are temp too, and the idle check ignores the host load:
+# these temp locks have no other users, so the real machine load says nothing about them.
+export SPARK_QUIET_GATE=$T/quiet.gate SPARK_QUIET_WANT=$T/want.d SPARK_BOARD=$T/BOARD.md SPARK_IDLE_LOAD=100000
 unset SPARK_WINDOW
 pass=0; fail=0
 ok() { pass=$((pass + 1)); echo "ok   $1"; }
