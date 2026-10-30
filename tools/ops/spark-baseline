@@ -40,13 +40,13 @@ sexe=$(readlink "/proc/$spid/exe" 2>/dev/null); sargs=$(tr '\0' ' ' < "/proc/$sp
 models=$(curl -s --max-time 10 "http://127.0.0.1:$port/v1/models")
 case $models in *"\"$mid\""*) ;; *) echo "spark-baseline: server on :$port does not serve $mid: $models" >&2; exit 1 ;; esac
 
-# The server takes /tmp/aien-gb10.lock itself for each generation (holding it here would deadlock),
+# The server takes the GPU lock itself for each generation (holding it here would deadlock),
 # and GPU-only jobs keep that lock busy. So the reply is streamed and every chunk is timestamped:
 # from the first to the last token the server holds the GPU lock for us, which makes the decode
 # rate and its energy clean whatever the queue did before. The lock table is sampled throughout;
 # any other process seen holding the GPU lock during the decode marks the baseline not ok.
-# Sample the lock spark-window uses: SPARK_GB10_LOCK, default /tmp/aien-gb10.lock.
-G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}; gino=$(stat -c %i "$G")
+# Sample the lock spark-window uses. SPARK_GB10_LOCK is for tests only (see spark-window:63).
+G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}; gino=$(stat -c %i "$G")   # SPARK_GB10_LOCK is for tests only (see spark-window:63)
 held || { echo "spark-baseline: window $id is not held; nothing measured" >&2; exit 1; }
 ( while :; do grep -E ":$gino " /proc/locks | sed "s/^/$(date +%s.%N) /"; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
 smp=$!
