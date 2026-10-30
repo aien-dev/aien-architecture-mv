@@ -2,8 +2,9 @@
 # spark-calibrate: the one calibration file of a measurement window.
 #
 # Run inside an open window (spark-window run spark-calibrate, or with
-# SPARK_WINDOW set). Holding /tmp/aien-gb10.lock (waits for it, printing the
-# holders every 60 s), it measures:
+# SPARK_WINDOW set). It holds the GPU lock (default /tmp/aien-gb10.lock;
+# SPARK_GB10_LOCK overrides it, for tests only (see spark-window:63)), waits
+# for it, and prints the holders every 60 s. It measures:
 #   1. CPU memory bandwidth with the omega#583 memcpy probe (pinned source
 #      omega research/cost-sim-583@3bd56731 tools/dagsim/memcpy_probe.c), the
 #      same call research/583 used: nice -n 10 memcpy_probe 1 K 10, K = 1 and 8.
@@ -19,7 +20,7 @@ id=${SPARK_WINDOW:-$(spark-window id)} || { echo "spark-calibrate: no open windo
 held() { [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] && [ ! -f "$WR/$id/expired" ] && kill -0 "$(cat "$WR/$id/holder.pid" 2>/dev/null)" 2>/dev/null; }
 d=$WR/$id; mkdir -p "$d/calibration"
 export SPARK_WINDOW=$id SPARK_WINDOW_DIR=$d
-G=/tmp/aien-gb10.lock
+G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}   # SPARK_GB10_LOCK is for tests only (see spark-window:63)
 
 # the probe, built once per source blob + flags
 REPO=${OMEGA_REPO:-$HOME/workspace/omega}; PIN=3bd56731c5517e2a9c8f195955c71e73dc6f9269; SRC=tools/dagsim/memcpy_probe.c
