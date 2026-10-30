@@ -1,0 +1,51 @@
+2026-10-27T08:13:31Z
+# absence search for audit map row 41: CUPTI: device activity/counter/PC-sampling profiling API
+# result wording: "not found" in the searched repos/terms; not proof of absence. gh code search misses private/unindexed repos.
+
+$ gh search code --owner aien-dev 'cupti' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+aien-dev/CUDApp:docs/trace/UNIFIED_TRACE.md
+aien-dev/aien-sovereign-core-mv:docs/campaigns/c1/SPEC.md
+
+$ git -C clones/CUDApp grep -I -i -l -E 'cupti|activity.?api|pc.?sampling|hardware.?counter|perf.?counter' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- ':!third_party' ':!**/third_party/**'
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/trace/UNIFIED_TRACE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/FB1-CUT5-HD128-7dd92dc/FB1-CUT5-7dd92dc/gpu_attention_test.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/FB1-CUT5-HD128-7dd92dc/FB1-CUT5-7dd92dc/sweep.json
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:tests/gpu_attention_test.c
+
+$ git -C clones/omega-mv grep -I -i -l -E 'cupti|activity.?api|pc.?sampling|hardware.?counter|perf.?counter' e5b32567a7aff3ce594e3254a622a846a6cd190b -- ':!third_party' ':!**/third_party/**'
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/numeric/FB1_CUT5_ATTENTION.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CODEPAD-PREFETCH-f1d57c5/hd64-regression/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CODEPAD-PREFETCH-f1d57c5/hd64-regression/sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/FB1-CUT5-HD128-5a9f759/hd64-regression/sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/FB1-CUT5-HD128-7dd92dc/FB1-CUT5-7dd92dc/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/FB1-CUT5-HD128-7dd92dc/FB1-CUT5-7dd92dc/sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/FB1-CUT5-cd80bf4/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/FB1-CUT5-cd80bf4/sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/gates/attention/FB1-CUT5-710d438c/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/gates/attention/FB1-CUT5-710d438c/sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/gates/cut4b/FB1-CUT4B-710d438c/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/gpu-reconv-308/T2-attention/div-sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/gpu-reconv-308/T2-attention/prod-sweep.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/gpu-reconv-308/T3/FB1-CUT4B-0a1812f/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/atemporal/at1/evaluator/gates/counter_mutant.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:spec/plan-reuse.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:spec/semantic-communication.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:tests/gpu_attention_test.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:tools/argus/r8_perthread.sh
+
+$ git -C clones/omega-blas grep -I -i -l -E 'cupti|activity.?api|pc.?sampling|hardware.?counter|perf.?counter' 0706265a751b0f0957df918a8a945e35735ce5c4 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-dnn grep -I -i -l -E 'cupti|activity.?api|pc.?sampling|hardware.?counter|perf.?counter' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/aien-math grep -I -i -l -E 'cupti|activity.?api|pc.?sampling|hardware.?counter|perf.?counter' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- ':!third_party' ':!**/third_party/**'
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/unit/linalg_residual.py
+
+
+2026-10-27T08:16:19Z # addendum: CUDApp main moved to e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 (PR #119 merged 08:06:46Z); same pattern re-run at the new head
+$ git -C clones/CUDApp grep -I -i -l -E 'cupti|activity.?api|pc.?sampling|hardware.?counter|perf.?counter' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 -- ':!third_party' ':!**/third_party/**'
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/trace/UNIFIED_TRACE.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:evidence/FB1-CUT5-HD128-7dd92dc/FB1-CUT5-7dd92dc/gpu_attention_test.c
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:evidence/FB1-CUT5-HD128-7dd92dc/FB1-CUT5-7dd92dc/sweep.json
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:tests/gpu_attention_test.c

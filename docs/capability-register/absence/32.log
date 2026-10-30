@@ -1,0 +1,57 @@
+2026-10-27T08:03:07Z
+# row 32: NPP/codecs: GPU image primitives and media codecs
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev nvjpeg --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev 'npp image' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev nvdec --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE '\bnpp\b|nppi|nvjpeg|nvdec|nvenc|nvimgcodec|jpeg|h\.?264|hevc|image resize' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/class/cl2080_notification.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0080/ctrl0080bsp.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080gpu.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvos.h
+[exit 0, 5 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE '\bnpp\b|nppi|nvjpeg|nvdec|nvenc|nvimgcodec|jpeg|h\.?264|hevc|image resize' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/c2-20260928-01/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/preflight-20260928-01/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/preflight-20260928-02/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/preflight-20260928-03/nvidia-smi.txt
+[exit 0, 4 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE '\bnpp\b|nppi|nvjpeg|nvdec|nvenc|nvimgcodec|jpeg|h\.?264|hevc|image resize' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE '\bnpp\b|nppi|nvjpeg|nvdec|nvenc|nvimgcodec|jpeg|h\.?264|hevc|image resize' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -iE '\bnpp\b|nppi|nvjpeg|nvdec|nvenc|nvimgcodec|jpeg|h\.?264|hevc|image resize' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/builtins.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/coverage.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/context/cx_data.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/units/data.om
+[exit 0, 4 lines]
+
+
+# retry after rate limit, 2026-10-27T08:06:59Z
+$ gh search code --owner aien-dev 'nvjpeg' --limit 30 --json repository,path
+exit 0
+[]
+$ gh search code --owner aien-dev 'npp image' --limit 30 --json repository,path
+exit 0
+[]
+$ gh search code --owner aien-dev 'nvdec' --limit 30 --json repository,path
+exit 0
+[]

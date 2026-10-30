@@ -1,0 +1,56 @@
+2026-10-27T08:04:59Z
+# row 36: NVSHMEM: GPU-initiated one-sided communication / symmetric heap
+# not found here is never proof of absence; gh code search misses private/unindexed repos; git grep covers only the listed clones at the listed shas, excluding vendored third_party/
+
+$ gh search code --owner aien-dev nvshmem --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev shmem_put --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' e5b32567a7aff3ce594e3254a622a846a6cd190b -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' 0706265a751b0f0957df918a8a945e35735ce5c4 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-train grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' b6c33e3a82611361b37c651df70d9a645045773a -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-sovereign-core-mv grep -I -l -i -E 'nvshmem|shmem_(put|get|malloc)|symmetric heap' f30eb963918d71dd2998b1cb936c251429417de1 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+
+# hit review: no hits in any listed clone.
+
+# gh code search retried once after the burst-limit window (2026-10-27T08:05:28Z):
+$ gh search code --owner aien-dev nvshmem --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (1 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+# VERDICT: not found in the searched scope (not proof of absence).
+
+# second retry 2026-10-27T08:11:17Z:
+$ gh search code --owner aien-dev nvshmem --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+(no output)
+[exit 0, 0 lines]
+
+# VERDICT: not found in the searched scope (not proof of absence).

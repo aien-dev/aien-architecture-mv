@@ -88,6 +88,13 @@ case "$step" in
     # Missing/mismatched compiler remains NOT_RUN (exit 3).
     exec sh tools/zero-legacy/gate.sh
     ;;
+  capreg)
+    # The org CUDA capability register (docs/capability-register/): every judgment is made by
+    # tools/capreg/gate.om (seeded .om), which checks AIEN_OMC against tools/zero-legacy/omega.pin,
+    # builds capreg.om, runs its fixtures, verifies register.tsv against REGISTER.md and expects a
+    # planted bad row to be refused. NOT_RUN (exit 3) without the pinned compiler.
+    exec sh tools/capreg/gate.sh
+    ;;
   *)
     echo "run.sh: unknown step '$step'" >&2
     exit 2

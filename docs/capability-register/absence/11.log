@@ -1,0 +1,33 @@
+2026-10-27T08:14:23Z  absence search for row 11: cubin/fatbin (fatbin container producer or loader)
+worker CapRegister.RowsToolchain; read-only; heads: CUDApp@e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 omega-mv@e5b32567a7aff3ce594e3254a622a846a6cd190b omega-blas@0706265a751b0f0957df918a8a945e35735ce5c4 omega-dnn@ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 aien-math@43c629db362b48aeec3590a8f0cd30e927e5ec16
+
+## GitHub code search (indexes only some repos; misses private/unindexed code)
+[2026-10-27T08:13:03Z] $ gh search code --owner aien-dev fatbin --limit 50 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+exit 0
+aien-dev/CUDApp:evidence/dx/pain-points/licence.txt
+aien-dev/CUDApp:THIRD_PARTY.md
+aien-dev/CUDApp:docs/AUDIT.md
+aien-dev/CUDApp:docs/LICENSE_PROVENANCE.md
+aien-dev/CUDApp:tools/localrouter/README.md
+[2026-10-27T08:13:48Z] control (search works for a term known to exist): $ gh search code --owner aien-dev nvdisasm --limit 5 ... -> exit 0, 5 results, first: aien-dev/CUDApp:tools/sm121dis/zero_nvdisasm.sh
+
+## git grep at exact head shas (clones in /home/drakestapleton/work/CapRegister/clones)
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -n -I -i -E 'fatbin|nvFatbin|fatBinary' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9
+exit 0 (5 matching lines)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:THIRD_PARTY.md:61:- No NVIDIA firmware, no libcuda, no NVIDIA cubin or fatbin, no PTX. The two cubins under
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/AUDIT.md:66:- In those cuts: no firmware, no `libcuda`, no cubin, fatbin or PTX, no `.so`, `.o` or `.a`.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/LICENSE_PROVENANCE.md:25:- **Probe and vendor tools.** The documented reverse-engineering process uses Drake's own probe kernels, vendor tools to inspect those probes, public references, and hardware observations. No NVIDIA compiler output, disassembler listing, firmware, CUDA library, cubin, fatbin, or PTX is asserted to be included based solely on th
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:evidence/dx/pain-points/licence.txt:14:$ git log --name-only --format= | grep -c -i -E "\.(cubin|ptx|fatbin|so|a|o|bin)$|^build/"   (cubin, PTX, fatbin, libraries, objects, firmware or build output in any commit of this branch)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:tools/localrouter/README.md:155:   fatbins cannot simply be passed to CUDA++'s native kernel builder.
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -n -I -i -E 'fatbin|nvFatbin|fatBinary' e5b32567a7aff3ce594e3254a622a846a6cd190b
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -n -I -i -E 'fatbin|nvFatbin|fatBinary' 0706265a751b0f0957df918a8a945e35735ce5c4
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -n -I -i -E 'fatbin|nvFatbin|fatBinary' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -n -I -i -E 'fatbin|nvFatbin|fatBinary' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+exit 1 (0 matching lines) -- exit 1 = no match
+
+## Interpretation
+All hits are prose stating no NVIDIA fatbin is shipped or that fatbins cannot be passed to the native kernel builder (THIRD_PARTY.md:61, docs/AUDIT.md:66, tools/localrouter/README.md:155). No fatbin producer or loader. cubin writers are recorded as rows 11.1-11.5.
+Verdict input: NONE_FOUND (absence of evidence at these shas, not proof of impossibility).

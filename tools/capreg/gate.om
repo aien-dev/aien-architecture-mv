@@ -1,0 +1,559 @@
+note SPDX-License-Identifier: Apache-2.0
+note gate: the ARCH-CAPABILITY-REGISTER gate runner, seeded native Omega.
+note usage: gate OMC          (run from tools/capreg; writes under build/)
+note Hashes OMC with the native sha256 (tools/zero-legacy/sha256.om) against
+note tools/zero-legacy/omega.pin, builds capreg.om, then expects:
+note   capreg check  fixtures/good.tsv                      exit 0
+note   capreg verify fixtures/good.tsv fixtures/good.md     exit 0
+note   capreg check  fixtures/bad-<name>.tsv                exit 1, stderr equal to fixtures/bad-<name>.err
+note   capreg verify the register and its REGISTER.md view  exit 0
+note   capreg check  the register plus one planted row with no sha and no evidence   exit 1
+note and prints AIEN-OBS lines. Exit 0 only when every expectation holds; 3 when OMC is missing
+note or does not match the pin (NOT_RUN); 1 otherwise.
+note The only thing outside this program is whoever compiled it (gate.sh).
+
+text tbl "capreg.om\n../zero-legacy/sha256.om\nbuild/capreg\nbuild/sha256\n../zero-legacy/omega.pin\nbuild\nbuild/omc.sha\ncheck\nverify\nfixtures/good.tsv\nfixtures/good.md\n../../docs/capability-register/register.tsv\n../../docs/capability-register/REGISTER.md\nbuild/bad.err\nbuild/planted.tsv\nbuild/out.txt\nfixtures/bad-\n.tsv\n.err\n/dev/null\n"
+text tbad "15-fields\narea-wrong\ncorrected-no-note\ndeployed-unmerged\nduplicate-row\nempty-field\nevidence-missing\nevidence-nosha\nexercised-no-test\ngpu-claim-on-host\nheader\nimplemented-with-arch\nlevel-over-arch\nnew-without-postaudit\nno-final-newline\nnonefound-no-absence\nowner-outside-org\nregister-dotdot\nregister-file-absent\nrow-1-missing\nsha-missing\nsha-short\n"
+text tplant "47.999\tFrameworks\taien-dev/planted\tnone\tMERGED\thost-aarch64\tEXERCISED_HOST\tplanted\tplanted\tmake test\tnone\tnone\tNOT_DEPLOYED\t(post-audit)\tNEW\t-\n"
+text tobs "AIEN-OBS "
+text tgood "capreg_good_exit "
+text tgview "capreg_good_view_exit "
+text tbok "capreg_bad_fixtures_refused "
+text tbtot "capreg_bad_fixtures_total "
+text treg "capreg_register_verify_exit "
+text tpl "capreg_planted_row_exit "
+text tbadf "gate: bad fixture not refused as expected: "
+text tnl "\n"
+text tuse "usage: gate OMC\n"
+text tnot "gate: OMC missing or not the pinned compiler (NOT_RUN)\n"
+text tcf "gate: compile failed\n"
+text tkey "omc_sha256: "
+
+const NBAD ulong 22
+
+global omcp uchar 4096
+global omcl ulong 1
+global pk uchar 4096
+global pkn ulong 1
+global pkc ulong 1
+global arg uchar 512
+global argl ulong 1
+global fin uchar 512
+global finl ulong 1
+global fout uchar 512
+global foutl ulong 1
+global ferr uchar 512
+global ferl ulong 1
+global status uchar 4
+global pin uchar 4096
+global pinl ulong 1
+global sha uchar 128
+global nb uchar 24
+global fa uchar 65536
+global fan ulong 1
+global fb uchar 65536
+global fbn ulong 1
+global big uchar 600000
+
+note ---- text tables ----
+
+fn pick i ulong to void
+put argl 0 0
+atbl i
+end
+
+note append entry i of tbl to arg
+fn atbl i ulong to void
+s = ulong 0
+k = ulong 0
+while lt k i bound 4096
+if eq get tbl s 10
+k = add k 1
+end
+s = add s 1
+end
+n = get argl 0
+j = ulong 0
+while ne get tbl add s j 10 bound 256
+put arg add n j get tbl add s j
+j = add j 1
+end
+put argl 0 add n j
+end
+
+note append entry i of tbad to arg
+fn abad i ulong to void
+s = ulong 0
+k = ulong 0
+while lt k i bound 4096
+if eq get tbad s 10
+k = add k 1
+end
+s = add s 1
+end
+n = get argl 0
+j = ulong 0
+while ne get tbad add s j 10 bound 256
+put arg add n j get tbad add s j
+j = add j 1
+end
+put argl 0 add n j
+end
+
+note arg = fixtures/bad-<name><ext>, ext 17 .tsv or 18 .err
+fn badname i ulong ext ulong to void
+pick 16
+abad i
+atbl ext
+end
+
+note ---- packets for execprog ----
+
+fn pk0 to void
+put pkn 0 2
+put pkc 0 0
+end
+
+fn pka to void
+n = get pkn 0
+m = get argl 0
+put pk n uchar rem m 256
+put pk add n 1 uchar div m 256
+for i ulong m
+put pk add n add 2 i get arg i
+end
+put pkn 0 add n add 2 m
+c = add get pkc 0 1
+put pkc 0 c
+put pk 0 uchar rem c 256
+put pk 1 uchar div c 256
+end
+
+fn pkt i ulong to void
+pick i
+pka
+end
+
+fn pkomc to void
+for i ulong get omcl 0
+put arg i get omcp i
+end
+put argl 0 get omcl 0
+pka
+end
+
+fn keep dst ulong to void
+for j ulong get argl 0
+if eq dst 0
+put fin j get arg j
+end
+if eq dst 1
+put fout j get arg j
+end
+if eq dst 2
+put ferr j get arg j
+end
+end
+if eq dst 0
+put finl 0 get argl 0
+end
+if eq dst 1
+put foutl 0 get argl 0
+end
+if eq dst 2
+put ferl 0 get argl 0
+end
+end
+
+fn noio to void
+put finl 0 0
+put foutl 0 0
+put ferl 0 0
+end
+
+note ---- run the packet; stdin, stdout, stderr redirected when set; exit code or -1 ----
+
+fn child to void
+if gt get finl 0 0
+fd = fopen fin 0 get finl 0 0 0
+if lt fd 0
+exit 126
+end
+r = dupfd int fd 0 0
+end
+if gt get foutl 0 0
+fd = fopen fout 0 get foutl 0 577 420
+if lt fd 0
+exit 126
+end
+r = dupfd int fd 1 0
+end
+if gt get ferl 0 0
+fd = fopen ferr 0 get ferl 0 577 420
+if lt fd 0
+exit 126
+end
+r = dupfd int fd 2 0
+end
+r = execprog pk 0 get pkn 0
+exit 127
+end
+
+fn run to long
+pid = fork
+if lt pid 0
+ret -1
+end
+if eq pid 0
+child
+end
+r = waitpid int pid status 0 4 0
+if ne r pid
+ret -1
+end
+if ne get status 0 0
+ret -1
+end
+ret long get status 1
+end
+
+note ---- steps ----
+
+fn compile src ulong dst ulong to bool
+pk0
+pkomc
+noio
+pick src
+keep 0
+pick dst
+keep 1
+r = run
+if ne r 0
+ret false
+end
+pick dst
+r = chmod arg 0 get argl 0 493
+ret eq r 0
+end
+
+fn hashomc to bool
+pk0
+pkt 3
+pkomc
+noio
+pick 6
+keep 1
+r = run
+if ne r 0
+ret false
+end
+pick 6
+fd = fopen arg 0 get argl 0 0 0
+if lt fd 0
+ret false
+end
+k = read int fd sha 0 128
+c = fclose int fd
+ret ge k 64
+end
+
+fn loadpin to bool
+pick 4
+fd = fopen arg 0 get argl 0 0 0
+if lt fd 0
+ret false
+end
+r = read int fd pin 0 4096
+c = fclose int fd
+if le r 0
+ret false
+end
+put pinl 0 ulong r
+ret true
+end
+
+fn pinat p ulong to bool
+for j ulong 64
+if ne get pin add p j get sha j
+ret false
+end
+end
+ret true
+end
+
+note does sha[0..64) equal the 64 bytes after "omc_sha256: " in the pin
+fn pinok to bool
+n = get pinl 0
+m = len tkey
+if lt n add m 64
+ret false
+end
+e = sub n add m 64
+i = ulong 0
+while le i e bound 4096
+j = ulong 0
+while lt j m bound 16
+if ne get pin add i j get tkey j
+break
+end
+j = add j 1
+end
+if eq j m
+ret pinat add i m
+end
+i = add i 1
+end
+ret false
+end
+
+note capreg MODE A [B]; stdout to build/out.txt, stderr to build/bad.err
+fn capreg md ulong a ulong b ulong to long
+pk0
+pkt 2
+pkt md
+pkt a
+if ne b 0
+pkt b
+end
+noio
+pick 15
+keep 1
+pick 13
+keep 2
+ret run
+end
+
+note read file arg into fa (w 0) or fb (w 1); false when unreadable or over 65535 bytes
+fn slurp w ulong to bool
+fd = fopen arg 0 get argl 0 0 0
+if lt fd 0
+ret false
+end
+n = ulong 0
+k = long 1
+while gt k 0 bound 65537
+if eq w 0
+k = read int fd fa n sub 65536 n
+else
+k = read int fd fb n sub 65536 n
+end
+if gt k 0
+n = add n ulong k
+end
+if ge n 65536
+k = long 0
+end
+end
+c = fclose int fd
+if or lt k 0 ge n 65536
+ret false
+end
+if eq w 0
+put fan 0 n
+else
+put fbn 0 n
+end
+ret true
+end
+
+fn sameab to bool
+n = get fan 0
+if ne n get fbn 0
+ret false
+end
+for i ulong n
+if ne get fa i get fb i
+ret false
+end
+end
+ret true
+end
+
+note bad fixture i: exit 1 and stderr byte-equal to fixtures/bad-<name>.err
+fn badone i ulong to bool
+pick 16
+abad i
+atbl 17
+for j ulong get argl 0
+put fa j get arg j
+end
+m = get argl 0
+pk0
+pkt 2
+pkt 7
+for j ulong m
+put arg j get fa j
+end
+put argl 0 m
+pka
+noio
+pick 15
+keep 1
+pick 13
+keep 2
+x = run
+if ne x 1
+ret false
+end
+pick 13
+if not slurp 0
+ret false
+end
+badname i 18
+if not slurp 1
+ret false
+end
+ret sameab
+end
+
+note build/planted.tsv = the register plus tplant; false when unreadable
+fn plant to bool
+pick 11
+fd = fopen arg 0 get argl 0 0 0
+if lt fd 0
+ret false
+end
+n = ulong 0
+k = long 1
+while gt k 0 bound 600001
+k = read int fd big n sub 599000 n
+if gt k 0
+n = add n ulong k
+end
+if ge n 599000
+k = long 0
+end
+end
+c = fclose int fd
+if or lt k 0 ge n 599000
+ret false
+end
+m = len tplant
+for i ulong m
+put big add n i get tplant i
+end
+pick 14
+fd = fopen arg 0 get argl 0 577 420
+if lt fd 0
+ret false
+end
+w = write int fd big 0 add n m
+c = fclose int fd
+ret eq w long add n m
+end
+
+note ---- output ----
+
+fn wnum v long to void
+if lt v 0
+put nb 22 45
+put nb 23 49
+r = write 1 nb 22 2
+ret
+end
+x = ulong v
+n = ulong 0
+if eq x 0
+put nb 23 48
+n = 1
+end
+while gt x 0 bound 20
+put nb sub 23 n uchar add 48 rem x 10
+x = div x 10
+n = add n 1
+end
+r = write 1 nb sub 24 n n
+end
+
+fn obsn k ulong v long to void
+r = write 1 tobs 0 len tobs
+if eq k 0
+r = write 1 tgood 0 len tgood
+end
+if eq k 1
+r = write 1 tgview 0 len tgview
+end
+if eq k 2
+r = write 1 tbok 0 len tbok
+end
+if eq k 3
+r = write 1 tbtot 0 len tbtot
+end
+if eq k 4
+r = write 1 treg 0 len treg
+end
+if eq k 5
+r = write 1 tpl 0 len tpl
+end
+wnum v
+r = write 1 tnl 0 1
+end
+
+fn main to int
+if lt argcnt 2
+r = write 2 tuse 0 len tuse
+ret 64
+end
+n = argread 1 omcp 0 4095
+if lt n 1
+r = write 2 tuse 0 len tuse
+ret 64
+end
+put omcl 0 ulong n
+pick 5
+r = makedir arg 0 get argl 0 493
+if not compile 1 3
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not loadpin
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not hashomc
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not pinok
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not compile 0 2
+r = write 2 tcf 0 len tcf
+ret 1
+end
+a = capreg 7 9 0
+b = capreg 8 9 10
+ok = ulong 0
+for i ulong NBAD
+if badone i
+ok = add ok 1
+else
+r = write 2 tbadf 0 len tbadf
+badname i 17
+r = write 2 arg 0 get argl 0
+r = write 2 tnl 0 1
+end
+end
+c = capreg 8 11 12
+d = long -1
+if plant
+d = capreg 7 14 0
+end
+obsn 0 a
+obsn 1 b
+obsn 2 long ok
+obsn 3 long NBAD
+obsn 4 c
+obsn 5 d
+if or ne a 0 ne b 0
+ret 1
+end
+if ne ok NBAD
+ret 1
+end
+if or ne c 0 ne d 1
+ret 1
+end
+ret 0
+end

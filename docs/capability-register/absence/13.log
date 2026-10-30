@@ -1,0 +1,9 @@
+2026-10-27T08:04:47Z
+# absence search for audit map row 13 (Runtime API) in infrastructure repos named by audit finding 1.10: omega-host, openaccel-lab
+# "not found" in the searched trees; not proof of absence
+
+$ git -C clones/omega-host grep -I -i -l -E 'cuda|cuLaunch|cudaMalloc|omega_gpu_|/dev/nvidia' f585e4bb5c32d6dfb70a831ebe93d68af7a1b774
+(no output: 0 files)
+
+$ git -C clones/openaccel-lab ls-tree -r --name-only 7804cc5c501dbafbf96a3be67fa497fe6d7598ad
+LICENSE

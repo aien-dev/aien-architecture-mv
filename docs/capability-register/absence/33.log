@@ -1,0 +1,66 @@
+2026-10-27T08:03:11Z
+# row 33: nvCOMP: GPU compression (host side is aien-math rANS)
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev nvcomp --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev 'rans gpu' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'nvcomp|\brans\b|\blz4\b|zstd|deflate|snappy|gdeflate' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'nvcomp|\brans\b|\blz4\b|zstd|deflate|snappy|gdeflate' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/docs/CODER_SPEC.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/docs/DATA_FORMAT.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/docs/EVALUATOR.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/docs/FAILURE_REPORTING.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001/preregistration.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/ans/results.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_B0_uniform.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_B1_order0.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_B2_order1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_B3_heuristic.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_M_candidate.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_M_mem.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j0_M_mem_seed1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_B0_uniform.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_B1_order0.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_B2_order1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_B3_heuristic.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_M_candidate.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_M_mem.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j1_M_mem_seed1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_B0_uniform.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_B1_order0.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_B2_order1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_B3_heuristic.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_M_candidate.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_M_mem.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g1_j2_M_mem_seed1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g2_j0_B0_uniform.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g2_j0_B1_order0.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/experiments/EXP-001R/decoder_receipts/g2_j0_B2_order1.json
+[... 58 more lines, total 88]
+[exit 0, 88 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'nvcomp|\brans\b|\blz4\b|zstd|deflate|snappy|gdeflate' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'nvcomp|\brans\b|\blz4\b|zstd|deflate|snappy|gdeflate' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+
+# retry after rate limit, 2026-10-27T08:07:02Z
+$ gh search code --owner aien-dev 'nvcomp' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+$ gh search code --owner aien-dev 'rans gpu' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.

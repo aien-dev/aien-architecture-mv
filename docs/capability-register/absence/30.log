@@ -1,0 +1,48 @@
+2026-10-27T08:03:10Z
+# row 30: cuRAND: GPU random number generation (host side is aien-math)
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev curand --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev philox --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'curand|philox|xorwow|mrg32k3a|sobol|xoshiro' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:ROADMAP.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/img/replacement-map.svg
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:tools/figures/make_figures.py
+[exit 0, 5 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'curand|philox|xorwow|mrg32k3a|sobol|xoshiro' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/OMEGA.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/BROWNIAN/BRN-10/brownian-profile-v1.5.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/BROWNIAN/BRN-10/results.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/MIXED_ALGEBRA/phase_twin_receipt.5d6ca45e970faf19986490264e35db453211ffe6dfff03d1cfb10937f329a22b.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:spec/mixed-algebra-phase-twin.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:src/algebra/phase_twin.h
+e5b32567a7aff3ce594e3254a622a846a6cd190b:src/crumbline/cl_common.h
+e5b32567a7aff3ce594e3254a622a846a6cd190b:tests/algebra/test_phase_twin.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:tests/brownian/test_brw_tps.c
+[exit 0, 9 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'curand|philox|xorwow|mrg32k3a|sobol|xoshiro' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'curand|philox|xorwow|mrg32k3a|sobol|xoshiro' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+
+# retry after rate limit, 2026-10-27T08:07:02Z
+$ gh search code --owner aien-dev 'curand' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+$ gh search code --owner aien-dev 'philox' --limit 30 --json repository,path
+exit 98
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:10Z (3 min). Do not retry in a loop: do other work, then one try after that time.

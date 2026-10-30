@@ -1,0 +1,49 @@
+2026-10-27T08:03:08Z
+# row 34: Distributed math: multi-GPU/multi-node BLAS/FFT/solvers
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev cublasmp --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev scalapack --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev 'multi-gpu gemm' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (3 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'cublasmp|cusolvermp|cufftmp|scalapack|multi[-_ ]gpu|multi[-_ ]node|distributed (gemm|fft|solve)' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000gpu.h
+[exit 0, 2 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'cublasmp|cusolvermp|cufftmp|scalapack|multi[-_ ]gpu|multi[-_ ]node|distributed (gemm|fft|solve)' e5b32567a7aff3ce594e3254a622a846a6cd190b
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'cublasmp|cusolvermp|cufftmp|scalapack|multi[-_ ]gpu|multi[-_ ]node|distributed (gemm|fft|solve)' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'cublasmp|cusolvermp|cufftmp|scalapack|multi[-_ ]gpu|multi[-_ ]node|distributed (gemm|fft|solve)' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -iE 'cublasmp|cusolvermp|cufftmp|scalapack|multi[-_ ]gpu|multi[-_ ]node|distributed (gemm|fft|solve)' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+(no output)
+[exit 1, 0 lines]
+
+
+# retry after rate limit, 2026-10-27T08:07:00Z
+$ gh search code --owner aien-dev 'cublasmp' --limit 30 --json repository,path
+exit 0
+[]
+$ gh search code --owner aien-dev 'scalapack' --limit 30 --json repository,path
+exit 0
+[]
+$ gh search code --owner aien-dev 'multi-gpu gemm' --limit 30 --json repository,path
+exit 1
+HTTP 403: API rate limit exceeded for user ID 330927100. If you reach out to GitHub Support for help, please include the request ID B11E:2B9CAD:101C597:352012D:6AE05BA5 and timestamp 2026-10-27 08:07:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (https://api.github.com/search/code?page=1&per_page=30&q=%22multi-gpu+gemm%22+user%3Aaien-dev)
+GitHub guard: GitHub refused the request (burst limit). Every chat on this machine now waits until 08:10Z. Do other work; one try after that time, no loop.
