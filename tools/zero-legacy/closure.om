@@ -543,11 +543,12 @@ if lt fd 0
 ret false
 end
 r = read int fd head 0 len head
+ok = ge r 0
 if gt r 0
 put hlen 0 ulong r
 end
 r = fclose int fd
-ret true
+ret ok
 end
 
 note is head[i-1] (or the start) and head[i+m] (or the end) whitespace
@@ -934,7 +935,13 @@ ret
 end
 while true bound 100000
 r = getdnts int fd dbuf 0 len dbuf
-if le r 0
+if lt r 0
+note entry changes plen; the error belongs to this directory, not its last child.
+put plen 0 dl
+report 21
+break
+end
+if eq r 0
 break
 end
 o = ulong 0
