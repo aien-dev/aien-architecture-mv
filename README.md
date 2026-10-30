@@ -47,6 +47,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `docs/adr/` | Architecture decision records (37 on `main`, listed in the [index](docs/adr/README.md)) |
 | `docs/plans/` | Finite workstream plans (not master plans) |
 | `docs/research/` | Research notes, for example the [repository layout note](docs/research/repo-topology-unix-vs-monorepo-vs-hybrid.md) and the [Hermes Agent note](docs/research/hermes-agent-prior-art.md) |
+| [Aienet collaborator directory](docs/research/aienet-collaborators.md) | Prospective academic and community contacts, sources, collaboration questions, and SI-agent outreach rules; not an affiliation or enrollment list |
 | `docs/archive/` | Superseded plans, kept for history only |
 | `qualification/` | Release candidates (`candidates/CAND-*.toml` and their gate results) and recorded exceptions |
 | `formal/invariants/` | Invariants written down for formal checking ([ADR 0027](docs/adr/0027-formal-oracle-lean-bootstrap.md)) |
