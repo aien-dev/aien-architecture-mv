@@ -28,7 +28,7 @@ WHOLE-SYSTEM-E2E, as posted on aien-architecture#190: one installation, one run,
 | what runs | proof |
 |---|---|
 | `aien` CLI: `daemon`, `start`, `stop`, `status`, `cockpit`, `allen <sub>`, `compose`, `goal <text>`, `goal auto <id>`, `auto <goal>`, `cortex`; daemon control over a UNIX socket `/tmp/aien-runtime.sock`, mode 0600 | `crates/aien-cli/src/main.rs:41-130`, `crates/aien-runtime/src/client.rs:22-28`, `server.rs:169-178` (scout reading, call sites UNVERIFIED by the author) |
-| the Aien end-to-end demo accepts a real objective (write a short document under stated requirements) under a resolved Aien identity, with a profile and a standing goal, and records it before work starts | `docs/campaigns/allen-e2e/DEMO-v2.md` steps S1 to S3; `RESULT-v3.md` PASS 10/10 real-CPU, `RESULT-v4-gb10.md` PASS 10/10 with S0 to S6 on the GB10 (native Omega engine, no CUDA), receipts `receipts-v3.jsonl`, `receipts-v4-gb10.jsonl` |
+| the ALLEN end-to-end demo accepts a real objective (write a short document under stated requirements) under a resolved ALLEN identity, with a profile and a standing goal, and records it before work starts | `docs/campaigns/allen-e2e/DEMO-v2.md` steps S1 to S3; `RESULT-v3.md` PASS 10/10 real-CPU, `RESULT-v4-gb10.md` PASS 10/10 with S0 to S6 on the GB10 (native Omega engine, no CUDA), receipts `receipts-v3.jsonl`, `receipts-v4-gb10.jsonl` |
 | cockpit HTTP on `127.0.0.1:18095` with `/api/goals`, `/api/approvals/{id}`, `/api/chat/stream`, `/api/action` | `crates/spark-cockpit-rs/src/main.rs` route table (scout) |
 | OSH, the Omega shell: `osh -c`, scripts, `--caps` policy, `--journal`; capability-authorized platform ops SPAWN, CHDIR, OPEN_WRITE, OPEN_READ through one request record on both the Linux host and the Aienux test adapter | omega `src/osh/host/osh_main.c:4-12`, `osh_host.h:50,103-127`; aienos `native/kernel/core/osh_op.h:45-87` (omega#344 lane done, aienos#294) |
 
@@ -43,7 +43,7 @@ WHOLE-SYSTEM-E2E, as posted on aien-architecture#190: one installation, one run,
 | stated requirements of a composed document are checked before approval | #287 |
 | real model inference on the Spark CPU and on the GB10 through the native Omega engine (no CUDA), with the GB10 reservation path the default on linked GB10 builds | `RESULT-v4-gb10.md` S0, S3; aien-sovereign-core#327 (Campaign 1 comment 2026-10-08) |
 | golden path rerun on the GB10 at main `fefce80` on 2026-10-10: PASS, backend identity recorded, `gpu_executions > 0`, `fallback_count == 0` | aien-sovereign-core#94 last comment |
-| provenance: a model commit names its generation record and the Aien agent; ledger links grant id, proposal sha256, content sha256, model digest and identity | #318; `RESULT-v4-gb10.md` S4 |
+| provenance: a model commit names its generation record and the ALLEN agent; ledger links grant id, proposal sha256, content sha256, model digest and identity | #318; `RESULT-v4-gb10.md` S4 |
 | PREFILL-E2E-0/1/2 (real checkpoint, shared prefill, N-branch fork, append-only revisions) | aien-sovereign-core#154, #163, #165 |
 
 **Gaps.** (a) Approval grants live in memory only: "A restart forgets every grant" (`approval.rs:16-17`, verified). The desk MAC for approved proposals (#262) is restart-safe; the grant broker is not. (b) Planning and capability routing: the Skill Router and World commit binder exist in omega (COMPOSITION-2, omega#121) and the compose path drives approved proposals through verify and World commit (#244), but no receipt found shows a multi-step plan chosen by the runtime for a free-form objective; the demo's objective is a single compose. (c) Inference on native Aienux: NOT_RUN in every demo ("native-AIENOS: NOT_RUN" in all four RESULT files); aienos M7 native CPU inference is open (aienos#34) and the int8 kernel speed-up is a draft (aienos#300, kernel default stays f32 until Drake says go).
@@ -52,7 +52,7 @@ WHOLE-SYSTEM-E2E, as posted on aien-architecture#190: one installation, one run,
 
 | what runs | proof |
 |---|---|
-| Aien scoped memory store, a separate hash-chained record store under `<home>.allen-memory/`, encrypted per item, scopes enforced at recall, key-destroying forget, crash-safe appends, refusal of damaged or foreign stores | `crates/aien-allen-memory/src/lib.rs:1-13`; #303, #314 |
+| ALLEN scoped memory store, a separate hash-chained record store under `<home>.allen-memory/`, encrypted per item, scopes enforced at recall, key-destroying forget, crash-safe appends, refusal of damaged or foreign stores | `crates/aien-allen-memory/src/lib.rs:1-13`; #303, #314 |
 | recall survives graceful stop and restart on the same model and across a model change: identity, profile, notes and goal identical after restart; forgotten item absent everywhere | `RESULT-v4-gb10.md` S5, S6, S7 |
 | omega `rx_cortex`: append-only journal replayed and verified on reopen, exclusive writer lock, torn-tail detection | omega `src/runtime/rx_cortex.h:54-55,145-167,187-190`; omega#114 |
 | durable effect intents and acks in Cortex, reconcile at start | aien-sovereign-core#227 |
@@ -81,7 +81,7 @@ WHOLE-SYSTEM-E2E, as posted on aien-architecture#190: one installation, one run,
 | graceful stop and restart with unchanged ledger, record count, document inode and mtime; replay reconcile 0 claims | `RESULT-v4-gb10.md` S5 |
 | Aienux subject restart across two processes on a sealed Store image | `native/kernel: make test-continuity-subject-restart` PASS (`docs/plans/aien-continuity/CAMPAIGN-v0-PREREG.md` line 22) |
 
-**Gaps.** (a) The acceptance step is a SIGKILL mid-objective followed by completion of the same objective. What exists proves refusal and non-duplication after faults; no receipt shows an interrupted objective being finished after restart. (b) Aien is not bound into the compose path: "MISSING_IMPLEMENTATION" (`CAMPAIGN-v0-PREREG.md` status table), so identity continuity and effect continuity are proven separately, not together. (c) Native Aienux recovery blocked on storage (E4 gap c).
+**Gaps.** (a) The acceptance step is a SIGKILL mid-objective followed by completion of the same objective. What exists proves refusal and non-duplication after faults; no receipt shows an interrupted objective being finished after restart. (b) ALLEN is not bound into the compose path: "MISSING_IMPLEMENTATION" (`CAMPAIGN-v0-PREREG.md` status table), so identity continuity and effect continuity are proven separately, not together. (c) Native Aienux recovery blocked on storage (E4 gap c).
 
 ## 3. Component findings outside the six steps
 
@@ -101,7 +101,7 @@ WHOLE-SYSTEM-E2E, as posted on aien-architecture#190: one installation, one run,
 | D2 | `RELEASE_NOTES.md` and `TEST_READY.md` describe live Modular MAX inference (port 18006) and ONNX encoders as part of the release | decision "leave MAX, no CUDA" (2026-10-02); the qualified path is the native Omega engine; `spark-max-rs`, `spark-max-cabi` still in the workspace | aien-sovereign-core root docs and `crates/` |
 | D3 | `aegis-runtime/README.md`: in-process native inference, 30 s heartbeat, TPM vault | mock backend by default, 60 s, "not a TPM" in the same README | aegis-runtime `src/inference.rs:504-515`, `src/main.rs:181` |
 | D4 | `release/candidate.toml` CAND-4 is "the candidate this tree is allowed to be released as" | every main is weeks past the CAND-4 pins; the demos that PASS ran on code CAND-4 does not contain | `qualification/candidates/CAND-4.toml` vs mains above |
-| D5 | `docs/02-implementation-status.md` snapshot 2026-09-23 (rows updated 2026-10-01); `docs/11-gap-analysis.md` undated | code moved through 2026-10-10 (Aien demo, NEXT-PHASE-2, approval desk default, OSH, Aienux B7a) | aien-architecture `docs/` |
+| D5 | `docs/02-implementation-status.md` snapshot 2026-09-23 (rows updated 2026-10-01); `docs/11-gap-analysis.md` undated | code moved through 2026-10-10 (ALLEN demo, NEXT-PHASE-2, approval desk default, OSH, Aienux B7a) | aien-architecture `docs/` |
 | D6 | `CURRENT_EXECUTION_PLAN.md` last addendum 2026-10-08 | merges of 2026-10-09 and 2026-10-10 in every repo are not reflected; the plan does not name the whole-system acceptance test | aien-architecture `CURRENT_EXECUTION_PLAN.md` (`60c92db`) |
 | D7 | spark-rsi README: standalone build; evidence receipt cites CI "Test & Invariant Verification" | needs `../aien-protocols` sibling; workflow is "Sovereign CI" | spark-rsi `Cargo.toml:43-45`, `.github/workflows/ci.yml` |
 | D8 | physics driver header: "shared by M16 qualification and M17" | no M17 directory | physics tree |
@@ -112,9 +112,9 @@ Correction (2026-10-16, #198): the D9 row overstates the gap. In aien-sovereign-
 
 ## 5. The gap list, ranked by what blocks the acceptance test
 
-1. **No single run chains the six steps.** The pieces exist on the Linux host for E2 to E6 in separate campaigns (Aien demo, NEXT-PHASE-2, golden path). The first integration lane is a harness that runs them as one objective with one receipt chain, and the acceptance contract (R3) that fixes receipt and verdict shapes.
+1. **No single run chains the six steps.** The pieces exist on the Linux host for E2 to E6 in separate campaigns (ALLEN demo, NEXT-PHASE-2, golden path). The first integration lane is a harness that runs them as one objective with one receipt chain, and the acceptance contract (R3) that fixes receipt and verdict shapes.
 2. **E6 as specified is unproven.** SIGKILL mid-objective then completion of the same objective has no receipt; today's proofs are refusal and non-duplication. Needs durable objective state plus a resume path, and the grant broker to survive restart or to re-issue grants deterministically.
-3. **Memory ownership.** One store must be named for the E4 recall (ADR 0022 says omega `rx_cortex`; the demos recall from `aien-allen-memory`). Either an ADR amendment or a binding of the Aien store onto the canonical journal.
+3. **Memory ownership.** One store must be named for the E4 recall (ADR 0022 says omega `rx_cortex`; the demos recall from `aien-allen-memory`). Either an ADR amendment or a binding of the ALLEN store onto the canonical journal.
 4. **Independent verifier for whole-system runs.** Separate code from the executor, a frozen receipt and verdict identity (aien-protocols `evaluation` or `evidence-receipt`), and a second-machine run. The AT-1 evaluator is the pattern that already works.
 5. **Release artifact for current mains.** A CAND-5 manifest, a signed release from it, and the offline signing key (Drake). Until then E1 can only be rehearsed with the throwaway-key dry run.
 6. **Operator surface.** One entry point that takes a free-form objective and reaches the real approval desk; the cockpit's placeholder approvals either wired to the desk or removed.
