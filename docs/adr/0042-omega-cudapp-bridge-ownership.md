@@ -1,8 +1,8 @@
 # ADR 0042: Omega owns computation. CUDApp owns GPU execution. Omega Bridge owns compatibility.
 
-**Status:** PROPOSED (2026-10-26). Records the boundary rule in an outside assessment of
-aien-dev/omega-bridge that Drake Stapleton forwarded on 2026-10-27, endorsing it by forwarding.
-Becomes ACCEPTED when Drake, or Main under his delegation, merges this PR. Recorded by BridgeBoundary.
+**Status:** Accepted (Main, delegated by Drake, 2026-10-30; merged as #342). Proposed 2026-10-26.
+Records the boundary rule in an outside assessment of aien-dev/omega-bridge that Drake Stapleton
+forwarded on 2026-10-27, endorsing it by forwarding. Recorded by BridgeBoundary.
 **Related:** ADR 0024 (Omega is the destination language), ADR 0018 (substrate-neutral realization),
 ADR 0039 (typed construction), ADR 0040 (identities). Does not change FORGE (ADR 0014).
 
