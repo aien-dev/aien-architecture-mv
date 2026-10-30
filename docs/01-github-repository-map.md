@@ -7,6 +7,7 @@ Snapshot-oriented map of the AIEN GitHub ecosystem, checked against `gh repo lis
 | Repository | Visibility | Role |
 |---|---|---|
 | `aien-dev/aienux` | public | Aienux, the kernel of AienOS (pre-alpha), not the whole operating system. |
+| `aien-dev/AienOS-nv` | public | GitHub description: "AienOS: my sovereign operating system for AI on hardware I own. Part of Sovereign Intelligence (aien-dev/sovereign-intelligence)." README: "This repository describes AienOS and links its parts. It publishes no releases." AienOS is the operating-system layer of Sovereign Intelligence (SI) ([ADR 0045](https://github.com/aien-dev/aien-architecture-mv/blob/f13c623/docs/adr/0045-aienix-retired-sovereign-intelligence-center.md)). |
 | `aien-dev/aienix` | public | Retired. It is no longer the core tree or the newcomer entry point. [sovereign-intelligence](https://github.com/aien-dev/sovereign-intelligence) is the integration, release and install center, and the place where the signed Spark test runs. The whole system is Sovereign Intelligence (SI); AienOS is only the operating-system layer ([ADR 0045](adr/0045-aienix-retired-sovereign-intelligence-center.md)). |
 | `aien-spark/omega` | public | Omega, the C reaction runtime and compiler. |
 | `aien-spark/physics` | public | FORGE machine realization plus historical Atlas/PHYSICS boot evidence. The subsystem was renamed FORGE by [ADR 0014](adr/0014-rename-machine-physics-to-forge.md), which keeps the existing `aien-spark/physics` repository name and history. The GitHub description is empty. |
