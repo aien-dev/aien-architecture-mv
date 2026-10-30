@@ -25,8 +25,8 @@ built, hashed, deleted and built again. Evidence: `CAND1-BUILD-2eec75b/summary.t
 |---|---|---|---|
 | R16 | G1/G2 loop inventory, every repo at its CAND-1 commit | PASS | 513 sites, 0 unclassified, 0 stale, no WARN; `CAND1-R16INV-cb06d08` (before the SC-126..129 rows: 4 unclassified, FAIL, kept) |
 | CI | GitHub checks on the CAND-1 commits | PASS | omega cb06d08 39 success, 2 skipped (map-only 80ca5d4: 30 success, 11 skipped), aienos 14/14 (2 skipped), interplane 8/8, sovereign-core 1/1 (Workspace Verification & Invariant Audit). Rechecked 2026-10-05 with all result pages; the CAND1-AUDIT-20261005 finding F6 ("28 success") read only the first page of 30 and is wrong |
-| AIENOS | ck_gates (QEMU) | 18 PASS, 0 FAIL, 2 MISSING_IMPLEMENTATION | `CAND1-CKGATES-bbad5e4`; KEYBOARD (no xHCI/USB HID driver in the C kernel), M0_ROLLBACK (C loader A/B parked) |
-| AIENOS | TRUST-1 M5 qualification | NOT_QUALIFIED: 20 PASS, 11 BLOCKED, 5 MISSING_IMPLEMENTATION, 1 FAIL (fix needs an operator action) | `CAND1-TRUST-bbad5e4`; the FAIL is `t1_gate7_preflight`: Secure Boot is off on this machine (operator setting since 2026-10-01), so the preflight correctly refuses |
+| Aienux | ck_gates (QEMU) | 18 PASS, 0 FAIL, 2 MISSING_IMPLEMENTATION | `CAND1-CKGATES-bbad5e4`; KEYBOARD (no xHCI/USB HID driver in the C kernel), M0_ROLLBACK (C loader A/B parked) |
+| Aienux | TRUST-1 M5 qualification | NOT_QUALIFIED: 20 PASS, 11 BLOCKED, 5 MISSING_IMPLEMENTATION, 1 FAIL (fix needs an operator action) | `CAND1-TRUST-bbad5e4`; the FAIL is `t1_gate7_preflight`: Secure Boot is off on this machine (operator setting since 2026-10-01), so the preflight correctly refuses |
 | Native model | strict real-model gate (TinyLlama, GB10, production build, 0 fallback) | PASS | `CAND1-NATIVE-2eec75b/receipt-strict-gate.json` |
 | Native model | Omega vs own CPU reference | PASS | `receipt-omega-vs-ref.json` |
 | Native model | Omega vs independent HF oracle | PASS | step-0 max abs logit difference 0.0435 against bound 0.15, same token; `receipt-omega-vs-oracle.json` |
@@ -71,10 +71,10 @@ omega #290 (the R15 sampler no longer leaves a 24 h `sleep` holding the quiet fl
   scored 1.0. The cause of the one stall is not established; a later diagnostic run cannot replace this verdict.
 - **R16 G6:** per-item checks exist (omega #287) but operator emergency controls have no implementation
   (MISSING_IMPLEMENTATION), so G6 cannot pass. **G8** is the merge-commit step, outside the script.
-- **AIENOS** has no USB keyboard driver in the C kernel and the C loader A/B and rollback are parked (MISSING_IMPLEMENTATION).
+- **Aienux** has no USB keyboard driver in the C kernel and the C loader A/B and rollback are parked (MISSING_IMPLEMENTATION).
 - **TRUST-1 M5:** 11 gates need attended hardware boots or operator ceremonies; 5 have no implementation; the
   Gate 7 preflight refuses because Secure Boot is off on this machine (operator setting). Not qualified.
-- **Physical machine:** every AIENOS result is QEMU. Nothing here qualifies the Spark booting AIENOS.
+- **Physical machine:** every Aienux result is QEMU. Nothing here qualifies the Spark booting Aienux.
 - **Contract pins in the manifest are wrong** (found 2026-10-05 by `scripts/check_candidate_pins.sh`). `CAND-1.toml`
   `[contracts]` pins the crumb-spec and spark-crumbs heads (`10b8251`, `98bb7cb`); the sovereign-core `Cargo.lock` at
   `2eec75b` consumes `24194d1` and `9355a92` (two commits behind each head, the revisions CAND-0 pins). The built

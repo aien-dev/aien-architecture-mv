@@ -1,0 +1,12 @@
+FAIL: cannot read omega.lock at aien-sovereign-core 2222222222222222222222222222222222222222
+FAIL: cannot read Cargo.lock at aien-sovereign-core 2222222222222222222222222222222222222222
+FAIL: cannot read aienos.lock at omega 1111111111111111111111111111111111111111
+FAIL: cannot read physics.lock at omega 1111111111111111111111111111111111111111
+FAIL: consumed_pins.sovereign-core-omega-lock: its lock file could not be read
+FAIL: consumed_pins.omega-aienos-lock: its lock file could not be read
+SKIP: consumed_pins.something-else (not read by this script)
+FAIL: consumed_pins.omega-argus-lock: its lock file could not be read
+FAIL: consumed_pins.omega-physics-lock: its lock file could not be read
+FAIL: consumed_pins.sovereign-core-cargo-lock-aien-protocols: its lock file could not be read
+PINS DISAGREE: m.toml
+rc=1

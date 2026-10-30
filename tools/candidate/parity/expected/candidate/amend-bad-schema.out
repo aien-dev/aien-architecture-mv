@@ -1,0 +1,3 @@
+FAIL: m.amendment-1.toml: schema must be CandidateAmendmentV1
+FAIL: m.amendment-1.toml: date and reason are required
+rc=1

@@ -6,7 +6,8 @@ Snapshot-oriented map of the AIEN GitHub ecosystem, checked against `gh repo lis
 
 | Repository | Visibility | Role |
 |---|---|---|
-| `aien-spark/aienos` | public | AIENOS, the sovereign operating system (pre-alpha). |
+| `aien-dev/aienux` | public | Aienux, the kernel of AienOS (pre-alpha), not the whole operating system. |
+| `aien-dev/aienix` | public | AienOS, the whole-system tree and newcomer entry point, including the Aienux kernel and other stack components. |
 | `aien-spark/omega` | public | Omega, the C reaction runtime and compiler. |
 | `aien-spark/physics` | public | FORGE machine realization plus historical Atlas/PHYSICS boot evidence. The subsystem was renamed FORGE by [ADR 0014](adr/0014-rename-machine-physics-to-forge.md), which keeps the existing `aien-spark/physics` repository name and history. The GitHub description is empty. |
 | `aien-dev/atlas` | public | Atlas, the bare-metal boot layer. The GitHub description is empty. |
@@ -14,7 +15,7 @@ Snapshot-oriented map of the AIEN GitHub ecosystem, checked against `gh repo lis
 | `aien-spark/aien-architecture` | public | This repository. |
 | `aien-dev/aien-sealed` | private | Name only. Holds evaluator-only material; never given to a candidate under test. |
 
-Other live public repositories: `aien-dev/aien-edge`, `aien-dev/aienos.com`, `aien-spark/drakestapleton.com`, `aien-spark/aien-dev` (profile), `aien-dev/.github`, `aien-spark/aegis-runtime`, `aien-spark/spark-rsi`, `aien-spark/benchmarks`, `aien-spark/open-humanity`.
+Other live public repositories: `aien-dev/aien-edge`, `aien-dev/aienos.com`, `aien-spark/drakestapleton.com` (merged into https://www.aienos.com/engineer/ on 2026-10-26; now serves only redirect stubs), `aien-spark/aien-dev` (profile), `aien-dev/.github`, `aien-spark/aegis-runtime`, `aien-spark/spark-rsi`, `aien-spark/benchmarks`, `aien-spark/open-humanity`.
 
 ## Canonical composition root
 
@@ -108,7 +109,7 @@ https://github.com/aien-spark/benchmarks
 
 Canonical performance/provenance benchmark work should be linked from this repo rather than copied into architecture docs.
 
-Prime Drag Race suite: lives in `aien-spark/benchmarks` under `prime-drag-race/` (contract, runner, receipts). The native GB10 implementation is in `aien-spark/omega` under `bench/prime_race/` (PR #303). Speed is measured against the machine's physical limit, and correctness against our own reference; there is no outside entry. Environment measured so far: Linux-hosted GB10, not AIENOS.
+Prime Drag Race suite: lives in `aien-spark/benchmarks` under `prime-drag-race/` (contract, runner, receipts). The native GB10 implementation is in `aien-spark/omega` under `bench/prime_race/` (PR #303). Speed is measured against the machine's physical limit, and correctness against our own reference; there is no outside entry. Environment measured so far: Linux-hosted GB10, not Aienux.
 
 ## Local composition
 

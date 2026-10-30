@@ -64,7 +64,7 @@ Operation: matvec. Two realizations of **one** semantic program with **one** Sem
 | Bounded error | Measured error vs oracle within the contract bound at the declared confidence. |
 | Repeatability | Repeated runs within the declared spread. |
 | Calibration bound | Fresh calibration digest bound into the realization identity; a stale one is refused in a negative test. |
-| No authority bypass | Device access only through an AIENOS capability with a 64-bit generation; a revoked or stale capability is refused. |
+| No authority bypass | Device access only through an Aienux capability with a 64-bit generation; a revoked or stale capability is refused. |
 | Complete evidence | AR3 completeness check passes with `provenance_class` = `PHYSICAL`. |
 | No vendor identity in the semantic program | The program, contract and World objects are byte-identical between the digital and analog runs; vendor data appears only in the FORGE substrate record. |
 | Clean digital fallback | Disconnecting or refusing the device yields the digital result under the same contract. |
@@ -93,5 +93,5 @@ Side constraint: any ARGUS telemetry work ◄── ARGUS perf gate decided (aie
 5. **AR5:** `aien-spark/omega#60` merged on main (`c0edef0`, merged at 2026-09-29T12:56:58Z); substrate axis and error field in `RxCmObservation` to follow post-R16.
 6. **AR6:** Fabric (`CURRENT_EXECUTION_PLAN.md` Phase F5) not started.
 7. **AR7:** RSI optimization loop (`CURRENT_EXECUTION_PLAN.md` Phase H3) not started.
-8. **ARGUS telemetry:** performance gate disputed (`aien-spark/aienos#160` +6.2% vs `aien-spark/omega#70` +3.87%; 5% vs 2% bar undecided); `aien-spark/omega#70` `src/runtime/rx_argus.c` loops collide with R16 G2.
+8. **ARGUS telemetry:** performance gate disputed (`aien-dev/aienux#160` +6.2% vs `aien-spark/omega#70` +3.87%; 5% vs 2% bar undecided); `aien-spark/omega#70` `src/runtime/rx_argus.c` loops collide with R16 G2.
 9. **Omega seams (post-R16):** `src/runtime/rx_route.h:61` `RX_COG_HW_*` bitmask must become substrate-neutral; `src/runtime/rx_contract.{h,c}` needs non-exact contract kinds.

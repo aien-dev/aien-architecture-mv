@@ -1,6 +1,6 @@
 # Rust versus C capability semantics (FORMAL-3 prep)
 
-Observed on aien-dev/aienos main 2ee61b4. Read only. This note records what each implementation does. The Lean model in `AienCap/Model.lean` models the Rust code only.
+Observed on aien-dev/aienux main 2ee61b4. Read only. This note records what each implementation does. The Lean model in `AienCap/Model.lean` models the Rust code only.
 
 | Topic | Rust `crates/aienos-aegis/src/capability.rs` | C `native/capability/aienos_capability.c` |
 |---|---|---|
@@ -17,7 +17,7 @@ Consequence for the Lean model: the Rust "child expiry <= parent" and "child dep
 
 # Receipt consistency (FORMAL-4)
 
-Observed on aien-dev/aienos main 2ee61b4, `crates/aienos-artifact/src/receipt.rs`. Read only. The Lean model is `AienReceipt/`; it models `validate`, `decode` and `encode` (field level, offsets in `AienReceipt/Layout.lean`).
+Observed on aien-dev/aienux main 2ee61b4, `crates/aienos-artifact/src/receipt.rs`. Read only. The Lean model is `AienReceipt/`; it models `validate`, `decode` and `encode` (field level, offsets in `AienReceipt/Layout.lean`).
 
 ## Finding: CanaryFailed decision is not tied to the CanaryFailed execution status
 

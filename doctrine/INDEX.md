@@ -4,7 +4,7 @@
 ```text
 Milestone:         Milestone 0 (DOCTRINE_V1)
 Corpus Identifier: AIEN-DOCTRINE-CORPUS-V1
-Canonical Path:    /home/drakestapleton/workspace/aien-architecture/doctrine/INDEX.md
+Canonical Path:    doctrine/INDEX.md (repository-relative)
 Classification:    Constitutional System Doctrine & Gate Ledger
 Target Substrate:  AArch64 Host CPU + Blackwell/Hopper Accelerator Substrate
 Status:            RATIFIED / CANONICAL / GATE VERIFIED
@@ -58,7 +58,7 @@ The seven doctrine files map directly to the functional and ontological layers o
 
 ## 3. The Seven Foundational Doctrine Documents
 
-The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/home/drakestapleton/workspace/aien-architecture/doctrine/`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/):
+The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`doctrine/`](./):
 
 ```text
 ┌───┬───────────────────┬──────────────────┬───────────────────────────────────────────────────────────┐
@@ -78,7 +78,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.1 [`ARCHITECTURE.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/ARCHITECTURE.md) — DOCTRINE-000: Sovereign Computational Architecture
+### 3.1 [`ARCHITECTURE.md`](ARCHITECTURE.md) — DOCTRINE-000: Sovereign Computational Architecture
 - **Document ID:** `DOCTRINE-000`
 - **Scope:** Foundational Master System Specification; The Four Permanent Layers and The Sovereign Machine.
 - **Core Principles:**
@@ -92,7 +92,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.2 [`ATLAS.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/ATLAS.md) — DOCTRINE-001: Atlas — The Irreducible Bootstrap Seed
+### 3.2 [`ATLAS.md`](ATLAS.md) — DOCTRINE-001: Atlas — The Irreducible Bootstrap Seed
 - **Document ID:** `DOCTRINE-001`
 - **Scope:** Bare-metal reset, hardware measurement, identity mapping, and monotonic handoff to Physics.
 - **Core Principles:**
@@ -106,7 +106,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.3 [`FORGE.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/FORGE.md) — DOCTRINE-002: Physics — The Trusted Machine Authority
+### 3.3 [`FORGE.md`](FORGE.md) — DOCTRINE-002: Physics — The Trusted Machine Authority
 - **Document ID:** `DOCTRINE-002`
 - **Scope:** Physical execution governance, MMU/SMMUv3 management, hardware capability enforcement, and effect admission.
 - **Core Principles:**
@@ -119,7 +119,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.4 [`OMEGA.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/OMEGA.md) — DOCTRINE-OMEGA-001: The Omega Foundational Specification
+### 3.4 [`OMEGA.md`](OMEGA.md) — DOCTRINE-OMEGA-001: The Omega Foundational Specification
 - **Document ID:** `AIEN-DOC-OMEGA-001`
 - **Scope:** The Semantic Language, Realization Substrate, and Tri-Graph Model for the Sovereign Machine.
 - **Core Principles:**
@@ -135,7 +135,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.5 [`AIEN.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/AIEN.md) — DOCTRINE-004: AIEN Foundational Doctrine
+### 3.5 [`AIEN.md`](AIEN.md) — DOCTRINE-004: AIEN Foundational Doctrine
 - **Document ID:** `DOCTRINE-004`
 - **Scope:** Sovereign Cognitive Core, J-Space Planning, Active State, and Semantic Memory.
 - **Core Principles:**
@@ -148,7 +148,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.6 [`TRUST.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/TRUST.md) — DOCTRINE-005: Trust — Epistemic Verification Doctrine
+### 3.6 [`TRUST.md`](TRUST.md) — DOCTRINE-005: Trust — Epistemic Verification Doctrine
 - **Document ID:** `DOCTRINE-005`
 - **Scope:** Epistemic verification boundaries, the Verification Ladder ($V_0 \to V_5$), correctness vs. performance authority, and failure containment.
 - **Core Principles:**
@@ -167,7 +167,7 @@ The `DOCTRINE_V1` corpus comprises seven canonical specifications located in [`/
 
 ---
 
-### 3.7 [`SOVEREIGNTY.md`](file:///home/drakestapleton/workspace/aien-architecture/doctrine/SOVEREIGNTY.md) — DOCTRINE-SOV-001: Sovereignty and Closure
+### 3.7 [`SOVEREIGNTY.md`](SOVEREIGNTY.md) — DOCTRINE-SOV-001: Sovereignty and Closure
 - **Document ID:** `DOCTRINE-SOV-001`
 - **Scope:** The Sovereignty Law, The Severance Invariant, Self-Hosting Closure, and The Oracle Principle.
 - **Core Principles:**
@@ -221,7 +221,7 @@ The `DOCTRINE_V1` Gate requires satisfying seven strict verification criteria be
 
 | Gate Criterion | Verification Standard | Audited Evidence | Status |
 | :--- | :--- | :--- | :---: |
-| **G0-1: Corpus Completeness** | All seven foundational doctrine documents authored, formatted, and cross-referenced in `/home/drakestapleton/workspace/aien-architecture/doctrine/`. | Verified on physical filesystem. | `PASSED` |
+| **G0-1: Corpus Completeness** | All seven foundational doctrine documents authored, formatted, and cross-referenced in `doctrine/`. | Verified on physical filesystem. | `PASSED` |
 | **G0-2: Ontological Consistency** | Zero terminological or authority contradictions across documents. Unidirectional dependency hierarchy verified. | Cross-audit of layers and definitions. | `PASSED` |
 | **G0-3: Epistemic Boundary** | Search, optimization, and neural inference strictly designated untrusted; verification and physics designated trusted. | Enforced in `TRUST.md` and `FORGE.md`. | `PASSED` |
 | **G0-4: Mathematical Rigor** | Formal definitions provided for Omega Tri-Graphs, Verification Ladder ($V_0 \to V_5$), and Epistemic Merkle DAGs. | Evaluated in `OMEGA.md` and `TRUST.md`. | `PASSED` |

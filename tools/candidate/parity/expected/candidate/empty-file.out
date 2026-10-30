@@ -1,0 +1,15 @@
+FAIL: missing field: schema
+FAIL: missing field: id
+FAIL: missing field: status
+FAIL: missing field: created
+FAIL: schema must be CandidateManifestV1
+FAIL: status must be 'draft, not frozen', 'frozen' or 'superseded'
+FAIL: missing commit: commits.omega
+FAIL: missing commit: commits.aienos
+FAIL: missing commit: commits.aien-sovereign-core
+FAIL: missing commit: commits.aien-protocols
+FAIL: missing commit: commits.aien-architecture
+FAIL: missing commit: contracts.crumb-spec
+FAIL: missing commit: contracts.spark-crumbs
+FAIL: no [executables] entries
+rc=1

@@ -1,0 +1,361 @@
+note SPDX-License-Identifier: Apache-2.0
+note gate: the ARCH-DOCTRINE gate runner (#316), seeded native Omega.
+note usage: gate OMC ROOT        (run from tools/doctrine; writes under build/)
+note Builds ../zero-legacy/sha256.om and doctrine.om with OMC, hashes OMC with the native sha256
+note and compares it to ../zero-legacy/omega.pin, prints AIEN-OBS lines, then runs
+note build/doctrine ROOT with this process's stdout. Exit: the checker's exit (0 PASS, 1 FAIL,
+note 2 ROOT unusable); 3 when OMC is missing or does not match the pin (NOT_RUN); 1 when a
+note build fails. The only thing outside this program is whoever compiled it (gate.sh).
+
+text tbl "../zero-legacy/sha256.om\nbuild/sha256\ndoctrine.om\nbuild/doctrine\nbuild/omc.sha\nbuild/doctrine.sha\n../zero-legacy/omega.pin\nbuild\n"
+text tobs "AIEN-OBS "
+text tsha "doctrine_sha256 \""
+text tq "\"\n"
+text texit "doctrine_exit "
+text tnl "\n"
+text tuse "usage: gate OMC ROOT\n"
+text tnot "gate: OMC missing or not the pinned compiler (NOT_RUN)\n"
+text tcf "gate: compile failed\n"
+text tkey "omc_sha256: "
+
+global omcp uchar 4096
+global omcl ulong 1
+global rootp uchar 4096
+global rootl ulong 1
+global pk uchar 4096
+global pkn ulong 1
+global pkc ulong 1
+global arg uchar 4096
+global argl ulong 1
+global fin uchar 256
+global finl ulong 1
+global fout uchar 256
+global foutl ulong 1
+global status uchar 4
+global pin uchar 4096
+global pinl ulong 1
+global sha uchar 128
+global nb uchar 24
+
+note ---- text table ----
+
+fn pick i ulong to void
+s = ulong 0
+k = ulong 0
+while lt k i bound 4096
+if eq get tbl s 10
+k = add k 1
+end
+s = add s 1
+end
+n = ulong 0
+while ne get tbl add s n 10 bound 256
+put arg n get tbl add s n
+n = add n 1
+end
+put argl 0 n
+end
+
+note ---- packets for execprog ----
+
+fn pk0 to void
+put pkn 0 2
+put pkc 0 0
+end
+
+fn pka to void
+n = get pkn 0
+m = get argl 0
+put pk n uchar rem m 256
+put pk add n 1 uchar div m 256
+for i ulong m
+put pk add n add 2 i get arg i
+end
+put pkn 0 add n add 2 m
+c = add get pkc 0 1
+put pkc 0 c
+put pk 0 uchar rem c 256
+put pk 1 uchar div c 256
+end
+
+fn pkt i ulong to void
+pick i
+pka
+end
+
+fn pkomc to void
+for i ulong get omcl 0
+put arg i get omcp i
+end
+put argl 0 get omcl 0
+pka
+end
+
+fn pkroot to void
+for i ulong get rootl 0
+put arg i get rootp i
+end
+put argl 0 get rootl 0
+pka
+end
+
+fn setin i ulong to void
+pick i
+for j ulong get argl 0
+put fin j get arg j
+end
+put finl 0 get argl 0
+end
+
+fn setout i ulong to void
+pick i
+for j ulong get argl 0
+put fout j get arg j
+end
+put foutl 0 get argl 0
+end
+
+fn noio to void
+put finl 0 0
+put foutl 0 0
+end
+
+note ---- run the packet; stdin/stdout redirected when set; returns exit code or -1 ----
+
+fn child to void
+if gt get finl 0 0
+fd = fopen fin 0 get finl 0 0 0
+if lt fd 0
+exit 126
+end
+r = dupfd int fd 0 0
+end
+if gt get foutl 0 0
+fd = fopen fout 0 get foutl 0 577 420
+if lt fd 0
+exit 126
+end
+r = dupfd int fd 1 0
+end
+r = execprog pk 0 get pkn 0
+exit 127
+end
+
+fn run to long
+pid = fork
+if lt pid 0
+ret -1
+end
+if eq pid 0
+child
+end
+r = waitpid int pid status 0 4 0
+if ne r pid
+ret -1
+end
+if ne get status 0 0
+ret -1
+end
+ret long get status 1
+end
+
+note ---- steps ----
+
+fn compile src ulong dst ulong to bool
+pk0
+pkomc
+setin src
+setout dst
+r = run
+if ne r 0
+ret false
+end
+pick dst
+r = chmod arg 0 get argl 0 493
+ret eq r 0
+end
+
+note hash the file named by table entry f into table entry out; read 64 hex into sha
+fn hashto f ulong out ulong to bool
+pk0
+pkt 1
+pkt f
+put finl 0 0
+setout out
+r = run
+if ne r 0
+ret false
+end
+ret readsha out
+end
+
+fn hashomc to bool
+pk0
+pkt 1
+pkomc
+put finl 0 0
+setout 4
+r = run
+if ne r 0
+ret false
+end
+ret readsha 4
+end
+
+fn readsha out ulong to bool
+pick out
+fd = fopen arg 0 get argl 0 0 0
+if lt fd 0
+ret false
+end
+r = read int fd sha 0 128
+c = fclose int fd
+ret ge r 64
+end
+
+fn loadpin to bool
+pick 6
+fd = fopen arg 0 get argl 0 0 0
+if lt fd 0
+ret false
+end
+r = read int fd pin 0 4096
+c = fclose int fd
+if le r 0
+ret false
+end
+put pinl 0 ulong r
+ret true
+end
+
+note does sha[0..64) equal the 64 bytes after "omc_sha256: " in the pin
+fn pinok to bool
+n = get pinl 0
+m = len tkey
+if lt n add m 64
+ret false
+end
+e = sub n add m 64
+i = ulong 0
+while le i e bound 4096
+j = ulong 0
+while lt j m bound 16
+if ne get pin add i j get tkey j
+break
+end
+j = add j 1
+end
+if eq j m
+ret same add i m
+end
+i = add i 1
+end
+ret false
+end
+
+fn same p ulong to bool
+for j ulong 64
+if ne get pin add p j get sha j
+ret false
+end
+end
+ret true
+end
+
+note build/doctrine ROOT, stdout inherited
+fn rundoc to long
+pk0
+pkt 3
+pkroot
+noio
+ret run
+end
+
+note ---- output ----
+
+fn wnum v long to void
+if lt v 0
+put nb 22 45
+put nb 23 49
+r = write 1 nb 22 2
+ret
+end
+x = ulong v
+n = ulong 0
+if eq x 0
+put nb 23 48
+n = 1
+end
+while gt x 0 bound 20
+put nb sub 23 n uchar add 48 rem x 10
+x = div x 10
+n = add n 1
+end
+r = write 1 nb sub 24 n n
+end
+
+fn obs1 to void
+r = write 1 tobs 0 len tobs
+r = write 1 tsha 0 len tsha
+r = write 1 sha 0 64
+r = write 1 tq 0 len tq
+end
+
+fn obs2 v long to void
+r = write 1 tobs 0 len tobs
+r = write 1 texit 0 len texit
+wnum v
+r = write 1 tnl 0 1
+end
+
+fn main to int
+if lt argcnt 3
+r = write 2 tuse 0 len tuse
+ret 64
+end
+n = argread 1 omcp 0 4095
+if lt n 1
+r = write 2 tuse 0 len tuse
+ret 64
+end
+put omcl 0 ulong n
+n = argread 2 rootp 0 4095
+if lt n 1
+r = write 2 tuse 0 len tuse
+ret 64
+end
+put rootl 0 ulong n
+pick 7
+r = makedir arg 0 get argl 0 493
+if not compile 0 1
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not loadpin
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not hashomc
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not pinok
+r = write 2 tnot 0 len tnot
+ret 3
+end
+if not compile 2 3
+r = write 2 tcf 0 len tcf
+ret 1
+end
+if not hashto 3 5
+r = write 2 tcf 0 len tcf
+ret 1
+end
+obs1
+e = rundoc
+obs2 e
+if lt e 0
+ret 1
+end
+ret int e
+end

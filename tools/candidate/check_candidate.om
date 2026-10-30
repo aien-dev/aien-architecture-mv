@@ -1,0 +1,1837 @@
+note SPDX-License-Identifier: Apache-2.0
+note check_candidate: validate a candidate manifest (docs/qualification/CANDIDATE.md) and its
+note amendments. Seeded native Omega port of scripts/check_candidate.sh (aien-architecture #316).
+note usage: check_candidate <manifest.toml>      exit 0 = valid, 1 = invalid
+note Same lines on stdout/stderr and the same exit code as the bash it replaces, including the
+note order of the FAIL lines: keys are kept in a table that walks like a bash 5.2 associative
+note array (FNV-1 hash, 1024 buckets, x4 growth, newest first in a bucket). sha existence is
+note checked with `gh api repos/aien-dev/<repo>/commits/<sha> -q .sha`, or with the command in
+note CAND_SHA_CHECK (run as: $CAND_SHA_CHECK <repo> <sha>). Children run through /bin/sh with
+note this process's environment replayed from a memfd, so PATH and the stub variables reach them.
+note Amendments: every <stem>.amendment-<n>.toml next to the manifest is read and checked too.
+note Capacities (exit 70 beyond them): a file of 999000 bytes, 4096 keys per file, keys and
+note section names of 8191 bytes, 1024 amendment files, a child argument list of 4096 bytes.
+note See tools/candidate/README.md for the parsed subset and the named limits.
+
+text tsh "set -a\n. \"$1\"\nset +a\nshift\nexec \"$@\"\n"
+text tm "usage: \n <manifest.toml>\nFAIL: \nmissing field: \nschema must be CandidateManifestV1\nstatus must be 'draft, not frozen', 'frozen' or 'superseded'\nmissing commit: \ncommit for \n is not 40 lowercase hex: \ncommit \n not found in aien-dev/\n is UNBUILT but status is not draft\n digest is not 64 lowercase hex\n digest is all zero (placeholder, not a real digest)\nno [executables] entries\n: schema must be CandidateAmendmentV1\n: candidate '\n' is not the manifest id '\n'\n: amendment '\n' does not match its file name (\n)\n: date and reason are required\n: pins manifest sha256 '\n' but \n is \n (frozen manifests are not edited)\n: unknown top-level key '\n cannot be amended (it would change what the candidate is)\n is already in the manifest; an amendment only adds keys\n is not a real sha256\n: adds no keys\nOK: \n (amendments: \n)\n: \ncheck_candidate: input over capacity\n"
+text tk "schema\nid\nstatus\ncreated\ncommits.omega\ncommits.aienos\ncommits.aien-sovereign-core\ncommits.aien-protocols\ncommits.aien-architecture\ncontracts.crumb-spec\ncontracts.spark-crumbs\ncommits.physics\ncommits.interplane\nCandidateManifestV1\ndraft, not frozen\nfrozen\nsuperseded\nexecutables.\nUNBUILT\ndraft\nCandidateAmendmentV1\ncandidate\namendment\ndate\nreason\nmanifest-sha256\ncommits.\ncontracts.\nconsumed_pins.\n-sha256\n.amendment-\n.toml\nCAND_SHA_CHECK\n/bin/sh\n-c\nsh\n/proc/self/fd/\ngh\napi\nrepos/aien-dev/\n/commits/\n-q\n.sha\n/dev/null\n.\nenvfile\n"
+
+const CAP ulong 999000
+const NREQ ulong 7
+const NOPT ulong 2
+const MASK ulong 4294967295
+
+global src uchar 999128
+global srcn ulong 1
+global pool uchar 1998000
+global pooln ulong 1
+global poolm ulong 1
+global kof ulong 8192
+global kln ulong 8192
+global vof ulong 8192
+global vln ulong 8192
+global khs ulong 8192
+global knx ulong 8192
+global kbk ulong 8192
+global kb2 ulong 4096
+global nen ulong 2
+global nbk ulong 2
+global secb uchar 8192
+global secl ulong 1
+global arg uchar 8192
+global argl ulong 1
+global obuf uchar 1100000
+global obl ulong 1
+global fpath uchar 4096
+global fpl ulong 1
+global a0 uchar 4096
+global a0l ulong 1
+global apath uchar 8192
+global apl ulong 1
+global dirp uchar 4096
+global dirl ulong 1
+global apre uchar 4096
+global aprl ulong 1
+global anum uchar 4096
+global anml ulong 1
+global apool uchar 262144
+global apn ulong 1
+global ano ulong 1024
+global anl ulong 1024
+global aix ulong 1024
+global acnt ulong 1
+global dbuf uchar 65536
+global stb uchar 128
+global rp uchar 8192
+global rpl ulong 1
+global mfh uchar 64
+global failf ulong 1
+global namend ulong 1
+global pk uchar 4096
+global pkn ulong 1
+global pkc ulong 1
+global ebuf uchar 65600
+global ewb uchar 131200
+global ev uchar 65600
+global evl ulong 1
+global efd long 1
+global epath uchar 32
+global epl ulong 1
+global status uchar 4
+global rmode ulong 1
+global nbuf uchar 24
+global shv ulong 8
+global swt ulong 64
+global skt ulong 64
+global sst ulong 8
+
+note ---- text tables ----
+
+fn om i ulong to void
+s = ulong 0
+k = ulong 0
+while lt k i bound 8192
+if eq get tm s 10
+k = add k 1
+end
+s = add s 1
+end
+n = get obl 0
+while ne get tm s 10 bound 8191
+put obuf n get tm s
+n = add n 1
+s = add s 1
+end
+put obl 0 n
+end
+
+fn kp i ulong to void
+s = ulong 0
+k = ulong 0
+while lt k i bound 8192
+if eq get tk s 10
+k = add k 1
+end
+s = add s 1
+end
+n = ulong 0
+while ne get tk add s n 10 bound 8191
+put arg n get tk add s n
+n = add n 1
+end
+put argl 0 n
+end
+
+fn over to void
+put obl 0 0
+om 36
+oc 10
+oflush 2
+exit 70
+end
+
+note ---- output line ----
+
+fn oc c uchar to void
+n = get obl 0
+put obuf n c
+put obl 0 add n 1
+end
+
+fn oflush fd int to void
+r = write fd obuf 0 get obl 0
+put obl 0 0
+end
+
+fn opool o ulong n ulong to void
+b = get obl 0
+for i ulong n
+put obuf add b i get pool add o i
+end
+put obl 0 add b n
+end
+
+fn oarg to void
+b = get obl 0
+for i ulong get argl 0
+put obuf add b i get arg i
+end
+put obl 0 add b get argl 0
+end
+
+fn ofile to void
+b = get obl 0
+for i ulong get fpl 0
+put obuf add b i get fpath i
+end
+put obl 0 add b get fpl 0
+end
+
+fn oapath to void
+b = get obl 0
+for i ulong get apl 0
+put obuf add b i get apath i
+end
+put obl 0 add b get apl 0
+end
+
+fn oanum to void
+b = get obl 0
+for i ulong get anml 0
+put obuf add b i get anum i
+end
+put obl 0 add b get anml 0
+end
+
+fn omfh to void
+b = get obl 0
+for i ulong 64
+put obuf add b i get mfh i
+end
+put obl 0 add b 64
+end
+
+fn okey x ulong to void
+opool get kof x get kln x
+end
+
+fn oval e long to void
+if ge e 0
+opool get vof ulong e get vln ulong e
+end
+end
+
+fn onum v ulong to void
+d = ulong 0
+while gt v 0 bound 24
+put nbuf d uchar rem v 10
+v = div v 10
+d = add d 1
+end
+if eq d 0
+put nbuf 0 0
+d = ulong 1
+end
+for i ulong d
+oc add 48 get nbuf sub sub d 1 i
+end
+end
+
+fn fail0 to void
+put obl 0 0
+om 2
+end
+
+fn fail1 to void
+oc 10
+oflush 2
+put failf 0 1
+end
+
+fn afail i ulong to void
+fail0
+oapath
+om i
+end
+
+note ---- key table: bash 5.2 associative array order ----
+
+fn hashk to ulong
+h = ulong 2166136261
+for j ulong get argl 0
+h = and mul h 16777619 MASK
+h = xor h ulong get arg j
+end
+ret h
+end
+
+fn treset t ulong to void
+put nbk t 1024
+put nen t 0
+for b ulong 1024
+put kbk add mul t 4096 b 0
+end
+end
+
+fn keyeq x ulong to bool
+n = get argl 0
+if ne get kln x n
+ret false
+end
+o = get kof x
+for i ulong n
+if ne get pool add o i get arg i
+ret false
+end
+end
+ret true
+end
+
+fn tfind t ulong to long
+h = hashk
+b = and h sub get nbk t 1
+e = get kbk add mul t 4096 b
+while ne e 0 bound 8192
+e = sub e 1
+if eq get khs e h
+if keyeq e
+ret long e
+end
+end
+e = get knx e
+end
+ret -1
+end
+
+fn pcopy o ulong n ulong to void
+p = get pooln 0
+if gt add p n len pool
+over
+end
+for i ulong n
+put pool add p i get src add o i
+end
+put pooln 0 add p n
+end
+
+fn acopy to void
+p = get pooln 0
+n = get argl 0
+if gt add p n len pool
+over
+end
+for i ulong n
+put pool add p i get arg i
+end
+put pooln 0 add p n
+end
+
+fn tlink t ulong x ulong h ulong to void
+b = add mul t 4096 and h sub get nbk t 1
+put knx x get kbk b
+put kbk b add x 1
+end
+
+fn rehash t ulong j ulong to void
+e = get kb2 j
+while ne e 0 bound 8192
+x = sub e 1
+n = get knx x
+tlink t x get khs x
+e = n
+end
+end
+
+fn tgrow t ulong to void
+nb = get nbk t
+if gt mul nb 4 4096
+over
+end
+tb = mul t 4096
+for b ulong nb
+put kb2 b get kbk add tb b
+put kbk add tb b 0
+end
+put nbk t mul nb 4
+for j ulong nb
+rehash t j
+end
+end
+
+fn tset t ulong vs ulong vn ulong to void
+e = tfind t
+if ge e 0
+x = ulong e
+put vof x get pooln 0
+put vln x vn
+pcopy vs vn
+ret
+end
+if ge get nen t mul get nbk t 2
+tgrow t
+end
+n = get nen t
+if ge n 4096
+over
+end
+x = add mul t 4096 n
+put kof x get pooln 0
+put kln x get argl 0
+acopy
+put vof x get pooln 0
+put vln x vn
+pcopy vs vn
+h = hashk
+put khs x h
+tlink t x h
+put nen t add n 1
+end
+
+note ---- the line parser: key = "value" [# comment], [section] [# comment], the rest ignored ----
+
+fn isws c uchar to bool
+ret or eq c 32 and ge c 9 le c 13
+end
+
+fn iskc c uchar to bool
+d = or and ge c 48 le c 57 and ge c 65 le c 90
+d = or d and ge c 97 le c 122
+ret or d or eq c 95 or eq c 46 eq c 45
+end
+
+fn skipws i ulong e ulong to ulong
+while lt i e bound 999999
+if not isws get src i
+ret i
+end
+i = add i 1
+end
+ret i
+end
+
+fn skipkc i ulong e ulong to ulong
+while lt i e bound 999999
+if not iskc get src i
+ret i
+end
+i = add i 1
+end
+ret i
+end
+
+fn notq i ulong e ulong to bool
+ret and lt i e ne get src i 34
+end
+
+fn skipnq i ulong e ulong to ulong
+while notq i e bound 999999
+i = add i 1
+end
+ret i
+end
+
+fn mkkey ks ulong kn ulong to void
+n = get secl 0
+if gt add n kn 8191
+over
+end
+for i ulong n
+put arg i get secb i
+end
+for i ulong kn
+put arg add n i get src add ks i
+end
+put argl 0 add n kn
+end
+
+fn kvline t ulong ls ulong z ulong to bool
+i = skipws ls z
+ks = i
+i = skipkc i z
+kn = sub i ks
+if eq kn 0
+ret false
+end
+i = skipws i z
+if ge i z
+ret false
+end
+if ne get src i 61
+ret false
+end
+i = skipws add i 1 z
+if ge i z
+ret false
+end
+if ne get src i 34
+ret false
+end
+vs = add i 1
+i = skipnq vs z
+if ge i z
+ret false
+end
+vn = sub i vs
+i = skipws add i 1 z
+if lt i z
+if ne get src i 35
+ret false
+end
+end
+mkkey ks kn
+tset t vs vn
+ret true
+end
+
+fn setsec s ulong j ulong to void
+n = sub j s
+if gt n 8191
+over
+end
+for i ulong n
+put secb i get src add s add 1 i
+end
+put secb sub n 1 46
+put secl 0 n
+end
+
+fn secline ls ulong z ulong to void
+s = skipws ls z
+if ge s z
+ret
+end
+if eq get src s 35
+ret
+end
+e = z
+while gt e s bound 999999
+if not isws get src sub e 1
+break
+end
+e = sub e 1
+end
+if ne get src s 91
+ret
+end
+j = skipkc add s 1 e
+if eq j add s 1
+ret
+end
+if ge j e
+ret
+end
+if ne get src j 93
+ret
+end
+i = skipws add j 1 e
+if lt i e
+if ne get src i 35
+ret
+end
+end
+setsec s j
+end
+
+fn parse t ulong to void
+put secl 0 0
+ls = ulong 0
+n = get srcn 0
+while lt ls n bound 999999
+z = ls
+while and lt z n ne get src z 10 bound 999999
+z = add z 1
+end
+if ge z n
+break
+end
+if not kvline t ls z
+secline ls z
+end
+ls = add z 1
+end
+end
+
+note ---- files ----
+
+fn slurpf fd int to void
+t = ulong 0
+while true bound 999999
+room = sub CAP t
+if eq room 0
+over
+end
+r = read fd src t room
+if lt r 0
+break
+end
+if eq r 0
+break
+end
+t = add t ulong r
+end
+put srcn 0 t
+end
+
+fn dropnul to void
+n = get srcn 0
+w = ulong 0
+for i ulong n
+c = get src i
+if ne c 0
+put src w c
+w = add w 1
+end
+end
+put srcn 0 w
+end
+
+fn loadm to void
+put srcn 0 0
+fd = fopen fpath 0 get fpl 0 0 0
+if lt fd 0
+ret
+end
+slurpf int fd
+r = fclose int fd
+dropnul
+end
+
+fn loada to void
+put srcn 0 0
+fd = fopen apath 0 get apl 0 0 0
+if lt fd 0
+ret
+end
+slurpf int fd
+r = fclose int fd
+dropnul
+end
+
+fn isregf to bool
+r = stat fpath 0 get fpl 0 stb 0 128
+if lt r 0
+ret false
+end
+m = ulong get stb 16
+m = or m shl ulong get stb 17 8
+ret eq and m 61440 32768
+end
+
+fn isrega to bool
+r = stat apath 0 get apl 0 stb 0 128
+if lt r 0
+ret false
+end
+m = ulong get stb 16
+m = or m shl ulong get stb 17 8
+ret eq and m 61440 32768
+end
+
+note ---- SHA-256 of src[0..srcn) into mfh (hex), FIPS 180-4 ----
+
+fn initk to void
+put skt 0 1116352408
+put skt 1 1899447441
+put skt 2 3049323471
+put skt 3 3921009573
+put skt 4 961987163
+put skt 5 1508970993
+put skt 6 2453635748
+put skt 7 2870763221
+put skt 8 3624381080
+put skt 9 310598401
+put skt 10 607225278
+put skt 11 1426881987
+put skt 12 1925078388
+put skt 13 2162078206
+put skt 14 2614888103
+put skt 15 3248222580
+put skt 16 3835390401
+put skt 17 4022224774
+put skt 18 264347078
+put skt 19 604807628
+put skt 20 770255983
+put skt 21 1249150122
+put skt 22 1555081692
+put skt 23 1996064986
+put skt 24 2554220882
+put skt 25 2821834349
+put skt 26 2952996808
+put skt 27 3210313671
+put skt 28 3336571891
+put skt 29 3584528711
+put skt 30 113926993
+put skt 31 338241895
+put skt 32 666307205
+put skt 33 773529912
+put skt 34 1294757372
+put skt 35 1396182291
+put skt 36 1695183700
+put skt 37 1986661051
+put skt 38 2177026350
+put skt 39 2456956037
+put skt 40 2730485921
+put skt 41 2820302411
+put skt 42 3259730800
+put skt 43 3345764771
+put skt 44 3516065817
+put skt 45 3600352804
+put skt 46 4094571909
+put skt 47 275423344
+put skt 48 430227734
+put skt 49 506948616
+put skt 50 659060556
+put skt 51 883997877
+put skt 52 958139571
+put skt 53 1322822218
+put skt 54 1537002063
+put skt 55 1747873779
+put skt 56 1955562222
+put skt 57 2024104815
+put skt 58 2227730452
+put skt 59 2361852424
+put skt 60 2428436474
+put skt 61 2756734187
+put skt 62 3204031479
+put skt 63 3329325298
+end
+
+fn inith to void
+put shv 0 1779033703
+put shv 1 3144134277
+put shv 2 1013904242
+put shv 3 2773480762
+put shv 4 1359893119
+put shv 5 2600822924
+put shv 6 528734635
+put shv 7 1541459225
+end
+
+fn rotr x ulong r ulong to ulong
+ret and or shr x r shl x sub 32 r MASK
+end
+
+fn bsig0 x ulong to ulong
+ret xor rotr x 2 xor rotr x 13 rotr x 22
+end
+
+fn bsig1 x ulong to ulong
+ret xor rotr x 6 xor rotr x 11 rotr x 25
+end
+
+fn ssig0 x ulong to ulong
+ret xor rotr x 7 xor rotr x 18 shr x 3
+end
+
+fn ssig1 x ulong to ulong
+ret xor rotr x 17 xor rotr x 19 shr x 10
+end
+
+fn ch x ulong y ulong z ulong to ulong
+ret xor and x y and and not x MASK z
+end
+
+fn maj x ulong y ulong z ulong to ulong
+ret xor and x y xor and x z and y z
+end
+
+fn sched b ulong to void
+for i ulong 16
+o = add b mul i 4
+v = ulong get src o
+v = or shl v 8 ulong get src add o 1
+v = or shl v 8 ulong get src add o 2
+v = or shl v 8 ulong get src add o 3
+put swt i v
+end
+for j ulong 48
+i = add j 16
+s = add ssig1 get swt sub i 2 get swt sub i 7
+s = add s ssig0 get swt sub i 15
+s = add s get swt sub i 16
+put swt i and s MASK
+end
+end
+
+fn round i ulong to void
+a = get sst 0
+e = get sst 4
+t1 = add get sst 7 bsig1 e
+t1 = add t1 ch e get sst 5 get sst 6
+t1 = add t1 get skt i
+t1 = and add t1 get swt i MASK
+t2 = and add bsig0 a maj a get sst 1 get sst 2 MASK
+put sst 7 get sst 6
+put sst 6 get sst 5
+put sst 5 e
+put sst 4 and add get sst 3 t1 MASK
+put sst 3 get sst 2
+put sst 2 get sst 1
+put sst 1 a
+put sst 0 and add t1 t2 MASK
+end
+
+fn block b ulong to void
+sched b
+for i ulong 8
+put sst i get shv i
+end
+for i ulong 64
+round i
+end
+for i ulong 8
+put shv i and add get shv i get sst i MASK
+end
+end
+
+fn pad to ulong
+sz = get srcn 0
+put src sz 128
+p = add sz 1
+while ne rem p 64 56 bound 64
+put src p 0
+p = add p 1
+end
+bits = mul sz 8
+for i ulong 8
+put src add p i uchar and shr bits mul sub 7 i 8 255
+end
+ret add p 8
+end
+
+fn hexd v ulong to uchar
+if lt v 10
+ret uchar add v 48
+end
+ret uchar add v 87
+end
+
+fn sha256 to void
+initk
+inith
+total = pad
+b = ulong 0
+while lt b total bound 262145
+block b
+b = add b 64
+end
+for i ulong 8
+v = get shv i
+for j ulong 8
+d = and shr v mul sub 7 j 4 15
+put mfh add mul i 8 j hexd d
+end
+end
+end
+
+note ---- children: /bin/sh replays the environment from a memfd, then exec "$@" ----
+
+fn pk0 to void
+put pkn 0 2
+put pkc 0 0
+end
+
+fn pka to void
+n = get pkn 0
+m = get argl 0
+if gt add n add 2 m 4096
+over
+end
+put pk n uchar rem m 256
+put pk add n 1 uchar div m 256
+for i ulong m
+put pk add n add 2 i get arg i
+end
+put pkn 0 add n add 2 m
+c = add get pkc 0 1
+put pkc 0 c
+put pk 0 uchar rem c 256
+put pk 1 uchar div c 256
+end
+
+fn pkt i ulong to void
+kp i
+pka
+end
+
+fn pksh to void
+pk0
+pkt 33
+pkt 34
+for i ulong len tsh
+put arg i get tsh i
+end
+put argl 0 len tsh
+pka
+pkt 35
+for i ulong get epl 0
+put arg i get epath i
+end
+put argl 0 get epl 0
+pka
+end
+
+fn envname l ulong to bool
+if eq l 0
+ret false
+end
+for i ulong l
+c = get ebuf i
+ok = or and ge c 65 le c 90 and ge c 97 le c 122
+ok = or ok eq c 95
+if gt i 0
+ok = or ok and ge c 48 le c 57
+end
+if not ok
+ret false
+end
+end
+ret true
+end
+
+fn envone l ulong to void
+e = ulong 0
+while and lt e l ne get ebuf e 61 bound 65536
+e = add e 1
+end
+if eq e l
+ret
+end
+if not envname e
+ret
+end
+for i ulong e
+put ewb i get ebuf i
+end
+n = e
+put ewb n 61
+put ewb add n 1 39
+n = add n 2
+i = add e 1
+while lt i l bound 65536
+c = get ebuf i
+if eq c 39
+put ewb n 39
+put ewb add n 1 92
+put ewb add n 2 39
+put ewb add n 3 39
+n = add n 4
+else
+put ewb n c
+n = add n 1
+end
+i = add i 1
+end
+put ewb n 39
+put ewb add n 1 10
+n = add n 2
+r = write int get efd 0 ewb 0 n
+end
+
+fn envinit to void
+kp 45
+f = memfd arg 0 get argl 0 0
+if lt f 0
+over
+end
+put efd 0 f
+for i ulong ulong envcnt
+l = envread i ebuf 0 65536
+if gt l 0
+envone ulong l
+end
+end
+kp 36
+n = get argl 0
+for i ulong n
+put epath i get arg i
+end
+v = ulong f
+d = ulong 0
+while gt v 0 bound 24
+put nbuf d uchar rem v 10
+v = div v 10
+d = add d 1
+end
+if eq d 0
+put nbuf 0 0
+d = ulong 1
+end
+for i ulong d
+put epath add n i add 48 get nbuf sub sub d 1 i
+end
+put epl 0 add n d
+end
+
+note the value of the environment variable named by arg, into ev; -1 when unset
+fn getenv to long
+n = get argl 0
+for i ulong ulong envcnt
+l = envread i ebuf 0 65536
+if gt l long n
+if envpre n
+ret envtake n ulong l
+end
+end
+end
+ret -1
+end
+
+fn envtake n ulong l ulong to long
+m = sub l add n 1
+o = add n 1
+for j ulong m
+put ev j get ebuf add o j
+end
+put evl 0 m
+ret long m
+end
+
+fn envpre n ulong to bool
+for i ulong n
+if ne get ebuf i get arg i
+ret false
+end
+end
+ret eq get ebuf n 61
+end
+
+note split ev on space, tab and newline, one packet record per word
+fn pkwords to void
+i = ulong 0
+n = get evl 0
+while lt i n bound 65536
+c = get ev i
+if or eq c 32 or eq c 9 eq c 10
+i = add i 1
+else
+w = ulong 0
+while and lt i n wordc get ev i bound 65536
+put arg w get ev i
+w = add w 1
+i = add i 1
+end
+put argl 0 w
+pka
+end
+end
+end
+
+fn wordc c uchar to bool
+ret not or eq c 32 or eq c 9 eq c 10
+end
+
+fn child to void
+if eq get rmode 0 1
+kp 43
+fd = fopen arg 0 get argl 0 1 0
+if lt fd 0
+exit 126
+end
+r = dupfd int fd 1 0
+r = dupfd int fd 2 0
+end
+r = execprog pk 0 get pkn 0
+exit 127
+end
+
+fn run to long
+pid = fork
+if lt pid 0
+ret -1
+end
+if eq pid 0
+child
+end
+r = waitpid int pid status 0 4 0
+if ne r pid
+ret -1
+end
+s = long get status 0
+s = or s shl long get status 1 8
+if eq and s 127 0
+ret shr s 8
+end
+ret add 128 and s 127
+end
+
+note ---- value helpers ----
+
+fn vlen e long to ulong
+if lt e 0
+ret 0
+end
+ret get vln ulong e
+end
+
+fn veq e long i ulong to bool
+if lt e 0
+ret false
+end
+kp i
+x = ulong e
+if ne get vln x get argl 0
+ret false
+end
+o = get vof x
+for j ulong get argl 0
+if ne get pool add o j get arg j
+ret false
+end
+end
+ret true
+end
+
+fn vpre e long i ulong to bool
+if lt e 0
+ret false
+end
+kp i
+x = ulong e
+if lt get vln x get argl 0
+ret false
+end
+o = get vof x
+for j ulong get argl 0
+if ne get pool add o j get arg j
+ret false
+end
+end
+ret true
+end
+
+fn vveq e long f long to bool
+n = vlen e
+if ne n vlen f
+ret false
+end
+if lt e 0
+ret true
+end
+o = get vof ulong e
+p = get vof ulong f
+for j ulong n
+if ne get pool add o j get pool add p j
+ret false
+end
+end
+ret true
+end
+
+fn vnum e long to bool
+n = vlen e
+if ne n get anml 0
+ret false
+end
+if lt e 0
+ret true
+end
+o = get vof ulong e
+for j ulong n
+if ne get pool add o j get anum j
+ret false
+end
+end
+ret true
+end
+
+fn mfeq e long to bool
+if ne vlen e 64
+ret false
+end
+o = get vof ulong e
+for j ulong 64
+if ne get pool add o j get mfh j
+ret false
+end
+end
+ret true
+end
+
+fn ishex c uchar to bool
+ret or and ge c 48 le c 57 and ge c 97 le c 102
+end
+
+fn hexn e long n ulong to bool
+if ne vlen e n
+ret false
+end
+o = get vof ulong e
+for j ulong n
+if not ishex get pool add o j
+ret false
+end
+end
+ret true
+end
+
+fn zero64 e long to bool
+if ne vlen e 64
+ret false
+end
+o = get vof ulong e
+for j ulong 64
+if ne get pool add o j 48
+ret false
+end
+end
+ret true
+end
+
+fn kfind t ulong i ulong to long
+kp i
+ret tfind t
+end
+
+note ---- key helpers (x is an entry index) ----
+
+fn keyis x ulong i ulong to bool
+kp i
+ret keyeq x
+end
+
+fn haspre x ulong i ulong to bool
+kp i
+n = get argl 0
+if lt get kln x n
+ret false
+end
+o = get kof x
+for j ulong n
+if ne get pool add o j get arg j
+ret false
+end
+end
+ret true
+end
+
+fn hassuf x ulong i ulong to bool
+kp i
+n = get argl 0
+m = get kln x
+if lt m n
+ret false
+end
+o = add get kof x sub m n
+for j ulong n
+if ne get pool add o j get arg j
+ret false
+end
+end
+ret true
+end
+
+fn hasdot x ulong to bool
+o = get kof x
+for j ulong get kln x
+if eq get pool add o j 46
+ret true
+end
+end
+ret false
+end
+
+fn inmf x ulong to bool
+o = get kof x
+n = get kln x
+for j ulong n
+put arg j get pool add o j
+end
+put argl 0 n
+ret ge tfind 0 0
+end
+
+note ---- commit pins ----
+
+note rp = the repo of key-table entry i (the part after its first dot); the key name aienos
+note names the kernel repository, renamed to aienux, so rp spells aienux for it
+fn kprepo i ulong to void
+kp i
+n = get argl 0
+d = ulong 0
+while and lt d n ne get arg d 46 bound 8192
+d = add d 1
+end
+d = add d 1
+m = ulong 0
+if lt d n
+m = sub n d
+end
+for j ulong m
+put rp j get arg add d j
+end
+if eq m 6
+if and eq get rp 0 97 eq get rp 1 105
+if and eq get rp 2 101 eq get rp 3 110
+if and eq get rp 4 111 eq get rp 5 115
+put rp 4 117
+put rp 5 120
+end
+end
+end
+end
+put rpl 0 m
+end
+
+fn arp to void
+n = get argl 0
+for j ulong get rpl 0
+put arg add n j get rp j
+end
+put argl 0 add n get rpl 0
+end
+
+fn orp to void
+b = get obl 0
+for j ulong get rpl 0
+put obuf add b j get rp j
+end
+put obl 0 add b get rpl 0
+end
+
+fn kpapp i ulong to void
+s = ulong 0
+k = ulong 0
+while lt k i bound 8192
+if eq get tk s 10
+k = add k 1
+end
+s = add s 1
+end
+n = get argl 0
+while ne get tk s 10 bound 8191
+put arg n get tk s
+n = add n 1
+s = add s 1
+end
+put argl 0 n
+end
+
+fn avapp e long to void
+x = ulong e
+o = get vof x
+n = get vln x
+b = get argl 0
+if gt add b n 8191
+over
+end
+for j ulong n
+put arg add b j get pool add o j
+end
+put argl 0 add b n
+end
+
+fn shaex i ulong e long to bool
+pksh
+kp 32
+l = getenv
+kprepo i
+if gt l 0
+pkwords
+put argl 0 0
+arp
+pka
+put argl 0 0
+avapp e
+pka
+put rmode 0 0
+else
+pkt 37
+pkt 38
+kp 39
+arp
+kpapp 40
+avapp e
+pka
+pkt 41
+pkt 42
+put rmode 0 1
+end
+ret eq run 0
+end
+
+fn fnot40 i ulong e long to void
+fail0
+om 7
+kp i
+oarg
+om 8
+oval e
+fail1
+end
+
+fn fnotfound i ulong e long to void
+fail0
+om 9
+oval e
+om 10
+kprepo i
+orp
+fail1
+end
+
+fn reqpin i ulong to void
+e = kfind 0 i
+if eq vlen e 0
+fail0
+om 6
+kp i
+oarg
+fail1
+ret
+end
+if not hexn e 40
+fnot40 i e
+ret
+end
+if not shaex i e
+fnotfound i e
+end
+end
+
+fn optpin i ulong to void
+e = kfind 0 i
+if eq vlen e 0
+ret
+end
+if not hexn e 40
+fnot40 i e
+ret
+end
+if not shaex i e
+fnotfound i e
+end
+end
+
+fn reqpins to void
+for i ulong NREQ
+reqpin add 4 i
+end
+end
+
+fn optpins to void
+for i ulong NOPT
+optpin add 11 i
+end
+end
+
+note ---- [executables] ----
+
+fn exe1 x ulong to void
+e = long x
+if veq e 18
+if not vpre kfind 0 2 19
+fail0
+okey x
+om 11
+fail1
+end
+ret
+end
+if not hexn e 64
+fail0
+okey x
+om 12
+fail1
+end
+z = zero64 e
+if z
+fail0
+okey x
+om 13
+fail1
+end
+end
+
+fn exes to void
+c = ulong 0
+for b ulong get nbk 0
+e = get kbk b
+while ne e 0 bound 8192
+x = sub e 1
+if haspre x 17
+c = add c 1
+exe1 x
+end
+e = get knx x
+end
+end
+if eq c 0
+fail0
+om 14
+fail1
+end
+end
+
+note ---- amendments ----
+
+fn splitdir to void
+n = get fpl 0
+d = ulong 0
+for i ulong n
+if eq get fpath i 47
+d = add i 1
+end
+end
+for i ulong d
+put dirp i get fpath i
+end
+put dirl 0 d
+m = sub n d
+kp 31
+if ge m 5
+if sufeq sub n 5
+m = sub m 5
+end
+end
+kp 30
+if gt add m get argl 0 4095
+over
+end
+for i ulong m
+put apre i get fpath add d i
+end
+for i ulong get argl 0
+put apre add m i get arg i
+end
+put aprl 0 add m get argl 0
+end
+
+note does fpath[p..p+5) equal arg (".toml")
+fn sufeq p ulong to bool
+for i ulong 5
+if ne get fpath add p i get arg i
+ret false
+end
+end
+ret true
+end
+
+note one directory entry name at dbuf[o..), NUL-terminated: keep it when it matches <apre>*.toml
+fn dname o ulong to void
+n = ulong 0
+while ne get dbuf add o n 0 bound 4096
+n = add n 1
+end
+if lt n add get aprl 0 5
+ret
+end
+for i ulong get aprl 0
+if ne get dbuf add o i get apre i
+ret
+end
+end
+kp 31
+for i ulong 5
+if ne get dbuf add o sub add n i 5 get arg i
+ret
+end
+end
+akeep o n
+end
+
+fn akeep o ulong n ulong to void
+c = get acnt 0
+p = get apn 0
+if or ge c 1024 gt add p n len apool
+over
+end
+for i ulong n
+put apool add p i get dbuf add o i
+end
+put ano c p
+put anl c n
+put aix c c
+put apn 0 add p n
+put acnt 0 add c 1
+end
+
+fn listdir to void
+put acnt 0 0
+put apn 0 0
+fd = long 0
+if eq get dirl 0 0
+kp 44
+fd = fopen arg 0 1 0 0
+else
+fd = fopen dirp 0 get dirl 0 0 0
+end
+if lt fd 0
+ret
+end
+while true bound 999999
+n = getdnts int fd dbuf 0 65536
+if le n 0
+break
+end
+p = ulong 0
+while lt p ulong n bound 65536
+rl = ulong get dbuf add p 16
+rl = or rl shl ulong get dbuf add p 17 8
+dname add p 19
+p = add p rl
+end
+end
+r = fclose int fd
+end
+
+note byte order of two kept names
+fn aless a ulong b ulong to bool
+n = get anl a
+m = get anl b
+l = n
+if lt m n
+l = m
+end
+for i ulong l
+x = get apool add get ano a i
+y = get apool add get ano b i
+if ne x y
+ret lt x y
+end
+end
+ret lt n m
+end
+
+fn asort to void
+c = get acnt 0
+for i ulong c
+j = i
+while gt j 0 bound 1024
+a = get aix sub j 1
+b = get aix j
+if not aless b a
+break
+end
+put aix sub j 1 b
+put aix j a
+j = sub j 1
+end
+end
+end
+
+note apath = dirp + name k; anum = the <n> between the prefix and .toml
+fn setapath k ulong to void
+d = get dirl 0
+o = get ano k
+n = get anl k
+if gt add d n 8191
+over
+end
+for i ulong d
+put apath i get dirp i
+end
+for i ulong n
+put apath add d i get apool add o i
+end
+put apl 0 add d n
+p = get aprl 0
+m = sub sub n p 5
+for i ulong m
+put anum i get apool add o add p i
+end
+put anml 0 m
+end
+
+fn amkey x ulong to bool
+if isfixed x
+ret false
+end
+if not hasdot x
+afail 27
+okey x
+om 18
+fail1
+ret false
+end
+if isdefk x
+afail 35
+okey x
+om 28
+fail1
+ret false
+end
+if inmf x
+afail 35
+okey x
+om 29
+fail1
+end
+if hassuf x 29
+if not realsha x
+afail 35
+okey x
+om 30
+fail1
+end
+end
+ret true
+end
+
+fn isfixed x ulong to bool
+f = or keyis x 0 keyis x 21
+f = or f or keyis x 22 keyis x 23
+ret or f or keyis x 24 keyis x 25
+end
+
+fn isdefk x ulong to bool
+f = or haspre x 26 haspre x 27
+ret or f or haspre x 17 haspre x 28
+end
+
+fn realsha x ulong to bool
+e = long x
+if not hexn e 64
+ret false
+end
+ret not zero64 e
+end
+
+fn amkeys to ulong
+c = ulong 0
+for b ulong get nbk 1
+e = get kbk add 4096 b
+while ne e 0 bound 8192
+x = sub e 1
+if amkey x
+c = add c 1
+end
+e = get knx x
+end
+end
+ret c
+end
+
+fn amhead to void
+e = kfind 1 0
+if not veq e 20
+afail 15
+fail1
+end
+e = kfind 1 21
+f = kfind 0 1
+if not vveq e f
+afail 16
+oval e
+om 17
+oval f
+om 18
+fail1
+end
+e = kfind 1 22
+if not vnum e
+afail 19
+oval e
+om 20
+oanum
+om 21
+fail1
+end
+e = kfind 1 23
+f = kfind 1 24
+if or eq vlen e 0 eq vlen f 0
+afail 22
+fail1
+end
+e = kfind 1 25
+if not mfeq e
+afail 23
+oval e
+om 24
+ofile
+om 25
+omfh
+om 26
+fail1
+end
+end
+
+fn amend1 k ulong to void
+setapath k
+if not isrega
+ret
+end
+treset 1
+put pooln 0 get poolm 0
+loada
+parse 1
+amhead
+nk = amkeys
+if eq nk 0
+afail 31
+fail1
+end
+put namend 0 add get namend 0 1
+end
+
+fn amends to void
+splitdir
+listdir
+asort
+for i ulong get acnt 0
+amend1 get aix i
+end
+end
+
+note ---- main ----
+
+fn usage to int
+put obl 0 0
+om 0
+b = get obl 0
+for i ulong get a0l 0
+put obuf add b i get a0 i
+end
+put obl 0 add b get a0l 0
+om 1
+oc 10
+oflush 2
+ret 1
+end
+
+fn main to int
+l = argread 0 a0 0 4095
+if lt l 0
+l = long 0
+end
+put a0l 0 ulong l
+if lt argcnt 2
+ret usage
+end
+l = argread 1 fpath 0 4095
+if lt l 0
+l = long 0
+end
+put fpl 0 ulong l
+if not isregf
+ret usage
+end
+envinit
+treset 0
+treset 1
+put pooln 0 0
+put failf 0 0
+put namend 0 0
+loadm
+parse 0
+put poolm 0 get pooln 0
+sha256
+for i ulong 4
+if eq vlen kfind 0 i 0
+fail0
+om 3
+kp i
+oarg
+fail1
+end
+end
+if not veq kfind 0 0 13
+fail0
+om 4
+fail1
+end
+e = kfind 0 2
+s = or veq e 14 veq e 15
+if not or s veq e 16
+fail0
+om 5
+fail1
+end
+reqpins
+optpins
+exes
+amends
+if ne get failf 0 0
+ret 1
+end
+put obl 0 0
+om 32
+ofile
+om 33
+onum get namend 0
+om 34
+oc 10
+oflush 1
+ret 0
+end

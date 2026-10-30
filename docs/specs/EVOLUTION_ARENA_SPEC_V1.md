@@ -80,10 +80,10 @@ Restated for the Arena:
 | J-Space | forks draft Worlds, keeps score dimensions separate, prunes dominated Candidates, retains counterfactuals | externalize effects (ARCH-0007), commit anything |
 | OMEGA | applies typed mutations to semantic programs; verification stays separate from selection ("REALIZE VERIFY MEASURE RECORD SELECT") | realize outside the Candidate's declared surface |
 | FORGE | realizes verified Omega programs on declared substrates, reports constraints and alternatives | act as gatekeeper, self-authorize |
-| AEGIS | verifies realization faithfulness and invariants; authors `PolicyDecision` / `CapabilityRequest`; states promotion requirements | mint capabilities (only the AIENOS root mints), execute the promotion itself |
+| AEGIS | verifies realization faithfulness and invariants; authors `PolicyDecision` / `CapabilityRequest`; states promotion requirements | mint capabilities (only the Aienux root mints), execute the promotion itself |
 | Evidence | immutable, content-addressed receipts bound to hardware identity | be edited, be replaced by prose or model confidence |
 | Cortex | admits claims through candidate → evidence → Signed Admission Receipt | own the speculative lifecycle, feed hard-invariant decisions (ARCH-0017 §2.3, aien-architecture branch) |
-| Promotion right holder | the only principal that can call `rx_gen_promote`. In Flagship 1 this is the operator-held promotion principal on the native AIENOS authority, as in the R9 and omega #60 receipts; never an Arena reaction | be the proposer; delegate the right |
+| Promotion right holder | the only principal that can call `rx_gen_promote`. In Flagship 1 this is the operator-held promotion principal on the native Aienux authority, as in the R9 and omega #60 receipts; never an Arena reaction | be the proposer; delegate the right |
 | ARGUS | observes; emits `ArgusFinding`s (pending: ARCH-0017 branch) | write World objects, take part in the promotion decision |
 
 **No self-widening.** No Arena principal (proposer, J-Space allocator, judge, learner, cost model) may request, receive or be delegated any capability beyond those granted at run start. No Arena principal may ever receive new capabilities; the Arena never widens its own authority.
@@ -286,7 +286,7 @@ rx_gen_promote(RxPromotionRequest{
     resource = RX_GEN_RES_PROMOTION, rights = RX_GEN_RIGHT_PROMOTE })
 ```
 
-validated against the native AIENOS authority. The Arena introduces no promotion path, no promotion capability and no promotion policy of its own. In Flagship 1 the `subject` is the operator-held promotion principal on the native AIENOS authority, as in the R9 and omega #60 receipts; never an Arena reaction.
+validated against the native Aienux authority. The Arena introduces no promotion path, no promotion capability and no promotion policy of its own. In Flagship 1 the `subject` is the operator-held promotion principal on the native Aienux authority, as in the R9 and omega #60 receipts; never an Arena reaction.
 
 What `rx_generation.c` on main enforces today, and what this spec adds on top:
 

@@ -8,7 +8,7 @@
 
 **Written:** 2026-09-28.
 
-**Why this exists.** On 2026-09-27 Drake decided: no Rust anywhere, AIENOS included. Everything comes from our own lineage, and existing Rust gets rewritten. On 2026-09-28 he agreed the target language is C, with hand-written assembly only where a measurement shows it is faster. This document proposes *how* to get there without breaking what already works.
+**Why this exists.** On 2026-09-27 Drake decided: no Rust anywhere, Aienux included. Everything comes from our own lineage, and existing Rust gets rewritten. On 2026-09-28 he agreed the target language is C, with hand-written assembly only where a measurement shows it is faster. This document proposes *how* to get there without breaking what already works.
 
 **Words used below:**
 
@@ -24,7 +24,7 @@ Every figure below was counted on 2026-09-28 from `origin/main` of each reposito
 
 | Repository | Commit counted |
 |---|---|
-| aien-spark/aienos | `c8ab65e` |
+| aien-dev/aienux | `c8ab65e` |
 | aien-spark/aien-sovereign-core | `63fe7a7` |
 | aien-spark/aegis-runtime | `2bbce76` |
 | aien-spark/omega (for the existing C crumb reader) | `ceb68d6` |
@@ -157,7 +157,7 @@ The rule for every step is the same. **Write the C twin, prove it passes the sam
 
 So the proposal is: **do not port it.** Keep it untouched as the reference oracle, the old system new results are compared against, through R15. At R16 archive the repository. The resident AEGIS work in R8 replaces its job.
 
-Cost of this choice: 9,207 lines of Rust stay alive until R16. They are never linked into AIENOS or Omega.
+Cost of this choice: 9,207 lines of Rust stay alive until R16. They are never linked into Aienux or Omega.
 
 ### Step 3: aienos, in the order boot → kernel → store → crypto
 
@@ -217,7 +217,7 @@ Each part gets a C twin that passes the same tests as the Rust version before th
 
 These are open. Each needs Drake's call or more measurement before work starts.
 
-Status 2026-10-01 (Lane 33 reconciliation, recorded from merged code, not a new decision): item 1 was taken in practice as bottom-up (crypto `aien-spark/aienos#183`, Store `#190`/`#191`, then the C kernel `#194` to `#204`; C boot loader not started), under Drake's standing "go with the recommendation" rule. Item 2 was executed by `aien-spark/aienos#188` (`913b962`, own Ed25519 + SHA-512 in C, RFC 8032 vectors). Items 3 to 8 are unchanged. See `CURRENT_EXECUTION_PLAN.md` §2, Lane 33 addendum.
+Status 2026-10-01 (Lane 33 reconciliation, recorded from merged code, not a new decision): item 1 was taken in practice as bottom-up (crypto `aien-dev/aienux#183`, Store `#190`/`#191`, then the C kernel `#194` to `#204`; C boot loader not started), under Drake's standing "go with the recommendation" rule. Item 2 was executed by `aien-dev/aienux#188` (`913b962`, own Ed25519 + SHA-512 in C, RFC 8032 vectors). Items 3 to 8 are unchanged. See `CURRENT_EXECUTION_PLAN.md` §2, Lane 33 addendum.
 
 1. **Order inside aienos.** boot → kernel → store → crypto (as briefed, needs temporary C-calls-Rust bridges), or crypto → store → kernel → boot (bottom-up, no bridges, boot last).
 2. **Ed25519 signatures.** Today they come from vendored outside code (`ed25519-dalek`). Writing our own Ed25519 in C is security-critical work that needs its own test plan: RFC 8032 vectors, plus a differential check against the current code.

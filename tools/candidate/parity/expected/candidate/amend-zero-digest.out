@@ -1,0 +1,2 @@
+FAIL: m.amendment-1.toml: model.tokenizer-json-sha256 is not a real sha256
+rc=1

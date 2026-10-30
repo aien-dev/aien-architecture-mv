@@ -1,0 +1,54 @@
+FAIL: executables.omega-runtime is UNBUILT but status is not draft
+FAIL: executables.bin-06 digest is not 64 lowercase hex
+FAIL: executables.aien-proof is UNBUILT but status is not draft
+FAIL: executables.bin-07 digest is not 64 lowercase hex
+FAIL: executables.bin-04 digest is not 64 lowercase hex
+FAIL: executables.bin-05 digest is not 64 lowercase hex
+FAIL: executables.bin-02 digest is not 64 lowercase hex
+FAIL: executables.bin-03 digest is not 64 lowercase hex
+FAIL: executables.bin-01 digest is not 64 lowercase hex
+FAIL: executables.bin-08 digest is not 64 lowercase hex
+FAIL: executables.bin-09 digest is not 64 lowercase hex
+FAIL: executables.img-01 is UNBUILT but status is not draft
+FAIL: executables.img-02 is UNBUILT but status is not draft
+FAIL: executables.img-03 is UNBUILT but status is not draft
+FAIL: executables.img-04 is UNBUILT but status is not draft
+FAIL: executables.img-05 is UNBUILT but status is not draft
+FAIL: executables.img-06 is UNBUILT but status is not draft
+FAIL: executables.img-07 is UNBUILT but status is not draft
+FAIL: executables.img-08 is UNBUILT but status is not draft
+FAIL: executables.img-09 is UNBUILT but status is not draft
+FAIL: executables.aienos-boot-image is UNBUILT but status is not draft
+FAIL: executables.bin-20 digest is not 64 lowercase hex
+FAIL: executables.bin-21 digest is not 64 lowercase hex
+FAIL: executables.bin-22 digest is not 64 lowercase hex
+FAIL: executables.bin-23 digest is not 64 lowercase hex
+FAIL: executables.bin-24 digest is not 64 lowercase hex
+FAIL: executables.bin-25 digest is not 64 lowercase hex
+FAIL: executables.bin-26 digest is not 64 lowercase hex
+FAIL: executables.bin-27 digest is not 64 lowercase hex
+FAIL: executables.bin-28 digest is not 64 lowercase hex
+FAIL: executables.bin-29 digest is not 64 lowercase hex
+FAIL: executables.bin-19 digest is not 64 lowercase hex
+FAIL: executables.bin-18 digest is not 64 lowercase hex
+FAIL: executables.bin-11 digest is not 64 lowercase hex
+FAIL: executables.bin-10 digest is not 64 lowercase hex
+FAIL: executables.bin-13 digest is not 64 lowercase hex
+FAIL: executables.bin-12 digest is not 64 lowercase hex
+FAIL: executables.bin-15 digest is not 64 lowercase hex
+FAIL: executables.bin-14 digest is not 64 lowercase hex
+FAIL: executables.bin-17 digest is not 64 lowercase hex
+FAIL: executables.bin-16 digest is not 64 lowercase hex
+FAIL: executables.img-10 is UNBUILT but status is not draft
+FAIL: executables.bin-40 digest is not 64 lowercase hex
+FAIL: executables.bin-33 digest is not 64 lowercase hex
+FAIL: executables.bin-32 digest is not 64 lowercase hex
+FAIL: executables.bin-31 digest is not 64 lowercase hex
+FAIL: executables.bin-30 digest is not 64 lowercase hex
+FAIL: executables.bin-37 digest is not 64 lowercase hex
+FAIL: executables.bin-36 digest is not 64 lowercase hex
+FAIL: executables.bin-35 digest is not 64 lowercase hex
+FAIL: executables.bin-34 digest is not 64 lowercase hex
+FAIL: executables.bin-39 digest is not 64 lowercase hex
+FAIL: executables.bin-38 digest is not 64 lowercase hex
+rc=1

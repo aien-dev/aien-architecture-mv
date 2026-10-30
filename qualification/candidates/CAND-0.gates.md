@@ -117,7 +117,7 @@ scripts and test headers. Status for every row except the zero-CUDA rows: NOT_RU
 | Repo | Command | Class |
 |---|---|---|
 | aien-protocols | `cargo fmt --all -- --check`; `cargo check --workspace --all-targets`; `cargo clippy --workspace --all-targets -- -D warnings`; `cargo test --workspace --verbose` | host |
-| aien-architecture | `make -C tools/crumb test`; `./tools/crumb/crumb verify .`; `scripts/check_doctrine.sh`; `scripts/test_check_candidate.sh`; `scripts/check_candidate.sh qualification/candidates/CAND-0.toml`; `sh scripts/verify-r16-status.sh <omega checkout>` | host |
+| aien-architecture | `make -C tools/crumb test`; `./tools/crumb/crumb verify .`; `AIEN_OMC=<pinned omc> tests/gates/run.sh doctrine`; `scripts/test_check_candidate.sh`; `scripts/check_candidate.sh qualification/candidates/CAND-0.toml`; `sh scripts/verify-r16-status.sh <omega checkout>` | host |
 | interplane | the `ci.yml` jobs (cargo fmt, clippy, test, conformance; Python fixtures, pytest, trust digest; see gap G12) | host |
 | interplane live model | `qualification.yml` (manual, needs a live model endpoint) | physical or external endpoint, BLOCKED_OPERATOR until an endpoint is named |
 

@@ -24,7 +24,7 @@ Component repositories may keep local roadmaps and acceptance specifications for
 
 Examples:
 
-- `aien-spark/aienos/ROADMAP.md` is the AIENOS component roadmap.
+- `aien-dev/aienux/ROADMAP.md` is the Aienux component roadmap.
 - Omega milestone specifications define acceptance contracts for individual Omega milestones.
 - Historical Physics/Forge milestone specifications and receipts remain evidence records.
 - A finite workstream plan under `docs/plans/` is allowed only when its scope is explicit and it is marked **NOT A MASTER PLAN**.

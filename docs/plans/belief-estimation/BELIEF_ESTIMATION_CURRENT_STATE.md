@@ -8,7 +8,7 @@
 |---|---|
 | aien-spark/omega | `6b9d4b7` (main; `b608dff` after a docs-only merge during the audit) |
 | aien-spark/aien-architecture | `ede9f16` |
-| aien-spark/aienos | `f0facc7` |
+| aien-dev/aienux | `f0facc7` |
 | aien-spark/physics | `f63a6ef` |
 
 Status words: IMPLEMENTED, PARTIAL, EXPERIMENTAL, PLANNED, MISSING, CONFLICTING, OBSOLETE. "Host reference" means C code exercised by tests but not wired into a live service.
@@ -49,7 +49,7 @@ Status words: IMPLEMENTED, PARTIAL, EXPERIMENTAL, PLANNED, MISSING, CONFLICTING,
 | Evolution Arena | PLANNED (spec only) | `docs/specs/EVOLUTION_ARENA_SPEC_V1.md` | No prediction or uncertainty dimensions; header still says PROPOSED and still calls omega #68 a draft (:8, :39). Stale. |
 | FORGE physical evidence | IMPLEMENTED v1 (duration + success only); EXPERIMENTAL v2 | physics `forge/forge_types.h:66-76`; `forge/v2/forge_substrate_v2.h:192-207` | v2 has temperature, energy with MEASURED / ESTIMATED source, confidence_ppm. No v2 records on disk. |
 | Effect Broker | IMPLEMENTED but CONFLICTING | aienos `crates/aienos-aegis/src/broker.rs:113-194` (Rust) | Conflicts with the recorded C-target decision; out of scope here. |
-| AIENOS physical sensors | MISSING | | Thermal, power and clock sampling exists only as Omega test tooling. |
+| Aienux physical sensors | MISSING | | Thermal, power and clock sampling exists only as Omega test tooling. |
 
 ## 3. Candidate real signals (EST-2)
 

@@ -1,7 +1,7 @@
 /-!
 # Abstract model of the Rust AEGIS capability graph (DEVELOPMENT_ORACLE)
 
-Source modelled: aien-dev/aienos `crates/aienos-aegis/src/capability.rs` at 2ee61b4
+Source modelled: aien-dev/aienux `crates/aienos-aegis/src/capability.rs` at 2ee61b4
 (functions `derive_child_token`, `revoke`, `validate_token`).
 
 Abstraction: authority is a finite set of atoms; expiry and depth are naturals;

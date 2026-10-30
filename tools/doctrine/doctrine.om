@@ -1,0 +1,1827 @@
+note SPDX-License-Identifier: Apache-2.0
+note doctrine: doctrine consistency check (aien-architecture#7) in seeded Omega (#316, #300).
+note Port of scripts/check_doctrine.sh (bash + GNU grep + gawk, LC_ALL=C): same inputs
+note (doctrine/*.md, docs/milestone-*-spec.md under ROOT), same checks 0-4, same output lines
+note and the same exit codes (0 pass, 1 fail, 2 ROOT unusable).
+note usage: doctrine [ROOT]          (ROOT defaults to the current directory)
+note Every ERE of the script is hand-written as a matcher below; the ERE is kept in a note
+note above its matcher. Byte semantics everywhere (the script runs under LC_ALL=C): word
+note characters are [A-Za-z0-9_], [[:space:]] is 9-13 and 32, and gawk's bracket [-–] is
+note the four bytes 45, 226, 128, 147 (an en dash never matches it as one character).
+note Built only by seed/out/omc from aien-dev/omega-mv (tools/zero-legacy/omega.pin).
+
+text tbl "<!-- HISTORICAL-PROVENANCE:BEGIN -->\n<!-- HISTORICAL-PROVENANCE:END -->\nALPHA\nAlpha\nalpha.\nbin\nmanifest\nsha256\ndecode\nmemory-map\ncontrol-flow\naudit\nHandoff (EL1)\nEL1 Handoff\nEL1 handoff\nstrictly at **EL1\nEL1 Jump\nat EL1 privilege level\nMilestone\nMILESTONE\nSOVEREIGN_CLOSURE\nSOVEREIGN_MACHINE_CLOSURE\nAIEN_HUMAN_INTERFACE\n27\n28-\n31-\nilestone\nwenty-eight \nprecise \nmilestones\nhirty-one milestones\nMILESTONE \n— \n–\nM27\nBOOTSTRAP_SEED_ATLAS\nATLAS_BAREMETAL_BOOT\nATLAS_MEASUREMENT_CHAIN\nATLAS_STAGE2_ELIMINATION\nPHYSICS_CORE_MEMBRANE\nSENTINEL_GATE_\nAIEN_SEED_TRAINING\nAIEN_SEED_TOPOLOGY\n[COMPLETE]\n[IN PROGRESS]\n[REOPENED\n[COMPLETE / QEMU QUALIFIED]\n[QEMU QUALIFIED]\nPHYSICS_BOOT\nCOMPLETE\n| **M\n** |\nhysics \nero\nCOMPLETE / QEMU QUALIFIED\nCOMPLETE / HARDWARE BOUNDARY QUALIFIED\nCOMPLETE / CORRECTIVELY REQUALIFIED\nCOMPLETE / SILICON QUALIFIED\nREOPENED / IN PROGRESS\nIN PROGRESS\nPLANNED\nPhysics Zero Discovery\nGeneral AIEN\nFAIL [\n] \n: \nunbalanced-historical-marker\nalpha-naming\nfixed-el1-handoff\nobsolete-m27-closure\nobsolete-roadmap-generation\nretired-milestone-identifier\nstatus-outside-roadmap\nduplicate-roadmap-table\nphysics-zero-range\nroadmap-missing\nroadmap-structure\nmilestone-number-mismatch\nHISTORICAL-PROVENANCE marker without partner\ncanonical roadmap file not found\n expected row M\n, found M\n has unknown status \"\n\"\n is outside Physics Zero M27-M35\n must be in the Physics Zero Discovery era\n is outside General AIEN M36-M40\n expected 41 roadmap rows (M0-M40), found \n cited as M\n, is M\n in ROADMAP.md: \n----------------------------------------------------------------------\ncheck_doctrine: scanned \n files; \n failure(s); 0 deferred finding(s).\ncheck_doctrine: FAIL\ncheck_doctrine: PASS\ncheck_doctrine: cannot cd to \ndoctrine/ROADMAP.md\ndoctrine/\ndocs/\n.md\nmilestone-\n-spec.md\ndoctrine\ndocs\n:\n M\n.\n"
+
+note table entries by index:
+note  0 BEGIN marker, 1 END marker, 2-11 alpha-naming parts, 12-17 fixed-el1-handoff literals,
+note  18 Milestone, 19 MILESTONE, 20-22 m27 codes, 23 "27", 24-34 roadmap-generation parts
+note  (32 is em dash + space, 33 is the en dash), 35-42 retired identifiers, 43-49 status parts,
+note  50 "| **M", 51 "** |", 52 "hysics ", 53 "ero", 54-60 roadmap statuses (49 is COMPLETE),
+note  61-62 eras, 63-65 report pieces, 66-77 check names (66 + check id), 78-90 messages,
+note  91-97 summary lines, 98 ROADMAP path, 99-105 directory and glob parts, 106 ":", 107 " M",
+note  108 "." (the default ROOT).
+
+global toff ulong 128
+global tlen ulong 128
+global fbuf uchar 8388608
+global flen ulong 1
+global fpath uchar 4096
+global fplen ulong 1
+global lb ulong 1
+global lx ulong 1
+global nl ulong 1
+global fs ulong 1
+global fe ulong 1
+global names uchar 65536
+global noff ulong 1024
+global nlen ulong 1024
+global ord ulong 1024
+global nf ulong 1
+global nused ulong 1
+global dbuf uchar 65536
+global sb uchar 128
+global nb uchar 24
+global fails ulong 1
+global mcode uchar 32768
+global moff ulong 512
+global mlen ulong 512
+global mnoff ulong 512
+global mnlen ulong 512
+global mcnt ulong 1
+global mused ulong 1
+global mi ulong 1
+
+note ---- the text table ----
+
+fn tinit to void
+k = ulong 0
+s = ulong 0
+for i ulong len tbl
+if eq get tbl i 10
+put toff k s
+put tlen k sub i s
+k = add k 1
+s = add i 1
+end
+end
+end
+
+note write table entry k to stdout
+fn wt k ulong to void
+r = write 1 tbl get toff k get tlen k
+end
+
+fn wnl to void
+put nb 0 10
+r = write 1 nb 0 1
+end
+
+fn wnum v ulong to void
+n = ulong 0
+if eq v 0
+put nb 23 48
+n = 1
+end
+x = v
+while gt x 0 bound 20
+put nb sub 23 n uchar add 48 rem x 10
+x = div x 10
+n = add n 1
+end
+r = write 1 nb sub 24 n n
+end
+
+note ---- bytes of the current line [lb, lx) of fbuf ----
+
+note byte at i inside the line, 0 at or past its end
+fn cb i ulong to ulong
+if lt i get lx 0
+ret ulong get fbuf i
+end
+ret 0
+end
+
+note table entry k is the text at i (inside the line)
+fn lit i ulong k ulong to bool
+m = get tlen k
+if gt add i m get lx 0
+ret false
+end
+o = get toff k
+for j ulong m
+if ne get fbuf add i j get tbl add o j
+ret false
+end
+end
+ret true
+end
+
+note table entry k occurs somewhere in the line
+fn has k ulong to bool
+m = get tlen k
+e = get lx 0
+if lt sub e get lb 0 m
+ret false
+end
+i = get lb 0
+e = sub e m
+while le i e bound 999999
+if lit i k
+ret true
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- byte classes (C locale) ----
+
+fn isdg c ulong to bool
+if lt c 48
+ret false
+end
+ret le c 57
+end
+
+fn isup c ulong to bool
+if lt c 65
+ret false
+end
+ret le c 90
+end
+
+fn islo c ulong to bool
+if lt c 97
+ret false
+end
+ret le c 122
+end
+
+note [A-Za-z0-9]
+fn isan c ulong to bool
+if isdg c
+ret true
+end
+if isup c
+ret true
+end
+ret islo c
+end
+
+note word character of \b and \<: [A-Za-z0-9_]
+fn isw c ulong to bool
+if isan c
+ret true
+end
+ret eq c 95
+end
+
+note [A-Z0-9_]
+fn isid c ulong to bool
+if isup c
+ret true
+end
+if isdg c
+ret true
+end
+ret eq c 95
+end
+
+note [[:space:]]
+fn issp c ulong to bool
+if eq c 32
+ret true
+end
+if lt c 9
+ret false
+end
+ret le c 13
+end
+
+note \b before position i: line start or a non-word byte before i
+fn wbb i ulong to bool
+if le i get lb 0
+ret true
+end
+ret not isw ulong get fbuf sub i 1
+end
+
+note \b after a word byte ending just before i: line end or a non-word byte at i
+fn wba i ulong to bool
+ret not isw cb i
+end
+
+note ---- check 1: alpha-naming ----
+note ERE: \bALPHA\b|\bAlpha\b|\balpha\.(bin|manifest|sha256|decode|memory-map|control-flow|audit)\b
+
+fn alsuf j ulong to bool
+k = ulong 5
+while le k 11 bound 8
+if lit j k
+if wba add j get tlen k
+ret true
+end
+end
+k = add k 1
+end
+ret false
+end
+
+fn m1 to bool
+i = get lb 0
+while lt i get lx 0 bound 999999
+if wbb i
+if lit i 2
+if wba add i 5
+ret true
+end
+end
+if lit i 3
+if wba add i 5
+ret true
+end
+end
+if lit i 4
+if alsuf add i 6
+ret true
+end
+end
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- check 1: fixed-el1-handoff ----
+note ERE: Monotonic Handoff \(EL1\)|Handoff \(EL1\)|EL1 [Hh]andoff|strictly at \*\*EL1|EL1 Jump|at EL1 privilege level
+note (the first alternative contains the second, so five literals decide)
+
+fn m2 to bool
+i = get lb 0
+while lt i get lx 0 bound 999999
+k = ulong 12
+while le k 17 bound 7
+if lit i k
+ret true
+end
+k = add k 1
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- check 1: obsolete-m27-closure ----
+note ERE: (Milestone|MILESTONE|\bM) ?27\b[^|]*SOVEREIGN(_MACHINE)?_CLOSURE
+note    | SOVEREIGN(_MACHINE)?_CLOSURE[^|]*(Milestone|MILESTONE|\bM) ?27\b
+note    | (Milestone|MILESTONE|M) ?27\b[^|]*AIEN_HUMAN_INTERFACE
+note    | AIEN_HUMAN_INTERFACE[^|]*(Milestone|MILESTONE|\bM) ?27\b
+
+note end of "(Milestone|MILESTONE|M) ?27\b" starting at i, 0 when none; bd 1 demands \b before a bare M
+fn tok27 i ulong bd ulong to ulong
+p = ulong 0
+if lit i 18
+p = add i 9
+end
+if lit i 19
+p = add i 9
+end
+if eq p 0
+if ne cb i 77
+ret 0
+end
+if eq bd 1
+if not wbb i
+ret 0
+end
+end
+p = add i 1
+end
+if eq cb p 32
+p = add p 1
+end
+if not lit p 23
+ret 0
+end
+if not wba add p 2
+ret 0
+end
+ret add p 2
+end
+
+note a token ends at or before s with no | between it and s
+fn m3a s ulong bd ulong to bool
+i = s
+while gt i get lb 0 bound 999999
+i = sub i 1
+if eq cb i 124
+ret false
+end
+e = tok27 i bd
+if ne e 0
+if le e s
+ret true
+end
+end
+end
+ret false
+end
+
+note a \b-token starts at or after e with no | between e and it
+fn m3b e ulong to bool
+i = e
+while lt i get lx 0 bound 999999
+if eq cb i 124
+ret false
+end
+if ne tok27 i 1 0
+ret true
+end
+i = add i 1
+end
+ret false
+end
+
+fn m3 to bool
+i = get lb 0
+while lt i get lx 0 bound 999999
+if or lit i 20 lit i 21
+if m3a i 1
+ret true
+end
+end
+if lit i 20
+if m3b add i 17
+ret true
+end
+end
+if lit i 21
+if m3b add i 25
+ret true
+end
+end
+if lit i 22
+if m3a i 0
+ret true
+end
+if m3b add i 20
+ret true
+end
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- check 1: obsolete-roadmap-generation ----
+note ERE: \b(28|31)-[Mm]ilestone|[Tt]wenty-eight (precise )?milestones|[Tt]hirty-one milestones
+note    | ^MILESTONE [0-9]+ +— |\bM[0-9]+ ?(-|–) ?M27\b
+
+fn m4a i ulong to bool
+if not wbb i
+ret false
+end
+if not or lit i 24 lit i 25
+ret false
+end
+c = cb add i 3
+if not or eq c 77 eq c 109
+ret false
+end
+ret lit add i 4 26
+end
+
+fn m4b i ulong to bool
+c = cb i
+if not or eq c 84 eq c 116
+ret false
+end
+if lit add i 1 30
+ret true
+end
+if not lit add i 1 27
+ret false
+end
+p = add i 13
+if lit p 28
+p = add p 8
+end
+ret lit p 29
+end
+
+fn m4c to bool
+p = get lb 0
+if not lit p 31
+ret false
+end
+p = add p 10
+if not isdg cb p
+ret false
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+if ne cb p 32
+ret false
+end
+while eq cb p 32 bound 999999
+p = add p 1
+end
+ret lit p 32
+end
+
+note position after "-" or the en dash at p, 0 when neither
+fn dash p ulong to ulong
+if eq cb p 45
+ret add p 1
+end
+if lit p 33
+ret add p 3
+end
+ret 0
+end
+
+fn m4d i ulong to bool
+if not wbb i
+ret false
+end
+if ne cb i 77
+ret false
+end
+p = add i 1
+if not isdg cb p
+ret false
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+if eq cb p 32
+p = add p 1
+end
+p = dash p
+if eq p 0
+ret false
+end
+if eq cb p 32
+p = add p 1
+end
+if not lit p 34
+ret false
+end
+ret wba add p 3
+end
+
+fn m4 to bool
+if m4c
+ret true
+end
+i = get lb 0
+while lt i get lx 0 bound 999999
+if m4a i
+ret true
+end
+if m4b i
+ret true
+end
+if m4d i
+ret true
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- check 1: retired-milestone-identifier ----
+note ERE: \b(BOOTSTRAP_SEED_ATLAS|ATLAS_BAREMETAL_BOOT|ATLAS_MEASUREMENT_CHAIN|ATLAS_STAGE2_ELIMINATION
+note    |PHYSICS_CORE_MEMBRANE|SENTINEL_GATE_[0-9]|AIEN_SEED_TRAINING|AIEN_SEED_TOPOLOGY)\b
+
+fn m5a i ulong to bool
+k = ulong 35
+while le k 42 bound 9
+if lit i k
+if eq k 40
+if isdg cb add i 14
+if wba add i 15
+ret true
+end
+end
+else
+if wba add i get tlen k
+ret true
+end
+end
+end
+k = add k 1
+end
+ret false
+end
+
+fn m5 to bool
+i = get lb 0
+while lt i get lx 0 bound 999999
+if wbb i
+if m5a i
+ret true
+end
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- check 1: status-outside-roadmap ----
+note ERE: \[(COMPLETE|IN PROGRESS|REOPENED[^]]*|COMPLETE / QEMU QUALIFIED|QEMU QUALIFIED)\]|PHYSICS_BOOT[^|]*\bCOMPLETE\b
+
+fn m6a i ulong to bool
+j = add i 12
+while lt j get lx 0 bound 999999
+if eq cb j 124
+ret false
+end
+if lit j 49
+if wbb j
+if wba add j 8
+ret true
+end
+end
+end
+j = add j 1
+end
+ret false
+end
+
+fn m6b i ulong to bool
+j = add i 9
+while lt j get lx 0 bound 999999
+if eq cb j 93
+ret true
+end
+j = add j 1
+end
+ret false
+end
+
+fn m6 to bool
+i = get lb 0
+while lt i get lx 0 bound 999999
+if or lit i 43 lit i 44
+ret true
+end
+if or lit i 46 lit i 47
+ret true
+end
+if lit i 45
+if m6b i
+ret true
+end
+end
+if lit i 48
+if m6a i
+ret true
+end
+end
+i = add i 1
+end
+ret false
+end
+
+note ---- check 1: duplicate-roadmap-table ----
+note ERE: ^[[:space:]]*M[0-9]{1,2}:[[:space:]]+[A-Z][A-Z0-9_]{3,}|^\| \*\*M[0-9]{1,2}\*\* \|
+
+fn m7b to bool
+p = get lb 0
+if not lit p 50
+ret false
+end
+p = add p 5
+if not isdg cb p
+ret false
+end
+p = add p 1
+if isdg cb p
+p = add p 1
+end
+ret lit p 51
+end
+
+fn m7 to bool
+if m7b
+ret true
+end
+p = get lb 0
+while issp cb p bound 999999
+p = add p 1
+end
+if ne cb p 77
+ret false
+end
+p = add p 1
+if not isdg cb p
+ret false
+end
+p = add p 1
+if isdg cb p
+p = add p 1
+end
+if ne cb p 58
+ret false
+end
+p = add p 1
+if not issp cb p
+ret false
+end
+while issp cb p bound 999999
+p = add p 1
+end
+if not isup cb p
+ret false
+end
+p = add p 1
+n = ulong 0
+while isid cb p bound 999999
+p = add p 1
+n = add n 1
+end
+ret ge n 3
+end
+
+note ---- check 2: physics-zero-range ----
+note awk, leftmost-longest, one report per line:
+note   while (match(s, /[Pp]hysics [Zz]ero[^.]{0,30}M[0-9]+ ?[-–] ?M[0-9]+|M[0-9]+ ?[-–] ?M[0-9]+ ?\([Pp]hysics [Zz]ero/))
+note     t = matched; s = rest; match(t, /M[0-9]+ ?[-–] ?M[0-9]+/); r = that with spaces removed and – turned into -
+note     if (r != "M27-M35") report the line and stop
+
+note one byte of gawk's C-locale bracket [-–]
+fn isdash c ulong to bool
+if eq c 45
+ret true
+end
+if eq c 226
+ret true
+end
+if eq c 128
+ret true
+end
+ret eq c 147
+end
+
+note end of M[0-9]+ ?[-–] ?M[0-9]+ at j, 0 when none
+fn rng j ulong to ulong
+if ne cb j 77
+ret 0
+end
+p = add j 1
+if not isdg cb p
+ret 0
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+if eq cb p 32
+p = add p 1
+end
+if not isdash cb p
+ret 0
+end
+p = add p 1
+if eq cb p 32
+p = add p 1
+end
+if ne cb p 77
+ret 0
+end
+p = add p 1
+if not isdg cb p
+ret 0
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+ret p
+end
+
+note [Pp]hysics [Zz]ero at i
+fn pz i ulong to bool
+c = cb i
+if not or eq c 80 eq c 112
+ret false
+end
+if not lit add i 1 52
+ret false
+end
+c = cb add i 8
+if not or eq c 90 eq c 122
+ret false
+end
+ret lit add i 9 53
+end
+
+note longest end of the first alternative at i, 0 when none
+fn alt1 i ulong to ulong
+if not pz i
+ret 0
+end
+b = add i 12
+best = ulong 0
+k = ulong 0
+while le k 30 bound 31
+if gt k 0
+if eq cb sub add b k 1 46
+break
+end
+end
+e = rng add b k
+if gt e best
+best = e
+end
+k = add k 1
+end
+ret best
+end
+
+note end of the second alternative at i, 0 when none
+fn alt2 i ulong to ulong
+p = rng i
+if eq p 0
+ret 0
+end
+if eq cb p 32
+p = add p 1
+end
+if ne cb p 40
+ret 0
+end
+if pz add p 1
+ret add p 13
+end
+ret 0
+end
+
+note the range at j (already known to match rng) normalizes to M27-M35
+fn rok j ulong to bool
+p = add j 1
+if not lit p 23
+ret false
+end
+p = add p 2
+if isdg cb p
+ret false
+end
+if eq cb p 32
+p = add p 1
+end
+if ne cb p 45
+ret false
+end
+p = add p 1
+if eq cb p 32
+p = add p 1
+end
+if ne cb p 77
+ret false
+end
+p = add p 1
+if ne cb p 51
+ret false
+end
+if ne cb add p 1 53
+ret false
+end
+ret not isdg cb add p 2
+end
+
+note inside t = [i, e): is the leftmost range not M27-M35
+fn m8t i ulong e ulong to bool
+sv = get lx 0
+put lx 0 e
+r = false
+j = i
+while lt j e bound 999999
+if ne rng j 0
+r = not rok j
+break
+end
+j = add j 1
+end
+put lx 0 sv
+ret r
+end
+
+fn m8 to bool
+pos = get lb 0
+while lt pos get lx 0 bound 999999
+i = pos
+e = ulong 0
+while lt i get lx 0 bound 999999
+a = alt1 i
+b = alt2 i
+if gt b a
+a = b
+end
+if gt a 0
+e = a
+break
+end
+i = add i 1
+end
+if eq e 0
+ret false
+end
+if m8t i e
+ret true
+end
+pos = e
+end
+ret false
+end
+
+note ---- roadmap rows (checks 3 and 4): fields split by | like awk -F'|' ----
+
+note field k of the line into [fs, fe); empty at the line end when the row has fewer fields
+fn fld k ulong to void
+p = get lb 0
+c = ulong 1
+while lt c k bound 999999
+if ge p get lx 0
+break
+end
+if eq cb p 124
+c = add c 1
+end
+p = add p 1
+end
+if lt c k
+put fs 0 get lx 0
+put fe 0 get lx 0
+ret
+end
+e = p
+while lt e get lx 0 bound 999999
+if eq cb e 124
+break
+end
+e = add e 1
+end
+put fs 0 p
+put fe 0 e
+end
+
+note gsub(/^ +| +$/, "") on the field
+fn trim to void
+s = get fs 0
+e = get fe 0
+while lt s e bound 999999
+if ne get fbuf s 32
+break
+end
+s = add s 1
+end
+while gt e s bound 999999
+if ne get fbuf sub e 1 32
+break
+end
+e = sub e 1
+end
+put fs 0 s
+put fe 0 e
+end
+
+note the field equals table entry k
+fn feq k ulong to bool
+if ne sub get fe 0 get fs 0 get tlen k
+ret false
+end
+ret lit get fs 0 k
+end
+
+note row regex ^\| \*\*M[0-9]+\*\* \|
+fn isrow to bool
+p = get lb 0
+if not lit p 50
+ret false
+end
+p = add p 5
+if not isdg cb p
+ret false
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+ret lit p 51
+end
+
+note the row's number as awk computes it (m + 0)
+fn rowm to ulong
+p = add get lb 0 5
+m = ulong 0
+while isdg cb p bound 999999
+m = add mul m 10 sub cb p 48
+p = add p 1
+end
+ret m
+end
+
+note status in the roadmap's closed list
+fn stok to bool
+if feq 49
+ret true
+end
+k = ulong 54
+while le k 60 bound 8
+if feq k
+ret true
+end
+k = add k 1
+end
+ret false
+end
+
+note ---- reports ----
+
+note FAIL [check] path:line:␣ and count the failure
+fn hdr ci ulong to void
+wt 63
+wt add 66 ci
+wt 64
+r = write 1 fpath 0 get fplen 0
+wt 106
+wnum get nl 0
+wt 65
+put fails 0 add get fails 0 1
+end
+
+fn wline to void
+r = write 1 fbuf get lb 0 sub get lx 0 get lb 0
+end
+
+note sed 's/^[[:space:]]*//' | cut -c1-160
+fn wstrip to void
+s = get lb 0
+while issp cb s bound 999999
+s = add s 1
+end
+n = sub get lx 0 s
+if gt n 160
+n = 160
+end
+r = write 1 fbuf s n
+end
+
+fn rep ci ulong to void
+hdr ci
+if eq ci 8
+wline
+else
+wstrip
+end
+wnl
+end
+
+note roadmap-structure message " M<m><entry k>"
+fn rep3 m ulong k ulong to void
+hdr 10
+wt 107
+wnum m
+wt k
+wnl
+end
+
+fn c3era m ulong to void
+pzd = feq 61
+if pzd
+if or lt m 27 gt m 35
+rep3 m 84
+end
+end
+if and ge m 27 le m 35
+if not pzd
+rep3 m 85
+end
+end
+if feq 62
+if or lt m 36 gt m 40
+rep3 m 86
+end
+end
+end
+
+note awk's row counter n is unset until the first row passes: printed before that, it is the
+note empty string, not 0 (" expected row M, found M1"; "found " with no rows). Reproduced.
+fn wcnt n ulong to void
+if ne n 0
+wnum n
+end
+end
+
+note one roadmap row; n = the row index expected
+fn c3row n ulong to void
+m = rowm
+if ne m n
+hdr 10
+wt 80
+wcnt n
+wt 81
+wnum m
+wnl
+end
+fld 6
+trim
+if not stok
+hdr 10
+wt 107
+wnum m
+wt 82
+r = write 1 fbuf get fs 0 sub get fe 0 get fs 0
+wt 83
+wnl
+end
+fld 3
+trim
+c3era m
+end
+
+note ---- check 4: milestone-number-mismatch ----
+note MAP: for each roadmap row, code = $4 without spaces and backticks -> number = $2 without " *M"
+note (a digit string; awk compares it to the cited digits as strings; the last row for a code wins)
+
+note copy field bytes that are not ' ' and not x and not y into mcode at mused; return the length
+fn mcopy x ulong y ulong to ulong
+u = get mused 0
+n = ulong 0
+s = get fs 0
+while lt s get fe 0 bound 999999
+c = ulong get fbuf s
+if ne c 32
+if ne c x
+if ne c y
+put mcode add u n uchar c
+n = add n 1
+end
+end
+end
+s = add s 1
+end
+put mused 0 add u n
+ret n
+end
+
+fn maprow to void
+k = get mcnt 0
+put moff k get mused 0
+fld 4
+put mlen k mcopy 96 96
+if eq get mlen k 0
+put mused 0 get moff k
+ret
+end
+put mnoff k get mused 0
+fld 2
+put mnlen k mcopy 42 77
+put mcnt 0 add k 1
+end
+
+note the code [s, e) is in the map: mi = its last row
+fn look s ulong e ulong to bool
+k = get mcnt 0
+while gt k 0 bound 512
+k = sub k 1
+if eq get mlen k sub e s
+if same s get moff k get mlen k
+put mi 0 k
+ret true
+end
+end
+end
+ret false
+end
+
+fn same s ulong o ulong n ulong to bool
+for j ulong n
+if ne get fbuf add s j get mcode add o j
+ret false
+end
+end
+ret true
+end
+
+note the cited digits [d, e) equal the map number of row mi as strings
+fn numeq d ulong e ulong to bool
+k = get mi 0
+if ne get mnlen k sub e d
+ret false
+end
+ret same d get mnoff k get mnlen k
+end
+
+fn rep4 cs ulong ce ulong ds ulong de ulong to void
+hdr 11
+r = write 1 fbuf cs sub ce cs
+wt 88
+r = write 1 fbuf ds sub de ds
+wt 89
+r = write 1 mcode get mnoff get mi 0 get mnlen get mi 0
+wt 90
+wline
+wnl
+end
+
+note first loop: (Milestones?|MILESTONE|\<M) ?[0-9]+[^A-Za-z0-9]{1,6}[A-Z][A-Z0-9_]+
+note   n = first digit run of t, c = the [A-Z][A-Z0-9_]+$ suffix of t
+
+note position after the keyword at i, 0 when none
+fn kwa i ulong to ulong
+if lit i 18
+p = add i 9
+if eq cb p 115
+ret add p 1
+end
+ret p
+end
+if lit i 19
+ret add i 9
+end
+if ne cb i 77
+ret 0
+end
+if not wbb i
+ret 0
+end
+ret add i 1
+end
+
+fn ma i ulong to ulong
+p = kwa i
+if eq p 0
+ret 0
+end
+if eq cb p 32
+p = add p 1
+end
+if not isdg cb p
+ret 0
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+q = p
+g = ulong 0
+while lt g 7 bound 8
+if isan cb q
+break
+end
+q = add q 1
+g = add g 1
+end
+if lt g 1
+ret 0
+end
+if gt g 6
+ret 0
+end
+if not isup cb q
+ret 0
+end
+r = add q 1
+while isid cb r bound 999999
+r = add r 1
+end
+if lt sub r q 2
+ret 0
+end
+ret r
+end
+
+fn ja i ulong e ulong to bool
+q = e
+while gt q i bound 999999
+if not isid cb sub q 1
+break
+end
+q = sub q 1
+end
+while not isup cb q bound 999999
+q = add q 1
+end
+d = i
+while not isdg cb d bound 999999
+d = add d 1
+end
+n = d
+while isdg cb n bound 999999
+n = add n 1
+end
+if not look q e
+ret false
+end
+if numeq d n
+ret false
+end
+rep4 q e d n
+ret true
+end
+
+fn m9a to bool
+pos = get lb 0
+while lt pos get lx 0 bound 999999
+i = pos
+e = ulong 0
+while lt i get lx 0 bound 999999
+e = ma i
+if gt e 0
+break
+end
+i = add i 1
+end
+if eq e 0
+ret false
+end
+if ja i e
+ret true
+end
+pos = e
+end
+ret false
+end
+
+note second loop: [A-Z][A-Z0-9_]+`?[^A-Za-z0-9]{1,4}\((Milestones?|MILESTONE|M) ?[0-9]+
+note   c = the ^[A-Z][A-Z0-9_]+ prefix of t, n = the [0-9]+$ suffix of t
+
+note position after "(Milestones?|MILESTONE|M) ?[0-9]+" at p, 0 when none
+fn kwb p ulong to ulong
+if lit p 18
+p = add p 9
+if eq cb p 115
+p = add p 1
+end
+else
+if lit p 19
+p = add p 9
+else
+if ne cb p 77
+ret 0
+end
+p = add p 1
+end
+end
+if eq cb p 32
+p = add p 1
+end
+if not isdg cb p
+ret 0
+end
+while isdg cb p bound 999999
+p = add p 1
+end
+ret p
+end
+
+note longest end given the identifier ends at x: gap of 1..5 non-alnum bytes (5 only after a backtick), then (
+fn mbg x ulong to ulong
+best = ulong 0
+g = ulong 1
+while le g 5 bound 6
+q = add x g
+if isan cb sub q 1
+break
+end
+if eq cb q 40
+if or lt g 5 eq cb x 96
+e = kwb add q 1
+if gt e best
+best = e
+end
+end
+end
+g = add g 1
+end
+ret best
+end
+
+fn mb i ulong to ulong
+if not isup cb i
+ret 0
+end
+r = add i 1
+while isid cb r bound 999999
+r = add r 1
+end
+if lt sub r i 2
+ret 0
+end
+best = ulong 0
+x = add i 2
+while le x r bound 999999
+e = mbg x
+if gt e best
+best = e
+end
+x = add x 1
+end
+ret best
+end
+
+fn jb i ulong e ulong to bool
+r = add i 1
+while isid cb r bound 999999
+r = add r 1
+end
+d = e
+while isdg cb sub d 1 bound 999999
+d = sub d 1
+end
+if not look i r
+ret false
+end
+if numeq d e
+ret false
+end
+rep4 i r d e
+ret true
+end
+
+fn m9b to bool
+pos = get lb 0
+while lt pos get lx 0 bound 999999
+i = pos
+e = ulong 0
+while lt i get lx 0 bound 999999
+e = mb i
+if gt e 0
+break
+end
+i = add i 1
+end
+if eq e 0
+ret false
+end
+if jb i e
+ret true
+end
+pos = e
+end
+ret false
+end
+
+fn m9 to bool
+if m9a
+ret true
+end
+ret m9b
+end
+
+note ---- line walks over the loaded file ----
+
+fn eol s ulong to ulong
+i = s
+e = get flen 0
+while lt i e bound 999999
+if eq get fbuf i 10
+ret i
+end
+i = add i 1
+end
+ret e
+end
+
+fn mt ci ulong to bool
+if eq ci 1
+ret m1
+end
+if eq ci 2
+ret m2
+end
+if eq ci 3
+ret m3
+end
+if eq ci 4
+ret m4
+end
+if eq ci 5
+ret m5
+end
+if eq ci 6
+ret m6
+end
+if eq ci 7
+ret m7
+end
+if eq ci 8
+ret m8
+end
+ret m9
+end
+
+note normative lines: a line inside the historical markers is blank and matches nothing
+fn scan ci ulong to void
+hist = ulong 0
+s = ulong 0
+put nl 0 0
+while lt s get flen 0 bound 999999
+e = eol s
+put nl 0 add get nl 0 1
+put lb 0 s
+put lx 0 e
+if has 0
+hist = 1
+else
+if has 1
+hist = 0
+else
+if eq hist 0
+if gt e s
+if mt ci
+if ne ci 11
+rep ci
+end
+end
+end
+end
+end
+end
+s = add e 1
+end
+end
+
+note check 0: the first unbalanced marker of the raw file. The awk prints NR and exits on a
+note second BEGIN or a stray END; exit still runs its END rule, so a second BEGIN also prints the
+note first BEGIN's line: the report's line field is then "NR\nopen". Reproduced, not corrected.
+fn c0 to void
+op = ulong 0
+bad = ulong 0
+s = ulong 0
+put nl 0 0
+while lt s get flen 0 bound 999999
+e = eol s
+put nl 0 add get nl 0 1
+put lb 0 s
+put lx 0 e
+if has 0
+if ne op 0
+bad = get nl 0
+break
+end
+op = get nl 0
+else
+if has 1
+if eq op 0
+bad = get nl 0
+break
+end
+op = 0
+end
+end
+s = add e 1
+end
+if eq bad 0
+bad = op
+op = 0
+end
+if ne bad 0
+put nl 0 bad
+hdr0 op
+wt 78
+wnl
+end
+end
+
+note FAIL [unbalanced-historical-marker] path:nl[\nop]:␣
+fn hdr0 op ulong to void
+wt 63
+wt 66
+wt 64
+r = write 1 fpath 0 get fplen 0
+wt 106
+wnum get nl 0
+if ne op 0
+wnl
+wnum op
+end
+wt 65
+put fails 0 add get fails 0 1
+end
+
+note check 3: roadmap structure, row by row, then the row count
+fn c3 to void
+hist = ulong 0
+n = ulong 0
+s = ulong 0
+put nl 0 0
+while lt s get flen 0 bound 999999
+e = eol s
+put nl 0 add get nl 0 1
+put lb 0 s
+put lx 0 e
+if has 0
+hist = 1
+else
+if has 1
+hist = 0
+else
+if eq hist 0
+if isrow
+c3row n
+n = add n 1
+end
+end
+end
+end
+s = add e 1
+end
+if ne n 41
+put nl 0 0
+hdr 10
+wt 87
+wcnt n
+wnl
+end
+end
+
+fn c4map to void
+hist = ulong 0
+s = ulong 0
+while lt s get flen 0 bound 999999
+e = eol s
+put lb 0 s
+put lx 0 e
+if has 0
+hist = 1
+else
+if has 1
+hist = 0
+else
+if eq hist 0
+if isrow
+maprow
+end
+end
+end
+end
+s = add e 1
+end
+end
+
+note ---- files ----
+
+note table entry k into fpath
+fn setent k ulong to void
+o = get toff k
+n = get tlen k
+for i ulong n
+put fpath i get tbl add o i
+end
+put fplen 0 n
+end
+
+note fpath[i..] is table entry k
+fn plit i ulong k ulong to bool
+o = get toff k
+for j ulong get tlen k
+if ne get fpath add i j get tbl add o j
+ret false
+end
+end
+ret true
+end
+
+fn fileeq k ulong to bool
+if ne get fplen 0 get tlen k
+ret false
+end
+ret plit 0 k
+end
+
+fn load to bool
+put flen 0 0
+fd = fopen fpath 0 get fplen 0 0 0
+if lt fd 0
+ret false
+end
+t = ulong 0
+while lt t len fbuf bound 100000
+r = read int fd fbuf t sub len fbuf t
+if le r 0
+break
+end
+t = add t ulong r
+end
+put flen 0 t
+r = fclose int fd
+ret true
+end
+
+note [ -f fpath ]: stat follows symlinks; S_IFMT 61440, S_IFREG 32768
+fn isreg to bool
+r = stat fpath 0 get fplen 0 sb 0 128
+if lt r 0
+ret false
+end
+m = add ulong get sb 16 mul 256 ulong get sb 17
+ret eq and m 61440 32768
+end
+
+fn addname to void
+n = get nf 0
+u = get nused 0
+put noff n u
+put nlen n get fplen 0
+for i ulong get fplen 0
+put names add u i get fpath i
+end
+put nused 0 add u get fplen 0
+put ord n n
+put nf 0 add n 1
+end
+
+fn less x ulong y ulong to bool
+m = get nlen x
+if gt m get nlen y
+m = get nlen y
+end
+for i ulong m
+a = ulong get names add get noff x i
+b = ulong get names add get noff y i
+if ne a b
+ret lt a b
+end
+end
+ret lt get nlen x get nlen y
+end
+
+note bash glob order under LC_ALL=C: byte order, within [a, b) of ord
+fn sortn a ulong b ulong to void
+i = add a 1
+while lt i b bound 1024
+j = i
+while gt j a bound 1024
+if not less get ord j get ord sub j 1
+break
+end
+t = get ord j
+put ord j get ord sub j 1
+put ord sub j 1 t
+j = sub j 1
+end
+i = add i 1
+end
+end
+
+fn setpath k ulong to void
+j = get ord k
+o = get noff j
+n = get nlen j
+for i ulong n
+put fpath i get names add o i
+end
+put fplen 0 n
+end
+
+note the glob: kind 0 = doctrine/*.md, kind 1 = docs/milestone-*-spec.md; name at fpath[pl, pl+n)
+fn pat pl ulong n ulong kind ulong to bool
+if eq kind 0
+if lt n 3
+ret false
+end
+ret plit sub add pl n 3 101
+end
+if lt n 18
+ret false
+end
+if not plit pl 102
+ret false
+end
+ret plit sub add pl n 8 103
+end
+
+fn reclen o ulong to ulong
+lo = ulong get dbuf add o 16
+hi = ulong get dbuf add o 17
+ret add lo mul 256 hi
+end
+
+note one getdents64 record at o; the prefix is already in fpath[0, fplen)
+fn entry o ulong kind ulong to void
+pl = get fplen 0
+n = ulong 0
+while ne get dbuf add o add 19 n 0 bound 256
+put fpath add pl n get dbuf add o add 19 n
+n = add n 1
+end
+if eq n 0
+ret
+end
+if eq get fpath pl 46
+ret
+end
+if not pat pl n kind
+ret
+end
+put fplen 0 add pl n
+if isreg
+addname
+end
+put fplen 0 pl
+end
+
+fn listdir kind ulong to void
+a = get nf 0
+setent add 104 kind
+fd = fopen fpath 0 get fplen 0 16384 0
+if lt fd 0
+ret
+end
+setent add 99 kind
+while true bound 100000
+r = getdnts int fd dbuf 0 len dbuf
+if le r 0
+break
+end
+o = ulong 0
+while lt o ulong r bound 65536
+entry o kind
+o = add o reclen o
+end
+end
+r = fclose int fd
+sortn a get nf 0
+end
+
+note run check ci over every file (skip 1: not the roadmap)
+fn pass ci ulong skip ulong to void
+for k ulong get nf 0
+setpath k
+if eq skip 1
+if fileeq 98
+continue
+end
+end
+if load
+if eq ci 0
+c0
+else
+scan ci
+end
+end
+end
+end
+
+fn main to int
+tinit
+put fplen 0 0
+if ge argcnt 2
+n = argread 1 fpath 0 4095
+if gt n 0
+put fplen 0 ulong n
+end
+end
+if eq get fplen 0 0
+setent 108
+end
+r = chdir fpath 0 get fplen 0
+if ne r 0
+r = write 2 tbl get toff 97 get tlen 97
+r = write 2 fpath 0 get fplen 0
+put nb 0 10
+r = write 2 nb 0 1
+ret 2
+end
+listdir 0
+listdir 1
+pass 0 0
+pass 1 0
+pass 2 0
+pass 3 0
+pass 4 0
+pass 5 0
+pass 6 1
+pass 7 1
+pass 8 1
+setent 98
+if not isreg
+put nl 0 0
+hdr 9
+wt 79
+wnl
+else
+if load
+c3
+c4map
+end
+pass 11 1
+end
+wt 91
+wnl
+wt 92
+wnum get nf 0
+wt 93
+wnum get fails 0
+wt 94
+wnl
+if gt get fails 0 0
+wt 95
+wnl
+ret 1
+end
+wt 96
+wnl
+ret 0
+end

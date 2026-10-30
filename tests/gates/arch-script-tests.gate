@@ -1,5 +1,6 @@
 # tests/gates/arch-script-tests.gate
-# Mirrors hosted: offline tests of scripts/pr-gate.sh, rebase-crumb.sh, check_candidate.sh, check_candidate_pins.sh (not a hosted job)
+# Mirrors hosted: offline tests of scripts/pr-gate.sh, rebase-crumb.sh and the seeded .om candidate checkers
+# tools/candidate/check_candidate.om, check_pins.om with their parity corpus (not a hosted job; NOT_RUN without the pinned AIEN_OMC)
 gate: ARCH-SCRIPT-TESTS
 manifest_version: 2
 owner: aien-architecture
@@ -7,13 +8,15 @@ requires:
   - host
 inputs:
   - scripts/
+  - tools/candidate/
+  - tools/zero-legacy/omega.pin
   - tests/gates/
 run:
   exec: tests/gates/run.sh
   args: ["script-tests"]
 expects:
   exit: 0
-  observe: ["script_tests_run == 4"]
+  observe: ["script_tests_run == 4", "candidate_parity_different == 0"]
   verdict: PASS
 timeout: 10m
 exactness: EXACT

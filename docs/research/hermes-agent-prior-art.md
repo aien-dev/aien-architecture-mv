@@ -214,7 +214,7 @@ hermes_platform/].
 scheduler but no delivery ledger and no at-most-once cron discipline (its
 README and source list neither). The hive's forge queue and lanes ledger are
 shell-level. Synapse has revisions and recovery for changesets, not for
-message delivery. The AIENOS continuity commit path already does
+message delivery. The Aienux continuity commit path already does
 advance-before-act for its own store (ADR 0016).
 
 ## 5. Tools, approvals, delegation, checkpoints
@@ -261,7 +261,7 @@ on our side. Each becomes one issue; the issue carries the credit line.
 | # | Principle (Hermes mechanic) | Why it is worth ours | Lands in |
 |---|---|---|---|
 | 1 | Bounded micro-compaction: never summarize the operator; one exchange per turn; transcript-recovered cursor; rolling summary with defrag; atomic store swap; evidence-anchored token accounting | Direct fit with "no guessing": provider usage is a receipt, an estimate is not. Extends sc#397 instead of replacing it | aien-sovereign-core (`aien` chat loop) |
-| 2 | Persist-before-act turn discipline; byte-identical replay sidecar; one-shot recovery flags; never run a truncated tool call | Same idea as AIENOS continuity commits (advance the record, then act), applied to the chat loop | aien-sovereign-core |
+| 2 | Persist-before-act turn discipline; byte-identical replay sidecar; one-shot recovery flags; never run a truncated tool call | Same idea as Aienux continuity commits (advance the record, then act), applied to the chat loop | aien-sovereign-core |
 | 3 | Tool batch planning with reader/writer path reservations; result spill under three budgets | Our loop runs tools one at a time; this is the safe form of parallelism | aien-sovereign-core |
 | 4 | Agent-written skills under an editorial policy: forked reviewer, lessons not logs, read-before-write enforced, unattended is add-only, content-addressed skill ledger with rollback, use-driven ageing | Our Cortex records lessons but nothing distils runs into skills; the ledger is content-addressed, which is Omega's own idea | omega (Cortex, Skill Router) |
 | 5 | Delivery and scheduling guarantees stated per path: at-least-once reply ledger with content-hash obligation ids and a visible duplicate marker; at-most-once cron (advance before run, pause on uncertainty, liveness by silence since progress, pid plus start-time owner stamps, epoch fences) | Allen's heartbeat and the hive's queue have no stated guarantee today; this is how "it ran once" becomes provable | aegis-runtime (gateway, heartbeat) |

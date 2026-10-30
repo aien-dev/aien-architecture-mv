@@ -117,7 +117,7 @@ Stop conditions: a Drake decision (desk MAC default, sc#327 model default, relea
 
 ## E. Qualification record
 
-All runs: host Spark (`spark-b87b`, Linux 7.0.0-1019-nvidia aarch64, 20 cores), CPU only, GPU engine is the CPU stub (`Backend: NativeTransformerBackend/CPU-reference`), model unsloth Llama-3.2-1B-Instruct snapshot 5a8abab, model turn scripted. Native compose library linked from omega.lock `6c6180cf` in every row except the SC stub-build row, which was not run. Source of the environment: `~/handoffs/vac/M1-qualification.md` section 1; `~/handoffs/vac/M3b-report.md`.
+All runs: host Spark (Linux 7.0.0-1019-nvidia aarch64, 20 cores), CPU only, GPU engine is the CPU stub (`Backend: NativeTransformerBackend/CPU-reference`), model unsloth Llama-3.2-1B-Instruct snapshot 5a8abab, model turn scripted. Native compose library linked from omega.lock `6c6180cf` in every row except the SC stub-build row, which was not run. Source of the environment: `~/handoffs/vac/M1-qualification.md` section 1; `~/handoffs/vac/M3b-report.md`.
 
 | # | Run | Command | Binary sha256 (aien-cli, debug) | Result | Evidence |
 |---|---|---|---|---|---|

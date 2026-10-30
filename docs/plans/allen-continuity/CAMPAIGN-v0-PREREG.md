@@ -11,7 +11,7 @@
 | aien-spark/aien-architecture | `aa13da7ece74aaf50fb6e891e58959466a31ce8d` |
 | aien-spark/aien-sovereign-core | `d5b78ff7a6be14d23e3cb00d3f9c4b4751442ffa` |
 | aien-spark/omega | `c0369e6705a4b0cb800978846e78915126a1b7f7` |
-| aien-spark/aienos | `b84c0a67590a934f3f3e001b12ec85ebc086a9eb` (also omega `aienos.lock`) |
+| aien-dev/aienux | `b84c0a67590a934f3f3e001b12ec85ebc086a9eb` (also omega `aienos.lock`) |
 | aien-spark/interplane | `11a753f2de00b57eb0908cf89d86bcb46868d942` |
 
 ## 2. What exists and was re-run (CPU, host only, 2026-10-06 20:16-20:25Z)

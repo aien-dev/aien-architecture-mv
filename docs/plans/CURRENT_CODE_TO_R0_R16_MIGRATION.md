@@ -8,7 +8,7 @@
 |---|---|
 | omega | `1feb832` |
 | physics | `a477aee` |
-| aienos | `aien-spark/aienos` main, last commit 2026-09-25 |
+| aienos | `aien-dev/aienux` main, last commit 2026-09-25 |
 | aien-sovereign-core | main, 2026-09-27 |
 | aegis-runtime | `2bbce76` |
 | aien-protocols | main, 2026-09-23 |
@@ -32,7 +32,7 @@ Every runtime path today is shaped as orchestration:
 - M19 `omega_world_*` is a synchronous register → submit → ring → drain service.
 - `aien-sovereign-core` `aien-runtime/src/spine.rs:112` is `for 0..max_steps { step() }`, driven once per request.
 - `aegis-runtime` `agent.rs:130` is an LLM tool-turn loop. `heartbeat.rs:94` polls an SQLite task table.
-- AIENOS boot runs a fixed demo sequence and halts: `aienos-boot/src/handoff.rs:1621`.
+- Aienux boot runs a fixed demo sequence and halts: `aienos-boot/src/handoff.rs:1621`.
 
 Nothing in code drives AIEN → Omega → AEGIS. The word "omega" does not appear in aienos, sovereign-core, or aegis-runtime.
 
@@ -70,7 +70,7 @@ The pieces worth keeping are primitives, not runtimes:
 | R15 quantitative performance | HISTORICAL PASS (16/16 at `3e9e53b`); requal FAIL 14/16 at `3108fc2` (omega `evidence/REQUAL-3108fc2/`); NOT requalified on CAND-0 | DGX Spark (#67, `bba3bd3`, 16/16 gates) |
 | R16 orchestrator retirement | HISTORICAL PASS at `850fc54`; receipt INVALID as a current claim; requal FAIL at `3108fc2`; NOT requalified on CAND-0 | DGX Spark (`aien-spark/omega#112` merged, `3dd5eaa`, receipt `evidence/R16/22d7a79a985514ac38139d39c71c9638d9b6b0a6e05425b6810bdb4833d1ea64.json`) |
 
-The R3/R4 claims are scoped to the host reference runtime. They say nothing about GPU execution (R12) or about the native AIENOS capability root (R7).
+The R3/R4 claims are scoped to the host reference runtime. They say nothing about GPU execution (R12) or about the native Aienux capability root (R7).
 
 ---
 
@@ -91,7 +91,7 @@ Parallelization groups (§4) are marked **G0–G6**.
 |---|---|---|---|---|---|---|---|---|
 | `tools/omegatool.c` (3,962 lines) | CLI that hand-sequences every gate suite and demo | Legacy orchestrated runtime = reference oracle; later one launcher that seeds stimuli and observes | **Oracle** until R16 | everything | Low while untouched | `--run-*-gates` (M4–M14: 111/111 rerun 2026-09-27) | R15 compare, R16 retire | — |
 | `src/runtime/rx_world.{c,h}` (new) | Host reference reaction runtime: object pool (id, generation, per-field versions, persistence class, content digest), dependency index by field mask, ready set by priority class, explicit lifecycle, versioned snapshot + atomic publication, causal crumbs (SHA-256 DAG) | Seed of `runtime/{object,reaction,dependency,publication,causal}`; the object pool moves onto the shared-world region at R1/R2 | **Keep → Adapt** | `sha256.c`, `rx_caproot` | One world mutex (deliberately simple, ADR 0016 §56); not a performance claim | `make test-r3`: 15 tests, 8,129 checks, 0 fail; 4/4 engine and 4/4 root deliberate-break (mutation) checks detected | R3, R4 (done host); R1, R5, R6, R15 next | G1 |
-| `src/runtime/rx_caproot.{c,h}` (new) | Host capability root: separate non-dumpable mint process; table in a sealed memfd, read-only to the runtime; mint / attenuate-only delegation / revoke (cascading via chain walk) / reclaim (generation++) / lease clock / epoch | Linux-host stand-in for the AIENOS kernel root; semantics must equal `aienos caps.rs` plus epoch/lease | **Keep (host)**; native root is aienos | Linux memfd seals (kernel ≥ 5.1; verified on 7.0) | Who may request a fresh mint is not yet authenticated (R7/R8) | Attack tests: forged, stale-generation replay, revoked, wrong subject, wrong resource, insufficient rights, lease expiry, epoch change, amplification, resource widening, non-delegable, cascading revoke, revoke mid-run, mprotect / mmap-write / pwrite / ftruncate / `/proc` reopen / direct-store SIGSEGV | R7 (host part) | G1 |
+| `src/runtime/rx_caproot.{c,h}` (new) | Host capability root: separate non-dumpable mint process; table in a sealed memfd, read-only to the runtime; mint / attenuate-only delegation / revoke (cascading via chain walk) / reclaim (generation++) / lease clock / epoch | Linux-host stand-in for the Aienux kernel root; semantics must equal `aienos caps.rs` plus epoch/lease | **Keep (host)**; native root is aienos | Linux memfd seals (kernel ≥ 5.1; verified on 7.0) | Who may request a fresh mint is not yet authenticated (R7/R8) | Attack tests: forged, stale-generation replay, revoked, wrong subject, wrong resource, insufficient rights, lease expiry, epoch change, amplification, resource widening, non-delegable, cascading revoke, revoke mid-run, mprotect / mmap-write / pwrite / ftruncate / `/proc` reopen / direct-store SIGSEGV | R7 (host part) | G1 |
 | `src/omega_accelerator_world.{c,h}` (M19, 1,369 lines) | Synchronous GPU world: buffer/code registries with `OmegaHandle{epoch,id,gen,type,permissions}`; submit/ring/drain; exactly-once completion (M19R); rolling digest | GPU **realization backend** under R2/R12. `OmegaHandle.permissions` becomes a cached view; the right comes from a capability reference validated against the root (I3) | **Adapt** | physics `nvrm`, `m16` | M19R Lanes A/B are editing this file now | M19 gates (GPU); M19R lifecycle gates | R2, R12 | G2 (after M19R Gate 2) |
 | `src/omega_world_gates.c` | M19 qualification gates | Unchanged; becomes the regression oracle for R12 | **Keep** | M19 world | Shared with M19R Lanes A/B | `--run-m19-gates` (GPU) | R12, R14 | — |
 | `src/omega_evidence.{c,h}` | Run-scoped, non-clobbering evidence paths; run commit / dirty tree; observed hardware identity | Receipt plumbing for every R-gate | **Keep** (already reused by the R3 receipt) | — | `run_commit` is HEAD, so every R receipt must also bind `OMEGA_CANDIDATE_COMMIT` | used by all suites | all | — |
@@ -113,11 +113,11 @@ Parallelization groups (§4) are marked **G0–G6**.
 | `m3/capability.s`, `m3/effect_broker.s`, `m3/receipt_ledger.s` | Bare-metal 32-slot capability ledger (slot + generation, attenuation, revoke), 10-stage effect broker, SHA-256 receipt chain | Assembly-level reference oracle for capability and effect semantics | **Keep** (historical, QEMU-qualified) | — | Python gate tooling at repo root violates the no-Python rule | `m3/tests/test_m3_authority.s` 21/21 | R7 oracle, R8 effects | — |
 | `m16/` native path | libcuda-free channel/GPFIFO | Unchanged | **Keep** | — | — | M16 requalification | R12 | — |
 
-### 3.3 AIENOS (`aien-spark/aienos`, Rust; kernel files are under `crates/aienos-kernel/src/`)
+### 3.3 Aienux (`aien-dev/aienux`, Rust; kernel files are under `crates/aienos-kernel/src/`)
 
 | Current module | Current responsibility | Target responsibility | Decision | Depends on | Risk | Tests | Milestone | Group |
 |---|---|---|---|---|---|---|---|---|
-| `crates/aienos-kernel/src/caps.rs` (466 lines) | Kernel-owned `CapTable`; handles `{index, generation}`; `derive` enforces subset + DERIVE right; cascading `revoke`; tombstones | **The native capability root** (ADR 0014 gives capabilities to AIENOS). Add epoch and lease/expiry; expose a read-only authority view for resident readiness checks | **Adapt** | — | ABI frozen in `abi.rs` (generation-0 rejected); adding fields needs an ABI version | kernel unit tests, `ipc.rs:461`, `task_runtime.rs:664/813` | R7 (native) | G3 |
+| `crates/aienos-kernel/src/caps.rs` (466 lines) | Kernel-owned `CapTable`; handles `{index, generation}`; `derive` enforces subset + DERIVE right; cascading `revoke`; tombstones | **The native capability root** (ADR 0014 gives capabilities to Aienux). Add epoch and lease/expiry; expose a read-only authority view for resident readiness checks | **Adapt** | — | ABI frozen in `abi.rs` (generation-0 rejected); adding fields needs an ABI version | kernel unit tests, `ipc.rs:461`, `task_runtime.rs:664/813` | R7 (native) | G3 |
 | `artifact_loader.rs:796`, `admission.rs:291` | Only mint path: admission grants → caps | AEGIS `PolicyDecision` → root mint (slow path); fast path = existing capability | **Adapt** | R7 | Minting remains centralized in the kernel (correct) | `artifact_loader_tests.rs`, H01–H29 corpus | R8 | G3 |
 | `kernel/src/scheduler.rs` (380 lines, host-tested) | Fixed-capacity run-queue policy | Native physical admission below semantic readiness (§8): schedules work, not faculties | **Adapt** | R5 host semantics | Not driven by a live loop yet | host tests | R5 (native) | G3 |
 | `store/engine.rs`, `checkpoint.rs`, `recovery.rs`, `recovery_core.rs` (Store v1) | A/B superblock atomic commit; crash recovery | Durable side of the generation barrier; commits go through the ADR 0015 ordered protocol | **Keep** | ADR 0015 (merged) | Store v1 catalog bound of 4,096 entries (ADR 0015 Builder 9) | Store golden/negative, `qemu_store_crash_test.sh` | R9 | G4 |

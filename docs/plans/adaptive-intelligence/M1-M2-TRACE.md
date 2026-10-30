@@ -66,11 +66,11 @@ Setup used for the baseline (`inventory/omega-runtime.md`): omega clone with sib
 ```
 cd <omega clone>
 git checkout 16e729b6d844        # Milestone 0 baseline (R11, R13, R14)
-AIENOS_LOCK_REPO=/home/drakestapleton/workspace/aienos-c793fc-clone make test-r11
-AIENOS_LOCK_REPO=/home/drakestapleton/workspace/aienos-c793fc-clone make test-r13-host   # run it alone; load above ~5 failed once
-AIENOS_LOCK_REPO=/home/drakestapleton/workspace/aienos-c793fc-clone make test-r14-host
+AIENOS_LOCK_REPO=~/workspace/aienos-c793fc-clone make test-r11
+AIENOS_LOCK_REPO=~/workspace/aienos-c793fc-clone make test-r13-host   # run it alone; load above ~5 failed once
+AIENOS_LOCK_REPO=~/workspace/aienos-c793fc-clone make test-r14-host
 git checkout 24d185057ab2        # after omega#398
-AIENOS_LOCK_REPO=/home/drakestapleton/workspace/aienos-c793fc-clone make test-r13-cortex-episode
+AIENOS_LOCK_REPO=~/workspace/aienos-c793fc-clone make test-r13-cortex-episode
 ```
 Each run writes a receipt under `build/qual-runs/<run id>/`. Do not run silicon targets without a chip window.
 Receipt and log sha256 (computed from the files in this directory):

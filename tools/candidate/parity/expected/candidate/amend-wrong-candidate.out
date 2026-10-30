@@ -1,0 +1,2 @@
+FAIL: m.amendment-1.toml: candidate 'CAND-9' is not the manifest id 'CAND-0'
+rc=1

@@ -1,0 +1,3 @@
+FAIL: missing field: id
+FAIL: missing field: created
+rc=1

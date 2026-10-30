@@ -37,17 +37,56 @@ case "$step" in
     sh scripts/verify-r16-status.sh ../omega
     ;;
   doctrine)
-    # Repository script (aien-architecture#7): doctrine consistency, pure text, no network.
-    bash scripts/check_doctrine.sh "$ROOT"
+    # aien-architecture#7 in seeded .om (#316): tools/doctrine/doctrine.om makes every judgment;
+    # gate.om builds it with AIEN_OMC after checking the compiler against tools/zero-legacy/
+    # omega.pin with the native sha256, then runs it on $ROOT. NOT_RUN (exit 3) without the
+    # pinned compiler. The retired bash oracle is scripts/check_doctrine.sh before this commit.
+    exec sh tools/doctrine/gate.sh "$ROOT"
     ;;
   script-tests)
     # The offline tests of the repository's own operator scripts. Each builds temporary git
     # repos and fake gh/crumb tools under mktemp; no network, no auth (see their headers).
+    # The candidate checkers are seeded .om (tools/candidate, #316): their suites and the
+    # byte-for-byte parity corpus compile them with the compiler named by AIEN_OMC, which must
+    # hash as tools/zero-legacy/omega.pin says; otherwise NOT_RUN (exit 3).
+    omc="${AIEN_OMC:-}"
+    if [ -z "$omc" ] || [ ! -x "$omc" ]; then
+      echo "run.sh: AIEN_OMC is not an executable omc (NOT_RUN)" >&2
+      exit 3
+    fi
+    want=$(sed -n 's/^omc_sha256: //p' tools/zero-legacy/omega.pin)
+    have=$(sha256sum "$omc" | cut -d' ' -f1)
+    if [ "$have" != "$want" ]; then
+      echo "run.sh: AIEN_OMC hashes $have, tools/zero-legacy/omega.pin pins $want (NOT_RUN)" >&2
+      exit 3
+    fi
+    export AIEN_OMC="$omc"
+    obs omc_sha256 "\"$have\""
+    build=$(mktemp -d)
+    trap 'rm -rf "$build"' EXIT
+    "$omc" < tools/candidate/check_candidate.om > "$build/check_candidate"
+    "$omc" < tools/candidate/check_pins.om > "$build/check_pins"
+    chmod +x "$build/check_candidate" "$build/check_pins"
+    parity_rc=0
+    bash tools/candidate/parity/run.sh "$build/check_candidate" "$build/check_pins" > "$build/parity.log" || parity_rc=$?
+    cat "$build/parity.log"
+    parity=$(sed -n 's/^parity: //p' "$build/parity.log")
+    obs candidate_parity_identical "${parity%% *}"
+    obs candidate_parity_naming_deltas "$(printf '%s' "$parity" | sed 's/.*identical, \([0-9]*\) exact naming deltas.*/\1/')"
+    obs candidate_parity_limits "$(printf '%s' "$parity" | sed 's/.*deltas, \([0-9]*\) named limits.*/\1/')"
+    obs candidate_parity_different "$(printf '%s' "$parity" | sed 's/.*limits, \([0-9]*\) different$/\1/')"
+    [ "$parity_rc" -eq 0 ]
     for t in scripts/test_pr_gate.sh scripts/test_rebase_crumb.sh scripts/test_check_candidate.sh scripts/test_check_candidate_pins.sh; do
       echo "== $t"
       bash "$t"
     done
     obs script_tests_run 4
+    ;;
+  zero-legacy)
+    # #316: every judgment is made by tools/zero-legacy/gate.om (seeded .om); gate.sh is the
+    # three-line loader that compiles it with AIEN_OMC and execs it. NOT_RUN (exit 3) without
+    # the pinned compiler; gate.om checks the pin with its own native sha256.
+    exec sh tools/zero-legacy/gate.sh
     ;;
   *)
     echo "run.sh: unknown step '$step'" >&2

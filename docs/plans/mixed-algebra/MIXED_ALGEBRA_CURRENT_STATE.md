@@ -194,7 +194,7 @@ ADR 0019 extends ARCH-0018; it must not re-decide these.
 4. Four contract kinds; EXACT is default and never realized on a weaker substrate; undeclared uncertainty means EXACT only (§3.2, §3.3).
 5. Calibration is FORGE-produced per substrate instance, content-addressed, bound into realization identity; stale means ineligible; recalibration never widens a contract (§4).
 6. Evidence v2 is additive with `provenance_class`; no pointers across boundaries (§5).
-7. Substrate access is an AIENOS capability with 64-bit generations; no new loop, scheduler or service (§6).
+7. Substrate access is an Aienux capability with 64-bit generations; no new loop, scheduler or service (§6).
 8. Fabric transport is cost metadata; remote substrates are capability providers (§7).
 9. Digital fallback is the eligible-set rule on the same contract digest, on any Machine (§14 Q7).
 10. Substrate classes and V2 wire encodings (AR1, physics#16).
