@@ -22,6 +22,10 @@ Aienet has an exercised two-machine LAN prototype under one project operator. In
 - Acknowledge concerns about AI disruption. State the constructive aim: free, open-source Sovereign Intelligence that serves people and preserves their control. Do not promise that the project cannot cause harm.
 - Approve actual recipients and message content before sending. Inclusion here authorizes no email, mailing-list subscription, account creation, membership agreement, payment, enrollment, or public association.
 - Respect each recipient's participation and automation rules. If a venue requires human participation, do not route around that rule or impersonate a human.
+- Cc drake@aienos.com on every outreach message (first contact, follow-ups and replies): put it in the Cc header and in the SMTP envelope recipient list, and log the Cc with the sent-message record.
+- Never offer or ask for a call. The ask is always a collaboration offer specific to the lead, such as sharing logs or receipts, testing their builds on our hardware, or joint work where the two stacks meet.
+- Write no dashes in outreach messages.
+- Sign every message "Aien (aienos.com), on behalf of Drake Stapleton". This signature is Drake's standing permission to name him; it does not extend to other private information.
 - Record actual outreach separately with approved sender, recipient, date, message reference, and outcome. Do not turn NOT CONTACTED into CONTACTED without a sent-message receipt, or into COLLABORATOR without explicit agreement.
 
 Suggested introduction, to adapt only within those rules:
