@@ -51,7 +51,7 @@ Each claim below is from the PREFILL-SCOUT report, which read source with `git s
 
 **Why tests did not catch it.** Every swarm test uses `MockInferenceBackend`, which ignores prompt content (`crates/aien-inference-abi/src/lib.rs:264-300`). No runtime test asserts that a swarm branch processed any prefill tokens.
 
-**Fix in flight.** A fix is being written on aien-sovereign-core PR #145 (branch hive/PREFILL-GATE-prefill, commit d6455da; host tests queued, NOT_RUN until forge receipt). This spec does not describe the fix; it states the gates the fix must pass (G1, G2). Open follow-up: the transformer backend still starts each branch from an empty internal state (transformer_backend.rs:939-948 at cfd9982), so branches do not yet consume the shared root prefill; #145 closes the scheduling gate only (source: /home/drakestapleton/handoffs/2026-10-01-PREFILL-GATE-builder.md, line 40).
+**Fix in flight.** A fix is being written on aien-sovereign-core PR #145 (branch hive/PREFILL-GATE-prefill, commit d6455da; host tests queued, NOT_RUN until forge receipt). This spec does not describe the fix; it states the gates the fix must pass (G1, G2). Open follow-up: the transformer backend still starts each branch from an empty internal state (transformer_backend.rs:939-948 at cfd9982), so branches do not yet consume the shared root prefill; #145 closes the scheduling gate only (source: ~/handoffs/2026-10-01-PREFILL-GATE-builder.md, line 40).
 
 ### 2.3 Related open questions (not part of the defect claim)
 

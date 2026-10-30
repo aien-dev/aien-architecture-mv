@@ -19,7 +19,7 @@ Drake's words, 2026-10-20:
 
 | Word | Means | Spelling | Today |
 | :--- | :--- | :--- | :--- |
-| **Aienux** | The kernel: boots the machine, drives the hardware. | Exactly `Aienux`. | Repository aien-dev/aienos-mv (C kernel, Rust crates, QEMU gates, Allen's window). |
+| **Aienux** | The kernel: boots the machine, drives the hardware. | Exactly `Aienux`. | Repository aien-dev/aienux (C kernel, Rust crates, QEMU gates, Allen's window). |
 | **AienOS** | The whole operating system: Aienux + Omega + runtime (sovereign core) + Allen. | Exactly `AienOS`. | The core tree repository aien-dev/aienix. |
 | **AIEN** | The project and the agent. | Unchanged. | |
 | **Omega** | The language, semantic substrate and GPU engine. | Unchanged. | aien-dev/omega-mv. |

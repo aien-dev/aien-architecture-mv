@@ -17,12 +17,19 @@ d="$FX/$CASE"
 case "$1 $2" in
   "pr view")
     if echo "$*" | grep -q mergeCommit && [ -e "$d/merged-flag" ]; then cat "$d/merged.json"
+    elif [ -e "$d/updated.json" ] && [ -e "$d/viewed" ]; then cat "$d/updated.json"
     else
-      # UNKNOWN case: the first N answers can be counted
+      touch "$d/viewed"
       cat "$d/pr.json"
     fi ;;
   "pr list") cat "$d/list.json" ;;
-  "pr merge") echo "$*" > "$d/merge.cmd"; touch "$d/merged-flag" ;;
+  "pr merge")
+    echo "$*" > "$d/merge.cmd"
+    if [ -e "$d/updated.json" ]; then
+      want=$(jq -r .headRefOid "$d/updated.json")
+      [[ " $* " == *" --match-head-commit $want "* ]] || { echo "head branch changed" >&2; exit 1; }
+    fi
+    touch "$d/merged-flag" ;;
   api\ repos/*)
     if [ -e "$d/prot404" ]; then echo "gh: Not Found (HTTP 404)" >&2; exit 1; fi
     cat "$d/prot.json" ;;
@@ -103,6 +110,18 @@ CASE=noprotb expect 1 "404 protection does not rescue a BEHIND PR" repo1 7 --dry
 # ---- merge cases
 fx merge;  CASE=merge expect 0 "clean PR merges (non-dry-run)" repo1 7
 has "merge PASS with sha" 'GATE merge: PASS squash; merge commit cafebabe'
+if grep -q -- '--match-head-commit aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' "$FX/merge/merge.cmd"; then ok; else no "merge binds the inspected head"; fi
+fx moved
+echo "$CLEANPR" | jq '.headRefOid="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"' > "$FX/moved/updated.json"
+CASE=moved expect 1 "moving head refuses at merge" repo1 7
+has "moving head refuses merge" 'head branch changed'
+check_notmerged() { if [ ! -e "$FX/$1/merged-flag" ]; then ok; else no "$2"; fi; }
+check_notmerged moved "moving head was merged"
+fx unknownmoved '.mergeStateStatus="UNKNOWN"'
+echo "$CLEANPR" | jq '.headRefOid="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"' > "$FX/unknownmoved/updated.json"
+CASE=unknownmoved expect 1 "UNKNOWN refresh changing head refuses before merge" repo1 7
+has "UNKNOWN head changed reason" 'head changed during mergeability wait'
+check_notmerged unknownmoved "UNKNOWN refresh merged changed head"
 if grep -q -- '--squash --delete-branch' "$FX/merge/merge.cmd" && ! grep -q -- '--admin' "$FX/merge/merge.cmd"; then ok; else no "merge command has squash+delete-branch and no --admin: $(cat "$FX/merge/merge.cmd" 2>&1)"; fi
 fx adm; CASE=adm expect 0 "authorized admin merge" repo1 7 --admin-authorized-by "Drake, 2026-10-10, test"
 if grep -q -- '--admin' "$FX/adm/merge.cmd"; then ok; else no "--admin recorded when authorized"; fi

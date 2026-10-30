@@ -8,7 +8,7 @@
 |---|---|
 | omega | `1feb832` |
 | physics | `a477aee` |
-| aienos | `aien-spark/aienos` main, last commit 2026-09-25 |
+| aienos | `aien-dev/aienux` main, last commit 2026-09-25 |
 | aien-sovereign-core | main, 2026-09-27 |
 | aegis-runtime | `2bbce76` |
 | aien-protocols | main, 2026-09-23 |
@@ -113,7 +113,7 @@ Parallelization groups (§4) are marked **G0–G6**.
 | `m3/capability.s`, `m3/effect_broker.s`, `m3/receipt_ledger.s` | Bare-metal 32-slot capability ledger (slot + generation, attenuation, revoke), 10-stage effect broker, SHA-256 receipt chain | Assembly-level reference oracle for capability and effect semantics | **Keep** (historical, QEMU-qualified) | — | Python gate tooling at repo root violates the no-Python rule | `m3/tests/test_m3_authority.s` 21/21 | R7 oracle, R8 effects | — |
 | `m16/` native path | libcuda-free channel/GPFIFO | Unchanged | **Keep** | — | — | M16 requalification | R12 | — |
 
-### 3.3 Aienux (`aien-spark/aienos`, Rust; kernel files are under `crates/aienos-kernel/src/`)
+### 3.3 Aienux (`aien-dev/aienux`, Rust; kernel files are under `crates/aienos-kernel/src/`)
 
 | Current module | Current responsibility | Target responsibility | Decision | Depends on | Risk | Tests | Milestone | Group |
 |---|---|---|---|---|---|---|---|---|

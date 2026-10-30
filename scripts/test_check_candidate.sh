@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-# Test for check_candidate.sh. Offline: sha existence is stubbed (CAND_SHA_CHECK) and,
-# for the real gh code path, a fake `gh` on PATH. No network or auth needed.
+# Test for tools/candidate/check_candidate.om. Offline: sha existence is stubbed (CAND_SHA_CHECK) and,
+# for the real gh code path, a fake `gh` on PATH. No network or auth needed. The checker is compiled
+# here with the pinned seeded compiler named by AIEN_OMC (exit 3 = NOT_RUN without it); the mutants
+# below are sed edits of the .om source, recompiled, each proving one check bites.
 set -u
 here="$(cd "$(dirname "$0")" && pwd)"
-chk="$here/check_candidate.sh"
+src="$here/../tools/candidate/check_candidate.om"
+omc="${AIEN_OMC:-}"
+[ -n "$omc" ] && [ -x "$omc" ] || { echo "test_check_candidate: AIEN_OMC is not an executable omc (NOT_RUN)" >&2; exit 3; }
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+chk="$tmp/check_candidate"
+"$omc" < "$src" > "$chk" && chmod +x "$chk" || { echo "TEST FAIL: $src does not compile with $omc"; exit 1; }
 stub="$tmp/stub.sh"
 cat > "$stub" <<'S'
 #!/usr/bin/env bash
@@ -109,20 +115,21 @@ expect 0 "live CAND-4 with Amendment 1 valid" "$live4"
 [ -z "$(cd "$here/.." && git diff 7f99d7ee4221bb3cd8b3bc23bf167a64baac24e4 -- qualification/candidates/CAND-4.toml 2>/dev/null)" ] && pass=$((pass+1)) || { bad=$((bad+1)); echo "TEST FAIL: frozen CAND-4.toml differs from 7f99d7e"; }
 echo '# edited' >> "$amd/CX.toml"   # left edited for the mutant below
 
-# --- new: mutants. Each broken copy of the checker must wrongly accept the bad input,
-# proving the new test above really depends on the new check.
+# --- mutants. Each broken copy of the checker (one sed edit of the .om source, recompiled) must
+# wrongly accept the bad input, proving the test above really depends on that check.
 mutant() { # mutant <label> <sed-expr> <input-file>
-  sed "$2" "$chk" > "$tmp/mut.sh"; chmod +x "$tmp/mut.sh"
-  if cmp -s "$chk" "$tmp/mut.sh"; then bad=$((bad+1)); echo "TEST FAIL: mutant '$1' did not change the checker"; return; fi
-  "$tmp/mut.sh" "$3" >/dev/null 2>&1; rc=$?
+  sed "$2" "$src" > "$tmp/mut.om"
+  if cmp -s "$src" "$tmp/mut.om"; then bad=$((bad+1)); echo "TEST FAIL: mutant '$1' did not change the checker"; return; fi
+  "$omc" < "$tmp/mut.om" > "$tmp/mut" 2>/dev/null && chmod +x "$tmp/mut" || { bad=$((bad+1)); echo "TEST FAIL: mutant '$1' does not compile"; return; }
+  "$tmp/mut" "$3" >/dev/null 2>&1; rc=$?
   if [ "$rc" = 0 ]; then pass=$((pass+1)); else bad=$((bad+1)); echo "TEST FAIL: mutant '$1' still rejected (rc=$rc), test does not bite"; fi
 }
-mutant "no zero-digest check" '/all zero/d' "$tmp/z.toml"
-mutant "old # truncation" 's/^  while IFS= read -r line; do$/  while IFS= read -r line; do line="${line%%#*}"/' "$tmp/h.toml"
-mutant "contracts not required" 's/ contracts.crumb-spec contracts.spark-crumbs;/;/' "$tmp/k1.toml"
-mutant "optional pins not checked" 's/for r in commits.physics commits.interplane; do/for r in; do/' "$tmp/p1.toml"
-mutant "optional pin sha existence not checked" '/^for r in commits.physics/,/^done$/s/sha_exists "\$repo" "\$s" || err .*$/true/' "$tmp/p2.toml"
-mutant "manifest pin not checked" 's/^  \[ "\${am\[manifest-sha256\]:-}" = "\$mf_sha" \] \\$/  true \\/' "$amd/CX.toml"
-mutant "amendment may override" '/is already in the manifest; an amendment only adds keys/d' "$tmp/amdov/CX.toml"
+mutant "no zero-digest check" 's/^z = zero64 e$/z = false/' "$tmp/z.toml"
+mutant "old # truncation" 's/^ret and lt i e ne get src i 34$/ret and lt i e and ne get src i 34 ne get src i 35/' "$tmp/h.toml"
+mutant "contracts not required" 's/^const NREQ ulong 7$/const NREQ ulong 5/' "$tmp/k1.toml"
+mutant "optional pins not checked" '/^optpins$/d' "$tmp/p1.toml"
+mutant "optional pin sha existence not checked" '/^fn optpin /,/^fn optpins /s/^if not shaex i e$/if false/' "$tmp/p2.toml"
+mutant "manifest pin not checked" 's/^if not mfeq e$/if false/' "$amd/CX.toml"
+mutant "amendment may override" 's/^if inmf x$/if false/' "$tmp/amdov/CX.toml"
 echo "passed=$pass failed=$bad"
 [ "$bad" -eq 0 ]

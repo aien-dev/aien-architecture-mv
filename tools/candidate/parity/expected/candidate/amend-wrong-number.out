@@ -1,0 +1,2 @@
+FAIL: m.amendment-1.toml: amendment '2' does not match its file name (1)
+rc=1

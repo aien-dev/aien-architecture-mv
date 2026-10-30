@@ -1620,6 +1620,7 @@ static const char *cont_when(const J *c) {
     if (!s && id) s = jstrval(id, "created_at");
     return s ? s : "";
 }
+static char *shq(const char *s);
 static int cmd_explain(const char *target) {
     char r[PATH_MAX];
     if (!realpath(target, r)) die("no such file or directory: %s", target);
@@ -1697,8 +1698,12 @@ static int cmd_explain(const char *target) {
     /* 4. commits */
     printf("== RECENT COMMITS ==\n");
     if (p) {
-        char q[PATH_MAX + 64]; snprintf(q, sizeof q, "log --oneline -%d -- '%s'", EXPL_COMMITS, rel);
+        char *quoted = shq(rel);
+        size_t qlen = strlen(quoted) + 64;
+        char *q = xmalloc(qlen);
+        snprintf(q, qlen, "log --oneline -%d -- %s", EXPL_COMMITS, quoted);
         char *lg = run_git_full(top, q);
+        free(q); free(quoted);
         if (*lg) { for (char *s = strtok(lg, "\n"); s; s = strtok(NULL, "\n")) printf("  %s\n", s); } else printf("  (no commits touch this path)\n");
     } else printf("  (not a git repository)\n");
     if (nc) {

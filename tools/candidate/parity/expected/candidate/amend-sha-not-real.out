@@ -1,0 +1,3 @@
+FAIL: m.amendment-1.toml: model.b-sha256 is not a real sha256
+FAIL: m.amendment-1.toml: model.a-sha256 is not a real sha256
+rc=1

@@ -2,7 +2,7 @@
 
 **Status:** Recorded 2026-09-30 from the orchestrator brief of that date, which carries the operator's wording for all four decisions. This record states the decisions in full and adds the evidence checked when it was written.
 **Supersedes:** nothing. **Amends:** nothing.
-**Related:** ARCH-0015 (Resident Semantic Store), ARCH-0016 (resident reaction architecture, R16), OS-0015 (System Store v1 format, in `aien-spark/aienos`), M19 corrective qualification (`CURRENT_EXECUTION_PLAN.md` Phase B).
+**Related:** ARCH-0015 (Resident Semantic Store), ARCH-0016 (resident reaction architecture, R16), OS-0015 (System Store v1 format, in `aien-dev/aienux`), M19 corrective qualification (`CURRENT_EXECUTION_PLAN.md` Phase B).
 
 Citation note: in this repository "ADR 0021" and ARCH-0021 name the same decision. In other repositories cite it as ARCH-0021.
 
@@ -45,9 +45,9 @@ The block layer reads the logical block size that the device reports and uses it
 ### Evidence checked on 2026-09-30
 
 - The Spark's internal SSD (`nvme0n1`) reports a 512-byte logical block size, a 512-byte physical block size and a 512-byte maximum atomic write unit.
-- `aien-spark/aienos` `crates/aienos-kernel/src/store/device.rs` already accepts both 512-byte and 4096-byte logical blocks and maps a 4096-byte Store unit to 8 or 1 blocks.
-- The current non-test Store qualification path in `aien-spark/aienos` (`crates/aienos-boot/src/nvme_read.rs`) refuses any geometry that is not 4096-byte LBA and requires a power-fail atomic 4096-byte root write. Only the test-only 512-byte qualification mode (`aien-spark/aienos#136`) runs the Store at 512-byte LBA. The production path therefore does not yet match this decision; it must adopt a torn-write recovery protocol before it can accept the Spark's SSD.
-- A C reference for that protocol, with fault-injection tests at 512-byte and 4096-byte logical block sizes, is proposed in `aien-spark/aienos` on branch `feat/store-torn-write-recovery`.
+- `aien-dev/aienux` `crates/aienos-kernel/src/store/device.rs` already accepts both 512-byte and 4096-byte logical blocks and maps a 4096-byte Store unit to 8 or 1 blocks.
+- The current non-test Store qualification path in `aien-dev/aienux` (`crates/aienos-boot/src/nvme_read.rs`) refuses any geometry that is not 4096-byte LBA and requires a power-fail atomic 4096-byte root write. Only the test-only 512-byte qualification mode (`aien-dev/aienux#136`) runs the Store at 512-byte LBA. The production path therefore does not yet match this decision; it must adopt a torn-write recovery protocol before it can accept the Spark's SSD.
+- A C reference for that protocol, with fault-injection tests at 512-byte and 4096-byte logical block sizes, is proposed in `aien-dev/aienux` on branch `feat/store-torn-write-recovery`.
 
 ---
 
@@ -67,7 +67,7 @@ Receipts are append-only. Each receipt file is named by its own digest, records 
 ### Evidence checked on 2026-09-30
 
 - `aien-spark/physics#17` already renamed the Gate 3 and Gate 4 receipts to digest-named files.
-- Several existing receipts, for example those under `aien-spark/aienos` `evidence/`, live inside source repositories. They are historical records and are not rewritten. The decision applies to receipts produced from now on.
+- Several existing receipts, for example those under `aien-dev/aienux` `evidence/`, live inside source repositories. They are historical records and are not rewritten. The decision applies to receipts produced from now on.
 - No combined M19 admission-gate harness exists yet. The M19R numeric receipt in `aien-spark/omega#32` is not yet digest-named or bound to a clean commit; that work is open.
 
 ---

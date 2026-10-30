@@ -7,7 +7,7 @@
 | Verification status | Math VERIFIED (re-derived and checked by a C Monte Carlo). Hardware table PARTIALLY VERIFIED (8 products checked on the web, 3 not checked). |
 | What was checked | Z3 add as phasor multiplication; the plus/minus 60 degree decision cells; the exact 3-PSK symbol error formula and its erfc approximation at 0 to 12 dB; the correlator SNR relation; jitter, cable and quantization numbers; prices and key specs of RFSoC 4x2, STEMlab 125-14, ADALM-PLUTO, USRP B210, ADALM2000, ULX3S (12F and 85F), Pmod DA4. |
 | What was corrected | (1) The raw draft had a summary paragraph spliced into the middle of Section 1, cutting off part of the signal-level text; repaired below. (2) Grok's error table is for one noisy phasor, but an add multiplies two noisy phasors; the add is about 2 dB worse (added below, with Monte Carlo numbers). (3) ADALM-PLUTO price was wrong ($399.99; real list is about $215 to $280). (4) STEMlab 125-14 price was the PRO tier; the base starter kit is cheaper. (5) Pmod DA4 has 8 DAC channels, not 2. |
-| Monte Carlo program | `/home/drakestapleton/.claude/jobs/c8884ded/tmp/verify/z3mc.c` (C, xoshiro-style RNG, Box-Muller noise). Not in the repo. |
+| Monte Carlo program | `~/.claude/jobs/c8884ded/tmp/verify/z3mc.c` (C, xoshiro-style RNG, Box-Muller noise). Not in the repo. |
 
 Prices are USD list or reseller snapshots as of 2026-09-29. Anything still uncertain is marked **verify**.
 

@@ -1,0 +1,103 @@
+# Candidate manifest, schema CandidateManifestV1. See docs/qualification/CANDIDATE.md.
+# Required gates, build recipe and known reproducibility gaps: qualification/candidates/CAND-0.gates.md
+schema = "CandidateManifestV1"
+id = "CAND-0"
+status = "frozen"
+created = "2026-10-05"
+note = "Code candidate for the 2026-10-05 overnight qualification campaign. Frozen 2026-10-05T03:25Z from GitHub mains plus the sovereign-core omega.lock chain (omega) and the omega physics.lock (physics), with aien-protocols pinned to the revision sovereign-core Cargo.lock consumes (main 3a4cdbe is not used by the build). Replaces the 2026-10-01 draft CAND-0 (heads 25b4a51, bb3a5f4, e58742a, 4a4877a, f11ac55), which was never frozen and never qualified anything; it is in git history. Evidence publication commits are not code candidates. Executable digests were produced by lane L1-CAND on 2026-10-05, host only, from clean worktrees at these commits; build recipe and gaps are in CAND-0.gates.md."
+
+[commits]
+omega = "e5593ae488fcb9038557a4317a07faa7625649a3"
+aienos = "9d41efc9d1bea31be0640ca70eeeec9d1d000fad"
+aien-sovereign-core = "0c1d249f2d119c7c2d726a2d252dc913e6185d28"
+aien-protocols = "7ac6facb630ca7e9a6ab4125b292203fe2bb6687"
+aien-architecture = "c5d80978c7a22cc039e67def9745cede5010f388"
+physics = "6d7cf0d4d8eb2cda7b512100ff6058e25dbb3ddf"
+interplane = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+
+# Contracts are pinned to the revisions the candidate code consumes (aien-sovereign-core Cargo.lock,
+# git dependencies). Both repos are archived; their HEADs (crumb-spec 10b825133580f7a4388ce78aca64b5db52c5d35b,
+# spark-crumbs 98bb7cbf7b7b5aba2d3f03c73b6e7045ad0f07eb) are 2 commits ahead and are not consumed by CAND-0.
+[contracts]
+crumb-spec = "24194d1b7917ef19244aae6bcaff510686b75fef"
+spark-crumbs = "9355a92bc9adfe95a6ec5f8ac926f38a0b6e7db2"
+
+# Informational: pins that the pinned repos themselves hold. These are not the same as [commits] in two
+# places (see CAND-0.gates.md, reproducibility gaps G1 and G3; G2 is closed). Not checked by check_candidate.sh.
+[consumed_pins]
+sovereign-core-omega-lock = "e5593ae488fcb9038557a4317a07faa7625649a3"
+sovereign-core-cargo-lock-aien-protocols = "7ac6facb630ca7e9a6ab4125b292203fe2bb6687"
+omega-physics-lock = "6d7cf0d4d8eb2cda7b512100ff6058e25dbb3ddf"
+omega-aienos-lock = "d39dd5bc3deb1a24e26a5059477a1342c110c71b"
+omega-argus-lock = "b375dcaa2887d53cda407d773c2e4e489a0b1365"
+omega-and-aienos-crumb-lock-aien-architecture = "d0f0b95d344b4c6628c3d868346932fd247ce168"
+
+# SHA-256 of each built binary or image under test. Built on the Spark, host only, at the commits above.
+# aien-cli embeds its build output directory (SPARK_MAX_SO_BUILT, option_env!), so its digest is bound to the
+# build path in [build].aien-cli-target-dir; the same path rebuilt from scratch gave the same digest.
+[executables]
+omega-runtime = "e702447fc50a3edc4279e7e47ea29c2e6a5d87b8ea5bbf8adc99c518cb3dfa62"
+omega-gpu-engine-lib = "e24cbfc9f8062a4845376421d4a0debff776c843bee5ddd2f047605dc01b2215"
+aien-cli-native-release = "8b24a5bb77518541446528af4b653c7334b2b027cdab6f288ecb6d579681cac5"
+aien-proof = "70c505e8e5492bb444f2620303f393d120c9e1894e89f316bf0a1d59556c4871"
+aien-test = "b1b4c71ff3869cc0b4c98e12131fe92f133851ba25acceb3d7558dcf40304a43"
+spark-max-bridge-so = "3630076d83b8ef2c02ff51afde84fb9b9deba7beaee0ea1266b394c84b59023f"
+aienos-boot-image = "a0e3ad101792c13409e9b2f99978c7fd785c288eea5252dbcaabfd5c726f3746"
+aienos-ck-core-image = "74e0a6ee69d01cbe9211eb951776c6d58a595a4e99f19e5d3de86ccc545d9346"
+physics-boot-bin = "4b22a08cd408b5cf90258af13b833b97a5211b4d2480fa74be357228f4aed3bd"
+atlas-m2-boot-bin = "1d6d75a6881bb9d9b17a777ec7dee885780386c4699d776adc7cc1c277b09012"
+
+# Model inputs for the real-model gates (inputs, never executables). Files are on the Spark under
+# ~/models/TinyLlama-1.1B-Chat-v1.0 (Hugging Face revision fe8a4ea1ffedaf415f4da2f062534de366a451e6, recorded in
+# the directory's .cache/huggingface/download metadata). The model and tokenizer digests equal the ones in
+# aien-sovereign-core crates/aien-inference-abi/fixtures/tinyllama_oracle_manifest.json.
+[model]
+model-id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+format = "safetensors, torch_dtype bfloat16"
+model-safetensors-sha256 = "6e6001da2106d4757498752a021df6c2bdc332c650aae4bae6b0c004dcf14933"
+model-safetensors-bytes = "2200119864"
+tokenizer-json-sha256 = "bcd04f0eadf90287bd26e1a183ac487d8a141b09b06aecb7725bbdd343640f2e"
+config-json-sha256 = "486bedda3a6988332e60d9638a09ca4b260d34ebcf1b19e22cf3b140b63d8fe9"
+geometry = "LlamaForCausalLM: layers 22, hidden 2048, heads 32, kv heads 4, head_dim 64 (hidden/heads), intermediate 5632, vocab 32000, max positions 2048, rope_theta 10000.0, rms_norm_eps 1e-05"
+oracle-fixture-safetensors-sha256 = "4707e3ba5c75f6c953217235528b38b3dffa334f68b8356f7356f9a5f6a6a6ea"
+oracle-fixture-manifest-sha256 = "d9871e7834513dfff5d453e6915440e4976098a7e84bc75086a3ab7833dcefd9"
+
+[toolchain]
+rustc = "rustc 1.98.1 (48a229cea 2026-09-01), LLVM 22.1.8, host aarch64-unknown-linux-gnu"
+cargo = "cargo 1.98.1 (797e8a9bc 2026-08-05)"
+cc = "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+make = "GNU Make 4.3"
+binutils = "GNU ld and ar 2.42 (Ubuntu)"
+cross-cc = "aarch64-linux-gnu-gcc, for physics m2_build.sh and the aienos C kernel (host is aarch64)"
+mojo = "Mojo 1.0.0 (ed45d567), a symlink into ~/max-env; used only by crates/spark-max-cabi/build.rs"
+rust-toolchain-file = "none in any pinned repo (gap G4)"
+
+# What was built and how. Paths are the L1-CAND worktrees under ~/workspace/overnight-1005.
+[build]
+physics = "./m2_build.sh (physics has no Makefile; omega compiles physics m16/nvrm sources directly). physics.bin and atlas_m2.bin rebuild byte for byte equal to the committed files."
+omega = "make -j6 PHYSICS_DIR=<physics worktree> OUT_DIR=<omega worktree>/build all libomega_gpu"
+aien-sovereign-core = "cargo build --release --locked --offline -p aien-cli -p aien-proof -p aien-test, default features (dev-fallback off), AIEN_OMEGA_DIR and AIEN_PHYSICS_DIR set, AIEN_DEV_FALLBACK and AIEN_FORCE_CPU_STUB unset"
+release-profile = "opt-level 3, lto true, codegen-units 1, panic abort, strip true (workspace Cargo.toml)"
+aienos = "make -C native/kernel -j4, then make -C native/kernel -j4 full (core image and full image)"
+aien-cli-target-dir = "/home/alice/workspace/overnight-1005/target-L1-CAND-sc"
+native-engine-linked = "cargo:rustc-cfg=has_omega_gpu printed by crates/aien-omega-gpu/build.rs; aien-cli carries the string OmegaGb10Backend (native Omega engine, no CUDA, NVIDIA GB10 sm_121)"
+
+# Environment of the production configuration. Dev fallback is a recorded opt-in, never part of a strict run.
+[env]
+AIEN_DEV_FALLBACK = "unset (production strict); CI sets 1 for host test runs, which a strict receipt rejects"
+AIEN_FORCE_CPU_STUB = "unset (would force the CPU stub library)"
+AIEN_OMEGA_DIR = "omega checkout at omega.lock, required for the native engine link"
+AIEN_PHYSICS_DIR = "physics checkout at omega physics.lock, required when physics is not at <omega>/../physics"
+AIEN_OMEGA_GPU_LIB = "unset (would link a prebuilt archive without a sha check)"
+AIEN_GPU_BACKEND = "omega demands the native backend at run time; AIEN_REQUIRE_BLACKWELL does the same"
+AIEN_E2E_CHECKPOINT = "directory of the TinyLlama checkpoint for the real-model gates"
+AIEN_MODEL_PATH = "safetensors file for aien-cli; with AIEN_TOKENIZER_PATH, AIEN_MODEL_DIR, AIEN_REQUIRE_CHECKPOINT=1 (no fallback to reference weights)"
+
+[hardware]
+machine = "spark, NVIDIA DGX Spark (GB10)"
+gpu = "NVIDIA GB10, Blackwell, part 2E12-275-A1, VBIOS 9A.0B.2D.00.00, driver 580.173.02"
+kernel = "Linux 7.0.0-1019-nvidia, aarch64"
+os = "Ubuntu 24.04.5 LTS"
+cpu = "20 cores: Cortex-X925 and Cortex-A725"
+memory = "127598528 kB"
+gpu-load-note = "The GPU was shared at freeze time (ollama llama-server, an atlas python process and MAX serve resident, util 94% per the campaign ledger). Chip timing taken under that load must say so."

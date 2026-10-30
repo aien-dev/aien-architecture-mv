@@ -4,10 +4,10 @@ Resolved architectural decisions are recorded here so implementation agents do n
 
 ## Naming ADRs across repositories
 
-`aien-architecture` and `aien-dev/aienos` number their ADRs independently, so the same number (for example 0012 or 0016) names two different decisions. In prose (docs, plans, issues, PRs, commit messages), cite an ADR with its repository prefix:
+`aien-architecture` and `aien-dev/aienux` number their ADRs independently, so the same number (for example 0012 or 0016) names two different decisions. In prose (docs, plans, issues, PRs, commit messages), cite an ADR with its repository prefix:
 
 - `ARCH-00nn`: an ADR in this repository (`aien-architecture/docs/adr/`), e.g. ARCH-0016 is the resident reaction architecture.
-- `OS-00nn`: an ADR in `aien-dev/aienos` (`docs/adr/`), e.g. OS-0012 is self-construction, capability growth and generations.
+- `OS-00nn`: an ADR in `aien-dev/aienux` (`docs/adr/`), e.g. OS-0012 is self-construction, capability growth and generations.
 
 A bare "ADR 00nn" is acceptable only inside the repository that owns it. Files are not renamed: the prefix is a citation convention, and existing file names and historical references stay as they are.
 
@@ -51,3 +51,5 @@ Current ADRs:
 - [0036 - Release v1 memory owner (lane L3): aien-allen-memory under an engaged ALLEN identity; remember and recall refuse when not engaged; every declared E2E run engages a fixture subject](0036-release-v1-memory-owner.md) - ACCEPTED 2026-10-10 (engineering decision under Drake directive; aien-architecture#197, aien-sovereign-core#386)
 - [0037 - Who signs native slot images: Owner Root directly, or a Release Signer it delegates to](0037-native-image-slot-signing-roles.md) - ACCEPTED 2026-10-12: Option A for native v1, Option B follow-on (addendum to 0024 Q3; aienos#333, aien-architecture#190)
 - [0038 - Names: Aienux is the kernel, AienOS is the operating system, the old names are retired](0038-names-aienux-kernel-aienos-system.md) - ACCEPTED 2026-10-20 (Drake; ledger L180)
+- [0039 - The typed-construction interface is Omega's primary agent programming interface: inspect / legal_actions / apply / obligations / realize / verify / explain_refusal; INVALID / INCOMPLETE / VALID-UNPROVEN / UNKNOWN](0039-typed-construction-agent-interface.md) - ACCEPTED 2026-10-26 (Main, delegated by Drake)
+- [0040 - Five identities; "same meaning, same identity" holds only under a named normalization system that fails toward CHANGED](0040-identity-layers-normalization.md) - ACCEPTED 2026-10-26 (Main, delegated by Drake); narrows the reading of 0015, 0018, 0019

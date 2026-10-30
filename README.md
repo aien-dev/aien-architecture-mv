@@ -4,15 +4,21 @@ The authority for how the AIEN project fits together: whole-system architecture,
 
 AIEN is a sovereign computing stack (one its owner builds, runs and controls end to end) being built in the open on an NVIDIA DGX Spark (Grace Blackwell GB10): its own operating system kernel (Aienux), its own reaction runtime and compiler (Omega), and its own machine realization layer (FORGE). Founding principle: closest to the metal, fastest wins. Build what is missing.
 
-Part of [AienOS](https://github.com/aien-dev/aienix), the core tree of AIEN. AienOS is the front door for newcomers; this repository is where the design decisions and the status of record are kept.
+Part of [AienOS](https://github.com/aien-dev/aienix), the whole system and core tree of AIEN. Aienux is its kernel, not the whole operating system. AienOS is the front door for newcomers; this repository is where the design decisions and the status of record are kept.
 
-**Status 2026-10-19: research-grade, pre-alpha.** Nothing in AIEN is described as qualified unless a receipt says so. Details follow.
+**Status 2026-10-26: AienOS is in alpha testing; the rest of the stack is research-grade and pre-alpha.** Alpha testers install one bundle: the Core engine built from aien-sovereign-core-mv `main`, the Omega install wizard and compiler (omc), and the CUDApp user-space replacement. Its GPU path runs only on the DGX Spark (GB10), and the three-run physical qualification has not been run. Everything outside that bundle, including the Aienux kernel, is pre-alpha. Nothing in AIEN is described as qualified unless a receipt says so. Details follow.
+
+## Human-Directed Agentic Engineering
+
+Development follows Human-Directed Agentic Engineering (HDAE): humans define goals, architecture, constraints, acceptance criteria and stopping points; agents implement, execute checks, diagnose failures and revise within those boundaries. Human review retains responsibility for claims, acceptance and release decisions. The existing plan authority, milestone registry and qualification requirements remain unchanged.
+
+For the documented method and systems-software case study, see Gregory M. Kurtzer, *Ginux: Building an Independent Kernel That Runs Linux Userspace through Human-Directed Agentic Engineering* (2026), [doi:10.5281/zenodo.23682548](https://doi.org/10.5281/zenodo.23682548). This is a description of the current development method, not a retrospective change to historical experiments or receipts.
 
 ## Current state
 
-Research-grade and pre-alpha. The live numbers are not repeated in this file because they change daily; read [CURRENT_EXECUTION_PLAN.md](CURRENT_EXECUTION_PLAN.md) and [doctrine/ROADMAP.md](doctrine/ROADMAP.md). What follows is a summary, with the source for each point.
+Alpha testing for the bundle above; research-grade and pre-alpha for everything else. The live numbers are not repeated in this file because they change daily; read [CURRENT_EXECUTION_PLAN.md](CURRENT_EXECUTION_PLAN.md) and [doctrine/ROADMAP.md](doctrine/ROADMAP.md). What follows is a summary, with the source for each point.
 
-- **Aienux kernel.** The C kernel passes its emulator (QEMU) gates but is not physically qualified, and it has not been booted on the DGX Spark. Only an earlier first-boot test of the previous Rust kernel ran there, on 2026-09-24 (see the [aienos README](https://github.com/aien-dev/aienos-mv#readme)). Its first runs on real hardware were on a Raspberry Pi 5 on 2026-10-13 (same README). An x86_64 build of it starts on a 2017 Intel iMac used as a test computer ([aienos-mv#405](https://github.com/aien-dev/aienos-mv/pull/405), merged 2026-10-17, and the follow-up pull requests #406 to #408). The aienos README does not yet describe the iMac runs.
+- **Aienux kernel.** The C kernel passes its emulator (QEMU) gates but is not physically qualified, and it has not been booted on the DGX Spark. Only an earlier first-boot test of the previous Rust kernel ran there, on 2026-09-24 (see the [Aienux README](https://github.com/aien-dev/aienux#readme)). Its first runs on real hardware were on a Raspberry Pi 5 on 2026-10-13 (same README). An x86_64 build of it starts on a 2017 Intel iMac used as a test computer ([aienux#405](https://github.com/aien-dev/aienux/pull/405), merged 2026-10-17, and the follow-up pull requests #406 to #408). The Aienux README does not yet describe the iMac runs.
 - **Omega runtime, R1 to R16 ladder.** The ladder was first qualified on builds that predate the composition modules now in the living build. Requalification at omega `3108fc2` recorded R15 FAIL (14 of 16 gates) and R16 FAIL (omega [`evidence/REQUAL-3108fc2/`](https://github.com/aien-dev/omega-mv/tree/main/evidence/REQUAL-3108fc2)). The ladder was rerun on candidate CAND-3 (omega `f816473`): R16 gates G1 to G8 PASS, and R15 passed 16 of 16 gates as a conditional pass, because Secure Boot was off for that run ([CAND-3 results](qualification/candidates/CAND-3.gates.md), [exception 0002](qualification/exceptions/0002-r15-secure-boot-off.md)). CAND-3 as a whole is not claimed qualified, and CAND-4 has no R15 or R16 rerun ([CAND-4 results](qualification/candidates/CAND-4.gates.md)). The R15 and R16 rows in [doctrine/ROADMAP.md](doctrine/ROADMAP.md) still carry the earlier wording (they stop at CAND-0 and CAND-1).
 - **ARGUS** (the defensive plane, which watches for attacks and proposes responses but never authorizes them). ARGUS-0, its event substrate, is complete under documented limits and ARGUS-1 containment is in progress ([ADR 0017](docs/adr/0017-argus-defensive-plane.md)).
 - **Specifications only.** Physics Zero, DIRAC-0, the Evolution Arena and the necessary-work programme are documents or plans with no qualified code (see [Specifications and plans](#specifications-and-plans-not-qualified-code) below).
@@ -59,7 +65,7 @@ AEGIS VERIFIES.  HARDWARE ACTS.  EVIDENCE TEACHES.
 
 | Repository | Role |
 | :--- | :--- |
-| [aienos-mv](https://github.com/aien-dev/aienos-mv) | The trusted operating system: its own kernel replacing Linux on the DGX Spark |
+| [aienux](https://github.com/aien-dev/aienux) | Aienux, the kernel of AienOS, intended to replace the Linux kernel on the DGX Spark |
 | [omega-mv](https://github.com/aien-dev/omega-mv) | The C reaction runtime and compiler that defines computation, and the native GB10 GPU engine |
 | [physics-mv](https://github.com/aien-dev/physics-mv) | FORGE machine realization, plus historical Atlas/PHYSICS boot evidence |
 | [aien-protocols-mv](https://github.com/aien-dev/aien-protocols-mv) | Versioned wire and state specifications |
@@ -95,15 +101,17 @@ The Spark runs five gates on every pull request. Each manifest in `tests/gates/`
 bash tests/gates/run.sh crumb-verify          # gate CRUMB-VERIFY: the crumbs are current
 bash tests/gates/run.sh crumb-tool-test       # gate ARCH-CRUMB-TOOL-TEST: the crumb tool tests
 bash tests/gates/run.sh script-tests          # gate ARCH-SCRIPT-TESTS: tests of the four checked scripts
-bash tests/gates/run.sh doctrine              # gate ARCH-DOCTRINE: doctrine consistency
+AIEN_OMC=<pinned omc> bash tests/gates/run.sh doctrine   # gate ARCH-DOCTRINE: doctrine consistency (tools/doctrine, seeded .om; NOT_RUN without the pinned compiler)
 bash tests/gates/run.sh qualification-status  # gate ARCH-QUALIFICATION-STATUS: R16 status wording
 ```
 
 `qualification-status` reads omega evidence, so it needs an omega checkout beside this one at `../omega`.
 
+For a Cargo repository, `CRUMB="$PWD/tools/crumb/crumb" bash scripts/pipeline-proofs/18-crumb-only-no-rebuild.sh <repo>` checks that a `.crumb`-only commit does not rebuild crates. It uses a persistent target cache at `${XDG_CACHE_HOME:-$HOME/.cache}/aien/pipeline/target-cold`, outside the temporary clone; set `TARGET_DIR` to reuse a different cache. The proof never deletes that cache. `CARGO_ARGS` defaults to `--locked --offline`.
+
 ## How a pull request is judged
 
-Since 2026-10-16 the DGX Spark is the only test judge for pull requests ([ADR 0033](docs/adr/0033-aien-verification-pipeline.md)). On 2026-10-18 the hosted test workflows were removed (pull request #270); the one workflow left in `.github/workflows/` is `aien-verification.yml`. The Spark runs the five gates above and signs the result. `main` is protected and requires only the `AIEN Verification` check, which confirms that the signed bundle is in [aien-receipts](https://github.com/aien-dev/aien-receipts). The verdict of record is the commit status "AIEN Verification (Spark)". [docs/PIPELINE.md](docs/PIPELINE.md) explains the flow.
+Since the 2026-10-24 merge-policy change, GitHub-hosted **AIEN Checks** on pull requests and `main` are advisory: they run `crumb verify` and, for enrolled repositories, portable smoke gates. They do not download a signed Spark bundle or gate a merge. The **AIEN Alpha** job runs only on `alpha/*` tags, requiring a signed full Spark bundle for a tagged commit on `main`. See [docs/PIPELINE.md](docs/PIPELINE.md) for the current flow and the older process.
 
 The crumb tool on `main` can now compute the generated part of each `.crumb` file on demand instead of storing it (RFC-0003 amendment 1, pull request #271, merged 2026-10-18; [docs/CRUMB_PROTOCOL_RFC_0003.md](docs/CRUMB_PROTOCOL_RFC_0003.md)). This repository switched on 2026-10-19 (pull request #272): its `.crumb` files no longer store that data, and `crumb verify .` computes it when it checks.
 
@@ -111,11 +119,11 @@ The crumb tool on `main` can now compute the generated part of each `.crumb` fil
 
 - Release candidates and their gate results: [qualification/candidates](qualification/candidates) and [qualification/exceptions](qualification/exceptions).
 - Receipts for runs: in the repository that ran them, mostly omega [`evidence/`](https://github.com/aien-dev/omega-mv/tree/main/evidence), cited from [CURRENT_EXECUTION_PLAN.md](CURRENT_EXECUTION_PLAN.md) and [doctrine/ROADMAP.md](doctrine/ROADMAP.md).
-- Signed pull request verdicts from the Spark: [aien-receipts](https://github.com/aien-dev/aien-receipts).
+- Signed Spark bundles, when produced: [aien-receipts](https://github.com/aien-dev/aien-receipts). Their absence on an ordinary PR is not a hosted-check failure.
 
 ## Contributing
 
-Open a pull request against `main` with docs-only or doctrine changes, cite the receipt or code you are relying on, and state any outside review you obtained. `main` is protected: no direct pushes. A pull request merges only after the Spark judge passes it and a maintainer adds the `ready-to-merge` label. Questions and design ideas are welcome as issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Open a pull request against `main` with docs-only or doctrine changes, cite the receipt or code you are relying on, and state any outside review you obtained. Hosted PR checks are advisory, not a signed Spark qualification or permission to merge; do not add the `ready-to-merge` label without the maintainer's approval. Questions and design ideas are welcome as issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

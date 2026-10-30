@@ -1,0 +1,1 @@
+# Zero-legacy fixture

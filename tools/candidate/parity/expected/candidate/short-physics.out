@@ -1,0 +1,2 @@
+FAIL: commit for commits.physics is not 40 lowercase hex: abc123
+rc=1

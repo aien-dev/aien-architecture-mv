@@ -1,0 +1,1 @@
+bash under a UTF-8 LANG counts U+2003 (any iswspace character) as [[:space:]]; the .om knows the six ASCII spaces only

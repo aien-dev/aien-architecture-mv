@@ -15,7 +15,7 @@ This file is the **single authoritative source** for Sovereign Machine milestone
 
 - Every other doctrine page references this file instead of restating the milestone table or milestone status.
 - Milestone status is changed **only** here. A status change must cite the qualifying evidence (issue, PR, or receipt).
-- `scripts/check_doctrine.sh` enforces this: it fails if another doctrine page duplicates the roadmap table, carries its own milestone status tags, or cites a milestone code identifier under a milestone number different from the one below.
+- `tools/doctrine/doctrine.om` (the `doctrine` gate step) enforces this: it fails if another doctrine page duplicates the roadmap table, carries its own milestone status tags, or cites a milestone code identifier under a milestone number different from the one below.
 
 > **Historical naming rule:** ADR 0014 renames the current machine-realization subsystem to **FORGE**. Existing milestone identifiers such as `PHYSICS_BOOT`, `PHYSICS_EFFECTS`, and `PHYSICS_ACCELERATOR_LINK` remain unchanged because milestone/evidence identity is historical provenance.
 
@@ -124,9 +124,10 @@ Era ranges: Foundational M0-M3; Omega Core Substrate M4-M7; Program Synthesis & 
 ### M6: `OMEGA_SELF_HOST` (correction note, 2026-09-30)
 - The historical identifier, commit `8033c38`, receipt `evidence/omega_self_host_qualification_receipt.json` and the COMPLETE row above are kept unchanged. The 10 M6 gates as specified did pass.
 - What the gates actually proved: the emitted "compiler" (`src/omega_self_host.c`, `emit_compiler_code`) checks the `OMGG` header, then dispatches on the object-count byte. For the 8-object graph $G_S$ it writes three constant words (ADD, SUB, RET). For the 5-object graph $G_C$ it copies its own instruction bytes. So `C1 == C2 == C3` holds by self-copy (quine style), not by compiling $G_C$.
-- M6 is therefore **not** evidence of a general Omega compiler or of compiler self-hosting, and it does not satisfy `SOVEREIGNTY.md` §6.3 invariant 1. A general Omega compiler does not exist on omega main. What exists is narrower: `omega_program_realize` (`src/omega_program.c`) lowers one program body shape (a sequence of arithmetic and bitwise operations with immediate constants across 8/16/32/64-bit integer types) to AArch64, and omega itself names this realization, not a compiler; the surface-language front end (`src/language/`) is partial; the compiler slice is OSC-1 work. Update 2026-10-01 (Lane 33): the OSC-1 slice (`aien-spark/omega#144` `b81f850`) and OSC-2 (`#148` to `#151`, last `7e713e3`: checked contracts, structs, arenas) are merged, IMPLEMENTED / NOT QUALIFIED with host receipts only. It is a compiler slice, not self-hosting, and not a general Omega compiler; M6 is unchanged.
+- M6 is therefore **not** evidence of a general Omega compiler or of compiler self-hosting, and it does not satisfy `SOVEREIGNTY.md` §6.3 invariant 1. At the correction's 2026-09-30 source pin, omega main had no general compiler: `omega_program_realize` (`src/omega_program.c`) lowered one arithmetic/bitwise program-body shape to AArch64; the surface-language front end (`src/language/`) was partial. The 2026-10-01 OSC-1 (`aien-spark/omega#144` `b81f850`) and OSC-2 (`#148` to `#151`, last `7e713e3`) slices were IMPLEMENTED / NOT QUALIFIED with host receipts. Those historical results remain separate from later compiler work.
 - Source of this correction (omega main `6d1ff1d`): `spec/self-host.md` note of 2026-09-29; `docs/adr/OMEGA-SYSTEMS-CORE-0000.md` item C8 (decided by Drake Stapleton, 2026-09-29: the M6 result "was a fixed-output self-copy check, not compilation, and is never evidence of a compiler"); `docs/osc/audit/language-compiler.md`.
 - Reopening M6 or redefining its gate is an explicit decision that has not been taken. Until then the row stays COMPLETE with this note.
+- Current compiler status (2026-10-26): omega-mv main includes the seeded `.om` compiler (`seed/omc/omc.om` and `seed/out/omc`), landed via [PR #696](https://github.com/aien-dev/omega-mv/pull/696); see [omega-mv README](https://github.com/aien-dev/omega-mv/blob/ec07d25d5506d33567adbd4d9b518177b7933bad/README.md). This does **not** retroactively qualify M6 as compiler self-hosting, nor establish untested compiler capabilities.
 
 ### M7 — `OMEGA_VERIFY`
 - REQUIRED: V0 Structural/Type/Capability, V1 Differential, V2 Property/Invariant.
@@ -164,7 +165,7 @@ One nontrivial abstraction not present in the initial library that:
 ### M15 — `PHYSICS_ACCELERATOR_LINK`
 - Status: **COMPLETE / HARDWARE BOUNDARY QUALIFIED**.
 - Qualified 2026-09-26 under `aien-spark/physics#10` and `aien-spark/omega#21`.
-- Grounded in observed DGX Spark physical topology (`spark-b87b`): NVIDIA GB10 (`10de:2e12` @ `000f:01:00.0`, IOMMU group 20), ARM SMMUv3 (`arm-smmu-v3.1.auto` @ `0x13000000`, Stream ID `0x0100`), BAR0 aperture `0x24000000-0x27ffffff` (64 MiB), within 128 GiB unified coherent LPDDR5x DRAM `[0x80000000, 0x2080000000)`.
+- Grounded in observed DGX Spark physical topology: NVIDIA GB10 (`10de:2e12` @ `000f:01:00.0`, IOMMU group 20), ARM SMMUv3 (`arm-smmu-v3.1.auto` @ `0x13000000`, Stream ID `0x0100`), BAR0 aperture `0x24000000-0x27ffffff` (64 MiB), within 128 GiB unified coherent LPDDR5x DRAM `[0x80000000, 0x2080000000)`.
 - Canonical Boundary Principle:
   - M15 establishes who may touch the accelerator (authority model & topology grounding).
   - M16 discovers how the accelerator is actually commanded (empirical submission path discovery).
@@ -190,7 +191,7 @@ One nontrivial abstraction not present in the initial library that:
   - Original Receipt: `physics/evidence/m16-blackwell-native-path-receipt.json`
   - Status: **SUPERSEDED / FAILED INDEPENDENT RUNTIME AUDIT**
   - Historical Record: Retained in git history as an immutable audit record. The original harness linked and loaded `libcuda.so.1`, called CUDA initialization APIs (`cuInit`, `cuStreamCreate`), and reused session-specific queue addresses.
-- Grounded on live DGX Spark (`spark-b87b`) hardware without libcuda:
+- Grounded on live DGX Spark hardware without libcuda:
   - Hardware: NVIDIA GB10 (Grace Blackwell, sm_121 / 0xa04), GPU ID `0xf0100`, bus `0000000f:01:00.0`.
   - Zero Foreign Userspace Runtime: `ldd`, `nm -u`, and `/proc/$PID/maps` verified zero `libcuda`, `libcudart`, or `libnvidia` dependencies. Linked strictly against standard C library (`libc.so.6`).
   - Native Resource Allocation: Raw ioctls on `/dev/nvidiactl`, `/dev/nvidia0`, and `/dev/nvidia-uvm` dynamically allocate client, device, subdevice, memory, and channel resources.
@@ -210,7 +211,7 @@ One nontrivial abstraction not present in the initial library that:
 - Final Evidence Receipt: `aien-spark/omega@43f725e` (PR #23, `evidence/omega_blackwell_vector_qualification_receipt.json`).
 - M16 Authority Substrate: `aien-spark/physics@b64753d` (PR #11).
 - Specification: [`docs/milestone-17-spec.md`](../docs/milestone-17-spec.md).
-- Silicon Target: NVIDIA DGX Spark (`spark-b87b`), Grace Blackwell GB10 (sm_121, 128 GiB unified LPDDR5x RAM).
+- Silicon Target: NVIDIA DGX Spark, Grace Blackwell GB10 (sm_121, 128 GiB unified LPDDR5x RAM).
 - Semantic Contract: Unsigned 32-bit vector addition ($C[i] = (A[i] + B[i]) \pmod{2^{32}}$) with exact bit-for-bit mathematical parity against OMEGA semantic oracle across boundary lengths $N \in \{1, 15, 63, 64, 65, 127, 128, 256, 1024\}$.
 - Four-Component Realization Identity: $\text{SHA-256}(\text{spec\_id} \parallel \text{machine\_id} \parallel \text{code\_digest} \parallel \text{sm\_arch})$ uniquely locking semantic operation, machine graph, machine code artifact, and GPU SM microarchitecture.
 - Qualification Gates: 18 / 18 Milestone 17 qualification gates passed.
@@ -224,7 +225,7 @@ One nontrivial abstraction not present in the initial library that:
 - Ratified 2026-09-26.
 - Implementation: `aien-spark/omega` (commit `9421737`, receipt commit `87349c0`).
 - Authority Substrate: `aien-spark/physics` M16 native submission (commit `b64753d`).
-- Hardware Target: NVIDIA DGX Spark (`spark-b87b`), Grace Blackwell GB10 (`sm_121`, 128 GiB unified LPDDR5x RAM).
+- Hardware Target: NVIDIA DGX Spark, Grace Blackwell GB10 (`sm_121`, 128 GiB unified LPDDR5x RAM).
 - Code Truth Doctrine: Zero static precompiled instruction tables in codegen core; dynamic sm_121 instruction selection, bounded linear-scan register allocation, 128-bit machine word encoding, and QMD launch descriptor synthesis.
 - Tensor Core Acceleration: Native physical GB10 execution of `HMMA.16816.F32` (FP16 inputs) and `HMMA.16816.F32.BF16` (BF16 inputs) with FP32 accumulation.
 - 9-Point Proof Bundle: (1) OMEGA IR HMMA node, (2) Quad/pair bounded regalloc trace, (3) Emitted 128-bit machine words, (4) Research-oracle instruction decode, (5) Runtime SHA-256 code digest, (6) Physical GB10 completion marker `0x44444444` and semaphore `6`, (7) FP32 numerical parity within bound (< 10^-4), (8) Controlled mutation test proving divergence/refusal, (9) Zero-libcuda runtime audit.
@@ -236,7 +237,7 @@ One nontrivial abstraction not present in the initial library that:
 ### M19: `OMEGA_ACCELERATOR_RESIDENT`
 - Status: **COMPLETE / CORRECTIVELY REQUALIFIED** (closed 2026-09-30 via M19R Gate 14, `aien-spark/omega#111` `5517d22`, receipt `50dd611b...`; previously recorded here as **REOPENED / IN PROGRESS** while the M19R recovery program ran).
 - Specification: `docs/milestone-19-spec.md`.
-- Target Substrate: Persistent Omega Execution Substrate in Coherent Memory on NVIDIA DGX Spark (`spark-b87b`, Grace Blackwell GB10, `sm_121`, 128 GiB unified LPDDR5x RAM).
+- Target Substrate: Persistent Omega Execution Substrate in Coherent Memory on NVIDIA DGX Spark (Grace Blackwell GB10, `sm_121`, 128 GiB unified LPDDR5x RAM).
 - Authority Substrate: `aien-spark/physics` M16 native submission (commit `b64753d`), `aien-spark/omega` M18 (commit `7273c37`).
 - Architecture: `OmegaAcceleratorWorld` holding persistent RM client, GPU device object, VAS aperture, GPFIFO compute channel, USERD doorbell mapping, completion semaphore ring, code registry, buffer registry, and coherent scratch arena.
 - Core Invariant: `resident != immortal`. Every resident object requires explicit monotonic generation counters, capability-bounded access scopes, fail-closed stale handle refusal, deterministic capability revocation, and clean zero-leak teardown.

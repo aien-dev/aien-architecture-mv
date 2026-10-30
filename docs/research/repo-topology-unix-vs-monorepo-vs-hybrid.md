@@ -2,7 +2,7 @@
 
 Date: 2026-10-16. Question from Drake: is a Unix-style GitHub setup (many small repositories, one per tool) more efficient long term, or a monorepo, or a hybrid (one core repo with adapters and modules in separate repos)?
 
-Labels: claims marked UNVERIFIED could not be confirmed from a primary source. "Inference" means my reasoning from the cited facts. Local facts come from the read-only clones under `/home/drakestapleton/workspace/pipeline/clones/`.
+Labels: claims marked UNVERIFIED could not be confirmed from a primary source. "Inference" means my reasoning from the cited facts. Local facts come from the read-only clones under `~/workspace/pipeline/clones/`.
 
 ## 1. What "Unix-style" actually means
 

@@ -1,7 +1,7 @@
 # Evidence chain inventory (Milestone 0, read-only scout)
 
 Pins: aien-protocols 407487b7e163, interplane 667fbe811f78, spark-inquisitor 230d257199b7 (ARCHIVED), benchmarks 8d4dfde8f944.
-Paths are relative to /home/drakestapleton/workspace/adaptive/. Nothing was built or run; all claims are from reading source.
+Paths are relative to ~/workspace/adaptive/. Nothing was built or run; all claims are from reading source.
 
 ## Classification table
 

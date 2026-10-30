@@ -1,6 +1,6 @@
 # Authority and Cortex ownership inventory (Milestone 0)
 
-Scout: read-only. Repos at pins in /home/drakestapleton/workspace/adaptive/PINS.txt (omega 16e729b6d844, aienos 3b2004b692a7, aegis-runtime 1eba7a7223ba, aien-sovereign-core 00e7ef05302c, cortex-rs 0606636f110d). Paths are relative to /home/drakestapleton/workspace/adaptive/. Claims without a source are marked UNVERIFIED.
+Scout: read-only. Repos at pins in ~/workspace/adaptive/PINS.txt (omega 16e729b6d844, aienos 3b2004b692a7, aegis-runtime 1eba7a7223ba, aien-sovereign-core 00e7ef05302c, cortex-rs 0606636f110d). Paths are relative to ~/workspace/adaptive/. Claims without a source are marked UNVERIFIED.
 
 ## 1. Classification table
 

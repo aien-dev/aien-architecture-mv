@@ -64,7 +64,7 @@ Build/run lives in `mk/physics0*.mk`, included by `Makefile:5`, output in `build
 | `make physics0-pd0b-run PD0_WORLD_BIN=.. PD0B_SEEDS=..` (`:83-90`) | `pd0b_run.sh`, harness | frozen learner vs external world, new receipt each run, refuses dirty tree | yes |
 | `make physics0-pd1-run RECORDS=..` (`mk/physics0-pd1.mk:5`) | `pd1/pd1_run.c` | unchanged learner on machine records, development only | seeded |
 
-Exact baseline command (verified present with `make -n`, not executed): from `/home/drakestapleton/workspace/adaptive/omega`: `make test-physics0-learner && make physics0-test && make test-physics0-verify`. For learning-quality numbers: `make physics0-learner-dev` (prints one PD0L line per level and seed).
+Exact baseline command (verified present with `make -n`, not executed): from `~/workspace/adaptive/omega`: `make test-physics0-learner && make physics0-test && make test-physics0-verify`. For learning-quality numbers: `make physics0-learner-dev` (prints one PD0L line per level and seed).
 
 Baseline results on record (evidence/physics0/learner/pd0-learner-dev-b1ae4f609128.txt; LEARNER.md:85-94): L0-L5 REPLICATED 5/5 with scorer PASS; L6 stops at CANDIDATE (code 251, 3 refutations) 5/5; null stays OBSERVATION.
 
