@@ -4,9 +4,9 @@ The authority for how the AIEN project fits together: whole-system architecture,
 
 AIEN is a sovereign computing stack (one its owner builds, runs and controls end to end) being built in the open on an NVIDIA DGX Spark (Grace Blackwell GB10): its own operating system kernel (Aienux), its own reaction runtime and compiler (Omega), and its own machine realization layer (FORGE). Founding principle: closest to the metal, fastest wins. Build what is missing.
 
-Part of [AienOS](https://github.com/aien-dev/aienix), the whole system and core tree of AIEN. Aienux is its kernel, not the whole operating system. AienOS is the front door for newcomers; this repository is where the design decisions and the status of record are kept.
+The whole system is Sovereign Intelligence (SI). AienOS is only the operating-system layer; Aienux is its kernel. [aien-dev/aienix](https://github.com/aien-dev/aienix) is retired. [sovereign-intelligence](https://github.com/aien-dev/sovereign-intelligence) is the integration, release and install center, and the place where the signed Spark test runs ([ADR 0045](docs/adr/0045-aienix-retired-sovereign-intelligence-center.md)). This repository is where the design decisions and the status of record are kept.
 
-**Status 2026-10-26: AienOS is in alpha testing; the rest of the stack is research-grade and pre-alpha.** Alpha testers install one bundle: the Core engine built from aien-sovereign-core-mv `main`, the Omega install wizard and compiler (omc), and the CUDApp user-space replacement. Its GPU path runs only on the DGX Spark (GB10), and the three-run physical qualification has not been run. Everything outside that bundle, including the Aienux kernel, is pre-alpha. Nothing in AIEN is described as qualified unless a receipt says so. Details follow.
+**Status 2026-10-26: Sovereign Intelligence (SI) is in alpha testing; the rest of the stack is research-grade and pre-alpha ([ADR 0045](docs/adr/0045-aienix-retired-sovereign-intelligence-center.md)).** Alpha testers install one bundle: the Core engine built from aien-sovereign-core-mv `main`, the Omega install wizard and compiler (omc), and the CUDApp user-space replacement. Its GPU path runs only on the DGX Spark (GB10), and the three-run physical qualification has not been run. Everything outside that bundle, including the Aienux kernel, is pre-alpha. Nothing in AIEN is described as qualified unless a receipt says so. Details follow.
 
 ## Human-Directed Agentic Engineering
 
@@ -44,7 +44,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | :--- | :--- |
 | `PLAN_AUTHORITY.md`, `CURRENT_EXECUTION_PLAN.md` | Which plan wins, and the one active plan |
 | `doctrine/` | The canonical architecture and the milestone registry |
-| `docs/adr/` | Architecture decision records (37 on `main`, listed in the [index](docs/adr/README.md)) |
+| `docs/adr/` | Architecture decision records (45 on `main`, listed in the [index](docs/adr/README.md)) |
 | `docs/plans/` | Finite workstream plans (not master plans) |
 | `docs/research/` | Research notes, for example the [repository layout note](docs/research/repo-topology-unix-vs-monorepo-vs-hybrid.md) and the [Hermes Agent note](docs/research/hermes-agent-prior-art.md) |
 | [Aienet collaborator directory](docs/research/aienet-collaborators.md) | Prospective academic and community contacts, sources, collaboration questions, and SI-agent outreach rules; not an affiliation or enrollment list |
@@ -78,7 +78,7 @@ Allen has now evolved into the final Aien (2026-10-26).
 | [aien-sovereign-core-mv](https://github.com/aien-dev/aien-sovereign-core-mv) | The Rust host runtime on Linux (the `aien` command line, inference ABI, KV cache, scheduler) and the verification pipeline that judges every repository; Rust here is scaffolding that Omega replaces piece by piece (ADR 0024) |
 | aien-architecture-mv (this repository) | Architecture, decision records, milestone status and the execution plan |
 
-These six are the core of [AienOS](https://github.com/aien-dev/aienix). They still live in separate repositories and will move into the one AienOS tree one at a time; the research note on the layout is in [docs/research](docs/research/repo-topology-unix-vs-monorepo-vs-hybrid.md). Signed test results for all of them are published to [aien-receipts](https://github.com/aien-dev/aien-receipts). Historical `PHYSICS_*` milestone names stay unchanged in old milestones and evidence. Older documents link to `aien-spark/<name>` or `aien-dev/<name>`; those addresses are the same repositories under earlier names.
+These six keep their own parts and still live in separate repositories. [sovereign-intelligence](https://github.com/aien-dev/sovereign-intelligence) is the integration, release and install center, and the place where the signed Spark test runs; [aien-dev/aienix](https://github.com/aien-dev/aienix) is retired ([ADR 0045](docs/adr/0045-aienix-retired-sovereign-intelligence-center.md)). The research note on the layout is in [docs/research](docs/research/repo-topology-unix-vs-monorepo-vs-hybrid.md). Signed test results for all of them are published to [aien-receipts](https://github.com/aien-dev/aien-receipts). Historical `PHYSICS_*` milestone names stay unchanged in old milestones and evidence. Older documents link to `aien-spark/<name>` or `aien-dev/<name>`; those addresses are the same repositories under earlier names.
 
 ## Standing rules
 
