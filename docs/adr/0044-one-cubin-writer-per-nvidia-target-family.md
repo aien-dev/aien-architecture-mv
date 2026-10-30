@@ -54,7 +54,7 @@ rebases onto this layout.
 
 CUDApp#108 tracks consolidation, and CUDApp#190's note becomes the inventory. tkinfo on
 sm_121 ABI 8 and the stored register count are tracked in CUDApp#190. The alu.s2 race issue
-is still to be filed in CUDApp. Hardware tiers stay NOT_RUN until an authorized window.
+is [CUDApp#191](https://github.com/aien-dev/CUDApp/issues/191). Hardware tiers stay NOT_RUN until an authorized window.
 This ADR moves no code.
 
 ## Source
