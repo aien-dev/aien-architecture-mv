@@ -1,0 +1,134 @@
+note SPDX-License-Identifier: Apache-2.0
+note Test-only builder for #316. Transform the actual scanner, never a copied implementation.
+note Refuse unless each instrumentation anchor occurs exactly once; no production test hooks.
+text tsrc "closure.om"
+text tdrv "fixtures/io-errors.om"
+text tmain "fn main to int"
+text tget "r = getdnts int fd dbuf 0 len dbuf"
+text tnl "\n"
+text tpref "global io_fault ulong 1\n"
+text tren "fn inventory_main to int\n"
+text tinj "if eq get io_fault 0 1\nr = getdnts -1 dbuf 0 len dbuf\nend\nput io_fault 0 1\n"
+global buf uchar 65536
+global used ulong 1
+
+fn load k ulong to bool
+fd = long -1
+if eq k 0
+fd = fopen tsrc 0 len tsrc 0 0
+else
+fd = fopen tdrv 0 len tdrv 0 0
+end
+if lt fd 0
+ret false
+end
+n = ulong 0
+while true bound 65537
+if eq n len buf
+r = fclose int fd
+ret false
+end
+r = read int fd buf n sub len buf n
+if lt r 0
+c = fclose int fd
+ret false
+end
+if eq r 0
+break
+end
+n = add n ulong r
+end
+r = fclose int fd
+put used 0 n
+ret true
+end
+
+fn ismain s ulong m ulong to bool
+if ne m len tmain
+ret false
+end
+for i ulong m
+if ne get buf add s i get tmain i
+ret false
+end
+end
+ret true
+end
+
+fn isget s ulong m ulong to bool
+if ne m len tget
+ret false
+end
+for i ulong m
+if ne get buf add s i get tget i
+ret false
+end
+end
+ret true
+end
+
+fn main to int
+if not load 0
+ret 65
+end
+r = write 1 tpref 0 len tpref
+if ne r long len tpref
+ret 66
+end
+n = get used 0
+s = ulong 0
+mc = ulong 0
+gc = ulong 0
+while lt s n bound 65536
+e = s
+while lt e n bound 65536
+if eq get buf e 10
+break
+end
+e = add e 1
+end
+m = sub e s
+nxt = e
+if lt nxt n
+nxt = add nxt 1
+end
+if ismain s m
+mc = add mc 1
+r = write 1 tren 0 len tren
+if ne r long len tren
+ret 66
+end
+else
+r = write 1 buf s sub nxt s
+if ne r long sub nxt s
+ret 66
+end
+if isget s m
+gc = add gc 1
+if eq nxt e
+ret 65
+end
+r = write 1 tinj 0 len tinj
+if ne r long len tinj
+ret 66
+end
+end
+end
+s = nxt
+end
+if or ne mc 1 ne gc 1
+ret 65
+end
+r = write 1 tnl 0 len tnl
+if ne r long len tnl
+ret 66
+end
+if not load 1
+ret 65
+end
+r = write 1 buf 0 get used 0
+if ne r long get used 0
+ret 66
+end
+ret 0
+end

@@ -5,9 +5,9 @@ note Builds closure.om, expect.om and sha256.om with OMC, hashes OMC with the na
 note compares it to omega.pin, runs the hostile and clean fixtures in release mode, judges the
 note reports with expect, prints AIEN-OBS lines. Exit 0 only when every expectation holds;
 note 3 when OMC is missing or does not match the pin (NOT_RUN); 1 otherwise.
-note The only thing outside this program is whoever compiled it (gate.sh, three lines).
+note gate.sh authenticates the compiler independently before compiling this native fixture gate.
 
-text tbl "closure.om\nexpect.om\nsha256.om\nbuild/closure\nbuild/expect\nbuild/sha256\nfixtures/tree\nrelease\nfixtures/manifest.txt\nfixtures/clean\nfixtures/clean-manifest.txt\nfixtures/tree.expected\nfixtures/clean.expected\nbuild/tree.out\nbuild/clean.out\nbuild/clean2.out\nbuild/omc.sha\nbuild/closure.sha\nomega.pin\nbuild\n"
+text tbl "closure.om\nexpect.om\nsha256.om\nbuild/closure\nbuild/expect\nbuild/sha256\nfixtures/tree\nrelease\nfixtures/manifest.txt\nfixtures/clean\nfixtures/clean-manifest.txt\nfixtures/tree.expected\nfixtures/clean.expected\nbuild/tree.out\nbuild/clean.out\nbuild/clean2.out\nbuild/omc.sha\nbuild/closure.sha\nomega.pin\nbuild\nfixtures/io-build.om\nbuild/io-build\nbuild/io-errors.om\nbuild/io-errors\nfixtures/clean/src\nread-error\ndirectory-error\nbuild/read-error.out\nbuild/directory-error.out\n"
 text tobs "AIEN-OBS "
 text tcls "closure_sha256 \""
 text tq "\"\n"
@@ -16,6 +16,8 @@ text tcle "clean_release_exit "
 text tcl2 "clean_undeclared_exit "
 text tex1 "expect_tree_exit "
 text tex2 "expect_clean_exit "
+text trerr "read_error_exit "
+text tderr "directory_error_exit "
 text tnl "\n"
 text tuse "usage: gate OMC\n"
 text tnot "gate: OMC missing or not the pinned compiler (NOT_RUN)\n"
@@ -297,6 +299,32 @@ noio
 ret run
 end
 
+note Build the test copy natively; no shell transformation or production fault switch.
+fn buildio to bool
+if not compile 20 21
+ret false
+end
+pk0
+pkt 21
+put finl 0 0
+setout 22
+r = run
+if ne r 0
+ret false
+end
+ret compile 22 23
+end
+
+fn iotest mode ulong out ulong to long
+pk0
+pkt 23
+pkt 24
+pkt mode
+put finl 0 0
+setout out
+ret run
+end
+
 note ---- output ----
 
 fn wnum v long to void
@@ -344,6 +372,12 @@ end
 if eq k 4
 r = write 1 tex2 0 len tex2
 end
+if eq k 5
+r = write 1 trerr 0 len trerr
+end
+if eq k 6
+r = write 1 tderr 0 len tderr
+end
 wnum v
 r = write 1 tnl 0 1
 end
@@ -389,17 +423,25 @@ if not hashto 3 17
 r = write 2 tcf 0 len tcf
 ret 1
 end
+if not buildio
+r = write 2 tcf 0 len tcf
+ret 1
+end
 obs1
 a = tree
 b = clean
 c = clean2
 d = judge 13 11
 e = judge 14 12
+f = iotest 25 27
+g = iotest 26 28
 obsn 0 a
 obsn 1 b
 obsn 2 c
 obsn 3 d
 obsn 4 e
+obsn 5 f
+obsn 6 g
 if ne a 1
 ret 1
 end
@@ -413,6 +455,12 @@ if ne d 0
 ret 1
 end
 if ne e 0
+ret 1
+end
+if ne f 0
+ret 1
+end
+if ne g 0
 ret 1
 end
 ret 0

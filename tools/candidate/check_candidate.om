@@ -574,7 +574,6 @@ ret
 end
 slurpf int fd
 r = fclose int fd
-dropnul
 end
 
 fn loada to void
@@ -1794,9 +1793,11 @@ put pooln 0 0
 put failf 0 0
 put namend 0 0
 loadm
+note Bind amendments to the raw frozen file, before parser-only NUL removal.
+sha256
+dropnul
 parse 0
 put poolm 0 get pooln 0
-sha256
 for i ulong 4
 if eq vlen kfind 0 i 0
 fail0

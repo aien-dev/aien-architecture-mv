@@ -11,7 +11,7 @@ The whole operating system: Aienux plus Omega plus the runtime (sovereign core) 
 _Avoid_: Aienix (retired: another company uses it), AIENOS, Aienos
 
 **Aienux**:
-The kernel: it boots the machine and drives the hardware (today the repository aienos-mv).
+The kernel: it boots the machine and drives the hardware (repository aien-dev/aienux; the old name aienos-mv is retired, ADR 0038).
 _Avoid_: AIENOS, Aienos, "the OS" when only the kernel is meant
 
 **AIEN**:
