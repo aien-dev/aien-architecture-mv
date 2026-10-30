@@ -1,0 +1,11 @@
+note SPDX-License-Identifier: Apache-2.0
+note Test-only loader sentinel. This must never execute through gate.sh.
+text marker "build/untrusted-compiler-ran"
+fn main to int
+fd = fopen marker 0 len marker 577 420
+if lt fd 0
+ret 97
+end
+r = fclose int fd
+ret 98
+end
