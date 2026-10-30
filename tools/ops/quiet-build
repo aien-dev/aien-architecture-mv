@@ -1,0 +1,58 @@
+#!/bin/sh
+# quiet-build CMD...  Run a build or CPU-heavy job politely.
+# Waits while a measurement is pending (flag files in /tmp/aien-quiet.want.d whose
+# owner process is alive; at most 1 min, L405), then passes the gate /tmp/aien-quiet.gate (a measurement window
+# at the front of the line holds it while the quiet lock drains; L322, 2026-10-21), then holds
+# /tmp/aien-quiet.lock shared. Locks already held are never affected by the gate.
+# L405 (2026-10-22, Drake: "stop chip locking"): correctness work never waits behind a timing
+# lock for long. ALL waiting together (flags + gate + lock) is capped at SPARK_BUILD_MAX_WAIT
+# seconds (default 1500 = 25 min: a timing window holds at most 20 min after at most 5 min of
+# draining). Past the cap the job runs anyway at nice 19, without the lock, and the overrun is
+# written to the open window (its numbers become "shared machine") and to
+# ~/.local/state/quiet/intrusions.log. Every wait is logged in ~/.local/state/quiet/waits.log.
+# SPARK_QUIET_LOCK / SPARK_QUIET_GATE / SPARK_QUIET_WANT / SPARK_WINDOWS_ROOT / SPARK_BUILD_MAX_WAIT override (tests only).
+case "${1-}" in
+  ""|-h|--help|help)
+    sed -n '2,/^[^#]/{/^#/s/^# \{0,1\}//p}' "$0"
+    exit 0 ;;
+esac
+Q=${SPARK_QUIET_LOCK:-/tmp/aien-quiet.lock}; GATE=${SPARK_QUIET_GATE:-/tmp/aien-quiet.gate}
+W=${SPARK_QUIET_WANT:-/tmp/aien-quiet.want.d}; WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
+MAXW=${SPARK_BUILD_MAX_WAIT:-1500}
+L=$HOME/.local/state/quiet; mkdir -p "$L" 2>/dev/null
+t0=$(date +%s); left() { r=$(( MAXW - ($(date +%s) - t0) )); [ "$r" -gt 0 ] && echo "$r" || echo 0; }
+# 1. pending measurements (flags), at most SPARK_FLAG_WAIT s (default 60; was 600 until L405: on 2026-10-22
+#    one measurement queued 80 min held 14 new builds here 10 min each) and never past the cap
+while [ $(( $(date +%s) - t0 )) -lt "${SPARK_FLAG_WAIT:-60}" ] && [ "$(left)" -gt 0 ]; do
+  live=0
+  for f in "$W"/*; do
+    [ -e "$f" ] || continue
+    p=$(basename "$f" | sed 's/^legacy-//')
+    if ! kill -0 "$p" 2>/dev/null; then rm -f "$f"
+    # a measurement that has waited over SPARK_FLAG_MAX_AGE s (default 600) has had its chance; it should take a
+    # spark-window, which waits for a quiet machine (L405: one flag 80 min old paused every new build 60 s)
+    elif [ $(( $(date +%s) - $(stat -c %Y "$f" 2>/dev/null || date +%s) )) -lt "${SPARK_FLAG_MAX_AGE:-600}" ]; then live=1; fi
+  done
+  [ "$live" -eq 0 ] && break
+  sleep 5
+done
+# 2. the gate (fail open: a stuck gate never blocks a build past the cap)
+[ -e "$GATE" ] || { : > "$GATE"; chmod 666 "$GATE"; } 2>/dev/null
+[ "$(left)" -gt 0 ] && flock -s -w "$(left)" "$GATE" true 2>/dev/null
+# 3. the quiet lock, shared, on fd 9 (inherited by CMD, so it is held for CMD's life)
+[ -e "$Q" ] || { : > "$Q"; chmod 666 "$Q"; } 2>/dev/null
+exec 9<"$Q"
+if flock -s -n 9 || { [ "$(left)" -gt 0 ] && flock -s -w "$(left)" 9; }; then
+  w=$(( $(date +%s) - t0 ))
+  printf '%s waited_s=%s how=lock %s\n' "$(date -u +%FT%TZ)" "$w" "$*" | cut -c1-300 >> "$L/waits.log" 2>/dev/null
+  exec "$@"
+fi
+exec 9<&-
+w=$(( $(date +%s) - t0 ))
+id=$(cat "$WR/OPEN" 2>/dev/null)
+line="$(date -u +%FT%TZ) waited_s=$w cap_s=$MAXW window=${id:-none} pid=$$ running without the quiet lock at nice 19: $*"
+printf '%s\n' "$line" | cut -c1-300 >> "$L/intrusions.log" 2>/dev/null
+[ -n "$id" ] && [ -d "$WR/$id" ] && printf '%s\n' "$line" | cut -c1-300 >> "$WR/$id/intrusions" 2>/dev/null
+printf '%s waited_s=%s how=bypass %s\n' "$(date -u +%FT%TZ)" "$w" "$*" | cut -c1-300 >> "$L/waits.log" 2>/dev/null
+echo "quiet-build: waited ${w}s (cap ${MAXW}s) behind a timing lock; running anyway at nice 19 (L405)" >&2
+exec nice -n 19 "$@"

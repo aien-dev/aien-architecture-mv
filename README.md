@@ -54,6 +54,7 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `docs/capability-register/` | The org-wide CUDA capability register: [register.tsv](docs/capability-register/register.tsv) (source of truth; owner, commit, arch, level and evidence file for each of the 47 rows of the CUDA replacement map) and its generated view [REGISTER.md](docs/capability-register/REGISTER.md) |
 | `tools/capreg/` | The register checker and renderer in seeded `.om`, and its gate (step `capreg`) |
 | `tools/crumb/` | The crumb tool (C11), which compiles and checks the `.crumb` files |
+| `tools/ops/` | The Spark's shared measurement base: build once, one measurement window at a time, per-window calibration and 27B baseline ([how to use it](docs/ops/MEASUREMENT_WINDOWS.md)) |
 | `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate, crumb rebase helper) and their `test_*.sh` tests |
 | `tests/gates/` | The gate manifests the Spark runs on every pull request |
 
