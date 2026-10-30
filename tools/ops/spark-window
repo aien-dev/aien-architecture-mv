@@ -38,7 +38,10 @@
 #        such windows with --gb10 none. quiet-measure run inside the window runs CMD
 #        directly instead of waiting on our own lock.
 #   spark-window close [ID]   release the quiet lock, record box state at close
-#        (close.json), print what the window holds.
+#        (close.json), print what the window holds. With an ID it closes only that
+#        window. Without one it closes the open window only if you own it: the shell
+#        that ran open is in your process tree, or $SPARK_WINDOW (set by run) is its id.
+#        Otherwise it refuses (exit 3) and prints the holder; close it by ID or wait.
 #   spark-window status       show the open window (or "none") and the lock queue.
 #   spark-window id           print the open, held window id (exit 1 if none).
 #   spark-window locks [gb10|quiet]  who holds and who is queued on the locks (kernel lock table).
@@ -128,6 +131,35 @@ qpos() { ls "$QD" 2>/dev/null | sort | grep -n -x -F "${1##*/}" | cut -d: -f1; }
 qlist() { ls "$QD" 2>/dev/null | sort | while read -r t; do echo "  in line: $(cat "$QD/$t" 2>/dev/null) (pid ${t##*-})"; done; }
 hpid() { cat "$WR/$1/holder.pid" 2>/dev/null; }
 
+# Who may close a window without naming it. open records the shell that ran it ("opener",
+# pid:start time, so a reused pid does not count); a bare close is only for that shell's tree
+# or for a caller whose $SPARK_WINDOW is the window id (set by run). L162, 2026-10-20.
+pstat() { sed 's/^.*) //' "/proc/$1/stat" 2>/dev/null; }   # fields from the state letter on
+ppid_of() { pstat "$1" | cut -d' ' -f2; }
+stime() { pstat "$1" | cut -d' ' -f20; }
+cmdl() { tr '\0' ' ' < "/proc/$1/cmdline" 2>/dev/null; }
+# the shell that ran this command, looking past the subshell a $(...) makes (same command line)
+anchor() {
+  a=$PPID
+  while p=$(ppid_of "$a"); [ -n "$p" ] && [ "$p" -gt 1 ] && [ "$(cmdl "$a")" = "$(cmdl "$p")" ]; do a=$p; done
+  echo "$a"
+}
+in_tree() {   # in_tree PID START: is that same process this one or one of its ancestors?
+  a=$$
+  while [ -n "$a" ] && [ "$a" -gt 1 ]; do
+    [ "$a" = "$1" ] && [ "$(stime "$a")" = "$2" ] && return 0
+    a=$(ppid_of "$a")
+  done
+  return 1
+}
+mine() {      # mine ID: may this caller close window ID without naming it?
+  [ "${SPARK_WINDOW:-}" = "$1" ] && return 0
+  o=$(cat "$WR/$1/opener" 2>/dev/null)
+  [ -n "$o" ] && in_tree "${o%%:*}" "${o##*:}" && return 0
+  h=$(hpid "$1"); [ -n "$h" ] && in_tree "$h" "$(stime "$h")" && return 0
+  return 1
+}
+
 describe() {
   d=$WR/$1
   st=queued; [ -f "$d/held" ] && st=held
@@ -207,6 +239,7 @@ open)
   [ -n "$tk" ] && { rm -f "$tk"; trap - EXIT INT TERM; }
   id=$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N3 -tx1 /dev/urandom | tr -d ' \n')
   d=$WR/$id; mkdir -p "$d"
+  oa=$(anchor); echo "$oa:$(stime "$oa")" > "$d/opener"
   echo "$name" > "$d/name"; echo "${ledger:-${SPARK_WINDOW_OWNER:-$(whoami)@pid$PPID}}" > "$d/owner"
   echo "$lease" > "$d/lease"; now > "$d/requested"
   echo "$id" > "$WR/OPEN.tmp" && mv -f "$WR/OPEN.tmp" "$WR/OPEN"
@@ -347,9 +380,18 @@ id)
   ;;
 close)
   exec 7>"$WR/.state.lock"; flock 7
-  id=${1:-$(cur)}
+  named=${1:-}; id=${named:-$(cur)}
+  case $id in */*|.*) echo "spark-window: not a window id: $id" >&2; exit 2 ;; esac
   [ -n "$id" ] && [ -d "$WR/$id" ] || { echo "spark-window: no window to close" >&2; exit 1; }
   [ -f "$WR/$id/close.json" ] && { echo "spark-window: window $id is already closed" >&2; exit 1; }
+  # A bare close is not allowed to end somebody else's window (L129's finishing script closed
+  # L159's window, whose own bare close then closed L127's queued one).
+  if [ -z "$named" ] && ! mine "$id"; then
+    echo "spark-window: refused, the open window is not yours (you did not open it from this shell, and SPARK_WINDOW is ${SPARK_WINDOW:-unset}):" >&2
+    describe "$id" >&2
+    echo "Close your own window by id (spark-window close <ID>); this one is closed by its owner or when its lease runs out." >&2
+    exit 3
+  fi
   d=$WR/$id; h=$(hpid "$id")
   now > "$d/close-request"
   # A holder still waiting for its locks holds nothing: stop it (its own process group, from setsid).
