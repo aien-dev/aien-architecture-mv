@@ -1,121 +1,123 @@
-# Product closure of the live aien-serve-http (bin-19173f9e, sha256 19173f9ec3b609fe79af644f84741d8808b92ea8eb3ecec4bc945af6f22b3aeb), 2026-10-24
+# Candidate dependency inventory for reported aien-serve-http (bin-19173f9e, sha256 19173f9ec3b609fe79af644f84741d8808b92ea8eb3ecec4bc945af6f22b3aeb), 2026-10-24
 # Source: `ar t` of the libomega_gpu.a shipped beside it (SHA256SUMS OK); members resolved to omega-mv a0eafa39 / physics-mv 048e5f5e paths.
 # Rust side: cargo metadata of sovereign-core 9699d928, normal deps reachable from aien-serve-http, workspace members only.
-# LINKED	<object>	<source path>
-LINKED	sha256	src/sha256.c
-LINKED	omega_canonical	src/omega_canonical.c
-LINKED	omega_validate	src/omega_validate.c
-LINKED	omega_core	src/omega_core.c
-LINKED	omega_codec	src/omega_codec.c
-LINKED	aarch64_encoder	src/aarch64_encoder.c
-LINKED	aarch64_decoder	src/aarch64_decoder.c
-LINKED	omega_realize	src/omega_realize.c
-LINKED	omega_exec	src/omega_exec.c
-LINKED	omega_self_host	src/omega_self_host.c
-LINKED	omega_verify	src/omega_verify.c
-LINKED	omega_program	src/omega_program.c
-LINKED	omega_synthesis	src/omega_synthesis.c
-LINKED	omega_library	src/omega_library.c
-LINKED	omega_discovery	src/omega_discovery.c
-LINKED	omega_machine	src/omega_machine.c
-LINKED	omega_realize_synth	src/omega_realize_synth.c
-LINKED	omega_matvec	src/omega_matvec.c
-LINKED	omega_accelerator	src/omega_accelerator.c
-LINKED	omega_accelerator_world	src/omega_accelerator_world.c
-LINKED	omega_vector	src/omega_vector.c
-LINKED	omega_blackwell_encoder	src/omega_blackwell_encoder.c
-LINKED	omega_blackwell_qmd	src/omega_blackwell_qmd.c
-LINKED	omega_blackwell_realize	src/omega_blackwell_realize.c
-LINKED	omega_blackwell_submit	src/omega_blackwell_submit.c
-LINKED	omega_blackwell_engine	src/omega_blackwell_engine.c
-LINKED	omega_gpu_engine	src/omega_gpu_engine.c
-LINKED	omega_blackwell_matmul	src/omega_blackwell_matmul.c
-LINKED	omega_blackwell_codegen	src/omega_blackwell_codegen.c
-LINKED	omega_gpu_session	src/omega_gpu_session.c
-LINKED	omega_gpu_platform	src/omega_gpu_platform.c
-LINKED	omega_gpu_platform_linux	src/omega_gpu_platform_linux.c
-LINKED	omega_gpu_fmt	src/omega_gpu_fmt.c
-LINKED	omega_gpu_matmul_api	src/omega_gpu_matmul_api.c
-LINKED	omega_gpu_elementwise_api	src/omega_gpu_elementwise_api.c
-LINKED	omega_gpu_attention_api	src/omega_gpu_attention_api.c
-LINKED	omega_gpu_serving	src/omega_gpu_serving.c
-LINKED	omega_gpu_wait	src/omega_gpu_wait.c
-LINKED	omega_evidence	src/omega_evidence.c
-LINKED	m16_native	physics/m16/m16_native.c
-LINKED	nvrm	physics/nvrm/nvrm.c
-LINKED	omega_gpu_moe_api	src/omega_gpu_moe_api.c
-LINKED	omega_blackwell_codegen_moe	src/omega_blackwell_codegen_moe.c
-LINKED	omega_gpu_fp8_pack	src/omega_gpu_fp8_pack.c
-LINKED	omega_gpu_fp8_api	src/omega_gpu_fp8_api.c
-LINKED	omega_blackwell_codegen_moe2	src/omega_blackwell_codegen_moe2.c
-LINKED	omega_blackwell_codegen_attn	src/omega_blackwell_codegen_attn.c
-LINKED	omega_gpu_decode_attn_api	src/omega_gpu_decode_attn_api.c
-LINKED	omega_blackwell_codegen_attn256	src/omega_blackwell_codegen_attn256.c
-LINKED	omega_gpu_decode_attn256_api	src/omega_gpu_decode_attn256_api.c
-LINKED	omega_blackwell_codegen_pattn256	src/omega_blackwell_codegen_pattn256.c
-LINKED	omega_gpu_prefill_attn256_api	src/omega_gpu_prefill_attn256_api.c
-LINKED	omega_gpu_hostmath	src/omega_gpu_hostmath.c
-LINKED	omega_blackwell_codegen_router	src/omega_blackwell_codegen_router.c
-LINKED	omega_gpu_router_api	src/omega_gpu_router_api.c
-LINKED	omega_blackwell_codegen_gdn	src/omega_blackwell_codegen_gdn.c
-LINKED	omega_gpu_gdn_api	src/omega_gpu_gdn_api.c
-LINKED	omega_gpu_cmdlist	src/omega_gpu_cmdlist.c
-LINKED	omega_blackwell_codegen_dec	src/omega_blackwell_codegen_dec.c
-LINKED	omega_gpu_mem_cached	src/omega_gpu_mem_cached.c
-LINKED	omega_gpu_decode_graph	src/omega_gpu_decode_graph.c
-LINKED	omega_gpu_q38_graph	src/omega_gpu_q38_graph.c
-LINKED	omega_gpu_q36_graph	src/omega_gpu_q36_graph.c
-LINKED	omega_blackwell_codegen_bf16	src/omega_blackwell_codegen_bf16.c
-LINKED	omega_gpu_bf16_gemv_api	src/omega_gpu_bf16_gemv_api.c
-LINKED	omega_blackwell_codegen_gemm	src/omega_blackwell_codegen_gemm.c
-LINKED	omega_gpu_fp8gemm_api	src/omega_gpu_fp8gemm_api.c
-LINKED	omega_blackwell_codegen_tc	src/omega_blackwell_codegen_tc.c
-LINKED	omega_gpu_tcgemm_api	src/omega_gpu_tcgemm_api.c
-LINKED	omega_blackwell_codegen_pattn	src/omega_blackwell_codegen_pattn.c
-LINKED	omega_gpu_prefill_attn_api	src/omega_gpu_prefill_attn_api.c
-LINKED	omega_blackwell_codegen_pf	src/omega_blackwell_codegen_pf.c
-LINKED	omega_gpu_prefill	src/omega_gpu_prefill.c
-LINKED	omega_blackwell_codegen_tc2	src/omega_blackwell_codegen_tc2.c
-LINKED	omega_gpu_pfgemm	src/omega_gpu_pfgemm.c
-LINKED	omega_blackwell_codegen_qmma	src/omega_blackwell_codegen_qmma.c
-LINKED	omega_blackwell_codegen_qg	src/omega_blackwell_codegen_qg.c
-LINKED	omega_blackwell_codegen_pfhost	src/omega_blackwell_codegen_pfhost.c
-LINKED	omega_gpu_pfhost	src/omega_gpu_pfhost.c
-LINKED	omega_blackwell_codegen_tern	src/omega_blackwell_codegen_tern.c
-LINKED	omega_gpu_tern_api	src/omega_gpu_tern_api.c
-LINKED	omega_program_ir	src/omega_program_ir.c
-LINKED	omega_vc_bridge	src/omega_vc_bridge.c
-LINKED	omega_resolve	src/omega_resolve.c
-LINKED	omega_receipt	src/omega_receipt.c
-LINKED	omega_blake3	src/omega_blake3.c
-LINKED	omega_vcstore	src/omega_vcstore.c
-CRATE	aien-abi-conformance
-CRATE	aien-abi-core
-CRATE	aien-allen
-CRATE	aien-allen-memory
-CRATE	aien-allen-profile
-CRATE	aien-inference-abi
-CRATE	aien-kv-cache
-CRATE	aien-kv-store
-CRATE	aien-localhttp
-CRATE	aien-omega-bf16
-CRATE	aien-omega-compose
-CRATE	aien-omega-dattn
-CRATE	aien-omega-dgraph
-CRATE	aien-omega-fp8
-CRATE	aien-omega-gpu
-CRATE	aien-omega-moe
-CRATE	aien-omega-pf
-CRATE	aien-omega-q38
-CRATE	aien-omega-router
-CRATE	aien-platform
-CRATE	aien-platform-linux
-CRATE	aien-proof
-CRATE	aien-runtime
-CRATE	aien-scheduler
-CRATE	aien-security
-CRATE	aien-serve-http
-CRATE	aien-trace
-CRATE	cortex-rs
-CRATE	spark-crumbs
-CRATE	spark-harness
+# Archive membership and metadata reachability only; final linked/runtime closure UNKNOWN.
+# ARCHIVE_MEMBER\t<object>\t<source path>
+# WORKSPACE_DEPENDENCY\t<crate name>
+ARCHIVE_MEMBER	sha256	src/sha256.c
+ARCHIVE_MEMBER	omega_canonical	src/omega_canonical.c
+ARCHIVE_MEMBER	omega_validate	src/omega_validate.c
+ARCHIVE_MEMBER	omega_core	src/omega_core.c
+ARCHIVE_MEMBER	omega_codec	src/omega_codec.c
+ARCHIVE_MEMBER	aarch64_encoder	src/aarch64_encoder.c
+ARCHIVE_MEMBER	aarch64_decoder	src/aarch64_decoder.c
+ARCHIVE_MEMBER	omega_realize	src/omega_realize.c
+ARCHIVE_MEMBER	omega_exec	src/omega_exec.c
+ARCHIVE_MEMBER	omega_self_host	src/omega_self_host.c
+ARCHIVE_MEMBER	omega_verify	src/omega_verify.c
+ARCHIVE_MEMBER	omega_program	src/omega_program.c
+ARCHIVE_MEMBER	omega_synthesis	src/omega_synthesis.c
+ARCHIVE_MEMBER	omega_library	src/omega_library.c
+ARCHIVE_MEMBER	omega_discovery	src/omega_discovery.c
+ARCHIVE_MEMBER	omega_machine	src/omega_machine.c
+ARCHIVE_MEMBER	omega_realize_synth	src/omega_realize_synth.c
+ARCHIVE_MEMBER	omega_matvec	src/omega_matvec.c
+ARCHIVE_MEMBER	omega_accelerator	src/omega_accelerator.c
+ARCHIVE_MEMBER	omega_accelerator_world	src/omega_accelerator_world.c
+ARCHIVE_MEMBER	omega_vector	src/omega_vector.c
+ARCHIVE_MEMBER	omega_blackwell_encoder	src/omega_blackwell_encoder.c
+ARCHIVE_MEMBER	omega_blackwell_qmd	src/omega_blackwell_qmd.c
+ARCHIVE_MEMBER	omega_blackwell_realize	src/omega_blackwell_realize.c
+ARCHIVE_MEMBER	omega_blackwell_submit	src/omega_blackwell_submit.c
+ARCHIVE_MEMBER	omega_blackwell_engine	src/omega_blackwell_engine.c
+ARCHIVE_MEMBER	omega_gpu_engine	src/omega_gpu_engine.c
+ARCHIVE_MEMBER	omega_blackwell_matmul	src/omega_blackwell_matmul.c
+ARCHIVE_MEMBER	omega_blackwell_codegen	src/omega_blackwell_codegen.c
+ARCHIVE_MEMBER	omega_gpu_session	src/omega_gpu_session.c
+ARCHIVE_MEMBER	omega_gpu_platform	src/omega_gpu_platform.c
+ARCHIVE_MEMBER	omega_gpu_platform_linux	src/omega_gpu_platform_linux.c
+ARCHIVE_MEMBER	omega_gpu_fmt	src/omega_gpu_fmt.c
+ARCHIVE_MEMBER	omega_gpu_matmul_api	src/omega_gpu_matmul_api.c
+ARCHIVE_MEMBER	omega_gpu_elementwise_api	src/omega_gpu_elementwise_api.c
+ARCHIVE_MEMBER	omega_gpu_attention_api	src/omega_gpu_attention_api.c
+ARCHIVE_MEMBER	omega_gpu_serving	src/omega_gpu_serving.c
+ARCHIVE_MEMBER	omega_gpu_wait	src/omega_gpu_wait.c
+ARCHIVE_MEMBER	omega_evidence	src/omega_evidence.c
+ARCHIVE_MEMBER	m16_native	physics/m16/m16_native.c
+ARCHIVE_MEMBER	nvrm	physics/nvrm/nvrm.c
+ARCHIVE_MEMBER	omega_gpu_moe_api	src/omega_gpu_moe_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_moe	src/omega_blackwell_codegen_moe.c
+ARCHIVE_MEMBER	omega_gpu_fp8_pack	src/omega_gpu_fp8_pack.c
+ARCHIVE_MEMBER	omega_gpu_fp8_api	src/omega_gpu_fp8_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_moe2	src/omega_blackwell_codegen_moe2.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_attn	src/omega_blackwell_codegen_attn.c
+ARCHIVE_MEMBER	omega_gpu_decode_attn_api	src/omega_gpu_decode_attn_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_attn256	src/omega_blackwell_codegen_attn256.c
+ARCHIVE_MEMBER	omega_gpu_decode_attn256_api	src/omega_gpu_decode_attn256_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_pattn256	src/omega_blackwell_codegen_pattn256.c
+ARCHIVE_MEMBER	omega_gpu_prefill_attn256_api	src/omega_gpu_prefill_attn256_api.c
+ARCHIVE_MEMBER	omega_gpu_hostmath	src/omega_gpu_hostmath.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_router	src/omega_blackwell_codegen_router.c
+ARCHIVE_MEMBER	omega_gpu_router_api	src/omega_gpu_router_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_gdn	src/omega_blackwell_codegen_gdn.c
+ARCHIVE_MEMBER	omega_gpu_gdn_api	src/omega_gpu_gdn_api.c
+ARCHIVE_MEMBER	omega_gpu_cmdlist	src/omega_gpu_cmdlist.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_dec	src/omega_blackwell_codegen_dec.c
+ARCHIVE_MEMBER	omega_gpu_mem_cached	src/omega_gpu_mem_cached.c
+ARCHIVE_MEMBER	omega_gpu_decode_graph	src/omega_gpu_decode_graph.c
+ARCHIVE_MEMBER	omega_gpu_q38_graph	src/omega_gpu_q38_graph.c
+ARCHIVE_MEMBER	omega_gpu_q36_graph	src/omega_gpu_q36_graph.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_bf16	src/omega_blackwell_codegen_bf16.c
+ARCHIVE_MEMBER	omega_gpu_bf16_gemv_api	src/omega_gpu_bf16_gemv_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_gemm	src/omega_blackwell_codegen_gemm.c
+ARCHIVE_MEMBER	omega_gpu_fp8gemm_api	src/omega_gpu_fp8gemm_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_tc	src/omega_blackwell_codegen_tc.c
+ARCHIVE_MEMBER	omega_gpu_tcgemm_api	src/omega_gpu_tcgemm_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_pattn	src/omega_blackwell_codegen_pattn.c
+ARCHIVE_MEMBER	omega_gpu_prefill_attn_api	src/omega_gpu_prefill_attn_api.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_pf	src/omega_blackwell_codegen_pf.c
+ARCHIVE_MEMBER	omega_gpu_prefill	src/omega_gpu_prefill.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_tc2	src/omega_blackwell_codegen_tc2.c
+ARCHIVE_MEMBER	omega_gpu_pfgemm	src/omega_gpu_pfgemm.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_qmma	src/omega_blackwell_codegen_qmma.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_qg	src/omega_blackwell_codegen_qg.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_pfhost	src/omega_blackwell_codegen_pfhost.c
+ARCHIVE_MEMBER	omega_gpu_pfhost	src/omega_gpu_pfhost.c
+ARCHIVE_MEMBER	omega_blackwell_codegen_tern	src/omega_blackwell_codegen_tern.c
+ARCHIVE_MEMBER	omega_gpu_tern_api	src/omega_gpu_tern_api.c
+ARCHIVE_MEMBER	omega_program_ir	src/omega_program_ir.c
+ARCHIVE_MEMBER	omega_vc_bridge	src/omega_vc_bridge.c
+ARCHIVE_MEMBER	omega_resolve	src/omega_resolve.c
+ARCHIVE_MEMBER	omega_receipt	src/omega_receipt.c
+ARCHIVE_MEMBER	omega_blake3	src/omega_blake3.c
+ARCHIVE_MEMBER	omega_vcstore	src/omega_vcstore.c
+WORKSPACE_DEPENDENCY	aien-abi-conformance
+WORKSPACE_DEPENDENCY	aien-abi-core
+WORKSPACE_DEPENDENCY	aien-allen
+WORKSPACE_DEPENDENCY	aien-allen-memory
+WORKSPACE_DEPENDENCY	aien-allen-profile
+WORKSPACE_DEPENDENCY	aien-inference-abi
+WORKSPACE_DEPENDENCY	aien-kv-cache
+WORKSPACE_DEPENDENCY	aien-kv-store
+WORKSPACE_DEPENDENCY	aien-localhttp
+WORKSPACE_DEPENDENCY	aien-omega-bf16
+WORKSPACE_DEPENDENCY	aien-omega-compose
+WORKSPACE_DEPENDENCY	aien-omega-dattn
+WORKSPACE_DEPENDENCY	aien-omega-dgraph
+WORKSPACE_DEPENDENCY	aien-omega-fp8
+WORKSPACE_DEPENDENCY	aien-omega-gpu
+WORKSPACE_DEPENDENCY	aien-omega-moe
+WORKSPACE_DEPENDENCY	aien-omega-pf
+WORKSPACE_DEPENDENCY	aien-omega-q38
+WORKSPACE_DEPENDENCY	aien-omega-router
+WORKSPACE_DEPENDENCY	aien-platform
+WORKSPACE_DEPENDENCY	aien-platform-linux
+WORKSPACE_DEPENDENCY	aien-proof
+WORKSPACE_DEPENDENCY	aien-runtime
+WORKSPACE_DEPENDENCY	aien-scheduler
+WORKSPACE_DEPENDENCY	aien-security
+WORKSPACE_DEPENDENCY	aien-serve-http
+WORKSPACE_DEPENDENCY	aien-trace
+WORKSPACE_DEPENDENCY	cortex-rs
+WORKSPACE_DEPENDENCY	spark-crumbs
+WORKSPACE_DEPENDENCY	spark-harness
