@@ -13,7 +13,7 @@ run:
   args: ["zero-legacy"]
 expects:
   exit: 0
-  observe: ["tree_release_exit == 1", "clean_release_exit == 0", "clean_undeclared_exit == 1", "expect_tree_exit == 0", "expect_clean_exit == 0"]
+  observe: ["tree_release_exit == 1", "clean_release_exit == 0", "clean_undeclared_exit == 1", "expect_tree_exit == 0", "expect_clean_exit == 0", "read_error_exit == 0", "directory_error_exit == 0"]
   verdict: PASS
 timeout: 5m
 exactness: EXACT
