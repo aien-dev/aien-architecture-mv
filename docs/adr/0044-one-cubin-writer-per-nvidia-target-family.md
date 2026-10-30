@@ -1,6 +1,6 @@
 # ADR 0044: One cubin writer per NVIDIA target family, owned by CUDApp
 
-**Status:** Accepted (Primate, 2026-10-30).
+**Status:** Accepted (Drake, 2026-10-30).
 This ADR moves no code.
 **Related:** ADR 0042 (ARCH-0042) Decision 7, ADR 0043 call 15 (merged #343; CUDApp pin `780a0af1`).
 [CUDApp#108](https://github.com/aien-dev/CUDApp/issues/108) tracks consolidation.
@@ -25,7 +25,7 @@ load PASS lines: vecadd/ctl PASS on an RTX 4090 (sm_80/86/89), a B200 (sm_100), 
 (sm_120). Those lines are reported by that PR and were not independently re-run for this ADR.
 
 ADR 0042 (ARCH-0042) makes CUDApp the owner. Decision 7 requires a separate consolidation
-decision by Primate (Drake). This ADR records that decision (option B, 2026-10-30). ADR 0043
+decision by Drake. This ADR records that decision (option B, 2026-10-30). ADR 0043
 does not cover the sm_80 family.
 
 ## Options

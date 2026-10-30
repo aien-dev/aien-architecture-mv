@@ -1,6 +1,6 @@
 # ADR 0043: The GPU stack splits into a portable Omega top and a thin per-target backend behind one 30-call ABI
 
-**Status:** Accepted (Primate, 2026-10-30). Proposed 2026-10-27.
+**Status:** Accepted (Drake, 2026-10-30). Proposed 2026-10-27.
 Design only. No code moves under this ADR until the gate in Decision 0 is met. Recorded by lane
 SplitDesign.
 **Related:** ARCH-0042 (ACCEPTED 2026-10-30, #342: Omega owns computation, CUDApp owns GPU execution, Omega
