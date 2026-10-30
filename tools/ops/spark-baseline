@@ -45,7 +45,8 @@ case $models in *"\"$mid\""*) ;; *) echo "spark-baseline: server on :$port does 
 # from the first to the last token the server holds the GPU lock for us, which makes the decode
 # rate and its energy clean whatever the queue did before. The lock table is sampled throughout;
 # any other process seen holding the GPU lock during the decode marks the baseline not ok.
-G=/tmp/aien-gb10.lock; gino=$(stat -c %i "$G")
+# Sample the lock spark-window uses: SPARK_GB10_LOCK, default /tmp/aien-gb10.lock.
+G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}; gino=$(stat -c %i "$G")
 held || { echo "spark-baseline: window $id is not held; nothing measured" >&2; exit 1; }
 ( while :; do grep -E ":$gino " /proc/locks | sed "s/^/$(date +%s.%N) /"; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
 smp=$!

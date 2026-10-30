@@ -44,17 +44,21 @@ the window is marked "shared machine" (L405).
 
 ## Exact commands
 
-Open a window (waits its turn; prints the window id when it holds the box):
+Open a window that will run the commands below, including `spark-baseline` (waits its turn; prints the
+window id when it holds the box). `spark-baseline` refuses a window that holds the GPU lock, so this
+open passes `--gb10 none`:
 
 ```sh
-id=$(spark-window open my-measurement --ledger L109 --lease 20 --wait)
+id=$(spark-window open my-measurement --ledger L109 --lease 20 --gb10 none --wait)
 ```
 
-By default the window also holds the GPU lock (`--gb10 exclusive`, added by L154), so GPU-only jobs
-cannot run inside it. The 27B server takes that lock itself for every reply, so a window that measures
-the 27B server, including `spark-baseline`, must be opened with `--gb10 none`; `spark-baseline` refuses
-otherwise. `spark-calibrate` works in both: it uses the window's GPU lock when the window holds it and
-takes the lock itself when it does not.
+By default `open` holds the GPU lock (`--gb10 exclusive`, added by L154), so GPU-only jobs cannot run
+inside it. The 27B server takes that lock itself for every reply, so a window that measures the 27B
+server, including `spark-baseline`, must be opened with `--gb10 none`; `spark-baseline` refuses
+otherwise. A window that does not measure the 27B can leave that default and skip `spark-baseline`.
+To hold the GPU lock for other work and still take a 27B baseline, use two windows: the default for
+the GPU-holding work, and `--gb10 none` for `spark-baseline`. `spark-calibrate` works in both: it
+uses the window's GPU lock when the window holds it and takes the lock itself when it does not.
 
 Calibrate and take the baseline inside it:
 
