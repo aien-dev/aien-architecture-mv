@@ -10,22 +10,28 @@
 
 Drake retired the repository role of aien-dev/aienix and named aien-dev/sovereign-intelligence the center. What that repository publishes about itself was read from its default-branch README at commit `907e0b0dd625f6bfd4c5516fea8858392dc41f91` (2026-10-30). This ADR does not invent a scope beyond that README and Drake's words below.
 
-Sovereign (the owner of sovereign-intelligence) states the product in one line:
+Sovereign (the owner of sovereign-intelligence) stated the product in one line. That original wording is the source, and it is not in the README:
 
 > "Sovereign Intelligence: one command turns a DGX Spark into your own AI — Aien, Omega and science tools, with no NVIDIA user-space software. Alpha."
 
-That sentence is not in the README. The README's own lines, quoted from that commit:
+The one-liner used here hedges that wording for the alpha:
 
-- Line 3: "My own AI, on hardware I own, with every layer open to read, rebuild and change." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L3))
-- Line 5: "Sovereign Intelligence, built on AienOS" with the link `aien-dev/AienOS-nv`. ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L5))
+> "Sovereign Intelligence: one command turns a DGX Spark into your own AI, with Omega and science tools and no NVIDIA user-space software. Alpha; Aien comes in a later release."
+
+The hedge is README line 41 at `907e0b0`: "The Aien experience is not in this release yet." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L41)). The release that Install section names is `alpha-20261026.2` (lines 30 and 33). Line 41 does not itself contain the tag. It is also README line 59 at the same commit: "Today NVIDIA's open kernel module 580.173.02" ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L59)).
+
+The README's own lines, quoted from that commit:
+
+- Line 5: "My own AI, on hardware I own, with every layer open to read, rebuild and change." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L5))
+- Line 7: "Sovereign Intelligence, built on AienOS" with the link `aien-dev/AienOS-nv`. ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L7))
 - Line 41: "installer EXERCISED (host 33/33 under read-only root, container 6/6 with a canary control)." The same line says a fresh GB10 install and first token through the installer, and the 3x physical qualification, are NOT_RUN, and "The Aien experience is not in this release yet." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L41))
-- Line 57: the CUDA++ row, "with no NVIDIA user-space software," attributed to CUDApp. Lines 58-59: the GPU kernel driver today is NVIDIA's open kernel module, and "SI alpha still runs on the Spark's own Linux." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L57-L59))
+- Line 57: the CUDA++ row, "with no NVIDIA user-space software," attributed to CUDApp. Line 58: "SI alpha still runs on the Spark's own Linux." Line 59: the GPU kernel driver today is NVIDIA's open kernel module. ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L57-L59))
 - Line 98: aienix is "Older front door that pins the main components as submodules." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L98))
 - Line 190: "This repo: the front door, the one-command installer and signed releases." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L190))
 
 Where those texts differ, the difference is recorded here and neither text is stretched to cover the other.
 
-The one-liner names Aien as part of what the command produces. README line 41 says the Aien experience is not in release `alpha-20261026.2`. The one-liner's "no NVIDIA user-space software" is the same phrase the README puts on the CUDA++ layer (CUDApp). It does not say the NVIDIA kernel module is gone. README line 5, "built on AienOS," matches Decision (c): AienOS is the operating-system layer inside Sovereign Intelligence. README line 190 is the repository's own description (front door, installer, signed releases). Decision (b) is that description plus Drake's answer of 6:53 AM CT: releases are assembled there, install starts there, and the Spark test runs there, while other repositories keep their own parts. README line 50 says "The installer is Omega you can read before you run it." `installer/install.sh` says it is not written in Omega. This ADR follows the script and the bootstrap exception, not line 50.
+Sovereign's original one-liner names Aien in the command. The hedged line puts Aien in a later release, which is line 41. The hedged line's "no NVIDIA user-space software" is the phrase on the CUDA++ row (line 57, CUDApp). Line 59 keeps NVIDIA's kernel module. README line 7, "built on AienOS," matches Decision (c): AienOS is the operating-system layer inside Sovereign Intelligence. README line 190 is the repository's own description (front door, installer, signed releases). Decision (b) is that description plus Drake's answer of 6:53 AM CT: releases are assembled there, install starts there, and the Spark test runs there, while other repositories keep their own parts. README line 51 says "The installer is Omega you can read before you run it." ([permalink](https://github.com/aien-dev/sovereign-intelligence/blob/907e0b0dd625f6bfd4c5516fea8858392dc41f91/README.md#L51)). `installer/install.sh` says it is not written in Omega. This ADR follows the script and the bootstrap exception, not line 51.
 
 ## Decision
 
@@ -80,7 +86,7 @@ There is no GB10 performance claim and no qualification claim without a committe
 
 > "This is the only part of AienOS that is not written in Omega. It is a host dependency, kept small on purpose"
 
-Nothing in this ADR treats `installer/install.sh` as Omega. README line 50, which calls the installer Omega, is the difference noted in Context.
+Nothing in this ADR treats `installer/install.sh` as Omega. README line 51, which calls the installer Omega, is the difference noted in Context.
 
 ## Consequences
 
