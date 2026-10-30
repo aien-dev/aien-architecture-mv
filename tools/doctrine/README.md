@@ -15,7 +15,7 @@ in a `note` above it.
 | --- | --- |
 | `doctrine.om` | the checker: `doctrine [ROOT]` (ROOT defaults to `.`) |
 | `gate.om` | the gate runner: builds `../zero-legacy/sha256.om` and `doctrine.om`, checks the compiler against the pin, runs the checker on ROOT, prints `AIEN-OBS` lines |
-| `gate.sh` | the loader outside the programs: compile `gate.om` with `$AIEN_OMC` and exec it |
+| `gate.sh` | independently authenticate `$AIEN_OMC` before compiling `gate.om`, then exec it |
 | `corpus.sh` | the parity corpus runner (needs the retired bash oracle; see below) |
 
 ## Contract (unchanged from the bash script)
@@ -54,7 +54,14 @@ $AIEN_OMC < tools/doctrine/doctrine.om > doctrine && chmod +x doctrine
 ./doctrine /path/to/checkout
 ```
 
-`gate.sh` exits 3 (NOT_RUN) when `AIEN_OMC` is unset, not executable, or produces no program;
+`gate.sh` authenticates `AIEN_OMC` against the reviewed `../zero-legacy/omega.pin`
+using trusted system `sed` and `sha256sum` **before invoking the candidate compiler**.
+This is a temporary external bootstrap boundary, not a completed all-.om cutover.
+Native self-hashing is defense in depth, not independent authentication. This assumes
+trusted OS/tools/pin and a compiler file not concurrently replaced. Separate build
+commands stop on failure rather than falling through to an older gate binary.
+
+`gate.sh` exits 3 (NOT_RUN) when `AIEN_OMC` is unset, not executable, mismatched, or produces no program;
 `gate.om` exits 3 when the compiler's native sha256 differs from `omega.pin`; otherwise its exit
 is the checker's (0/1/2) and it prints `AIEN-OBS doctrine_sha256 "<sha256 of build/doctrine>"`
 before the run and `AIEN-OBS doctrine_exit N` after it. The gate manifest
@@ -116,3 +123,31 @@ the script's own stderr line, which is identical.
 
 NOT_RUN: nothing in this directory has been run under the hosted x86 workflow (AArch64 compiler
 only); `aien-test run ARCH-DOCTRINE` was not run here, only `tests/gates/run.sh doctrine`.
+
+## Bootstrap rejection regression (NOT_RUN)
+
+This loader repair does not change `doctrine.om`, its matching rules, the gate manifest,
+or the author's 40-case parity receipt above. Native execution of the changed loader
+and the sentinel procedure below is NOT_RUN; older receipts do not qualify this head.
+
+From the repository root in an isolated fixture checkout, with `AIEN_OMC` an absolute path already
+independently verified against the pinned digest, use the shared native sentinel:
+
+```sh
+set -eu
+ROOT="$PWD"
+cd tools/doctrine
+mkdir -p build
+"$AIEN_OMC" < ../zero-legacy/fixtures/loader-sentinel.om > build/loader-sentinel
+chmod +x build/loader-sentinel
+rm -f build/untrusted-compiler-ran
+if build/loader-sentinel; then rc=0; else rc=$?; fi
+[ "$rc" -eq 98 ] && [ -f build/untrusted-compiler-ran ] || exit 1
+rm -f build/untrusted-compiler-ran
+if AIEN_OMC="$PWD/build/loader-sentinel" sh ./gate.sh "$ROOT"; then rc=0; else rc=$?; fi
+[ "$rc" -eq 3 ] && [ ! -e build/untrusted-compiler-ran ] || exit 1
+```
+
+The direct-run precondition proves the sentinel creates the marker before checking that
+the loader rejects it without execution. The zero-legacy loader has its own equivalent
+procedure in its README; both loaders require independent rejection receipts.

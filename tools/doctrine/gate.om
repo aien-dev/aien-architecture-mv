@@ -5,7 +5,7 @@ note Builds ../zero-legacy/sha256.om and doctrine.om with OMC, hashes OMC with t
 note and compares it to ../zero-legacy/omega.pin, prints AIEN-OBS lines, then runs
 note build/doctrine ROOT with this process's stdout. Exit: the checker's exit (0 PASS, 1 FAIL,
 note 2 ROOT unusable); 3 when OMC is missing or does not match the pin (NOT_RUN); 1 when a
-note build fails. The only thing outside this program is whoever compiled it (gate.sh).
+note build fails. gate.sh independently authenticates OMC before executing it to compile this gate.
 
 text tbl "../zero-legacy/sha256.om\nbuild/sha256\ndoctrine.om\nbuild/doctrine\nbuild/omc.sha\nbuild/doctrine.sha\n../zero-legacy/omega.pin\nbuild\n"
 text tobs "AIEN-OBS "
