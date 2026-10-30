@@ -1,0 +1,23 @@
+# tests/gates/arch-capability-register.gate
+# seeded .om checker accepts the CUDA capability register and its view, refuses 22 bad fixtures and a planted row (no hosted job)
+gate: ARCH-CAPABILITY-REGISTER
+manifest_version: 2
+owner: aien-architecture
+requires:
+  - host
+inputs:
+  - tools/capreg/
+  - tools/zero-legacy/omega.pin
+  - tools/zero-legacy/sha256.om
+  - docs/capability-register/
+  - tests/gates/
+run:
+  exec: tests/gates/run.sh
+  args: ["capreg"]
+expects:
+  exit: 0
+  observe: ["capreg_good_exit == 0", "capreg_good_view_exit == 0", "capreg_bad_fixtures_refused == 22", "capreg_bad_fixtures_total == 22", "capreg_register_verify_exit == 0", "capreg_planted_row_exit == 1"]
+  verdict: PASS
+timeout: 5m
+exactness: EXACT
+cache_scope: machine

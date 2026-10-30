@@ -1,0 +1,24 @@
+2026-10-27T08:14:23Z  absence search for row 03: nvcc (nvcc-compatible compiler driver)
+worker CapRegister.RowsToolchain; read-only; heads: CUDApp@e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 omega-mv@e5b32567a7aff3ce594e3254a622a846a6cd190b omega-blas@0706265a751b0f0957df918a8a945e35735ce5c4 omega-dnn@ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 aien-math@43c629db362b48aeec3590a8f0cd30e927e5ec16
+
+## GitHub code search (indexes only some repos; misses private/unindexed code)
+[2026-10-27T08:06:48Z] $ gh search code --owner aien-dev 'nvcc compatible' --limit 50 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+exit 0
+(no results)
+[2026-10-27T08:13:48Z] control (search works for a term known to exist): $ gh search code --owner aien-dev nvdisasm --limit 5 ... -> exit 0, 5 results, first: aien-dev/CUDApp:tools/sm121dis/zero_nvdisasm.sh
+
+## git grep at exact head shas (clones in /home/drakestapleton/work/CapRegister/clones)
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -n -I -i -E 'nvcc.?(compatible|drop.?in|replacement|compat)|drop.?in (for|replacement for) nvcc' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -n -I -i -E 'nvcc.?(compatible|drop.?in|replacement|compat)|drop.?in (for|replacement for) nvcc' e5b32567a7aff3ce594e3254a622a846a6cd190b
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -n -I -i -E 'nvcc.?(compatible|drop.?in|replacement|compat)|drop.?in (for|replacement for) nvcc' 0706265a751b0f0957df918a8a945e35735ce5c4
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -n -I -i -E 'nvcc.?(compatible|drop.?in|replacement|compat)|drop.?in (for|replacement for) nvcc' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -n -I -i -E 'nvcc.?(compatible|drop.?in|replacement|compat)|drop.?in (for|replacement for) nvcc' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+exit 1 (0 matching lines) -- exit 1 = no match
+
+## Interpretation
+No nvcc-compatible driver. nvcc appears elsewhere only as an offline oracle (not matched by this pattern).
+Verdict input: NONE_FOUND (absence of evidence at these shas, not proof of impossibility).

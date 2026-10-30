@@ -1,0 +1,55 @@
+2026-10-27T08:14:00Z
+# absence search for audit map row 42: Nsight: device profiler (Systems/Compute) equivalent
+# result wording: "not found" in the searched repos/terms; not proof of absence. gh code search misses private/unindexed repos.
+
+$ gh search code --owner aien-dev 'nsight' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+aien-dev/CUDApp:ROADMAP.md
+aien-dev/CUDApp:README.md
+aien-dev/CUDApp:docs/PAIN_POINTS.md
+aien-dev/CUDApp:docs/trace/UNIFIED_TRACE.md
+aien-dev/omega-mv:docs/OMEGA.md
+aien-dev/CUDApp:tools/figures/make_figures.py
+aien-dev/aien-architecture-mv:docs/plans/necessary-work/README.md
+aien-dev/aien-architecture-mv:docs/research/necessary-work-program-feasibility.md
+aien-dev/benchmarks-mv:prime-drag-race/evidence/2026-10-05-campaign/astra/REPORT.md
+aien-dev/aien-architecture-mv:docs/plans/necessary-work/AIEN_Physical_Limits_Project_Plan.md
+aien-dev/aienos.com:crates/site-builder/data/omega.json
+aien-dev/aien-sovereign-core-mv:crates/spark-dream/src/lib.rs
+aien-dev/aienos.com:public/turing/index.html
+aien-dev/aienos.com:public/zh-CN/turing/index.html
+aien-dev/aien-architecture-mv:docs/plans/physics-zero/PHYSICS_ZERO_LAW_ATLAS_V1.md
+aien-dev/aien-sovereign-core-mv:OPEN_COOPERATION_COVENANT.md
+aien-dev/interplane.io:crates/site-builder/src/main.rs
+aien-dev/open-humanity:docs/research/2026-10-15-volunteer-gpu-training.md
+
+$ git -C clones/CUDApp grep -I -i -l -E 'nsight|\bnsys\b|\bncu\b' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- ':!third_party' ':!**/third_party/**'
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:ROADMAP.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/img/replacement-map.svg
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/trace/UNIFIED_TRACE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:tools/figures/make_figures.py
+
+$ git -C clones/omega-mv grep -I -i -l -E 'nsight|\bnsys\b|\bncu\b' e5b32567a7aff3ce594e3254a622a846a6cd190b -- ':!third_party' ':!**/third_party/**'
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/OMEGA.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:om/tls/test/x509/run.sh
+
+$ git -C clones/omega-blas grep -I -i -l -E 'nsight|\bnsys\b|\bncu\b' 0706265a751b0f0957df918a8a945e35735ce5c4 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-dnn grep -I -i -l -E 'nsight|\bnsys\b|\bncu\b' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/aien-math grep -I -i -l -E 'nsight|\bnsys\b|\bncu\b' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+
+2026-10-27T08:16:19Z # addendum: CUDApp main moved to e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 (PR #119 merged 08:06:46Z); same pattern re-run at the new head
+$ git -C clones/CUDApp grep -I -i -l -E 'nsight|\bnsys\b|\bncu\b' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 -- ':!third_party' ':!**/third_party/**'
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:README.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:ROADMAP.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/PAIN_POINTS.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/img/replacement-map.svg
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:docs/trace/UNIFIED_TRACE.md
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:tools/c5/c5_matrix.om
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:tools/figures/make_figures.py

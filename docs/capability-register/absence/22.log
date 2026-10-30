@@ -1,0 +1,131 @@
+2026-10-27T08:02:57Z
+# row 22: CUTLASS-style: CUTLASS/CuTe API compatibility layer
+# not found is never proof of absence; gh code search misses private/unindexed repos
+
+$ gh search code --owner aien-dev cutlass --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+aien-dev/CUDApp docs/issues/D11-libraries.md
+aien-dev/CUDApp PROVENANCE.md
+aien-dev/CUDApp docs/AUDIT.md
+aien-dev/CUDApp docs/PAIN_POINTS.md
+aien-dev/CUDApp README.md
+aien-dev/aien-architecture-mv docs/research/omegese-and-gb10-decode.md
+aien-dev/CUDApp evidence/dx/pain-points/ledger.json
+[exit 0, 7 lines]
+
+$ gh search code --owner aien-dev CuTe --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+aien-dev/CUDApp docs/learn53/PLAN.md
+aien-dev/CUDApp docs/device-trace/REPRODUCE.md
+aien-dev/CUDApp src/omega_gpu_engine.h
+aien-dev/interplane.io .crumb
+aien-dev/aien-architecture-mv docs/06-jspace.md
+aien-dev/omega-mv spec/plan-reuse.md
+aien-dev/aienux docs/GB10_HARDWARE_QUALIFICATION.md
+aien-dev/spark-rsi-mv src/ledger/schema.rs
+aien-dev/interplane-mv bench/PROTOCOL-0.3.md
+aien-dev/spark-rsi-mv src/supervisor/ipc.rs
+aien-dev/aien-architecture-mv docs/errata/m19-errata.md
+aien-dev/spark-rsi-mv src/isolation/container.rs
+aien-dev/atlas atlas.memory-map
+aien-dev/aienux crates/aienos-kernel/src/uefi.rs
+aien-dev/aienux AGENTS.md
+aien-dev/pi-register README.md
+aien-dev/CUDApp docs/runtime/API.md
+aien-dev/physics-mv tools/qemu_inspect.sh
+aien-dev/omega-mv spec/semantic-object.md
+aien-dev/aien-sovereign-core-mv docs/plans/tracing/DESIGN-398.md
+aien-dev/aegis-runtime-mv docs/FAILURE-PROVENANCE.md
+aien-dev/CUDApp native/blackwell/trace.om
+aien-dev/aegis-runtime-mv docs/WORKFLOW-DAG.md
+aien-dev/omega-mv seed/spirv/traps.unit.om
+aien-dev/physics-mv m3/tools/qemu_inspect.sh
+[... 5 more lines, total 30]
+[exit 0, 30 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -iE 'cutlass|\bcute::|CuTe\b' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:PROVENANCE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/AUDIT.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/NAMING.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/device-trace/PLAN.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/device-trace/REPRODUCE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/independent-verification/AGENT_PROMPT.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/independent-verification/README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/issues/D11-libraries.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/learn53/PLAN.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/runtime/API.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/runtime/omega_runtime_api.manifest
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/shader-pilot/README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/LEARN53-L777/COMMANDS.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/dx/pain-points/ledger.json
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/independent-verification/host-contract-20261026/README.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/shader-pilot/host-foundation-20261026/REPRODUCE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:native/blackwell/trace.om
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_codegen.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_codegen_attn.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_codegen_attn256.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_codegen_gdn.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_codegen_gemm.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_codegen_router.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_engine.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_submit.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_blackwell_submit.h
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_gpu_cmdlist.c
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:src/omega_gpu_engine.c
+[... 14 more lines, total 44]
+[exit 0, 44 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -iE 'cutlass|\bcute::|CuTe\b' e5b32567a7aff3ce594e3254a622a846a6cd190b
+e5b32567a7aff3ce594e3254a622a846a6cd190b:calibration/docs/BLINDING_PROTOCOL.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/SPIRV.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/numeric/OMEGA_GPU_ENGINE.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/numeric/OMEGA_GPU_NATIVE_BOUNDARY.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/one_layer/OMEGESE.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/polyglot/OMEGA_POLYGLOT_CURRENT_STATE.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/r16-operator-brief.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/turing/TURING_W0_PROPOSAL.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/turing/protocols/turing-instrument-calibration-validation-protocol-v1-0.tex
+e5b32567a7aff3ce594e3254a622a846a6cd190b:docs/turing/protocols/turing-laboratory-execution-protocol-v1-0.tex
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/DECODE-LAUNCH-COLLAPSE-20261013/graph-r3-stamps/worktree.diff
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/GATE14-FOUNDATION/legs-1720a8d/README.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/ONE-LAYER-2/generations/r3-stage0-a-one-20261015/cands/a-text-1/dev05/candidate.osc
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/ONE-LAYER-2/generations/r3-stage0-a-one-20261015/gen/a-text-1/dev05/r2.candidate.osc
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/ONE-LAYER-2/generations/r3-stage0-a-one-20261015/gen/a-text-1/dev05/r2.content
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/ONE-LAYER-2/generations/r3-stage0-a-one-20261015/gen/a-text-1/dev05/r2.payload
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/ONE-LAYER-2/generations/r3-stage0-a-one-20261015/gen/a-text-1/dev05/r2.resp.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/gates/reconv/GPU-RECONV-710d438c/bw_warp_sim.h
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/gates/reconv/GPU-RECONV-710d438c/omega_blackwell_codegen.c
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/OWN30B-REQUAL-MAIN-710d438c-20261015/omega457/ground.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/12785aab7bb22bc1fd1d4e71143c15f98f1e4bc94885e9b2a725487b023b7c93.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/15d6703cbffe8006696d9571f591696659a01c8dce872bf9b0aa8f95445c36ea.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/40b42c034efe2801963d0f94c24bb070a8b0f7a6b92dd243e70ab2718c538935.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/425a7302980e41972125b7ac2ae8727da6efd16ccd96d1acca66f6805cb51bfd.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/4de74cf3a01f7b362819183af5eb22a99f8af71638b2ecb026062acdf93bafb9.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/585287db840f3d09bbd89471da73825341a8aae9ac8422c898a3d2a9b0ab2101.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/632ba16d47358742c7908e176f0e702b7349dfce3ecd404151fd6b8705c18df1.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/98a63b2e17af68c97cf021612b43387497a57c82bbeb9d206a9b32f6bb21e7e6.json
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/VISOR/VISOR_V1_QUALIFICATION.md
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/gdn-decode-20261018/change.diff
+[... 85 more lines, total 115]
+[exit 0, 115 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -iE 'cutlass|\bcute::|CuTe\b' 0706265a751b0f0957df918a8a945e35735ce5c4
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -iE 'cutlass|\bcute::|CuTe\b' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86:om/dnn.om
+[exit 0, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -iE 'cutlass|\bcute::|CuTe\b' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/builtins.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/coverage.json
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/context/cx_data.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/parse/pa_chars.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/strings/regex.om
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/arith_cli.sh
+43c629db362b48aeec3590a8f0cd30e927e5ec16:tests/unit/parse_chars.json
+[exit 0, 7 lines]
+
+
+# 2026-10-27T08:07:11Z interpretation: git grep -i CuTe also matches the substring "execute"; the CUDApp src/native hits (omega_blackwell_codegen*.c, trace.om, omega_blackwell_engine.h) are execute/comment text, not CUTLASS or CuTe code.

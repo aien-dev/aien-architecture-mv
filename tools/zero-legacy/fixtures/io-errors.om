@@ -1,0 +1,55 @@
+note Test-only driver appended to closure.om after renaming its main.
+note The generated test copy injects a bad directory fd only after one successful batch.
+note No production fault switch or foreign implementation is introduced.
+
+fn main to int
+if lt argcnt 3
+ret 64
+end
+n = argread 1 path 0 4095
+if lt n 1
+ret 64
+end
+put plen 0 ulong n
+put rootl 0 ulong n
+rootn = ulong n
+n = argread 2 name 0 255
+if lt n 1
+ret 64
+end
+if eq get name 0 114
+note Establish the error is read failure, not an unopened fixture.
+fd = fopen path 0 get plen 0 0 0
+if lt fd 0
+ret 13
+end
+r = read int fd head 0 len head
+failed = lt r 0
+r = fclose int fd
+if not failed
+ret 14
+end
+note Reading an opened directory yields a real negative read, even as root.
+if readhd
+ret 11
+end
+if ne classif 21
+ret 12
+end
+ret 0
+end
+scandir
+if ne get cnt 0 1
+ret 21
+end
+if ne get cnt 21 1
+ret 22
+end
+if ne unknown 1
+ret 23
+end
+if ne get plen 0 rootn
+ret 24
+end
+ret 0
+end

@@ -1,9 +1,9 @@
 # ADR 0043: The GPU stack splits into a portable Omega top and a thin per-target backend behind one 30-call ABI
 
-**Status:** PROPOSED (2026-10-27). Design only. No code moves under this ADR until the gate in
-Decision 0 is met. Becomes ACCEPTED when Drake, or Main under his delegation, merges this PR after a
-non-author review. Recorded by lane SplitDesign.
-**Related:** ARCH-0042 (PROPOSED, PR #342: Omega owns computation, CUDApp owns GPU execution, Omega
+**Status:** Accepted (Main, delegated by Drake, 2026-10-30; merged as #343). Proposed 2026-10-27.
+Design only. No code moves under this ADR until the gate in Decision 0 is met. Recorded by lane
+SplitDesign.
+**Related:** ARCH-0042 (ACCEPTED 2026-10-30, #342: Omega owns computation, CUDApp owns GPU execution, Omega
 Bridge owns compatibility; Decision 2 superseded in part, see Decision 1), ARCH-0024 (Omega is the
 destination language), ARCH-0018
 (substrate-neutral realization). The companion file-level design is `docs/ARCHITECTURE.md` in
@@ -159,12 +159,13 @@ Rules on the ABI:
   called by the top; they stay in place as GB10-internal code (or are deleted at a cutover that
   replaces them). The `m16/` and `nvrm/` gate programs remain backend tests. Within CUDApp the split is
   logical (headers, build groups, CODEOWNERS), not a file move.
-- **Versioning.** The public runtime API stays ABI 0.1 until the cutover. Moving the STABLE
+- **Versioning.** The public runtime API is ABI 0.1 today. Moving the STABLE
   `omega_gpu_session_launch` / `OmegaGpuLaunch` from raw code + QMD shape to a code object is a MAJOR
   bump (API.md §2). The decode-path APIs absent from the manifest today (fp8, fp8gemm, bf16_gemv,
   decode_attn, router, tern, tcgemm, prefill*, moe, decode_graph) enter the manifest as EXPERIMENTAL
   before any of them moves (CUDApp#124). API.md §2 counts an added EXPERIMENTAL entry as a MINOR
-  change, so that step is either a 0.2 bump or an exception to "stays 0.1"; open for the merger.
+  change, so the first such entry bumps the API to 0.2 (MINOR) when it enters the manifest; no
+  exception to API.md §2 is made.
 - **A CPU reference backend** (AArch64, `.om`) implements the same 30 calls with code-object format
   `AARCH64`. It runs every top-level test on a GitHub `ubuntu-24.04-arm` runner without a GPU and is
   the negative-control target: a mutant kernel must fail there before any chip run is requested.

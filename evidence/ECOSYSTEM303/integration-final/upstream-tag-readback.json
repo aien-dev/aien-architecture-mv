@@ -1,0 +1,122 @@
+[
+  {
+    "repository": "huggingface/safetensors",
+    "tag": "v0.6.2",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "2c28ad",
+      "wall_time_seconds": 0.155711139,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "aa6c43d729868fc43918e862d42bfeaf60485d1d\trefs/tags/v0.6.2\n"
+    }
+  },
+  {
+    "repository": "vllm-project/vllm",
+    "tag": "v0.11.0",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "efad58",
+      "wall_time_seconds": 0.177055246,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "b8b302cde434df8c9289a2b465406b47ebab1c2d\trefs/tags/v0.11.0\n"
+    }
+  },
+  {
+    "repository": "ggml-org/llama.cpp",
+    "tag": "b6748",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "0f3ebe",
+      "wall_time_seconds": 0.327296233,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "3f750f8d760ab5a61491e6a9409072dfeee4b4d7\trefs/tags/b6748\n"
+    }
+  },
+  {
+    "repository": "NVIDIA/TensorRT",
+    "tag": "v10.13.3",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "ac3321",
+      "wall_time_seconds": 0.15321733,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "94e2b9ef6d2cce74c76cdad499cca36cc4949197\trefs/tags/v10.13.3\n"
+    }
+  },
+  {
+    "repository": "mlflow/mlflow",
+    "tag": "v3.4.0",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "81d7b7",
+      "wall_time_seconds": 0.201353117,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "78d075062b120597050bf2b3839a426feea5ea4c\trefs/tags/v3.4.0\n"
+    }
+  },
+  {
+    "repository": "ray-project/ray",
+    "tag": "ray-2.49.2",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "18b45a",
+      "wall_time_seconds": 0.141778912,
+      "exit_code": 0,
+      "original_token_count": 16,
+      "output": "479fa716904109d9df4b56b98ca3c3350e1ec13c\trefs/tags/ray-2.49.2\n"
+    }
+  },
+  {
+    "repository": "kserve/kserve",
+    "tag": "v0.15.2",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "0ed5f2",
+      "wall_time_seconds": 0.135293504,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "d623ea29e4a7312e509829f9104209cd6f820268\trefs/tags/v0.15.2\n"
+    }
+  },
+  {
+    "repository": "EleutherAI/lm-evaluation-harness",
+    "tag": "v0.4.9.1",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "d5281c",
+      "wall_time_seconds": 0.136014117,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "d021bf846218f1bb3bdc0603864789329476d464\trefs/tags/v0.4.9.1\n"
+    }
+  },
+  {
+    "repository": "triton-lang/triton",
+    "tag": "v3.5.0",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "1faeda",
+      "wall_time_seconds": 0.124460994,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "c3c476f357f1e9768ea4e45aa5c17528449ab9ef\trefs/tags/v3.5.0\n"
+    }
+  },
+  {
+    "repository": "NVIDIA/nccl",
+    "tag": "v2.28.7-1",
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "89f610",
+      "wall_time_seconds": 0.10228069,
+      "exit_code": 0,
+      "original_token_count": 16,
+      "output": "ae7aed194dc63c65d1bf5c0385ba3d68d3b64c8c\trefs/tags/v2.28.7-1\n"
+    }
+  }
+]

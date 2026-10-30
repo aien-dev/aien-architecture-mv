@@ -1,0 +1,111 @@
+2026-10-27T08:14:23Z  absence search for row 08: Device linking (nvlink / cuLink / relocatable device code)
+worker CapRegister.RowsToolchain; read-only; heads: CUDApp@e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 omega-mv@e5b32567a7aff3ce594e3254a622a846a6cd190b omega-blas@0706265a751b0f0957df918a8a945e35735ce5c4 omega-dnn@ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 aien-math@43c629db362b48aeec3590a8f0cd30e927e5ec16
+
+## GitHub code search (indexes only some repos; misses private/unindexed code)
+[2026-10-27T08:11:41Z] $ gh search code --owner aien-dev cuLinkCreate --limit 50 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+exit 0
+(no results)
+[2026-10-27T08:12:02Z] $ gh search code --owner aien-dev 'relocatable device code' --limit 50 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+exit 0
+(no results)
+[2026-10-27T08:13:48Z] control (search works for a term known to exist): $ gh search code --owner aien-dev nvdisasm --limit 5 ... -> exit 0, 5 results, first: aien-dev/CUDApp:tools/sm121dis/zero_nvdisasm.sh
+
+## git grep at exact head shas (clones in /home/drakestapleton/work/CapRegister/clones)
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -n -I -i -E 'nvlink\b|cuLinkCreate|cuLinkAddData|relocatable device code|\-rdc\b|device.?link(ing|er)' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9
+exit 0 (83 matching lines)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/class/cl2080_notification.h:599: * Nvlink Link status change Notification
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000gpu.h:847: * is an NOP for non-NVLink GPUs.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000gpu.h:957: * This command is used to set NVLINK bandwidth for power saving
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000gpu.h:960: * NVLINK_BW_MODE is an NOP for non-NVLink GPUs.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000gpu.h:1006: * This command is used to get NVLINK bandwidth for power saving
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000gpu.h:1008: * NVLINK_BW_MODE is an NOP for non-NVLink GPUs.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1078:#define NV0000_CTRL_P2P_CAPS_INDEX_NVLINK            2U
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1181: *         When this bit is set, NVLINK is supported for all P2P between subdevices
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1199: *         When this bit is set, indirect NVLINK is supported for subdevices
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1207: *      For a pair of GPUs, return mask of CEs to use for p2p reads over Nvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1209: *      For a pair of GPUs, return mask of CEs to use for p2p writes over Nvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1227: *         Indicates that NvLink P2P link setup failed.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1321: *         When this bit is set, NVLINK is supported for all P2P between subdevices
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1339: *         When this bit is set, indirect NVLINK is supported for subdevices
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1342: *      For a pair of GPUs, return mask of CEs to use for p2p reads over Nvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1345: *      For a pair of GPUs, return mask of CEs to use for p2p writes over Nvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1348: *      For a pair of GPUs, return mask of CEs to use for p2p reads over Nvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0000/ctrl0000system.h:1351: *      For a pair of GPUs, return mask of CEs to use for p2p writes over Nvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl0080/ctrl0080base.h:56:#define NV0080_CTRL_NVLINK                     (0x21)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080base.h:80:#define NV2080_CTRL_NVLINK                        (0x30)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080gpu.h:4037: *   Mask of CEs to use for p2p reads over Nvlink.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080gpu.h:4039: *   Mask of CEs to use for p2p writes over Nvlink.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:2372: * Disable all NVLINK FB peers
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:2461: *   Mask of CEs to use for p2p reads over Nvlink.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:2463: *   Mask of CEs to use for p2p writes over Nvlink.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:3565: *      - Nvlink Bandwidth mode
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:3611: *      - Nvlink Bandwidth mode
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4125: * idled due to a fatal nvlink error.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4244: * This command is used to enable RM NVLink enabled peer state.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4257: *     If NVLINK is not supported on the chip, or
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4271: * NVLINK Link states
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4272: * These should ALWAYS match the nvlink core library defines in nvlink.h
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4306: * NVLINK TX Sublink states
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4307: * These should ALWAYS match the nvlink core library defines in nvlink.h
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4323: * NVLINK RX Sublink states
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4324: * These should ALWAYS match the nvlink core library defines in nvlink.h
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4337: * These should ALWAYS match the values defined in nvlink.h
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4342:// NVLINK callback types
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4361: *     The current Nvlink DL mode
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4398: * Structure to store the Nvlink Remote and Local SID info
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4420: *     The output structure containing the Nvlink Remote/Local SID info
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4439: *     The input nvlink state to set
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4461: *     The current Nvlink TL mode
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4470: *     The input nvlink mode to set
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4494: *     The input nvlink mode to set
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4506: *     The input nvlink mode to set
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4581: * Generic NvLink callback RPC to route commands to GSP
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4605: *     The output structure containing the Nvlink Remote/Local SID info
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4660: * Performs all the necessary actions required before setting a peer on NVLink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4663: *     Peer ID which will be set on NVLink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4682: * Performs all the necessary actions required after setting a peer on NVLink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4685: *     Mask of Peer IDs which has been set on NVLink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4730: * Performs all the necessary actions required to remove NVLink mapping (sysmem or peer or both)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4733: *     Remove NVLink mapping for the given map types (sysmem or peer or both)
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4735: *     Mask of Peer IDs which needs to be removed on NVLink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4753: * Performs all the necessary actions required to save/restore HSHUB state during NVLink L2 entry/exit
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4775: * Performs all the necessary actions required to save/restore bufferready state during NVLink L2 entry/exit
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4796: * Performs all the necessary actions required to update the current Nvlink configuration 
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4799: *     Whether sysmem nvlink support was enabled
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4953: * [Out] ipVerNvlink
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4954: *    IP revision of the NVLink HW
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:4968:    NvU32                                          ipVerNvlink;
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5018: * Program NVLink Speed from OS/VBIOS
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5067: *     Whether to assert, de-assert or toggle the Nvlink reset
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5121: *     Current Nvlink refclk source
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5191: * Process NVLink forced configurations which includes setting of HSHUB and memory system
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5199: *     Tracks the set of registers to program from the NVLink table
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5217: * Sync the NVLink lane shutdown properties with GSP-RM
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5220: *     Whether nvlink shutdown should be triggered on driver unload
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5233: * Enable ATS functionality related to NVLink sysmem if hardware support is available
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5248: *  Get the mask of Nvlink links connected to system
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5251: *      Mask of Nvlink links connected to system
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/ctrl/ctrl2080/ctrl2080internal.h:5416: * idled due to a fatal nvlink error.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvos.h:3113: *                        Enables VA translation for this address space using NVLINK ATS.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvos.h:3114: *                        Note, the GMMU page tables still exist and take priority over NVLINK ATS.
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:145:NV_STATUS_CODE(NV_ERR_NVLINK_INIT_ERROR,               0x00000074, "Nvlink Init Error")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:146:NV_STATUS_CODE(NV_ERR_NVLINK_MINION_ERROR,             0x00000075, "Nvlink Minion Error")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:147:NV_STATUS_CODE(NV_ERR_NVLINK_CLOCK_ERROR,              0x00000076, "Nvlink Clock Error")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:148:NV_STATUS_CODE(NV_ERR_NVLINK_TRAINING_ERROR,           0x00000077, "Nvlink Training Error")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:149:NV_STATUS_CODE(NV_ERR_NVLINK_CONFIGURATION_ERROR,      0x00000078, "Nvlink Configuration Error")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:158:NV_STATUS_CODE(NV_ERR_NVLINK_FABRIC_NOT_READY,         0x00000081, "Nvlink Fabric Status or Fabric Probe is not yet complete, caller needs to retry")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:159:NV_STATUS_CODE(NV_ERR_NVLINK_FABRIC_FAILURE,           0x00000082, "Nvlink Fabric Probe failed")
+e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9:third_party/nvidia-open-580.173.02/src/common/sdk/nvidia/inc/nvstatuscodes.h:164:NV_STATUS_CODE(NV_ERR_FABRIC_STATE_OUT_OF_SYNC,        0x00000087, "NVLink fabric state cached by the driver is out of sync")
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -n -I -i -E 'nvlink\b|cuLinkCreate|cuLinkAddData|relocatable device code|\-rdc\b|device.?link(ing|er)' e5b32567a7aff3ce594e3254a622a846a6cd190b
+exit 0 (1 matching lines)
+e5b32567a7aff3ce594e3254a622a846a6cd190b:src/runtime/omega_shared_world_abi.h:88:/* Cache line / alignment. NVLink-C2C coherence granule on GB10 is 64 bytes. */
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -n -I -i -E 'nvlink\b|cuLinkCreate|cuLinkAddData|relocatable device code|\-rdc\b|device.?link(ing|er)' 0706265a751b0f0957df918a8a945e35735ce5c4
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -n -I -i -E 'nvlink\b|cuLinkCreate|cuLinkAddData|relocatable device code|\-rdc\b|device.?link(ing|er)' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86
+exit 1 (0 matching lines) -- exit 1 = no match
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -n -I -i -E 'nvlink\b|cuLinkCreate|cuLinkAddData|relocatable device code|\-rdc\b|device.?link(ing|er)' 43c629db362b48aeec3590a8f0cd30e927e5ec16
+exit 1 (0 matching lines) -- exit 1 = no match
+
+## Interpretation
+All CUDApp hits are under third_party/nvidia-open-580.173.02 (NVLink interconnect headers); the omega-mv hit is an NVLink-C2C comment in src/runtime/omega_shared_world_abi.h:88. No device linker, cuLink or relocatable device code.
+Verdict input: NONE_FOUND (absence of evidence at these shas, not proof of impossibility).

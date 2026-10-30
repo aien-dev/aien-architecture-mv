@@ -47,9 +47,12 @@ Superseded plans are kept only under [docs/archive/plans](docs/archive/plans/REA
 | `docs/adr/` | Architecture decision records (37 on `main`, listed in the [index](docs/adr/README.md)) |
 | `docs/plans/` | Finite workstream plans (not master plans) |
 | `docs/research/` | Research notes, for example the [repository layout note](docs/research/repo-topology-unix-vs-monorepo-vs-hybrid.md) and the [Hermes Agent note](docs/research/hermes-agent-prior-art.md) |
+| [Aienet collaborator directory](docs/research/aienet-collaborators.md) | Prospective academic and community contacts, sources, collaboration questions, and SI-agent outreach rules; not an affiliation or enrollment list |
 | `docs/archive/` | Superseded plans, kept for history only |
 | `qualification/` | Release candidates (`candidates/CAND-*.toml` and their gate results) and recorded exceptions |
 | `formal/invariants/` | Invariants written down for formal checking ([ADR 0027](docs/adr/0027-formal-oracle-lean-bootstrap.md)) |
+| `docs/capability-register/` | The org-wide CUDA capability register: [register.tsv](docs/capability-register/register.tsv) (source of truth; owner, commit, arch, level and evidence file for each of the 47 rows of the CUDA replacement map) and its generated view [REGISTER.md](docs/capability-register/REGISTER.md) |
+| `tools/capreg/` | The register checker and renderer in seeded `.om`, and its gate (step `capreg`) |
 | `tools/crumb/` | The crumb tool (C11), which compiles and checks the `.crumb` files |
 | `scripts/` | Small shell tools (doctrine check, candidate and pin checks, R16 status wording, the pull request gate, crumb rebase helper) and their `test_*.sh` tests |
 | `tests/gates/` | The gate manifests the Spark runs on every pull request |

@@ -1,0 +1,159 @@
+note EC303 v1 structural admission. This does not authenticate or approve evidence.
+note Forty fixed capability families; 20 fields per row. See FORMAT.md.
+global EC ulong 800
+global Seen ulong 40
+global Reach ulong 1600
+
+fn ecrequire id ulong to ulong
+if or eq id 15 or eq id 16 or eq id 19 eq id 20
+ret 7
+end
+if or eq id 8 or eq id 13 eq id 14
+ret 3
+end
+if or eq id 18 and ge id 21 le id 23
+ret 3
+end
+if or eq id 27 and ge id 30 le id 35
+ret 3
+end
+if or eq id 12 eq id 24
+ret 2
+end
+if or and ge id 4 le id 7 eq id 9
+ret 1
+end
+if or eq id 17 and ge id 36 le id 38
+ret 1
+end
+ret 0
+end
+
+fn ecfield row ulong col ulong to ulong
+ret get EC add mul row 20 col
+end
+
+fn ecvalidate version ulong count ulong to ulong
+if ne version 1
+ret 1
+end
+if eq count 41
+ret 2
+end
+for i ulong 40
+put Seen i 0
+end
+for i ulong 1600
+put Reach i 0
+end
+for i ulong 40
+id = ecfield i 0
+if or lt id 1 gt id 40
+ret 3
+end
+if ne get Seen sub id 1 0
+ret 3
+end
+put Seen sub id 1 add i 1
+if or lt ecfield i 1 1 gt ecfield i 1 4
+ret 4
+end
+if or eq ecfield i 2 0 eq ecfield i 3 0
+ret 4
+end
+state = ecfield i 4
+tier = ecfield i 5
+needs = ecfield i 6
+if or gt state 4 or gt tier 3 gt needs 7
+ret 5
+end
+if ne and needs ecrequire id ecrequire id
+ret 19
+end
+deps = ecfield i 7
+if gt deps 1099511627775
+ret 6
+end
+if ne and deps shl 1 sub id 1 0
+ret 6
+end
+for j ulong 40
+if ne and deps shl 1 j 0
+put Reach add mul sub id 1 40 j 1
+end
+end
+if gt state 0
+if or eq ecfield i 8 0 eq ecfield i 9 0
+ret 7
+end
+end
+if ge state 2
+if or eq tier 0 or eq ecfield i 10 0 eq ecfield i 11 0
+ret 8
+end
+if or eq ecfield i 18 0 eq ecfield i 18 ecfield i 3
+ret 9
+end
+if eq ecfield i 16 0
+ret 10
+end
+if ne and needs 1 0
+if eq ecfield i 17 0
+ret 11
+end
+end
+if ne and needs 2 0
+if eq ecfield i 15 0
+ret 12
+end
+end
+if ne and needs 4 0
+if ne tier 3
+ret 13
+end
+end
+end
+if ge state 3
+if or eq ecfield i 12 0 eq ecfield i 14 0
+ret 14
+end
+end
+if eq state 4
+if eq ecfield i 13 0
+ret 15
+end
+end
+if ne ecfield i 19 0
+ret 16
+end
+end
+note Transitive closure detects cycles even in entirely pending rows.
+for k ulong 40
+for i ulong 40
+if ne get Reach add mul i 40 k 0
+for j ulong 40
+if ne get Reach add mul k 40 j 0
+put Reach add mul i 40 j 1
+end
+end
+end
+end
+end
+for i ulong 40
+if ne get Reach add mul i 40 i 0
+ret 17
+end
+row = sub get Seen i 1
+if ge ecfield row 4 3
+for j ulong 40
+if ne get Reach add mul i 40 j 0
+dep = sub get Seen j 1
+if lt ecfield dep 4 3
+ret 18
+end
+end
+end
+end
+end
+ret 0
+end

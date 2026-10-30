@@ -1,0 +1,80 @@
+2026-10-27T08:05:00Z
+# row 37: GPUDirect: RDMA / Storage / peer-to-peer
+# not found here is never proof of absence; gh code search misses private/unindexed repos; git grep covers only the listed clones at the listed shas, excluding vendored third_party/
+
+$ gh search code --owner aien-dev gpudirect --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev nvidia-peermem --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev cuFile --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- . ':(exclude)third_party'
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/nvidia-out/LAYERS-0-3.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:evidence/dx/pain-points/counts.json
+[exit 0, 2 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' e5b32567a7aff3ce594e3254a622a846a6cd190b -- . ':(exclude)third_party'
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/R15-silicon/raw/processes-after.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/R15-silicon/raw/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/A7b-R15/R15-silicon/run-dir/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-A7c/R15-raw/20261006T113938Z-97ee27584cda-silicon/processes-after.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND3-LIVING-f816473-A7c/R15-raw/20261006T113938Z-97ee27584cda-silicon/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/R15/raw/20260929T020536Z-ad8e1f2ea4e4-silicon/processes-after.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/R15/raw/20260929T020536Z-ad8e1f2ea4e4-silicon/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/R15/raw/20260929T025735Z-3e9e53be3358-silicon/processes-after.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/R15/raw/20260929T025735Z-3e9e53be3358-silicon/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/preflight-20260928-01/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/preflight-20260928-02/processes-before.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:research/m15/spbm/runs/preflight-20260928-03/processes-before.txt
+[exit 0, 12 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' 0706265a751b0f0957df918a8a945e35735ce5c4 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-train grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' b6c33e3a82611361b37c651df70d9a645045773a -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-sovereign-core-mv grep -I -l -i -E 'gpudirect|peermem|cufile|gpudirect storage|EnablePeerAccess|peer[-_ ]access|rdma' f30eb963918d71dd2998b1cb936c251429417de1 -- . ':(exclude)third_party'
+f30eb963918d71dd2998b1cb936c251429417de1:docs/archive/plans/2026-09-22/AIEN_COMPLETE_SYSTEM_ARCHITECTURE_v2.md
+[exit 0, 1 lines]
+
+
+# hit review (git grep -n on each hit):
+#  CUDApp docs/nvidia-out/LAYERS-0-3.md:134 MEASURED nvidia-peermem.ko / nvidia-fs.ko installed but not loaded; :167 lists mlx5 RDMA modules. Inventory text, no implementation.
+#  CUDApp evidence/dx/pain-points/counts.json:398 a scraped post title 'RDMA over Thunderbolt 5'. False positive.
+#  omega-mv processes-*.txt files: kernel thread 'kworker/R-rdma_cm' in process listings. False positive.
+#  aien-sovereign-core-mv docs/archive/plans/2026-09-22/AIEN_COMPLETE_SYSTEM_ARCHITECTURE_v2.md: archived plan text. No implementation.
+
+# gh code search retried once after the burst-limit window (2026-10-27T08:05:28Z):
+$ gh search code --owner aien-dev gpudirect --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (1 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev cuFile --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (1 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+# VERDICT: not found in the searched scope (not proof of absence).
+
+# second retry 2026-10-27T08:11:20Z:
+$ gh search code --owner aien-dev gpudirect --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+(no output)
+[exit 0, 0 lines]
+
+# VERDICT: not found in the searched scope (not proof of absence).

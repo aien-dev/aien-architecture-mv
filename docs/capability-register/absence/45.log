@@ -1,0 +1,66 @@
+2026-10-27T08:14:57Z
+# absence search for audit map row 45: MPS/MIG: multi-process service or GPU partitioning
+# result wording: "not found" in the searched repos/terms; not proof of absence. gh code search misses private/unindexed repos.
+
+$ gh search code --owner aien-dev 'nvidia-cuda-mps' --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+":"+.path'
+(no output: 0 hits)
+
+$ git -C clones/CUDApp grep -I -i -l -E 'nvidia-cuda-mps|cuda.?mps|multi.?process.?service|\bmig\b|multi.?instance.?gpu' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-mv grep -I -i -l -E 'nvidia-cuda-mps|cuda.?mps|multi.?process.?service|\bmig\b|multi.?instance.?gpu' e5b32567a7aff3ce594e3254a622a846a6cd190b -- ':!third_party' ':!**/third_party/**'
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/00-identity/machine-start/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/CHIPWAIT/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/CHIPWAIT/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/COMPOSITION-2-GPU/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/COMPOSITION-2-GPU/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/M18-build/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/M18-build/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/M18/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/M18/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/R13-testbuild-silicon/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/R13-testbuild-silicon/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/R16-ladder/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/R16-ladder/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/prod-hygiene-silicon/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-LIVING-cb06d08/prod-hygiene-silicon/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-NATIVE-2eec75b/identity.log
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/00-identity/machine-start/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/99-identity/machine-end/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/ATTN-timing-1/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/ATTN-timing-1/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/ATTN-timing-2/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/ATTN-timing-2/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/ATTN-timing-3/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/ATTN-timing-3/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/R11-living/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/R11-living/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/R15-silicon/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW-20261005T1252Z/R15-silicon/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/00-identity/machine-start/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/99-identity/machine-end/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/R11-living/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/R11-living/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/R15-silicon/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND1-WINDOW2-20261005T1259Z/R15-silicon/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/00-identity/machine-start/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/A7b-R15/R15-build/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/A7b-R15/R15-build/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/A7b-R15/R15-silicon/machine-after/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/A7b-R15/R15-silicon/machine-before/nvidia-smi.txt
+e5b32567a7aff3ce594e3254a622a846a6cd190b:evidence/CAND2-LIVING-79a805d/CHIPWAIT/machine-after/nvidia-smi.txt
+... (124 files total)
+
+$ git -C clones/omega-blas grep -I -i -l -E 'nvidia-cuda-mps|cuda.?mps|multi.?process.?service|\bmig\b|multi.?instance.?gpu' 0706265a751b0f0957df918a8a945e35735ce5c4 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/omega-dnn grep -I -i -l -E 'nvidia-cuda-mps|cuda.?mps|multi.?process.?service|\bmig\b|multi.?instance.?gpu' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+$ git -C clones/aien-math grep -I -i -l -E 'nvidia-cuda-mps|cuda.?mps|multi.?process.?service|\bmig\b|multi.?instance.?gpu' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
+
+
+2026-10-27T08:16:20Z # addendum: CUDApp main moved to e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 (PR #119 merged 08:06:46Z); same pattern re-run at the new head
+$ git -C clones/CUDApp grep -I -i -l -E 'nvidia-cuda-mps|cuda.?mps|multi.?process.?service|\bmig\b|multi.?instance.?gpu' e7b9e1fc6312a03d36eb8cd8f9c14296f1788ad9 -- ':!third_party' ':!**/third_party/**'
+(no output: 0 files)
