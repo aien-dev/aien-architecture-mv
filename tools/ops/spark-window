@@ -1,45 +1,92 @@
 #!/bin/sh
 # spark-window: one measurement window at a time on the Spark.
 #
-#   spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none] [--wait]
+#   spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none] [--quiet exclusive|none] [--wait]
 #        Refuses (exit 3) if a window is already open or anyone is in line, and
 #        lists them. With --wait it takes a ticket and waits its turn instead:
 #        first come, first served (L113, 2026-10-20: retrying every 15 s lost
 #        the turn for 4 h).
 #        Otherwise creates window id <UTC date-time>-<random>, FIRST takes the
 #        chip lock /tmp/aien-gb10.lock (default exclusive; none skips it), THEN
-#        the quiet lock exclusive, never holding one while blocking on the
-#        other (measurements take quiet then chip, so holding the chip while
-#        blocking on quiet could deadlock), so a window waiting for
-#        the chip never blocks CPU timings (L154, 2026-10-20: a window held the
-#        quiet lock 25 min while its own GPU job queued for the chip). A holder
-#        process keeps both until close or until the lease runs out (default
-#        90 min). Records box state at open in ~/yardsticks/windows/<id>/open.json
-#        and prints the id. While waiting it prints who holds each lock.
+#        the quiet lock exclusive. While it waits for the chip it holds nothing,
+#        so it never blocks CPU timings (L154, 2026-10-20: a window held the
+#        quiet lock 25 min while its own GPU job queued for the chip). Once it
+#        has the chip it KEEPS it while it waits for the quiet lock, and raises a
+#        gate (/tmp/aien-quiet.gate, exclusive) so new quiet-build / quiet-measure
+#        callers wait outside while the ones already holding the quiet lock finish
+#        (L322, 2026-10-21: with no gate, shared takers kept arriving, the
+#        exclusive waiter never won, and each time the window let the chip go a raw
+#        flock user took it: 40+ min for the front of the line).
+#        L405 (2026-10-22): the window drains the quiet lock for at most 5 min, then lets
+#        everything go and waits for a quiet machine again; quiet-build gives up waiting after 25 min.
+#        Deadlock guard: measurements take quiet then chip, so if a process waiting
+#        for the chip holds the quiet lock, the window lets the chip go (gate stays
+#        up), waits for quiet, then tries the chip without blocking.
+#        --quiet none: chip lock only, no quiet lock and no gate. For chip checks that
+#        compare VALUES (routes, logits, cosines), not times: the quiet lock exists for
+#        timings only. Never use it for a number you will report as a speed.
+#        A holder process keeps the locks until close or until the lease runs out
+#        (default and maximum 20 min when it takes anything exclusive; 90 min otherwise). Records box state at open in
+#        ~/yardsticks/windows/<id>/open.json and prints the id. While waiting it
+#        prints who holds each lock.
 #   spark-window run CMD...   run CMD inside the open window: sets SPARK_WINDOW and
 #        SPARK_WINDOW_DIR, so spark-receipt stamps the window id and calibration,
 #        and, when the window holds the chip lock, AIEN_GB10_LOCK_HELD=1, so a
 #        job that honours it (aien-test gates, the 27B server) does not queue
 #        behind its own window. A job that takes /tmp/aien-gb10.lock itself and
 #        ignores the marker (plain flock) waits until the window closes: open
-#        such windows with --gb10 none.
-#        and quiet-measure runs CMD directly instead of waiting on our own lock.
+#        such windows with --gb10 none. quiet-measure run inside the window runs CMD
+#        directly instead of waiting on our own lock.
 #   spark-window close [ID]   release the quiet lock, record box state at close
 #        (close.json), print what the window holds.
 #   spark-window status       show the open window (or "none") and the lock queue.
 #   spark-window id           print the open, held window id (exit 1 if none).
 #   spark-window locks [gb10|quiet]  who holds and who is queued on the locks (kernel lock table).
 #
+# L405 lock policy (Drake 2026-10-22: "stop chip locking"):
+#   1. Correctness work (builds, host tests, QEMU, crumb checks, value gates) takes no exclusive lock and waits
+#      at most 25 min behind a timing lock (quiet-build), then runs anyway and the window is marked "shared machine".
+#   2. Exclusive windows are for TIMING receipts only and last at most 20 min (open refuses more). A window
+#      that overruns is let go and gets NO VERDICT. Split long measurements, or run on the shared machine labelled so.
+#   3. A timing window opens only when the machine is quiet anyway: at most 3 jobs on the quiet lock and load at
+#      most 10 (numbers from the L371 incident: 3.25 new builds per 20 min). It waits, holding nothing, until then.
+#   4. Test model servers use their own chip lock (q36-extra sets AIEN_SERVE_GPU_LOCK), like the live server.
+#   5. lock-long-holds (cron, 5 min) posts every exclusive hold over 20 min on the board and asks spark-window to
+#      close a window past its lease; it never kills jobs.
 # Rule: one window at a time. Wait your turn with open --wait (first come, first served) and
 # say so on the ledger (ledger note <your id> "measure: in line for a window").
 set -u
 WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
-Q=${SPARK_QUIET_LOCK:-/tmp/aien-quiet.lock}; W=/tmp/aien-quiet.want.d; G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}   # overrides: tests only
+Q=${SPARK_QUIET_LOCK:-/tmp/aien-quiet.lock}; W=${SPARK_QUIET_WANT:-/tmp/aien-quiet.want.d}; G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}   # overrides: tests only
+# writer-preference gate (see _hold): quiet-build and quiet-measure pass through it before taking the quiet lock
+GATE=${SPARK_QUIET_GATE:-/tmp/aien-quiet.gate}
+# L405 limits (numbers from the 2026-10-21 L371 incident: the build line grew from 3 to 29 in 160 min,
+# 3.25 new jobs per 20 min, calc:691a9354): exclusive leases at most LEASE_MAX min; open only when at most
+# IDLE_N jobs hold or wait on the quiet lock and the 1-min load is at most IDLE_LOAD; drain the quiet lock
+# for at most DRAIN_MAX s, else let go and wait for quiet again; give up after IDLE_MAX s of waiting.
+# Builds wait at most DRAIN_MAX + LEASE_MAX (25 min, quiet-build SPARK_BUILD_MAX_WAIT) behind a window.
+LEASE_MAX=${SPARK_LEASE_MAX:-20}; LU=${SPARK_LEASE_UNIT_S:-60}
+IDLE_N=${SPARK_IDLE_N:-3}; IDLE_LOAD=${SPARK_IDLE_LOAD:-10}; DRAIN_MAX=${SPARK_DRAIN_MAX:-300}; IDLE_MAX=${SPARK_IDLE_MAX:-2700}
+BOARD=${SPARK_BOARD:-$HOME/handoffs/BOARD.md}   # overrides: tests only
 mkdir -p "$WR"
 now() { date -u +%FT%TZ; }
 esc() { printf '%s' "$1" | tr '\n\t' '  ' | sed 's/\\/\\\\/g; s/"/\\"/g'; }
 age() { echo $(( $(date +%s) - $(stat -c %Y "$1" 2>/dev/null || date +%s) )); }
 
+# openers FILE: the processes that have FILE open right now (a lock set by a flock that has since
+# exited lives on in whoever inherited the open file), up to 5, as "pid cmd"
+openers() {
+  n=0; seen=" "
+  for f in /proc/[0-9]*/fd/*; do
+    [ "$(readlink "$f" 2>/dev/null)" = "$1" ] || continue
+    p=${f#/proc/}; p=${p%%/*}
+    case $seen in *" $p "*) continue ;; esac
+    seen="$seen$p "; n=$((n + 1)); [ $n -le 5 ] || continue
+    printf '%spid %s %s' "$([ $n -gt 1 ] && echo '; ')" "$p" "$(ps -o args= -p "$p" 2>/dev/null | cut -c1-70)"
+  done
+  [ $n -gt 0 ] || printf 'none found'
+  [ $n -le 5 ] || printf '+%s more' $((n - 5))
+}
 # holders LOCKFILE: who holds the lock (kernel lock table) and who is queued on it, with ages
 holders() {
   ino=$(stat -c %i "$1" 2>/dev/null) || return 0
@@ -47,7 +94,7 @@ holders() {
   while read -r _ a b c d e _; do
     if [ "$a" = "->" ]; then q="queued"; m=$d; p=$e; else q="holds"; m=$c; p=$d; fi
     [ "$m" = READ ] && m=shared || m=exclusive
-    a=$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110); [ -n "$a" ] || a="(set by a finished flock; the open window $(cur) holder $(hpid "$(cur)") keeps it)"
+    a=$(ps -o args= -p "$p" 2>/dev/null | cut -c1-110); [ -n "$a" ] || a="(set by a finished flock; processes with $1 open now: $(openers "$1"))"
     printf '%s %s pid %s (%ss) %s; ' "$q" "$m" "$p" "$(ps -o etimes= -p "$p" 2>/dev/null | tr -d ' ')" "$a"
   done
 }
@@ -84,16 +131,27 @@ hpid() { cat "$WR/$1/holder.pid" 2>/dev/null; }
 describe() {
   d=$WR/$1
   st=queued; [ -f "$d/held" ] && st=held
-  echo "window $1  name=$(cat "$d/name" 2>/dev/null)  owner=$(cat "$d/owner" 2>/dev/null)  gb10=$(cat "$d/gb10" 2>/dev/null || echo legacy-quiet-only)  state=$st  opened_request=$(cat "$d/requested" 2>/dev/null)  holder_pid=$(hpid "$1")  lease_min=$(cat "$d/lease" 2>/dev/null)"
+  echo "window $1  name=$(cat "$d/name" 2>/dev/null)  owner=$(cat "$d/owner" 2>/dev/null)  gb10=$(cat "$d/gb10" 2>/dev/null || echo legacy-quiet-only)  quiet=$(cat "$d/quiet" 2>/dev/null || echo exclusive)  state=$st  opened_request=$(cat "$d/requested" 2>/dev/null)  holder_pid=$(hpid "$1")  lease_min=$(cat "$d/lease" 2>/dev/null)"
   [ -f "$d/held" ] && echo "  held since $(cat "$d/held") ($(age "$d/held") s)"
 }
+
+# verdict ID: what a window's timings are worth (L405): NO VERDICT after a lease overrun, "shared machine"
+# when correctness jobs ran beside it after their 25 min cap, else "quiet machine"
+verdict() {
+  [ -f "$WR/$1/expired" ] && { echo "NO VERDICT: the lease ran out before close"; return; }
+  n=$(cat "$WR/$1/intrusions" 2>/dev/null | wc -l)
+  [ "$n" -gt 0 ] && { echo "shared machine: $n correctness job(s) ran beside it after waiting their cap"; return; }
+  echo "quiet machine"
+}
+board() { echo "$(date -u +%FT%H:%MZ) $1" >> "$BOARD" 2>/dev/null; }
 
 # called with the state lock held: drop a window whose holder is gone
 reap() {
   id=$(cur); [ -n "$id" ] || return 0
   alive "$(hpid "$id")" && return 0
   why="holder process gone"; [ -f "$WR/$id/expired" ] && why="lease expired $(cat "$WR/$id/expired")"
-  { printf '{"closed_by": "spark-window reap", "reason": "%s", "state": ' "$why"; state; echo '}'; } > "$WR/$id/close.json"
+  [ -f "$WR/$id/gave-up" ] && why="never opened: $(cat "$WR/$id/gave-up")"
+  { printf '{"closed_by": "spark-window reap", "reason": "%s", "verdict": "%s", "state": ' "$(esc "$why")" "$(verdict "$id")"; state; echo '}'; } > "$WR/$id/close.json"
   rm -f "$WR/OPEN"
   echo "spark-window: closed stale window $id ($why)" >&2
 }
@@ -101,10 +159,24 @@ reap() {
 cmd=${1:-status}; [ $# -gt 0 ] && shift
 case $cmd in
 open)
-  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none] [--wait]}; shift
-  ledger=""; lease=90; gb10=exclusive; wait=0
-  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; --gb10) gb10=$2; shift 2 ;; --wait) wait=1; shift ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
+  name=${1:?usage: spark-window open NAME [--ledger ID] [--lease MIN] [--gb10 exclusive|shared|none] [--quiet exclusive|none] [--wait]}; shift
+  ledger=""; lease=""; gb10=exclusive; quiet=exclusive; wait=0
+  while [ $# -gt 0 ]; do case $1 in --ledger) ledger=$2; shift 2 ;; --lease) lease=$2; shift 2 ;; --gb10) gb10=$2; shift 2 ;; --quiet) quiet=$2; shift 2 ;; --wait) wait=1; shift ;; *) echo "spark-window: unknown option $1" >&2; exit 2 ;; esac; done
   case $gb10 in exclusive) gflag=-x ;; shared) gflag=-s ;; none) gflag= ;; *) echo "spark-window: --gb10 must be exclusive, shared or none" >&2; exit 2 ;; esac
+  case $quiet in exclusive) ;; none) [ "$gb10" != none ] || { echo "spark-window: --gb10 none with --quiet none would lock nothing" >&2; exit 2; } ;; *) echo "spark-window: --quiet must be exclusive or none" >&2; exit 2 ;; esac
+  # L405: exclusive locks are for short timing receipts only
+  excl=0; { [ "$gb10" = exclusive ] || [ "$quiet" = exclusive ]; } && excl=1
+  [ -n "$lease" ] || { [ $excl = 1 ] && lease=$LEASE_MAX || lease=90; }
+  case $lease in ''|*[!0-9]*|0) echo "spark-window: --lease must be a whole number of minutes" >&2; exit 2 ;; esac
+  if [ $excl = 1 ] && [ "$lease" -gt "$LEASE_MAX" ]; then
+    echo "spark-window: refused, --lease $lease: exclusive windows (chip or quiet) are at most $LEASE_MAX min (L405, Drake 2026-10-22)." >&2
+    echo "  Split the measurement into windows of $LEASE_MAX min or less, or run it on the shared machine and label the receipt \"shared machine\"." >&2
+    echo "  Value checks (tokens, routes, outputs) need no exclusive lock: --gb10 shared --quiet none, or no window at all." >&2
+    exit 2
+  fi
+  RES=$HOME/.local/state/aien-coordinator/CHIP-RESERVED
+  # Drake 2026-10-24 ("be coworkers"): the reservation file is a courtesy note, not a gate. Say what you run on the BOARD, let anyone mid-measurement finish, step aside when asked. No refusal here.
+  if [ -f "$RES" ] && ! head -1 "$RES" | cut -d"(" -f1 | tr " " "\n" | grep -qx "${ledger:-none}"; then echo "spark-window: note, other lanes also want the chip ($(head -1 "$RES" | cut -d'(' -f1 | xargs)). Courtesy rule (Drake 2026-10-24): post what you run and for how long on ~/handoffs/BOARD.md, let anyone mid-measurement finish, step aside if asked." >&2; fi
   # --wait: take a numbered ticket and wait in line; the oldest live ticket opens next. Without --wait
   # an open is refused while a window is open or anyone holds a ticket, so nobody jumps the line.
   mkdir -p "$QD"; tk=""
@@ -139,12 +211,16 @@ open)
   echo "$lease" > "$d/lease"; now > "$d/requested"
   echo "$id" > "$WR/OPEN.tmp" && mv -f "$WR/OPEN.tmp" "$WR/OPEN"
   echo "$gb10" > "$d/gb10"
+  echo "$quiet" > "$d/quiet"
   setsid "$0" _hold "$id" 7>&- > "$d/holder.log" 2>&1 < /dev/null &
   echo $! > "$d/holder.pid"
   flock -u 7; exec 7>&-
   t0=$(date +%s); last=$t0
   while [ ! -f "$d/held" ]; do
-    if ! alive "$(hpid "$id")"; then echo "spark-window: holder died before taking the lock; see $d/holder.log" >&2; rm -f "$WR/OPEN"; exit 1; fi
+    if ! alive "$(hpid "$id")"; then
+      if [ -f "$d/gave-up" ]; then echo "spark-window: not opened: $(cat "$d/gave-up")" >&2; rm -f "$WR/OPEN"; exit 4; fi
+      echo "spark-window: holder died before taking the lock; see $d/holder.log" >&2; rm -f "$WR/OPEN"; exit 1
+    fi
     if [ $(( $(date +%s) - last )) -ge 60 ]; then
       last=$(date +%s)
       echo "spark-window: waiting $(( last - t0 )) s: $(cut -c22- "$d/phase" 2>/dev/null). gb10: $(holders $G) | quiet: $(holders $Q) | waiters: $(waiters)" >&2
@@ -153,48 +229,113 @@ open)
   done
   { printf '{"window_id": "%s", "name": "%s", "owner": "%s", "lease_min": %s, "gb10": "%s", "waited_s": %s, "state": ' \
       "$id" "$(esc "$name")" "$(esc "$(cat "$d/owner")")" "$lease" "$gb10" "$(( $(date +%s) - t0 ))"; state; echo '}'; } > "$d/open.json"
-  echo "spark-window: window $id open, quiet lock held exclusive (waited $(( $(date +%s) - t0 )) s); box state in $d/open.json" >&2
+  echo "spark-window: window $id open, chip lock $gb10, quiet lock $quiet (waited $(( $(date +%s) - t0 )) s); box state in $d/open.json" >&2
   echo "$id"
   ;;
 _hold)
-  # Takes the window's locks, then holds them until close or lease end. Never holds one lock
-  # while blocking on the other: the measurement tools take quiet then chip (quiet-measure, then
-  # flock gb10), so blocking on quiet while holding the chip could deadlock with them, and
-  # blocking on the chip while holding quiet starves every CPU timing (L154). So: wait for the
-  # chip holding nothing, then TRY the quiet lock; if it is taken, let the chip go, wait until
-  # the quiet lock is free (holding nothing), and start again.
-  id=$1; d=$WR/$id; lease=$(cat "$d/lease"); mode=$(cat "$d/gb10" 2>/dev/null || echo legacy)
+  # Takes the window's locks, then holds them until close or lease end.
+  # Order and rules (L154, L189, L322, L405):
+  #  0. (quiet exclusive only, L405) Wait, holding NOTHING, until the machine is quiet anyway: at most
+  #     $IDLE_N jobs hold or wait on the quiet lock and the 1-min load is at most $IDLE_LOAD. A window
+  #     opens when the machine is idle, it does not stop everyone. Give up after $IDLE_MAX s (exit 4).
+  #  1. Wait for the chip holding NOTHING (a window waiting for the chip must not block CPU timings).
+  #  2. With the chip in hand, raise the GATE (exclusive on $GATE). quiet-build and quiet-measure pass
+  #     through it (shared, for a moment) before they take the quiet lock, so no NEW taker arrives while
+  #     we wait; the ones already holding the quiet lock finish normally (L322).
+  #  3. Drain: wait for the quiet lock while KEEPING the chip, in 5 s polls, for at most $DRAIN_MAX s.
+  #     If it has not drained by then, let everything go (builds pass) and go back to step 0.
+  #  4. Deadlock guard: the measurement tools take quiet THEN chip. If a process queued on the chip
+  #     has the quiet lock file open, it waits for our chip while we wait for its quiet lock: let the
+  #     chip go (gate stays up), wait for the quiet lock holding nothing else (same drain cap), then TRY
+  #     the chip without blocking (a try cannot deadlock). If the try fails, let quiet go and start again.
+  #  5. Hold until close or lease end. Lease end (L405): let go, write NO VERDICT, post on the board.
+  #  --quiet none: chip only, no quiet lock, no gate, no idle wait (value checks, not timings).
+  id=$1; d=$WR/$id; lease=$(cat "$d/lease"); mode=$(cat "$d/gb10" 2>/dev/null || echo legacy); qmode=$(cat "$d/quiet" 2>/dev/null || echo exclusive)
   echo $$ > "$d/holder.pid.tmp" && mv -f "$d/holder.pid.tmp" "$d/holder.pid"
   case $mode in exclusive) gf=-x ;; shared) gf=-s ;; *) gf= ;; esac
+  phase() { echo "$(now) $1" > "$d/phase"; }
+  # qjobs: rows (holders and waiters) on the quiet lock in the kernel lock table
+  qjobs() { qi=$(stat -c %i "$Q" 2>/dev/null) || { echo 0; return; }; grep -cE "^[0-9]+: +(-> +)?FLOCK +[A-Z]+ +[A-Z]+ +[0-9]+ [0-9a-f]+:[0-9a-f]+:$qi " /proc/locks 2>/dev/null; }
+  load1() { cut -d. -f1 /proc/loadavg; }
+  t_idle0=$(date +%s)
+  wait_idle() {
+    while :; do
+      n=$(qjobs); l=$(load1)
+      [ "$n" -le "$IDLE_N" ] && [ "$l" -le "$IDLE_LOAD" ] && return 0
+      if [ $(( $(date +%s) - t_idle0 )) -ge "$IDLE_MAX" ]; then
+        echo "the machine was never quiet in ${IDLE_MAX}s ($n jobs on the quiet lock, max $IDLE_N; load $l, max $IDLE_LOAD). Split the measurement or run it on the shared machine and label it \"shared machine\"." > "$d/gave-up"
+        phase "gave up: machine never quiet"; exit 4
+      fi
+      phase "waiting for a quiet machine, holding nothing: $n jobs on the quiet lock (max $IDLE_N), load $l (max $IDLE_LOAD)"
+      sleep 5 8>&- 9>&- 6>&-
+    done
+  }
+  # drain: wait for the quiet lock (fd 8) at most DRAIN_MAX s; with $1=guard, stop early when the deadlock guard fires
+  drain() {
+    ds=$(date +%s); yield=0
+    while [ $(( $(date +%s) - ds )) -lt "$DRAIN_MAX" ]; do
+      flock -w 5 -x 8 && return 0
+      if [ "${1:-}" = guard ] && [ -n "$gf" ] && chip_waiter_holds_quiet; then yield=1; return 1; fi
+    done
+    return 1
+  }
+  # chip_waiter_holds_quiet: some process queued on the chip lock has the quiet lock file open
+  chip_waiter_holds_quiet() {
+    cino=$(stat -c %i "$G" 2>/dev/null) || return 1
+    for p in $(awk -v i="$cino" '$2=="->" { split($7, a, ":"); if (a[3] == i) print $6 }' /proc/locks 2>/dev/null); do
+      for f in /proc/$p/fd/*; do [ "$(readlink "$f" 2>/dev/null)" = "$Q" ] && return 0; done
+    done
+    return 1
+  }
   # legacy: a window opened by the previous version runs _hold under quiet-measure, which already
   # holds the quiet lock for it; taking it again here would wait on itself.
   if [ "$mode" != legacy ]; then
-    exec 8>>"$Q"
     [ -n "$gf" ] && exec 9>>"$G"
-    tries=0
-    while :; do
-      tries=$((tries + 1))
-      if [ -n "$gf" ]; then echo "$(now) waiting for the chip lock ($mode)" > "$d/phase"; flock $gf 9; fi
-      if [ -z "$gf" ]; then echo "$(now) waiting for the quiet lock" > "$d/phase"; flock -x 8; break; fi
-      flock -n -x 8 && break
-      flock -u 9
-      echo "$(now) chip lock let go: quiet lock busy (try $tries)" > "$d/phase"
-      flock -x 8; flock -u 8
-    done
+    if [ "$qmode" = none ]; then
+      phase "waiting for the chip lock ($mode, no quiet lock)"; flock $gf 9; tries=1
+    else
+      exec 8>>"$Q"; mkdir -p "$(dirname "$GATE")"; [ -e "$GATE" ] || { : > "$GATE"; chmod 666 "$GATE"; } 2>/dev/null; exec 6>>"$GATE"
+      tries=0
+      while :; do
+        tries=$((tries + 1))
+        wait_idle
+        if [ -n "$gf" ]; then phase "waiting for the chip lock ($mode)"; flock $gf 9; fi
+        flock -x 6
+        flock -n -x 8 && break
+        phase "chip held, gate up, draining the quiet lock for at most ${DRAIN_MAX}s (try $tries)"
+        drain guard && break
+        if [ $yield = 1 ]; then
+          flock -u 9; yields=$((${yields:-0} + 1)); echo "$yields" > "$d/yields"
+          phase "chip let go: a process waiting for the chip holds the quiet lock (try $tries)"
+          drain && { flock -n $gf 9 && break; }
+        fi
+        flock -u 8; flock -u 6; [ -n "$gf" ] && flock -u 9
+        echo "$(now) try $tries: quiet lock did not drain in ${DRAIN_MAX}s, let everything go" >> "$d/backoffs"
+        phase "quiet lock did not drain in ${DRAIN_MAX}s: let everything go so builds pass, back to waiting for a quiet machine (try $tries)"
+        sleep 2 8>&- 9>&- 6>&-
+      done
+      flock -u 6
+    fi
     echo "$tries" > "$d/tries"
   fi
-  echo "$(now) holding" > "$d/phase"
+  phase "holding"
   now > "$d/held"
-  end=$(( $(date +%s) + lease * 60 ))
+  end=$(( $(date +%s) + lease * LU ))
   while [ ! -f "$d/close-request" ]; do
-    if [ "$(date +%s)" -ge "$end" ]; then now > "$d/expired"; echo "lease of $lease min ran out" >&2; exit 0; fi
-    sleep 2 8>&- 9>&-
+    if [ "$(date +%s)" -ge "$end" ]; then
+      now > "$d/expired"
+      echo "NO VERDICT: the lease of $lease min ran out before close; timings from this window are not valid (L405)" > "$d/verdict"
+      echo "lease of $lease min ran out" >&2
+      board "spark-window to $(cat "$d/owner" 2>/dev/null): window $id ($(cat "$d/name" 2>/dev/null)) ran past its $lease min lease. Its locks are let go and its timings get NO VERDICT (L405). Split long measurements into windows of $LEASE_MAX min or less."
+      exit 0
+    fi
+    sleep 2 8>&- 9>&- 6>&-
   done
   exit 0
   ;;
 run)
   id=$(cur)
-  if [ -z "$id" ] || [ ! -f "$WR/$id/held" ] || ! alive "$(hpid "$id")"; then echo "spark-window: no open window holds the quiet lock; run spark-window open NAME first" >&2; exit 1; fi
+  if [ -z "$id" ] || [ ! -f "$WR/$id/held" ] || ! alive "$(hpid "$id")"; then echo "spark-window: no open window holds its locks; run spark-window open NAME first" >&2; exit 1; fi
   [ $# -gt 0 ] || { echo "usage: spark-window run CMD..." >&2; exit 2; }
   case $(cat "$WR/$id/gb10" 2>/dev/null) in exclusive|shared) AIEN_GB10_LOCK_HELD=1; export AIEN_GB10_LOCK_HELD ;; esac
   SPARK_WINDOW=$id SPARK_WINDOW_DIR=$WR/$id exec "$@"
@@ -215,9 +356,10 @@ close)
   [ -f "$d/held" ] || { alive "$h" && kill -- -"$h" 2>/dev/null; why_pre="closed while still waiting for its locks"; }
   while alive "$h"; do sleep 1; done
   why=${why_pre:-closed}; [ -f "$d/expired" ] && why="lease expired $(cat "$d/expired") before close"
-  { printf '{"window_id": "%s", "closed_by": "spark-window close", "reason": "%s", "held_s": %s, "state": ' \
-      "$id" "$why" "$(( $(date +%s) - $(stat -c %Y "$d/held" 2>/dev/null || date +%s) ))"; state; echo '}'; } > "$d/close.json"
+  { printf '{"window_id": "%s", "closed_by": "spark-window close", "reason": "%s", "verdict": "%s", "held_s": %s, "state": ' \
+      "$id" "$why" "$(esc "$(verdict "$id")")" "$(( $(date +%s) - $(stat -c %Y "$d/held" 2>/dev/null || date +%s) ))"; state; echo '}'; } > "$d/close.json"
   [ "$(cur)" = "$id" ] && rm -f "$WR/OPEN"
+  echo "spark-window: verdict for its timings: $(verdict "$id")" >&2
   echo "spark-window: window $id closed ($why). It holds:" >&2
   ls "$d" | grep -E '\.json$' | sed 's/^/  /' >&2
   ;;
@@ -233,5 +375,5 @@ status)
   echo "gb10 lock holders: $(holders $G)"
   qclean; echo "waiting line (--wait):"; qlist
   ;;
-*) sed -n '2,34p' "$0"; exit 2 ;;
+*) sed -n '2,/^set -u/p' "$0"; exit 2 ;;
 esac
