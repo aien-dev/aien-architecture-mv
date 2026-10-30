@@ -24,7 +24,7 @@ Scout: read-only. Repos at pins in ~/workspace/adaptive/PINS.txt (omega 16e729b6
 | Inference interface | aien-abi-core AienInferenceBackend (lib :587) ; aegis-runtime InferenceEngine inference.rs:79 | Implemented and integrated (two separate traits, see section 4) |
 | Serve-path observation snapshot (queue, KV, batch) | aien-dual-observation/src/lib.rs:118-158 | Implemented but disconnected (only dev-dependency users found: aien-scheduler tests) |
 | Typed resource-condition state (latency, contention, memory pressure, deadline risk) as one type | none | Missing (pieces only, section 5) |
-| Legacy ALLEN scoped memory | aien-allen-memory/src/lib.rs:1-16 | Implemented, separate store, not Cortex |
+| Legacy Aien scoped memory | aien-allen-memory/src/lib.rs:1-16 | Implemented, separate store, not Cortex |
 
 ## 2. Cortex ownership table
 
@@ -42,7 +42,7 @@ Quoted migration plan, omega/src/runtime/rx_cortex.h:2-3 "Cortex, AIEN's durable
 | aienos-aegis, aienos-explain, aienos-kernel continuity | aienos/crates/aienos-cortex (aienos-aegis/Cargo.toml:13, aienos-explain/Cargo.toml:12; kernel continuity.rs:260 holds a `cortex_wal` ObjectId list only) | No (rx_cortex.h:18-20) | Not migrated; aegis uses it as a dependency but src/*.rs had no `aienos_cortex` reference in grep (dependency possibly unused: UNVERIFIED) |
 | omega runtime (rx_projection.c, rx_world.c, compose) | omega C CxStore, rx_cortex.h / rx_cortex_record.h | YES, only one | Canonical (M20, 2026-09-30) |
 | AEGIS runtime (aegis-runtime) | No Cortex implementation. `cortex.search` and `cortex_recall` are in ALLOWED_SKILLS but "Registered but unconnected; their handlers only report Unavailable" (src/enforcement.rs:20-24) | n/a | Disconnected |
-| ALLEN memory | Separate store `<home>.allen-memory/` (aien-allen-memory/src/lib.rs:1-5) | Not Cortex | Separate by design |
+| Aien memory | Separate store `<home>.allen-memory/` (aien-allen-memory/src/lib.rs:1-5) | Not Cortex | Separate by design |
 
 Reading: three live stores coexist (CxStore, cortex-rs SQLite at ~/.config/cortex/cortex.db, aienos-cortex in-process). The header declares only CxStore authoritative, yet all agent-memory traffic on this Spark (MCP, aien-cli, mail) goes to cortex-rs. Step 3 (delete) is far from done because step 2 (import as CX_K_IMPORTED) has no evidence of existing in what this scout read.
 
