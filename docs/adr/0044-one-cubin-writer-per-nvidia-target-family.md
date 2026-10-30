@@ -19,7 +19,10 @@ container only: it opens no device and performs no launch. The hosted build pack
 CUDApp pin `780a0af1`, where the GB10 column of `ob_code_load` names `omega_cubin.c` for cubins.
 
 omega-mv `seed/sm80/cubin.om` exists only on closed draft omega-mv#864. It accepts SM 80, 86,
-87, 89, 90, 100, 103, and 120, and it refuses 121. Its hardware load is NOT_RUN.
+87, 89, 90, 100, 103, and 120, and it refuses 121. The body of
+[omega-mv#864](https://github.com/aien-dev/omega-mv/pull/864#issue-6050605672) reports libcuda
+load PASS lines: vecadd/ctl PASS on an RTX 4090 (sm_80/86/89), a B200 (sm_100), and an RTX 5090
+(sm_120). Those lines are reported by that PR and were not independently re-run for this ADR.
 
 ADR 0042 (ARCH-0042) makes CUDApp the owner. Decision 7 requires a separate consolidation
 decision by Primate (Drake). This ADR records that decision (option B, 2026-10-30). ADR 0043
