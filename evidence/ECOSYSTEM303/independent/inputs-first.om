@@ -1,0 +1,149 @@
+note Native malformed input producer. Mode byte is an independent review case.
+global Mode uchar 1
+global Out uchar 65536
+global Digit uchar 20
+text Space " "
+text Ws "\t\r\n "
+text Over "18446744073709551616 "
+text Long "000000000000000000000 "
+text Minus "-303 "
+text Tail "x"
+text NL "\n"
+
+fn output n ulong to void
+if eq n 0
+put Digit 0 48
+w = write 1 Digit 0 1
+if ne w 1
+exit 90
+end
+ret
+end
+p = ulong 20
+while gt n 0 bound 20
+p = sub p 1
+put Digit p uchar add 48 rem n 10
+n = div n 10
+end
+w = write 1 Digit p sub 20 p
+if ne w long sub 20 p
+exit 90
+end
+end
+
+fn sep to void
+if eq get Mode 0 10
+w = write 1 Ws 0 len Ws
+if ne w long len Ws
+exit 90
+end
+else
+w = write 1 Space 0 1
+if ne w 1
+exit 90
+end
+end
+end
+
+fn main to int
+r = read 0 Mode 0 1
+if ne r 1
+ret 90
+end
+m = get Mode 0
+if eq m 13
+ret 0
+end
+if or eq m 7 eq m 8
+for i ulong 65536
+put Out i 32
+end
+n = ulong 65535
+if eq m 8
+n = 65536
+end
+w = write 1 Out 0 n
+if ne w long n
+ret 90
+end
+ret 0
+end
+if or eq m 4 or eq m 14 eq m 15
+put Out 0 0
+if eq m 14
+put Out 0 194
+end
+if eq m 15
+put Out 0 11
+end
+w = write 1 Out 0 1
+if ne w 1
+ret 90
+end
+end
+if eq m 1
+w = write 1 Over 0 len Over
+else
+if eq m 2
+w = write 1 Long 0 len Long
+else
+if eq m 5
+w = write 1 Minus 0 len Minus
+else
+if eq m 16
+output 304
+else
+output 303
+end
+sep
+end
+end
+end
+output 1
+sep
+if eq m 9
+output 39
+else
+output 40
+end
+sep
+count = ulong 40
+if eq m 6
+count = 39
+end
+for i ulong count
+output add i 1
+sep
+for c ulong 19
+col = add c 1
+value = ulong 0
+if eq col 1
+value = 1
+end
+if eq col 2
+value = 663
+end
+if eq col 3
+value = 787
+if eq m 11
+value = 18446744073709551615
+end
+end
+if eq col 6
+value = 7
+end
+if and eq m 12 and eq i 0 eq col 7
+value = 1099511627776
+end
+output value
+sep
+end
+end
+if eq m 3
+w = write 1 Tail 0 1
+if ne w 1
+ret 90
+end
+end
+ret 0
+end
