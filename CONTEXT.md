@@ -7,7 +7,7 @@ AienOS is becoming a native AI runtime architecture centered on managed model co
 ### Names (ADR 0038)
 
 **AienOS**:
-The whole operating system: Aienux plus Omega plus the runtime (sovereign core) plus Allen. The site www.aienos.com shows this name.
+The whole operating system: Aienux plus Omega plus the runtime (sovereign core) plus Aien. The site www.aienos.com shows this name.
 _Avoid_: Aienix (retired: another company uses it), AIENOS, Aienos
 
 **Aienux**:

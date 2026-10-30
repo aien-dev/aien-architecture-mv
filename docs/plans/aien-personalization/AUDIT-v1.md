@@ -8,7 +8,7 @@ Commits read (GitHub `main` on 2026-10-08, local fresh clones): aien-architectur
 
 | Concern | Owner (repo, file) | What it does today | Source read |
 |---|---|---|---|
-| Decision | aien-architecture `docs/adr/0035-persistent-cognitive-entity-boundary-allen.md` | ACCEPTED 2026-10-06. AIEN is the organism, ALLEN the durable subject. | header of the ADR |
+| Decision | aien-architecture `docs/adr/0035-persistent-cognitive-entity-boundary-aien.md` | ACCEPTED 2026-10-06. AIEN is the organism, ALLEN the durable subject. | header of the ADR |
 | Host identity gate | aien-sovereign-core `crates/aien-allen/src/{lib,resolve,subject_v0,binding,deployment}.rs` | RESOLVE ONLY. Reads a kind-24 SubjectState exported by AIENOS, decodes it (`subject_v0::decode`), checks lineage against Cortex journal record 1, keeps a host pin `<home>.allen-binding` and a hash-chained deployment record `<home>.allen-deployments`. Opt-in via `AIEN_ALLEN_SUBJECT`; refusal exits 78. `crates/aien-allen/tests/refusal_rows_test.rs` scans the source for banned names (`fn encode_subject`, `fn provision`, `cs_provision`, ...) so this crate can never write a subject. | `lib.rs` header, `refusal_rows_test.rs` |
 | Gate engagement | aien-sovereign-core `crates/aien-runtime/src/spine.rs`, `allen_gate()` (about line 630), called on every compose-home open (about line 1884) | Engaged: prints `ALLEN: engaged agent=... head_sequence=... chain_verified=...`. Refused: fatal. Not engaged: one log line, no identity claim. The `Resolved` value is printed and then dropped; no later code receives the identity. | `spine.rs` 622-676 |
 | Request path | `crates/aien-cli/src/compose.rs` (`aien compose propose|authorize|execute ...`) to `ControlCommand::RunComposeTask` (`control.rs`, `server.rs`) to `ComposeBridge` and `task_prompt()` / `task_decision()` / `propose_task_checked` (`spine.rs`) to the model to `ComposeTaskReport` (`control.rs`) | The product path. Writes need S4 `authorize` then S5 `execute`. The prompt is a fixed template; nothing from a profile enters it. | grep of the three files |
@@ -63,7 +63,7 @@ Environment tags used by the pending PR's tests: fixture-based host tests only. 
 |---|---|---|
 | omega `spec/allen.md` line 3-4 | "ARCH-0035 ... PROPOSED" | Wrong against ADR 0035 (ACCEPTED 2026-10-06). Fixed in the omega PR with a dated note. |
 | aien-architecture `doctrine/AIEN.md` line 629 | "ARCH-0035 ..., PROPOSED" | Wrong. Fixed in this PR (one word, plus date). |
-| aienos ADR 0018 line 3 | "ARCH-0035 ... PROPOSED"; ADR 0018 itself Proposed | The "Proposed" status of ADR 0018 is correct (format not frozen). Its ARCH-0035 label is stale. Not changed here: other repo. Already recorded in `docs/plans/allen-continuity/CAMPAIGN-v0-PREREG.md`. |
+| aienos ADR 0018 line 3 | "ARCH-0035 ... PROPOSED"; ADR 0018 itself Proposed | The "Proposed" status of ADR 0018 is correct (format not frozen). Its ARCH-0035 label is stale. Not changed here: other repo. Already recorded in `docs/plans/aien-continuity/CAMPAIGN-v0-PREREG.md`. |
 | `docs/adr/README.md` line 47, ADR 0035 header, `CAMPAIGN-v0-PREREG.md` | ACCEPTED | Correct. Untouched. |
 
 Historical evidence and receipts were not edited.
