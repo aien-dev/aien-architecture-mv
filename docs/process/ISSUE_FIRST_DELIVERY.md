@@ -10,6 +10,12 @@ This document governs **how work is recorded and qualified**, not what AIEN shou
 
 Before opening an issue, check the live owning repository's source, tests, build contracts and existing issues. Plans and issues establish intent, **not** current implementation. Never mark a roadmap milestone complete solely because an issue or PR closed. Only the canonical milestone registry owns that status.
 
+## Human-Directed Agentic Engineering
+
+This process records the two loops of Human-Directed Agentic Engineering (HDAE). Humans set the objective, architecture, constraints, acceptance gates and stopping points, then review the observed behavior. Within those boundaries, agents implement, execute checks, diagnose failures and revise. Human acceptance remains separate from agent execution and model review; naming the method does not change plan authority or qualification policy.
+
+Method reference: Gregory M. Kurtzer, *Ginux: Building an Independent Kernel That Runs Linux Userspace through Human-Directed Agentic Engineering* (2026), [doi:10.5281/zenodo.23682548](https://doi.org/10.5281/zenodo.23682548). The report documents a method and case study and does not claim to originate the general idea or phrase.
+
 ## Normal workflow
 
 1. **Discover and deduplicate.** Identify the owning repository and current executable behavior. Search existing open/closed issues and merged PRs. If a capability already exists, link the evidence instead of recreating it.
