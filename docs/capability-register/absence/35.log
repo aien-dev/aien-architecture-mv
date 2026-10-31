@@ -1,0 +1,74 @@
+2026-10-27T08:04:58Z
+# row 35: NCCL: multi-GPU/multi-node collectives
+# not found here is never proof of absence; gh code search misses private/unindexed repos; git grep covers only the listed clones at the listed shas, excluding vendored third_party/
+
+$ gh search code --owner aien-dev nccl --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev ncclAllReduce --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev allreduce --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (2 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/CUDApp grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' 9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb -- . ':(exclude)third_party'
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:PROVENANCE.md
+9841bb3a5dfbde1c7bf7741fd2fceb916962c8cb:docs/PAIN_POINTS.md
+[exit 0, 2 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-mv grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' e5b32567a7aff3ce594e3254a622a846a6cd190b -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-blas grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' 0706265a751b0f0957df918a8a945e35735ce5c4 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/omega-dnn grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' ca6b59ef3d63e61d0ad5983e54fc5e7f4e736b86 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-math grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' 43c629db362b48aeec3590a8f0cd30e927e5ec16 -- . ':(exclude)third_party'
+43c629db362b48aeec3590a8f0cd30e927e5ec16:data/context/topics.jsonl
+43c629db362b48aeec3590a8f0cd30e927e5ec16:src/context/cx_data.om
+[exit 0, 2 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-train grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' b6c33e3a82611361b37c651df70d9a645045773a -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+$ git -C /home/drakestapleton/work/CapRegister/clones/aien-sovereign-core-mv grep -I -l -i -E 'nccl|all[-_ ]?reduce|all[-_ ]?gather|reduce[-_ ]?scatter|ncclComm' f30eb963918d71dd2998b1cb936c251429417de1 -- . ':(exclude)third_party'
+(no output)
+[exit 1, 0 lines]
+
+
+# hit review (git grep -n on each hit):
+#  CUDApp PROVENANCE.md:46 lists NCCL among NVIDIA binaries not used; docs/PAIN_POINTS.md:215 lists NCCL among libraries CUDA++ lacks. Mentions only, no implementation.
+#  aien-math data/context/topics.jsonl, src/context/cx_data.om:6 match 'all reduced residue classes' (number theory text). False positive.
+#  Separately (not a grep hit at main): aien-train open PR #14 head 2ff21448 native/distributed7/admission.om = distributed metadata admission only (no tensor transfer/reduction); recorded as row 35.2.
+
+# gh code search retried once after the burst-limit window (2026-10-27T08:05:28Z):
+$ gh search code --owner aien-dev nccl --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (1 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+$ gh search code --owner aien-dev allreduce --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+GitHub guard: GitHub refused this account's requests (burst limit); every chat waits until 08:06Z (1 min). Do not retry in a loop: do other work, then one try after that time.
+[exit 98, 1 lines]
+
+# VERDICT: not found in the searched scope (not proof of absence).
+
+# second retry 2026-10-27T08:11:13Z:
+$ gh search code --owner aien-dev nccl --limit 30 --json repository,path --jq '.[]|.repository.nameWithOwner+" "+.path'
+aien-dev/CUDApp PROVENANCE.md
+aien-dev/CUDApp docs/PAIN_POINTS.md
+aien-dev/aienos.com public/alpha/wizard.om
+aien-dev/aienos.com om/alpha-page/main.html
+aien-dev/open-humanity docs/research/2026-10-15-volunteer-gpu-training.md
+[exit 0, 5 lines]
+
+# hit review: CUDApp PROVENANCE.md/docs/PAIN_POINTS.md are the mentions above; aienos.com wizard.om/main.html are website pages and open-humanity docs/research/...volunteer-gpu-training.md is a research note (paths only, contents not inspected); none is a collective implementation.
+# VERDICT: not found in the searched scope (not proof of absence).

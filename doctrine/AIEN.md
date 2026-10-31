@@ -626,7 +626,7 @@ However, unconstrained self-modification leads directly to cognitive collapse, g
 
 ### 10.2 The Succession Triad
 
-At all times, Omega maintains three distinct model generations. A model generation is a replaceable component of the organism (§12.1: AIEN is not a weight matrix); the subject every generation serves is ALLEN ([ARCH-0035](../docs/adr/0035-persistent-cognitive-entity-boundary-allen.md), ACCEPTED 2026-10-06), whose identity, standing intents and memory lineage do not change when a generation is promoted or rolled back. Generations are named Model N, Model N+1 and Model N-1; none of them is "AIEN":
+At all times, Omega maintains three distinct model generations. A model generation is a replaceable component of the organism (§12.1: AIEN is not a weight matrix); the subject every generation serves is Aien ([ARCH-0035](../docs/adr/0035-persistent-cognitive-entity-boundary-aien.md), ACCEPTED 2026-10-06), whose identity, standing intents and memory lineage do not change when a generation is promoted or rolled back. Generations are named Model N, Model N+1 and Model N-1; none of them is "AIEN":
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐

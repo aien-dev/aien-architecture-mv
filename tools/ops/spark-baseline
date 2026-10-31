@@ -1,0 +1,150 @@
+#!/bin/sh
+# spark-baseline MODEL: the one baseline receipt per model per measurement window.
+#
+#   spark-baseline 27b    one fixed request to the resident 27B server on
+#                         127.0.0.1:18091: fixed prompt, temperature 0, seed 1,
+#                         64 tokens, sent once the GPU lock is quiet, timed through
+#                         spark-receipt. Never starts, stops or restarts a server.
+# Run inside an open window (spark-window run spark-baseline 27b). Writes
+# ~/yardsticks/windows/<id>/baseline-27b.json with the decode rate (streamed reply,
+# first to last token) and request tok/s, wall J/token over the decode
+# (receipt wall_J / tokens) and J/token above idle (window calibration idle W),
+# the reply's sha256 (same server build + same request = same reply) and the
+# server process, so a different build is visible.
+set -u
+WR=${SPARK_WINDOWS_ROOT:-$HOME/yardsticks/windows}
+model=${1:?usage: spark-baseline 27b}
+case $model in
+  27b) port=${SPARK_BASELINE_PORT:-18091}; mid=qwen3.8-27b-fp8 ;;  # port override only for tests against a stand-in server
+  *) echo "spark-baseline: unknown model $model (known: 27b)" >&2; exit 2 ;;
+esac
+id=${SPARK_WINDOW:-$(spark-window id)} || { echo "spark-baseline: no open window; run spark-window open NAME first" >&2; exit 1; }
+[ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] || { echo "spark-baseline: window $id is not the open, held window" >&2; exit 1; }
+held() { [ "$(cat "$WR/OPEN" 2>/dev/null)" = "$id" ] && [ -f "$WR/$id/held" ] && [ ! -f "$WR/$id/expired" ] && kill -0 "$(cat "$WR/$id/holder.pid" 2>/dev/null)" 2>/dev/null; }
+d=$WR/$id; b=$d/baseline-$model; mkdir -p "$b"
+export SPARK_WINDOW=$id SPARK_WINDOW_DIR=$d
+# The 27B server takes the GPU lock itself for each reply. A window that holds that lock (spark-window
+# open --gb10 exclusive|shared, L154) would make the server wait for the window to end: refuse up front.
+case $(cat "$d/gb10" 2>/dev/null) in exclusive|shared)
+  echo "spark-baseline: window $id holds the GPU lock (--gb10 $(cat "$d/gb10")), so the 27B server cannot answer inside it; open the window with --gb10 none" >&2; exit 1 ;; esac
+[ -f "$d/calibration.json" ] || echo "spark-baseline: warning: window $id has no calibration.json yet (run spark-calibrate first); J/token above idle will be null" >&2
+
+N=64; SEED=1
+PROMPT="Count upward from one in English words, separated by commas, and do not stop: one, two, three,"
+REQ=$(printf '{"model": "%s", "messages": [{"role": "user", "content": "%s"}], "temperature": 0, "seed": %s, "max_tokens": %s, "stream": true, "stream_options": {"include_usage": true}}' "$mid" "$PROMPT" "$SEED" "$N")
+echo "$REQ" > "$b/request.json"
+
+spid=$(ss -ltnpH "sport = :$port" 2>/dev/null | sed -n 's/.*pid=\([0-9]*\).*/\1/p' | head -n 1)
+[ -n "$spid" ] || { echo "spark-baseline: nothing listens on 127.0.0.1:$port; not starting one" >&2; exit 1; }
+sexe=$(readlink "/proc/$spid/exe" 2>/dev/null); sargs=$(tr '\0' ' ' < "/proc/$spid/cmdline" 2>/dev/null | cut -c1-300)
+models=$(curl -s --max-time 10 "http://127.0.0.1:$port/v1/models")
+case $models in *"\"$mid\""*) ;; *) echo "spark-baseline: server on :$port does not serve $mid: $models" >&2; exit 1 ;; esac
+
+# The server takes the GPU lock itself for each generation (holding it here would deadlock),
+# and GPU-only jobs keep that lock busy. So the reply is streamed and every chunk is timestamped:
+# from the first to the last token the server holds the GPU lock for us, which makes the decode
+# rate and its energy clean whatever the queue did before. The lock table is sampled throughout;
+# any other process seen holding the GPU lock during the decode marks the baseline not ok.
+# Sample the lock spark-window uses. SPARK_GB10_LOCK is for tests only (see spark-window:63).
+G=${SPARK_GB10_LOCK:-/tmp/aien-gb10.lock}; gino=$(stat -c %i "$G")   # SPARK_GB10_LOCK is for tests only (see spark-window:63)
+held || { echo "spark-baseline: window $id is not held; nothing measured" >&2; exit 1; }
+( while :; do grep -E ":$gino " /proc/locks | sed "s/^/$(date +%s.%N) /"; sleep 0.5; done ) > "$b/gb10-during.txt" 2>/dev/null &
+smp=$!
+# bash for EPOCHREALTIME: a clock read without starting a process per line, so a burst stays a burst.
+# The server serves one reply at a time and turns a request away at once (503) while another runs
+# (other clients, e.g. aien-translate, use it around the clock; a window cannot stop them). So: watch
+# /health until busy is false, send at once, and on 503 go back to watching; give up after 20 min.
+# Every try is logged in attempts.txt. A reply line without a final newline (an error body) is kept.
+rm -f "$b/attempts.txt" "$b/headers.txt"
+spark-receipt "baseline-$model-$id" --idle 10 -- bash -c '
+  end=$(( ${EPOCHREALTIME%.*} + 1200 )); i=0; w=0
+  while [ ${EPOCHREALTIME%.*} -lt $end ]; do
+    case $(curl -s --max-time 2 "$6") in *"\"busy\":false"*) ;; *) w=$((w + 1)); sleep 0.2; continue ;; esac
+    i=$((i + 1)); echo "send $EPOCHREALTIME after $w busy polls" >> "$5"
+    curl -sN -D "$4" -H "Content-Type: application/json" --data-binary @"$1" "$2" |
+      while IFS= read -r l || [ -n "$l" ]; do printf "%s %s\n" "$EPOCHREALTIME" "$l"; done > "$3"
+    c=$(awk "NR == 1 { print \$2 }" "$4" 2>/dev/null)
+    echo "try $i http ${c:-none} $EPOCHREALTIME $(head -c 160 "$3" | tr "\n" " ")" >> "$5"
+    [ "$c" = 503 ] || break
+  done
+  exit 0' bash "$b/request.json" "http://127.0.0.1:$port/v1/chat/completions" "$b/stream.txt" "$b/headers.txt" "$b/attempts.txt" "http://127.0.0.1:$port/health" > "$b/receipt.out" 2>&1
+rc=$?
+tsend=$(awk '$1 == "send" { t = $2 } END { print t }' "$b/attempts.txt" 2>/dev/null)
+tries=$(grep -c '^try ' "$b/attempts.txt" 2>/dev/null); tries=${tries:-0}
+kill $smp 2>/dev/null; wait $smp 2>/dev/null
+held && wheld=true || wheld=false
+# chunks: "<epoch> data: {json}"; content chunks carry choices[0].delta.content
+grep -E '^[0-9.]+ data: \{' "$b/stream.txt" | while read -r t _ j; do
+  printf '%s\t%s\n' "$t" "$(printf '%s' "$j" | jq -c '[(.choices[0].delta.content // ""), (.usage.completion_tokens // null), (.choices[0].finish_reason // null)]')"
+done > "$b/chunks.tsv"
+cut -f2 "$b/chunks.tsv" | jq -rj '.[0]' > "$b/reply.txt"
+nchunk=$(cut -f2 "$b/chunks.tsv" | jq -r 'select(.[0] != "") | 1' | wc -l)
+t_first=$(awk -F'\t' '$2 !~ /^\[""/ {print $1; exit}' "$b/chunks.tsv")
+t_last=$(awk -F'\t' '$2 !~ /^\[""/ {t=$1} END {print t}' "$b/chunks.tsv")
+toks=$(cut -f2 "$b/chunks.tsv" | jq -r '.[1] // empty' | tail -n 1); toks=${toks:-$nchunk}
+fin=$(cut -f2 "$b/chunks.tsv" | jq -r '.[2] // empty' | tail -n 1); fin=${fin:-none}
+# the server logs its own prefill and decode timing per reply under the reply id: keep that line as a cross-check
+cid=$(grep -m 1 -E '^[0-9.]+ data: \{' "$b/stream.txt" | cut -d" " -f3- | jq -r '.id // empty' 2>/dev/null)
+slog=$(readlink "/proc/$spid/fd/2" 2>/dev/null)
+sline=""; [ -n "$cid" ] && [ -f "$slog" ] && sline=$(grep -F "$cid:" "$slog" | tail -n 1 | cut -c1-400)
+code=$(awk 'NR == 1 { print $2 }' "$b/headers.txt" 2>/dev/null); code=${code:-0}
+secs=$(awk -v a="$tsend" -v b="$t_last" 'BEGIN { if (b == "") print "null"; else printf "%.3f\n", b - a }')
+ttft=$(awk -v a="$tsend" -v b="$t_first" 'BEGIN { if (b == "") print "null"; else printf "%.3f\n", b - a }')
+dsecs=$(awk -v a="$t_first" -v b="$t_last" 'BEGIN { if (a == "" || b == "") print "null"; else printf "%.3f\n", b - a }')
+others=$(awk -v s="$spid" -v a="${t_first:-0}" -v e="${t_last:-0}" '$1 >= a && $1 <= e { if ($3 != "->" && $6 != s) print $6 }' "$b/gb10-during.txt" | sort -u | tr '\n' ' ')
+# wall power over the decode only, from the sensor rows (same CSV spark-receipt reads)
+dec=$(awk -F, -v a="${t_first:-0}" -v e="${t_last:-0}" '$1 ~ /^[0-9]+$/ && $1 >= int(a) && $1 <= int(e) + 1 && $3 ~ /^[0-9.]+$/ { w += $3; n++ } END { if (n) printf "%.6g %d\n", w / n, n; else print "null 0" }' "$HOME/yardsticks/sensors/$(date -d "@${t_first%.*}" +%F 2>/dev/null || date +%F).csv" 2>/dev/null)
+dW=${dec% *}; dn=${dec#* }
+r=$(sed -n 's/^receipt: //p' "$b/receipt.out"); cp "$r" "$b/receipt.json" 2>/dev/null
+rsha=$(sha256sum < "$b/reply.txt" | cut -c1-64)
+idleW=$(jq -r '.idle.wall_W_mean // "null"' "$d/calibration.json" 2>/dev/null); idleW=${idleW:-null}
+num() { awk -v x="$1" 'BEGIN { if (x == "" || x == "null") print "null"; else print x + 0 }'; }
+# values go in as awk variables, never pasted into the program: a pasted 0 divisor is a gawk error
+q() { awk -v s="$1" -v t="$2" -v w="$3" -v i="$4" -v op="$5" 'BEGIN {
+  if (s == "" || s == "null" || s + 0 <= 0 || t + 0 == 0 || (op != "rate" && (w == "" || w == "null")) || (op == "above" && (i == "" || i == "null"))) { print "null"; exit }
+  if (op == "rate") printf "%.4g\n", t / s; else if (op == "wall") printf "%.4g\n", w * s / t; else printf "%.4g\n", (w - i) * s / t }'; }
+# tokens that arrived after the first content chunk; when chunks carry more than one token, scale by tokens per chunk
+dtoks=$(awk -v t="$toks" -v c="$nchunk" 'BEGIN { if (c < 2) print 0; else if (t == c) print t - 1; else printf "%.6g\n", (c - 1) * t / c }')
+tps=$(q "$secs" "$toks" "" "" rate)
+dtps=$(q "$dsecs" "$dtoks" "" "" rate)
+djpt=$(q "$dsecs" "$dtoks" "$dW" "" wall)
+djpt_inc=$(q "$dsecs" "$dtoks" "$dW" "$idleW" above)
+# a decode of under 50 ms for many tokens means the server sent the reply in one burst, not as it decoded
+burst=$(awk -v s="$dsecs" -v t="$dtoks" 'BEGIN { print (t + 0 > 4 && (s == "null" || s + 0 < 0.05)) ? "true" : "false" }')
+ok=true; [ "$rc" = 0 ] && [ "$code" = 200 ] && [ "$toks" = "$N" ] && [ -z "$others" ] && [ "$wheld" = true ] && [ "$burst" = false ] || ok=false
+cat > "$b.json.tmp" <<EOJ
+{
+ "window_id": "$id",
+ "model": "$mid",
+ "ok": $ok,
+ "request": {"url": "http://127.0.0.1:$port/v1/chat/completions", "max_tokens": $N, "temperature": 0, "seed": $SEED, "stream": true, "file": "$b/request.json"},
+ "completion_tokens": $toks,
+ "content_chunks": $nchunk,
+ "decode_tokens_counted": $dtoks,
+ "stream_arrived_in_one_burst": $burst,
+ "finish_reason": "$fin",
+ "http_code": $code,
+ "tries": $tries,
+ "server_log_line": $(printf '%s' "$sline" | jq -Rs .),
+ "request_seconds": $(num "$secs"),
+ "first_token_seconds": $(num "$ttft"),
+ "tok_per_s_request": $tps,
+ "decode_seconds": $(num "$dsecs"),
+ "decode_tok_per_s": $dtps,
+ "decode_wall_W_mean": $(num "$dW"),
+ "decode_sensor_samples": $dn,
+ "decode_wall_J_per_token": $djpt,
+ "idle_W_calibration": $(num "$idleW"),
+ "decode_J_per_token_above_idle": $djpt_inc,
+ "reply_sha256": "$rsha",
+ "window_held_throughout": $wheld,
+ "gb10_other_holders_during_decode": "$others",
+ "server": {"pid": $spid, "exe": "$sexe", "exe_sha256": "$(sha256sum "$sexe" 2>/dev/null | cut -c1-64)", "args": "$(printf '%s' "$sargs" | sed 's/"/\\"/g')"},
+ "receipt": "$r",
+ "calibration": "$( [ -f "$d/calibration.json" ] && echo "$d/calibration.json")",
+ "note": "one streamed request; first_token_seconds includes the wait in the server's GPU-lock queue and the prefill; decode = first to last token, while the server holds the GPU lock; wall W is the whole UPS output in 10 W steps every ~2 s, so a few-second decode rests on a few samples: read J/token as coarse"
+}
+EOJ
+mv -f "$b.json.tmp" "$b.json"
+cat "$b.json"; echo "baseline: $b.json"
+[ "$ok" = true ]

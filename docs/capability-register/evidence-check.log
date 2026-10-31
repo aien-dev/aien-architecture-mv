@@ -1,0 +1,6 @@
+# capreg evidence run 2026-10-27T08:22:39Z on spark-b87b aarch64
+# command: tools/capreg/build/capreg evidence docs/capability-register/register.tsv /home/drakestapleton/work/CapRegister/clones
+# register sha256: 0efae6aa40cdd313f5e630ec638da0b19e5f176ca82e9acbaa0cb22c2db87d64
+# clones fetched with: git fetch origin '+refs/pull/*/head:refs/remotes/origin/pr/*' '+refs/heads/*:refs/remotes/origin/*'
+OK evidence checked=93
+# exit 0

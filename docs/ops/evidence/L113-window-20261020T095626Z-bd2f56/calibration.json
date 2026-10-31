@@ -1,0 +1,14 @@
+{
+ "window_id": "20261020T095626Z-bd2f56",
+ "start": "2026-10-20T09:56:59Z",
+ "gb10_lock_waited_s": 32,
+ "gb10_lock_held_by": "calibrate",
+ "window_held_throughout": true,
+ "memcpy_probe": {"source": "omega research/cost-sim-583@3bd56731c5517e2a9c8f195955c71e73dc6f9269 tools/dagsim/memcpy_probe.c", "blob": "3c1ec3b9b68f933236beb266f11a45a4cfb2978b", "cflags": "-O2 -pthread",
+   "binary_sha256": "a9ef1c14caba26ab55edc1c93cfbbae2c65f467b6d744c429e06f500714cb28c", "cmd": "nice -n 10 memcpy_probe 1 K 10",
+   "unit": "GB/s, read+write counted twice, as in M1 block4", "k1": {"reps": 10, "GBps_median": 45.65, "GBps_min": 41.0, "GBps_max": 50.0}, "k8": {"reps": 10, "GBps_median": 86.15, "GBps_min": 66.5, "GBps_max": 120.5}},
+ "idle": {"seconds": 30, "wall_W_mean": 245.3333333, "gpu_W_mean": 7.316666667, "gpu_util_mean": 0.0,
+   "samples": 15, "load1_start": "28.67", "receipt": "/home/drakestapleton/yardsticks/receipts/2026-10-20-calib-idle-20261020T095626Z-bd2f56.json"},
+ "files": "calibration/memcpy_k1.csv calibration/memcpy_k8.csv calibration/idle-receipt.json",
+ "note": "wall W is the whole UPS output (UPS ups.load x 10, 10 W steps, ~2 s), not the Spark alone; the GPU is held idle by the GB10 lock during the 30 s but servers stay resident"
+}

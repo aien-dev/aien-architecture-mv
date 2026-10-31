@@ -38,8 +38,8 @@ case "$step" in
     ;;
   doctrine)
     # aien-architecture#7 in seeded .om (#316): tools/doctrine/doctrine.om makes every judgment;
-    # gate.om builds it with AIEN_OMC after checking the compiler against tools/zero-legacy/
-    # omega.pin with the native sha256, then runs it on $ROOT. NOT_RUN (exit 3) without the
+    # gate.sh independently checks the compiler pin before invoking AIEN_OMC; gate.om
+    # repeats the native hash check and runs the checker on $ROOT. NOT_RUN (exit 3) without the
     # pinned compiler. The retired bash oracle is scripts/check_doctrine.sh before this commit.
     exec sh tools/doctrine/gate.sh "$ROOT"
     ;;
@@ -83,10 +83,17 @@ case "$step" in
     obs script_tests_run 4
     ;;
   zero-legacy)
-    # #316: every judgment is made by tools/zero-legacy/gate.om (seeded .om); gate.sh is the
-    # three-line loader that compiles it with AIEN_OMC and execs it. NOT_RUN (exit 3) without
-    # the pinned compiler; gate.om checks the pin with its own native sha256.
+    # #316: gate.sh independently checks the compiler pin before executing AIEN_OMC.
+    # Fixture judgments and the additional native hash check live in gate.om.
+    # Missing/mismatched compiler remains NOT_RUN (exit 3).
     exec sh tools/zero-legacy/gate.sh
+    ;;
+  capreg)
+    # The org CUDA capability register (docs/capability-register/): every judgment is made by
+    # tools/capreg/gate.om (seeded .om), which checks AIEN_OMC against tools/zero-legacy/omega.pin,
+    # builds capreg.om, runs its fixtures, verifies register.tsv against REGISTER.md and expects a
+    # planted bad row to be refused. NOT_RUN (exit 3) without the pinned compiler.
+    exec sh tools/capreg/gate.sh
     ;;
   *)
     echo "run.sh: unknown step '$step'" >&2

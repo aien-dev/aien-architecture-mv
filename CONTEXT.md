@@ -1,17 +1,17 @@
 # AienOS
 
-AienOS is becoming a native AI runtime architecture centered on managed model contexts, shared physical KV memory, an effect boundary, typed subsystem protocols, native inference execution, and persistent state. It is not yet an operating system.
+Sovereign Intelligence (SI) is the whole system. It is becoming a native AI runtime architecture centered on managed model contexts, shared physical KV memory, an effect boundary, typed subsystem protocols, native inference execution, and persistent state. AienOS is only the operating-system layer (ADR 0045).
 
 ## Language
 
 ### Names (ADR 0038)
 
 **AienOS**:
-The whole operating system: Aienux plus Omega plus the runtime (sovereign core) plus Allen. The site www.aienos.com shows this name.
+Only the operating-system layer. Aienux is its kernel. The whole system is Sovereign Intelligence (SI), per ADR 0045. The site www.aienos.com shows this name.
 _Avoid_: Aienix (retired: another company uses it), AIENOS, Aienos
 
 **Aienux**:
-The kernel: it boots the machine and drives the hardware (today the repository aienos-mv).
+The kernel: it boots the machine and drives the hardware (repository aien-dev/aienux; the old name aienos-mv is retired, ADR 0038).
 _Avoid_: AIENOS, Aienos, "the OS" when only the kernel is meant
 
 **AIEN**:
